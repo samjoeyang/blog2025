@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html lang="<%= config.language %>">
+<%- partial('_partial/head') %>
+<!-- Google AdSense -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script>
+<!-- End Google AdSense -->
+
+<body>
+  <header id="header" class="inner"><%- partial('_partial/header') %></header>
+  <div id="content" class="inner">
+    <div id="main-col" class="alignleft"><div id="wrapper"><%- body %></div></div>
+    <aside id="sidebar" class="alignright"><%- partial('_partial/sidebar', {}, {cache: true}) %></aside>
+    <div class="clearfix"></div>
+  </div>
+  <footer id="footer" class="inner"><%- partial('_partial/footer') %></footer>
+  <%- partial('_partial/after_footer') %>
+</body>
+</html>
