@@ -100,7 +100,7 @@ theme: light
 
 # Track
 track:
-  gaid: ''  # Google Analytics ID
+  gaid: 'G-SRDGJ6LZM5'  # Google Analytics ID
   baidu: '' # Baidu Analytics ID
 
 # Comment
@@ -112,7 +112,7 @@ comment:
 deploy:
   type: git
   repo: https://github.com/samjoeyang/blog2025.git
-  branch: main
+  branch: pages
   message: "Site updated: {{ now('YYYY-MM-DD HH:mm:ss') }}"
   token: ${GITHUB_TOKEN}
 

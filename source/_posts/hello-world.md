@@ -35,4 +35,9 @@ More info: [Generating](https://hexo.io/docs/generating.html)
 $ hexo deploy
 ```
 
+你也可以使用一条命令完成清理、生成和部署：
+
+``` bash
+$ hexo clean && hexo generate && hexo deploy
+```
 More info: [Deployment](https://hexo.io/docs/one-command-deployment.html)
