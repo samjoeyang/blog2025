@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程） | Need.UNO</title>
+
+
+    <meta name="keywords" content="Hexo, Commento, 评论系统, Docker, 自托管, 教程, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="💬 使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程） 本文将介绍如何使用 Docker Compose 部署 Commento 评论系统，并将其集成到 Hexo 静态博客中，实现可控、轻量、无追踪的评论功能。   📌 目录 Commento 简介   为什么选择 Commento   系统架构   部署环境准备   Docker Compose 部署 Commento">
+<meta property="og:type" content="website">
+<meta property="og:title" content="使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程）">
+<meta property="og:url" content="https://need.uno/2025/05/28/%E4%BD%BF%E7%94%A8-Commento-%E4%B8%BA-Hexo-%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%87%AA%E6%89%98%E7%AE%A1%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%89/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="💬 使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程） 本文将介绍如何使用 Docker Compose 部署 Commento 评论系统，并将其集成到 Hexo 静态博客中，实现可控、轻量、无追踪的评论功能。   📌 目录 Commento 简介   为什么选择 Commento   系统架构   部署环境准备   Docker Compose 部署 Commento">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-28T09:31:09.000Z">
+<meta property="article:modified_time" content="2025-05-28T12:24:32.456Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="Hexo">
+<meta property="article:tag" content="Commento">
+<meta property="article:tag" content="评论系统">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="自托管">
+<meta property="article:tag" content="教程">
+<meta name="twitter:card" content="summary_large_image">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <meta property="og:title" content="<%= page.title %>" /> 
+    
+        <meta property="og:type" content="<%= page.type %>" /> 
+    
+        <meta property="og:url" content="<%= page.permalink %>" /> 
+    
+        <meta property="og:description" content="<%= page.description || config.description %>" /> 
+    
+        <meta property="og:site_name" content="<%= config.title %>" /> 
+    
+        <meta property="og:image" content="<%= page.thumbnail || config.url + config.favicon %>" /> 
+    
+        <meta name="twitter:card" content="summary_large_image" /> 
+    
+        <meta name="twitter:title" content="<%= page.title %>" /> 
+    
+        <meta name="twitter:description" content="<%= page.description || config.description %>" /> 
+    
+        <meta name="twitter:image" content="<%= page.thumbnail || config.url + config.favicon %>" /> 
+    
+        <script src="https://res.wx.qq.com/open/js/jweixin-1.6.0.js"></script> 
+    
+        <script src="https://cdn.jsdelivr.net/npm/wechat-js-sdk@1.0.0/dist/wechat-jssdk.min.js"></script> 
+    
+        <script> function shareToWechat(type) { var title = "<%= page.title %>"; var desc = "<%= page.description || config.description %>"; var link = "<%= page.permalink %>"; var imgUrl = "<%= page.thumbnail || config.url + config.favicon %>";
+if (type === "timeline") { wx.ready(function() { wx.updateTimelineShareData({ title: title, link: link, imgUrl: imgUrl, success: function() { alert("分享成功！"); } }); }); } else if (type === "friend") { wx.ready(function() { wx.updateAppMessageShareData({ title: title, desc: desc, link: link, imgUrl: imgUrl, success: function() { alert("分享成功！"); } }); }); } } </script> 
+    
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程）
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2025/05/" class="post-meta__date button">2025-05-28</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <h1 id="💬-使用-Commento-为-Hexo-博客添加自托管评论系统（完整教程）"><a href="#💬-使用-Commento-为-Hexo-博客添加自托管评论系统（完整教程）" class="headerlink" title="💬 使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程）"></a>💬 使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程）</h1><blockquote>
+<p>本文将介绍如何使用 Docker Compose 部署 Commento 评论系统，并将其集成到 Hexo 静态博客中，实现可控、轻量、无追踪的评论功能。</p>
+</blockquote>
+<hr>
+<h2 id="📌-目录"><a href="#📌-目录" class="headerlink" title="📌 目录"></a>📌 目录</h2><ol>
+<li><a href="#commento-%E7%AE%80%E4%BB%8B">Commento 简介</a>  </li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-commento">为什么选择 Commento</a>  </li>
+<li><a href="#%E7%B3%BB%E7%BB%9F%E6%9E%B6%E6%9E%84">系统架构</a>  </li>
+<li><a href="#%E9%83%A8%E7%BD%B2%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87">部署环境准备</a>  </li>
+<li><a href="#docker-compose-%E9%83%A8%E7%BD%B2-commento--postgresql--caddy">Docker Compose 部署 Commento + PostgreSQL + Caddy</a>  </li>
+<li><a href="#%E9%85%8D%E7%BD%AE%E5%9F%9F%E5%90%8D%E5%92%8C-https">配置域名和 HTTPS</a>  </li>
+<li><a href="#hexo-%E9%9B%86%E6%88%90-commento">Hexo 集成 Commento</a>  </li>
+<li><a href="#%E8%AF%84%E8%AE%BA%E5%90%8E%E5%8F%B0%E7%AE%A1%E7%90%86">评论后台管理</a>  </li>
+<li><a href="#%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98%E4%B8%8E%E5%BB%BA%E8%AE%AE">常见问题与建议</a>  </li>
+<li><a href="#%E6%80%BB%E7%BB%93">总结</a></li>
+</ol>
+<hr>
+<h2 id="Commento-简介"><a href="#Commento-简介" class="headerlink" title="Commento 简介"></a>Commento 简介</h2><p><strong>Commento</strong> 是一个开源的嵌入式评论系统，可用于替代如 Disqus 等第三方服务。支持 Markdown、隐私保护、反垃圾、多站点等特性。你可以选择自托管的方式完全控制数据。</p>
+<hr>
+<h2 id="为什么选择-Commento"><a href="#为什么选择-Commento" class="headerlink" title="为什么选择 Commento"></a>为什么选择 Commento</h2><table>
+<thead>
+<tr>
+<th>特性</th>
+<th>支持</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>开源</td>
+<td>✅</td>
+<td>自由修改部署</td>
+</tr>
+<tr>
+<td>自托管</td>
+<td>✅</td>
+<td>控制全部数据</td>
+</tr>
+<tr>
+<td>无广告</td>
+<td>✅</td>
+<td>注重隐私，无第三方追踪</td>
+</tr>
+<tr>
+<td>支持 Markdown</td>
+<td>✅</td>
+<td>格式美观、方便书写</td>
+</tr>
+<tr>
+<td>支持审核管理</td>
+<td>✅</td>
+<td>后台可屏蔽、删除、审批</td>
+</tr>
+<tr>
+<td>邮件通知</td>
+<td>✅</td>
+<td>可配置 SMTP 发送通知</td>
+</tr>
+<tr>
+<td>多站点支持</td>
+<td>✅</td>
+<td>一套服务，多站共用</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="系统架构"><a href="#系统架构" class="headerlink" title="系统架构"></a>系统架构</h2><table>
+<thead>
+<tr>
+<th>组件</th>
+<th>功能</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Commento</td>
+<td>评论服务核心，运行在端口 8080</td>
+</tr>
+<tr>
+<td>PostgreSQL</td>
+<td>存储评论数据</td>
+</tr>
+<tr>
+<td>Caddy</td>
+<td>反向代理并自动配置 HTTPS</td>
+</tr>
+<tr>
+<td>Hexo</td>
+<td>生成静态页面的博客系统</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="部署环境准备"><a href="#部署环境准备" class="headerlink" title="部署环境准备"></a>部署环境准备</h2><ol>
+<li>一台云服务器（Ubuntu 20.04 或以上）  </li>
+<li>域名一枚（如 <code>comments.example.com</code>）并完成解析  </li>
+<li>安装 Docker 和 Docker Compose：</li>
+</ol>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"><span class="built_in">sudo</span> apt install docker docker-compose -y</span><br></pre></td></tr></table></figure>
+
+<h2 id="Docker-Compose-部署-Commento-PostgreSQL-Caddy"><a href="#Docker-Compose-部署-Commento-PostgreSQL-Caddy" class="headerlink" title="Docker Compose 部署 Commento + PostgreSQL + Caddy"></a>Docker Compose 部署 Commento + PostgreSQL + Caddy</h2><p>1️⃣ 创建 docker-compose.yml</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">postgres:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:13</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">commento-postgres</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">commento</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">strong_password_here</span></span><br><span class="line">      <span class="attr">POSTGRES_DB:</span> <span class="string">commento</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">pgdata:/var/lib/postgresql/data</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">commento:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">registry.gitlab.com/commento/commento</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">commento</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">COMMENTO_ORIGIN:</span> <span class="string">&quot;https://comments.example.com&quot;</span></span><br><span class="line">      <span class="attr">COMMENTO_PORT:</span> <span class="number">8080</span></span><br><span class="line">      <span class="attr">COMMENTO_POSTGRES:</span> <span class="string">&quot;postgres://commento:strong_password_here@postgres:5432/commento?sslmode=disable&quot;</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgres</span></span><br><span class="line"></span><br><span class="line">  <span class="attr">caddy:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">caddy:2</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">commento-caddy</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;443:443&quot;</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">./Caddyfile:/etc/caddy/Caddyfile</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">caddy_data:/data</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">caddy_config:/config</span></span><br><span class="line"></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">pgdata:</span></span><br><span class="line">  <span class="attr">caddy_data:</span></span><br><span class="line">  <span class="attr">caddy_config:</span></span><br></pre></td></tr></table></figure>
+
+<p>2️⃣ 创建 Caddyfile</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">comments.example.com &#123;</span><br><span class="line">  reverse_proxy commento:8080</span><br><span class="line"></span><br><span class="line">  encode gzip</span><br><span class="line">  header &#123;</span><br><span class="line">    Strict-Transport-Security &quot;max-age=31536000; includeSubDomains; preload&quot;</span><br><span class="line">    X-Content-Type-Options &quot;nosniff&quot;</span><br><span class="line">    X-Frame-Options &quot;DENY&quot;</span><br><span class="line">    X-XSS-Protection &quot;1; mode=block&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>3️⃣ 启动服务</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker compose up -d</span><br></pre></td></tr></table></figure>
+
+<h2 id="配置域名和-HTTPS"><a href="#配置域名和-HTTPS" class="headerlink" title="配置域名和 HTTPS"></a>配置域名和 HTTPS</h2><p>将 comments.example.com 指向你的服务器 IP（A 记录）</p>
+<p>确保服务器开放 80 和 443 端口：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> ufw allow 80</span><br><span class="line"><span class="built_in">sudo</span> ufw allow 443</span><br><span class="line">Caddy 会自动申请并续签 HTTPS 证书</span><br></pre></td></tr></table></figure>
+<h2 id="Hexo-集成-Commento"><a href="#Hexo-集成-Commento" class="headerlink" title="Hexo 集成 Commento"></a>Hexo 集成 Commento</h2><p>在你的 Hexo 博客主题中找到 layout&#x2F;post.ejs 或 post.html，在页面底部插入：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">div</span> <span class="attr">id</span>=<span class="string">&quot;commento&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">defer</span> <span class="attr">src</span>=<span class="string">&quot;https://comments.example.com/js/commento.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>然后执行生成部署：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo clean &amp;&amp; hexo g &amp;&amp; hexo d</span><br></pre></td></tr></table></figure>
+<h2 id="评论后台管理"><a href="#评论后台管理" class="headerlink" title="评论后台管理"></a>评论后台管理</h2><p>访问你的 Commento 服务首页：<br><a target="_blank" rel="noopener" href="https://comments.example.com/">https://comments.example.com</a></p>
+<ul>
+<li>注册账号</li>
+<li>登录后创建站点（填写你博客的域名）</li>
+<li>管理功能：<ul>
+<li>评论审核与删除</li>
+<li>用户封禁</li>
+<li>多站点切换</li>
+<li>SMTP 通知配置（可选）</li>
+</ul>
+</li>
+</ul>
+<h2 id="常见问题与建议"><a href="#常见问题与建议" class="headerlink" title="常见问题与建议"></a>常见问题与建议</h2><table>
+<thead>
+<tr>
+<th>问题</th>
+<th>解决方案</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>域名访问不了</td>
+<td>检查 DNS、端口、防火墙配置</td>
+</tr>
+<tr>
+<td>评论不显示</td>
+<td>检查域名与 COMMENTO_ORIGIN 是否一致</td>
+</tr>
+<tr>
+<td>邮件通知失败</td>
+<td>配置 SMTP，确保端口和账号正确</td>
+</tr>
+<tr>
+<td>页面加载太慢</td>
+<td>使用 CDN 加速博客主站，不影响评论</td>
+</tr>
+</tbody></table>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>技术</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>评论系统</td>
+<td>Commento（自托管）</td>
+</tr>
+<tr>
+<td>部署方式</td>
+<td>Docker Compose</td>
+</tr>
+<tr>
+<td>评论数据存储</td>
+<td>PostgreSQL</td>
+</tr>
+<tr>
+<td>反向代理与</td>
+<td>HTTPS	Caddy 自动化配置</td>
+</tr>
+<tr>
+<td>博客平台</td>
+<td>Hexo（静态）</td>
+</tr>
+<tr>
+<td>嵌入方法</td>
+<td>HTML 标签与 JS 脚本</td>
+</tr>
+</tbody></table>
+<p>Commento 是一个优雅、注重隐私的评论解决方案，适合内容创作者、技术博客、文档站点等场景。结合 Hexo 可构建完全自控的内容平台。</p>
+
+    </div>
+    <div class="post__share">
+        <div class="share-title">分享到：</div>
+        <div class="share-buttons">
+            <a href="https://twitter.com/intent/tweet?text=%E4%BD%BF%E7%94%A8%20Commento%20%E4%B8%BA%20Hexo%20%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%87%AA%E6%89%98%E7%AE%A1%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%89&url=https%3A%2F%2Fneed.uno%2F2025%2F05%2F28%2F%25E4%25BD%25BF%25E7%2594%25A8-Commento-%25E4%25B8%25BA-Hexo-%25E5%258D%259A%25E5%25AE%25A2%25E6%25B7%25BB%25E5%258A%25A0%25E8%2587%25AA%25E6%2589%2598%25E7%25AE%25A1%25E8%25AF%2584%25E8%25AE%25BA%25E7%25B3%25BB%25E7%25BB%259F%25EF%25BC%2588%25E5%25AE%258C%25E6%2595%25B4%25E6%2595%2599%25E7%25A8%258B%25EF%25BC%2589%2F" target="_blank" rel="noopener" class="share-button twitter">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/></svg>
+            </a>
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2F2025%2F05%2F28%2F%25E4%25BD%25BF%25E7%2594%25A8-Commento-%25E4%25B8%25BA-Hexo-%25E5%258D%259A%25E5%25AE%25A2%25E6%25B7%25BB%25E5%258A%25A0%25E8%2587%25AA%25E6%2589%2598%25E7%25AE%25A1%25E8%25AF%2584%25E8%25AE%25BA%25E7%25B3%25BB%25E7%25BB%259F%25EF%25BC%2588%25E5%25AE%258C%25E6%2595%25B4%25E6%2595%2599%25E7%25A8%258B%25EF%25BC%2589%2F" target="_blank" rel="noopener" class="share-button facebook">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+            </a>
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2F2025%2F05%2F28%2F%25E4%25BD%25BF%25E7%2594%25A8-Commento-%25E4%25B8%25BA-Hexo-%25E5%258D%259A%25E5%25AE%25A2%25E6%25B7%25BB%25E5%258A%25A0%25E8%2587%25AA%25E6%2589%2598%25E7%25AE%25A1%25E8%25AF%2584%25E8%25AE%25BA%25E7%25B3%25BB%25E7%25BB%259F%25EF%25BC%2588%25E5%25AE%258C%25E6%2595%25B4%25E6%2595%2599%25E7%25A8%258B%25EF%25BC%2589%2F&title=%E4%BD%BF%E7%94%A8%20Commento%20%E4%B8%BA%20Hexo%20%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%87%AA%E6%89%98%E7%AE%A1%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%89" target="_blank" rel="noopener" class="share-button weibo">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M10.098 20c-3.308 0-6-2.692-6-6s2.692-6 6-6 6 2.692 6 6-2.692 6-6 6zm0-10.5c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.015-4.5-4.5-4.5zm7.5-1.5c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm-15 0c-.828 0-1.5.672-1.5 1.5s.672 1.5 1.5 1.5 1.5-.672 1.5-1.5-.672-1.5-1.5-1.5zm7.5-1.5c-2.485 0-4.5 2.015-4.5 4.5s2.015 4.5 4.5 4.5 4.5-2.015 4.5-4.5-2.015-4.5-4.5-4.5zm0 1.5c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/></svg>
+            </a>
+            <a href="https://www.linkedin.com/shareArticle?mini=true&url=https%3A%2F%2Fneed.uno%2F2025%2F05%2F28%2F%25E4%25BD%25BF%25E7%2594%25A8-Commento-%25E4%25B8%25BA-Hexo-%25E5%258D%259A%25E5%25AE%25A2%25E6%25B7%25BB%25E5%258A%25A0%25E8%2587%25AA%25E6%2589%2598%25E7%25AE%25A1%25E8%25AF%2584%25E8%25AE%25BA%25E7%25B3%25BB%25E7%25BB%259F%25EF%25BC%2588%25E5%25AE%258C%25E6%2595%25B4%25E6%2595%2599%25E7%25A8%258B%25EF%25BC%2589%2F&title=%E4%BD%BF%E7%94%A8%20Commento%20%E4%B8%BA%20Hexo%20%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%87%AA%E6%89%98%E7%AE%A1%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%89" target="_blank" rel="noopener" class="share-button linkedin">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            </a>
+            <a href="javascript:void(0)" onclick="shareToWechat('friend')" class="share-button wechat">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.328.328 0 0 0 .168-.054l1.903-1.114a.864.864 0 0 1 .718-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.856-2.5.096-5.127 2.34-6.95 2.245-1.823 5.313-2.258 7.974-1.07.09-2.807-2.291-5.187-5.393-5.187zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm6.635 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm6.636 0c.641 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm2.332 4.177c-2.372 0-4.5 1.8-4.5 4.5 0 2.7 2.128 4.5 4.5 4.5.555 0 1.08-.09 1.575-.24a.864.864 0 0 1 .718.098l1.903 1.114a.328.328 0 0 0 .168.054c.16 0 .29-.132.29-.295 0-.072-.03-.142-.048-.213l-.39-1.48a.59.59 0 0 1 .213-.665c1.832-1.347 3.002-3.338 3.002-5.55 0-2.7-2.128-4.5-4.5-4.5zm-1.5 2.25c.414 0 .75.336.75.75s-.336.75-.75.75-.75-.336-.75-.75.336-.75.75-.75zm-4.5 0c.414 0 .75.336.75.75s-.336.75-.75.75-.75-.336-.75-.75.336-.75.75-.75zm4.5 4.5c.414 0 .75.336.75.75s-.336.75-.75.75-.75-.336-.75-.75.336-.75.75-.75z"/></svg>
+            </a>
+            <a href="javascript:void(0)" onclick="shareToWechat('timeline')" class="share-button wechat-moments">
+                <svg viewBox="0 0 24 24" width="24" height="24"><path fill="currentColor" d="M8.691 2.188C3.891 2.188 0 5.476 0 9.53c0 2.212 1.17 4.203 3.002 5.55a.59.59 0 0 1 .213.665l-.39 1.48c-.019.07-.048.141-.048.213 0 .163.13.295.29.295a.328.328 0 0 0 .168-.054l1.903-1.114a.864.864 0 0 1 .718-.098 10.16 10.16 0 0 0 2.837.403c.276 0 .543-.027.811-.05-.856-2.5.096-5.127 2.34-6.95 2.245-1.823 5.313-2.258 7.974-1.07.09-2.807-2.291-5.187-5.393-5.187zM5.785 5.991c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178A1.17 1.17 0 0 1 4.623 7.17c0-.651.52-1.18 1.162-1.18zm6.635 0c.642 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18zm6.636 0c.641 0 1.162.529 1.162 1.18a1.17 1.17 0 0 1-1.162 1.178 1.17 1.17 0 0 1-1.162-1.178c0-.651.52-1.18 1.162-1.18z"/></svg>
+            </a>
+        </div>
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/2025/05/28/%E4%BD%BF%E7%94%A8-Commento-%E4%B8%BA-Hexo-%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%87%AA%E6%89%98%E7%AE%A1%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%89/">https://need.uno/2025/05/28/%E4%BD%BF%E7%94%A8-Commento-%E4%B8%BA-Hexo-%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%87%AA%E6%89%98%E7%AE%A1%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%89/</a>
+        </p>
+        
+            <strong>
+                <p>本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">知识共享署名-非商业性使用-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2025-05-28</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Hexo/" class="post-tags__link button"># Hexo</a><a href="/tags/Commento/" class="post-tags__link button"># Commento</a><a href="/tags/%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F/" class="post-tags__link button"># 评论系统</a><a href="/tags/Docker/" class="post-tags__link button"># Docker</a><a href="/tags/%E8%87%AA%E6%89%98%E7%AE%A1/" class="post-tags__link button"># 自托管</a><a href="/tags/%E6%95%99%E7%A8%8B/" class="post-tags__link button"># 教程</a></div> 
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/2025/05/28/%E4%BA%BA%E7%B1%BB%E5%B0%86%E7%AA%81%E7%A0%B4%E4%B8%80%E7%BA%A7%E6%96%87%E6%98%8E%EF%BC%9F/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            人类将突破一级文明？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="2025/05/28/使用-Commento-为-Hexo-博客添加自托管评论系统（完整教程）/"></div>
+<script type="text/javascript">
+  var repo = "https://github.com/samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2025 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+         
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-SRDGJ6LZM5', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-SRDGJ6LZM5"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-SRDGJ6LZM5');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    </body>
+</html>
