@@ -1,6 +1,7 @@
 menu:
-  Home:
+  Home: /
   Archives: archives
+  About: about
 
 widgets:
 - search
@@ -20,12 +21,12 @@ fancybox: true
 google_analytics: G-KBL1X494XR  # 替换为您的 Google Analytics 跟踪 ID
 rss:
 
-comment_provider: facebook
+# comment_provider: facebook
 # Disqus comment
 disqus_shortname:
 # Facebook comment
-facebook:
-  appid: # <appId>
-  comment_count: 5
-  comment_width: 840
-  comment_colorscheme: light
+# facebook:
+#   appid: # <appId>
+#   comment_count: 5
+#   comment_width: 840
+#   comment_colorscheme: light

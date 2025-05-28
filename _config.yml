@@ -122,3 +122,8 @@ word_count:
   post_word_count: true
   min2read: true
   total_wordcount: true
+
+sitemap:
+  path: sitemap.xml
+baidusitemap:
+  path: baidusitemap.xml
