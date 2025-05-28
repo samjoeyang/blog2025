@@ -3,8 +3,8 @@
 ## Source: https://github.com/hexojs/hexo/
 
 # Site
-title: 朕
-subtitle: '知道了'
+title: Need.UNO
+subtitle: '见证AI时代'
 description: '见证AI时代'
 keywords: AI, 人工智能, 技术革命, 未来展望, 社会变革
 author: Samjoe Yang
@@ -96,7 +96,7 @@ ignore:
 # Extensions
 ## Plugins: https://hexo.io/plugins/
 ## Themes: https://hexo.io/themes/
-theme: light
+theme: cards
 
 # Track
 track:
@@ -123,7 +123,17 @@ word_count:
   min2read: true
   total_wordcount: true
 
+# Sitemap
 sitemap:
   path: sitemap.xml
+  rel: false
+  tags: true
+  categories: true
+
+# Baidu Sitemap
 baidusitemap:
   path: baidusitemap.xml
+
+# Google Analytics
+google_analytics:
+  id: 'G-SRDGJ6LZM5'
