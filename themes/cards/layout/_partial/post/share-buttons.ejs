@@ -1,0 +1,50 @@
+<% if (theme.social_share && theme.social_share.enable) { %>
+<div class="post-share">
+    <div class="share-buttons">
+        <% theme.social_share.networks.forEach(function(network) { %>
+            <a href="<%= network.url.replace('{{url}}', encodeURIComponent(page.permalink)).replace('{{title}}', encodeURIComponent(page.title)).replace('{{description}}', encodeURIComponent(page.description || '')).replace('{{image}}', encodeURIComponent(page.thumbnail || '')) %>"
+               class="share-button"
+               data-share="<%= network.name %>"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="<%= network.icon %>"></i>
+            </a>
+        <% }); %>
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+<% } %>

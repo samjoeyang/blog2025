@@ -23,10 +23,10 @@ head:
   # 社交分享链接
   opengraph: 
     enable: true
-    type: 
+    type: website
     twitter_card: summary_large_image
-    twitter_id: 
-    twitter_site: 
+    twitter_id: samjoeyang
+    twitter_site: samjoeyang
     image: page.thumbnail
     fb_admins: 
     fb_app_id: 
@@ -56,10 +56,12 @@ navbar:
       url: /tags/
     - name: 归档
       url: /archives/
-    - name: 友链
-      url: /friends/
-    - name: Page
-      url: /page/
+    # - name: 友链
+    #   url: /friends/
+    # - name: Page
+    #   url: /page/
+    - name: 关于
+      url: /about/
 
   # 导航栏永远显示在屏幕顶端
   # 仅当屏幕宽度不小于 1080 px 时生效
@@ -179,8 +181,8 @@ meta:
     enable: true
     author: Samjoe Yang
     url: {{ url }}
-    license: CC BY-SA 4.0
-    license_url: https://creativecommons.org/licenses/by-sa/4.0/
+    # license: CC BY-SA 4.0
+    # license_url: https://creativecommons.org/licenses/by-sa/4.0/
     
     # 在作者声明和永久链接之后，可以多行，支持 markdown
     custom_text:
@@ -199,7 +201,7 @@ comments:
   # Tips: Make sure you have installed [utterances app](https://github.com/apps/utterances) in your repo
   utterances:
     enable: true
-    repo: https://github.com/samjoeyang/blog2025 # Repository
+    repo: samjoeyang/blog2025 # Repository
     issueTerm: title # Blog post ↔️ issue mapping: pathname | url | title | og:title
     theme: github-light # Theme: github-light | github-dark | github-dark-orange | icy-dark | dark-blue | photon-dark
     label: # Issue label
@@ -308,7 +310,7 @@ comments:
   changyan: 
     appid:
     conf:
-    thread_key_type: path # id | path，单独定义时候用 “id”
+    thread_key_type: path # id | path，单独定义时候用 "id"
 
   # Wildfire
   wildfire: 
@@ -334,8 +336,8 @@ comments:
 # ---------------------------------------------------------------
 
 analytics:
-  google_site_id: G-SRDGJ6LZM5
-  gtags_site_id: G-SRDGJ6LZM5
+  google_site_id: G-KBL1X494XR
+  gtags_site_id: G-KBL1X494XR
   baidu_site_id: 
   cnzz_site_id: 
   cloudflare_site_id: 
@@ -343,7 +345,7 @@ analytics:
     id:
     url:
 
-# ca-pub-1157022733083083
+
 
 # ---------------------------------------------------------------
 # 网站页脚
@@ -407,7 +409,7 @@ lazyload:
 
 # 站内搜索插件
 search:
-  enable: false
+  enable: true
   path: search.json
   field: All  # Page | Post | All
 
@@ -565,5 +567,89 @@ vendors:
   # 自定义 script
   custom_script: 
     - '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script>'
-    # - ''
-    # - ''
+    - '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">'
+    - '<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>'
+    - '<script>
+      function isWeChatBrowser() {
+        return /micromessenger/i.test(navigator.userAgent);
+      }
+      document.addEventListener("DOMContentLoaded", function() {
+        const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]");
+        wechatButtons.forEach(button => {
+          button.addEventListener("click", function(e) {
+            e.preventDefault();
+            if (isWeChatBrowser()) {
+              // 微信内置浏览器，提示用户使用右上角菜单分享
+              const modal = document.createElement("div");
+              modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;";
+              modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`;
+              modal.addEventListener("click", () => modal.remove());
+              document.body.appendChild(modal);
+            } else {
+              // 普通浏览器，弹二维码
+              const url = window.location.href;
+              const qrcode = new QRCode(document.createElement("div"), {
+                text: url,
+                width: 128,
+                height: 128
+              });
+              const qrcodeImg = qrcode._el.querySelector("img");
+              const modal = document.createElement("div");
+              modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;";
+              modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`;
+              modal.addEventListener("click", () => modal.remove());
+              document.body.appendChild(modal);
+            }
+          });
+        });
+      });
+      </script>'
+  # 如果你想要在特定位置显示广告，你还需要在相应的位置添加广告单元代码。广告单元代码通常看起来像这样：
+  # <ins class="adsbygoogle"
+  #    style="display:block"
+  #    data-ad-client="ca-pub-1157022733083083"
+  #    data-ad-slot="YOUR_AD_SLOT_ID"
+  #    data-ad-format="auto"
+  #    data-full-width-responsive="true"></ins>
+  # <script>
+  #     (adsbygoogle = window.adsbygoogle || []).push({});
+  # </script>
+
+# ---------------------------------------------------------------
+# 社交分享按钮
+# ---------------------------------------------------------------
+social_share:
+  enable: true
+  networks:
+    - name: twitter
+      icon: fab fa-twitter
+      url: https://twitter.com/intent/tweet?url={{url}}&text={{title}}&via=samjoeyang
+    - name: x
+      icon: fab fa-x-twitter
+      url: https://x.com/intent/tweet?url={{url}}&text={{title}}&via=samjoeyang
+    - name: facebook
+      icon: fab fa-facebook
+      url: https://www.facebook.com/sharer/sharer.php?u={{url}}
+    - name: reddit
+      icon: fab fa-reddit
+      url: https://www.reddit.com/submit?url={{url}}&title={{title}}
+    - name: telegram
+      icon: fab fa-telegram
+      url: https://t.me/share/url?url={{url}}&text={{title}}
+    - name: linkedin
+      icon: fab fa-linkedin
+      url: https://www.linkedin.com/shareArticle?mini=true&url={{url}}&title={{title}}&summary={{description}}
+    - name: weibo
+      icon: fab fa-weibo
+      url: https://service.weibo.com/share/share.php?url={{url}}&title={{title}}&pic={{image}}
+    - name: qq
+      icon: fab fa-qq
+      url: https://connect.qq.com/widget/shareqq/index.html?url={{url}}&title={{title}}&summary={{description}}&pics={{image}}
+    - name: wechat
+      icon: fab fa-weixin
+      url: javascript:void(0)
+      qrcode: true
+    - name: wechat-moments
+      icon: fas fa-share-alt
+      url: javascript:void(0)
+      qrcode: true

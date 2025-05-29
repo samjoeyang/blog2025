@@ -106,7 +106,7 @@ theme: cards
 
 # Track
 track:
-  gaid: 'G-SRDGJ6LZM5'  # Google Analytics ID
+  gaid: 'G-KBL1X494XR'  # Google Analytics ID
   baidu: '' # Baidu Analytics ID
 
 # Comment
@@ -142,4 +142,7 @@ baidusitemap:
 
 # Google Analytics
 google_analytics:
-  id: 'G-SRDGJ6LZM5'
+  id: 'G-KBL1X494XR'
+
+# google_adsense:
+#   id: ca-pub-1157022733083083
