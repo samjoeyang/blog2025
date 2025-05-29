@@ -1,0 +1,14 @@
+<% if (theme.comments.commento.enable) { %>
+<div id="commento"></div>
+<script src="<%= theme.comments.commento.url %>/js/commento.js"></script>
+<% if (theme.comments.commento.sso) { %>
+<script>
+    window.commento = {
+        sso: {
+            provider: '<%= theme.comments.commento.sso_provider %>',
+            publicKey: '<%= theme.comments.commento.sso_public_key %>'
+        }
+    };
+</script>
+<% } %>
+<% } %> 
