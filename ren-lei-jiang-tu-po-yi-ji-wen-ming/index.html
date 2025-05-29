@@ -1,28 +1,494 @@
-.content-card {
-  background-color: var(--bg-content-color);
-  max-width: var(--content-width);
-  margin: 0 auto;
-  transition: background-color 0.6s;
-  padding: var(--space);
-  border-radius: $radius_main;
-  -webkit-box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.02), 1px 1px 15px 0 rgba(0,0,0,0.03);
-  box-shadow: 1px 1px 5px 0 rgba(0,0,0,0.02), 1px 1px 15px 0 rgba(0,0,0,0.03);
-  -webkit-transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.6s;
-  transition: background-color 0.3s, -webkit-transform 0.3s, -webkit-box-shadow 0.6s;
-  -o-transition: transform 0.3s, background-color 0.3s, box-shadow 0.6s;
-  transition: transform 0.3s, background-color 0.3s, box-shadow 0.6s;
-  transition: transform 0.3s, background-color 0.3s, box-shadow 0.6s, -webkit-transform 0.3s, -webkit-box-shadow 0.6s;
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>人类将突破一级文明？ | Need.UNO</title>
+
+
+    <meta name="keywords" content="科技, 人工智能, 未来, 文明进化, 马斯克, 卡尔达肖夫, AGI, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="马斯克昨天发推称人类将跨越卡尔达肖夫一级文明门槛（完全掌控地球能源） 今天红杉资本就在一个放出的初创公司访谈中，描述了实现卡尔达肖夫二级文明的方法论   更重要的是，在此之前，亿万个能力快速进化的ai工程师将建设未来星舰，核聚变反应堆，火星城 过程中顺便淘汰人类工程师，以下是全文：  访谈记录：从数据中心到戴森球——P-1 AI硬件工程AGI的探索之路 采访者：最近几年我一直在思考一个问题：为什么">
+<meta property="og:type" content="website">
+<meta property="og:title" content="人类将突破一级文明？">
+<meta property="og:url" content="https://need.uno/ren-lei-jiang-tu-po-yi-ji-wen-ming/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="马斯克昨天发推称人类将跨越卡尔达肖夫一级文明门槛（完全掌控地球能源） 今天红杉资本就在一个放出的初创公司访谈中，描述了实现卡尔达肖夫二级文明的方法论   更重要的是，在此之前，亿万个能力快速进化的ai工程师将建设未来星舰，核聚变反应堆，火星城 过程中顺便淘汰人类工程师，以下是全文：  访谈记录：从数据中心到戴森球——P-1 AI硬件工程AGI的探索之路 采访者：最近几年我一直在思考一个问题：为什么">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-05-28T03:20:37.000Z">
+<meta property="article:modified_time" content="2025-05-28T03:22:34.914Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="科技">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="未来">
+<meta property="article:tag" content="文明进化">
+<meta property="article:tag" content="马斯克">
+<meta property="article:tag" content="卡尔达肖夫">
+<meta property="article:tag" content="AGI">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        人类将突破一级文明？
+    </h1>
+    <div class="post-title__meta">
+        <a href="/archives/2025/05/" class="post-meta__date button">2025-05-28</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+    <div class="post__content">
+        <p>马斯克昨天发推称人类将跨越卡尔达肖夫一级文明门槛（完全掌控地球能源）</p>
+<p>今天红杉资本就在一个放出的初创公司访谈中，描述了实现卡尔达肖夫二级文明的方法论  </p>
+<p>更重要的是，在此之前，亿万个能力快速进化的ai工程师将建设未来星舰，核聚变反应堆，火星城</p>
+<p>过程中顺便淘汰人类工程师，以下是全文：</p>
+<hr>
+<p>访谈记录：从数据中心到戴森球——P-1 AI硬件工程AGI的探索之路</p>
+<p>采访者：<br>最近几年我一直在思考一个问题：为什么目前没有团队专注于为物理世界打造AI？毕竟，我们现在看到的软件工程领域有很多突破，但硬件工程似乎还没迎来大的变革。对此，您怎么看？</p>
+<p>Paul Arnango（P1 AI CEO）：<br>这是个非常好的问题。说到底，关键在于训练数据的匮乏。举个例子，如果你想要一个AI工程师帮你设计或改进一架飞机，比如说，“如果我把A320机翼面积增加10%，会发生什么？”你就必须有成百万甚至千万级的飞机设计数据来训练模型，这样模型才有能力去回答这个问题。<br>我个人的背景是在DARPA做主管，35岁时成为空客最年轻的CTO。如今，我希望通过P1 AI，将我童年时的科幻梦想变为现实。我们的目标是打造一款适用于物理世界的工程级AGI。</p>
+<p>采访者：<br>目前软件工程领域正在经历快速发展的“垂直起飞”，像AI辅助的24&#x2F;7初级软件工程师即将成为现实。那么物理工程领域有什么样的进展呢？<br>Paul Arnango：<br>坦率地说，目前还没有太多。P1 AI成立的初衷之一，正是因为我们热爱硬科幻，但直到2025年，这个领域的AI应用依然没有大突破。我们分析了背后的原因，并找到了可能的解决方案，希望能尽快将这些技术推向市场。</p>
+<p>我非常感谢Jeff成为我们的天使投资人。编码AI的出现其实已经期待了很久，我们相信这不会再需要十年或十五年时间。我们预计今年可以搭建起技术基础，并在明年找到产品与市场的匹配点。</p>
+<p>采访者：<br>您刚才提到的“技术基础”具体包括哪些方面？哪些关键环节是必须要有的？<br>Paul Arnango：<br>回顾航空历史，自莱特兄弟以来，即使你能拥有所有飞机设计数据——其实不可能——且所有数据都是语义上统一和连贯的——实际上也不是——你也不过拥有大约一千个设计样本，这远远不够训练大型模型。</p>
+<p>因此，我们的最基础技术就是在主流设计周围密集采样训练样本，同时在设计空间的边缘和角落稀疏采样。即使设计空间的某些区域不是理想方向，采样这些点能教给模型为什么这些设计不可行，这对于模型理解非常关键。<br>同时，我们还构建了一个大型语言模型（LLM）作为“指挥官”和推理器，并作为用户接口，协调模型运作。</p>
+<p>采访者：<br>这听起来非常复杂。您能详细讲讲如何让模型具备基于物理的推理能力吗？这类推理能力现在是否已有设计软件实现？这些知识是如何被注入模型的？另外，供应链信息又是如何融入系统的？</p>
+<p>Paul Arnango：<br>我们让系统根据设计需求提出多个解决方案，先进行第一性大小估计，判断答案的大致形态，同时分析涉及的物理现象。这里的物理现象包括多种物理属性——不仅仅是几何形状，还包括电学、热学、振动、电磁干扰等多物理因素，这些都会影响设计。<br>我们的首款产品叫“Archie”。“Archie”是智能代理的代号，我们聚焦认知自动化，并非尝试替代已有设计与仿真工具，而是让Archie能够像人类工程师一样熟练使用这些工具。</p>
+<p>这些基本操作包括设计评估（判断设计性能）和设计合成（根据性能需求生成设计）。另外，我们采用图神经网络来构建基于物理的代理模型，能够高效模拟性能空间；还有几何推理模型，用于空间定位、包装和干涉判断，具备复杂空间推理能力。<br>在多物理推理方面，我们结合传统软件1.0方法和神经网络技术。例如，我们开发了“labbotomized LLM”，它不再擅长英语表达，但擅长用程序化方式表示多物理系统。</p>
+<p>我们的预研demo以住宅冷却系统为例，涵盖流体流动、热力学、电气系统等多物理交互。我们致力于打造适用于物理系统工程AI的评估方法，已经准备发表名为“Archie IQ”的论文，将评估方法应用于人类工程师。</p>
+<p>采访者：<br>在训练数据方面，您是如何规划的？住宅冷却系统是起点吗？未来的发展路线图是什么？</p>
+<p>Paul Arnango：<br>是的，住宅冷却系统是我们的起点。数据中心冷却系统是工程瓶颈所在，现有的交付能力严重受限于工程师的带宽，尤其是半定制解决方案的供给。<br>我们的客户对此热情很高。当前系统大约包含1000个独特部件，且每年产品复杂度至少翻倍。</p>
+<p>第二个垂直领域是工业系统，比如工厂里的物料搬运设备和工业机器人等。然后是移动领域，包括汽车、农业机械、采矿设备，最终进入航空航天和国防装备。<br>我们计划训练Archie达到入门级工程师水平，具备大学学历背景，但不熟悉某家公司的具体产品细节或深度流程，也不了解供应链细节。我们可以整合模型驱动工具、实际系统性能和质量反馈等现实世界数据，让Archie快速提升至中高级工程师水平。</p>
+<p>采访者：<br>您提到的工程任务分层体系是什么样的？</p>
+<p>Paul Arnango：<br>我们设计了一个金字塔型的任务体系：</p>
+<p>底层是信息回忆，比如识别和记忆零部件，这是相对简单的任务；</p>
+<p>中层是语义理解，比如理解某个零件的功能；</p>
+<p>高层是设计评估，包括评估更改零件对性能的影响、工艺限制、替代方案及可能错误等。这些能力通常只由资深工程师和大型工业公司的技术专家掌握。<br>对我们来说，顶层的工程智能是对自身能力和局限的自我认知。</p>
+<p>采访者：<br>对于更复杂的系统，比如零件数量极多的飞机，您认为挑战仅是计算规模，还是需要技术突破？<br>Paul Arnango：<br>我们认为不需要重大技术突破。挑战主要在于算力和训练数据的规模。目前的GPU推理算力还不足以处理百万级零件系统，尤其是训练数据集的构建非常复杂。</p>
+<p>为此，我们开发了大量自动化和AI工具，帮助我们建立组件目录和模型。组件必须智能组装，不能像风暴扫过废料场那样随意拼装，而是要有规则地组合并仿真其性能，确保设计的可行性。</p>
+<p>采访者：<br>作为前空客CTO，您如何看待客户视角和工程师工作流程？</p>
+<p>Paul Arnango：<br>客户的工程师通常负责子系统或组件的设计，从需求中提炼关键设计驱动因素，提出解决方案，进行初步尺寸设计和详细分析。这个流程会在整个工程组织层层递归。</p>
+<p>Archie的目标是成为团队成员，帮助复制和加速这一流程。<br>采访者：<br>推广新软件给大型企业像空客这样的公司是否困难？</p>
+<p>Paul Arnango：<br>非常困难。工业生态系统中已有数百乃至上千种工程工具，它们通过复杂且不总是优雅的方式连接。新工具的引入常常遭遇摩擦。<br>但Archie的引入门槛低，不改变现有流程，相当于新增了一个低成本员工。它可能在某些任务上优于人类，在某些方面不及，但目标是作为有效的团队成员存在。</p>
+<p>采访者：<br>为什么叫“Archie”？未来的应用场景是什么？<br>Paul Arnango：<br>“Archie”名字最初用于半定制产品定制领域，尤其是数据中心冷却设备的“特殊品”定制，满足具体客户的建筑规范和功能需求。<br>展望2030、2040年，全球将可能拥有数百万甚至数千万个Archie以及其他智能代理，实现物理世界的工程AGI。</p>
+<p>采访者：<br>Archie是否能够促进团队间的协调？</p>
+<p>Paul Arnango：<br>是的，我们设想Archie能在各团队间协调交流，甚至比人类工程师更高效，拥有自己的“行话”，极大提升工程组织效率。<br>采访者：<br>您提到的“戴森球”、“星舰”等未来愿景是什么？</p>
+<p>Paul Arnango：<br>这些是我作为创始人的梦想，也是我们的北极星指引。但我们同时致力于打造务实、盈利的企业。<br>我们的合作伙伴Constantine提出“随机思维”（stochastic mindset）——物理世界充满随机性，人类工程师同样会犯错，不可避免地表现不稳定。</p>
+<p>采访者：<br>您计划如何衡量Archie的表现？</p>
+<p>Paul Arnango：<br>我们计划今年开展试点，量化Archie的错误率。如果错误率和人类工程师相当，意味着我们的系统达标。<br>采访者：<br>未来的工程团队会是什么样子？</p>
+<p>Paul Arnango：<br>未来几年内，我们希望在每个工程团队部署Archie，使其占比达到10%。Archie承担重复且枯燥的工作，并带来团队间的协同增效。<br>采访者：<br>关于类人机器人，您怎么看？</p>
+<p>Paul Arnango：<br>我们认为构建能够融入现有团队的智能代理很重要，类人机器人能更顺利地融入现实环境，尽管它们可能不是最优解。</p>
+<p>我们对神经网络为何有效尚无完全理解，但我们用类神经元的方式构建系统，堆积大量神经元后出现了令人惊叹的涌现性质。<br>我们先从语言模型开始，爬取互联网海量数据，之后扩展到视频和图像，暂时未涉及触觉、味觉和听觉。触觉对空间感知尤为关键。</p>
+<p>采访者：<br>最后，您个人最喜欢用的AI应用是什么？<br>Paul Arnango：<br>答案可能比较平凡，是ChatGPT和Cursor。但更令人兴奋的是，我们刚刚发布了一个短片，所有声音、视频和音乐完全由AI生成，利用了多种模型和生态系统拼接技术，效果非常震撼。</p>
+<p>感谢您的邀请，很高兴分享我们的愿景。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/ren-lei-jiang-tu-po-yi-ji-wen-ming/">https://need.uno/ren-lei-jiang-tu-po-yi-ji-wen-ming/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2025-05-28</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E7%A7%91%E6%8A%80/" class="post-tags__link button"># 科技</a><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-tags__link button"># 人工智能</a><a href="/tags/%E6%9C%AA%E6%9D%A5/" class="post-tags__link button"># 未来</a><a href="/tags/%E6%96%87%E6%98%8E%E8%BF%9B%E5%8C%96/" class="post-tags__link button"># 文明进化</a><a href="/tags/%E9%A9%AC%E6%96%AF%E5%85%8B/" class="post-tags__link button"># 马斯克</a><a href="/tags/%E5%8D%A1%E5%B0%94%E8%BE%BE%E8%82%96%E5%A4%AB/" class="post-tags__link button"># 卡尔达肖夫</a><a href="/tags/AGI/" class="post-tags__link button"># AGI</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fren-lei-jiang-tu-po-yi-ji-wen-ming%2F&amp;title=%E4%BA%BA%E7%B1%BB%E5%B0%86%E7%AA%81%E7%A0%B4%E4%B8%80%E7%BA%A7%E6%96%87%E6%98%8E%EF%BC%9F&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fren-lei-jiang-tu-po-yi-ji-wen-ming%2F&amp;title=%E4%BA%BA%E7%B1%BB%E5%B0%86%E7%AA%81%E7%A0%B4%E4%B8%80%E7%BA%A7%E6%96%87%E6%98%8E%EF%BC%9F&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fren-lei-jiang-tu-po-yi-ji-wen-ming%2F&amp;title=%E4%BA%BA%E7%B1%BB%E5%B0%86%E7%AA%81%E7%A0%B4%E4%B8%80%E7%BA%A7%E6%96%87%E6%98%8E%EF%BC%9F&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
 }
-.content-card>:first-child {
-  margin-top: 0;
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
 }
-.content-card>:last-child {
-  margin-bottom: 0;
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
 }
-.MathJax {
-  overflow-x: auto;
-  overflow-y: hidden;
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
 }
-.separate-dot:after {
-  content: ' · ';
+
+.share-button i {
+    font-size: 1.2rem;
 }
+</style>
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/shi-yong-commento-wei-hexo-bo-ke-tian-jia-zi-tuo-guan-ping-lun-xi-tong-wan-zheng-jiao-cheng/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程）
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/hello-world/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            Hello World
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="ren-lei-jiang-tu-po-yi-ji-wen-ming/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2025 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+         
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    
+        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px;border-radius:8px;text-align:center;"><img src="${qrcodeImg.src}" style="margin-bottom:10px;"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); }); }); }); </script> 
+    
+
+    </body>
+</html>

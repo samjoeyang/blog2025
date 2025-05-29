@@ -326,6 +326,55 @@
     <priority>0.2</priority>
   </url>
   
+  <url>
+    <loc>https://need.uno/tags/%E6%B3%95%E5%BE%8B/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://need.uno/tags/%E8%AF%89%E8%AE%BC/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://need.uno/tags/%E6%B6%89%E5%A4%96%E6%A1%88%E4%BB%B6/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://need.uno/tags/%E6%B0%91%E5%95%86%E4%BA%8B%E6%A1%88%E4%BB%B6/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://need.uno/tags/%E7%9F%A5%E8%AF%86%E4%BA%A7%E6%9D%83/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://need.uno/tags/%E6%B5%B7%E7%89%99%E8%AE%A4%E8%AF%81/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
+  <url>
+    <loc>https://need.uno/tags/%E5%8F%B8%E6%B3%95%E5%AE%9E%E5%8A%A1/</loc>
+    <lastmod>2025-05-29</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.2</priority>
+  </url>
+  
 
   
 </urlset>
