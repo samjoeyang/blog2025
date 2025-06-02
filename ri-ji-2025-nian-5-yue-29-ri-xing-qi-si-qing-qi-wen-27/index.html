@@ -131,6 +131,7 @@
     <h1 class="post-title__text">
         日记:2025年5月29日 星期四 晴 气温:27
     </h1>
+    
     <div class="post-title__meta">
         <a href="/archives/2025/05/" class="post-meta__date button">2025-05-29</a>
         
@@ -150,6 +151,22 @@
 
 <article class="post content-card">
     <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
     <div class="post__content">
         <p>最近发生了一件小事，挥之不去。</p>
 <p>一场平常的项目例会，气氛比往常凝重些。客户发言的语气比平时更紧了一点，说起系统上线后一项功能异常，给他们造成了不少困扰。说话时，声音没有抬高，但句子尾音透出一种耐人寻味的不快。坐在对面的几位，神情略显局促，手指在笔记本边缘轻轻摩擦，像是想起了什么，又不便说。</p>
@@ -311,6 +328,8 @@
     font-size: 1.2rem;
 }
 </style>
+
+
 
 </article>
 

@@ -129,6 +129,7 @@
     <h1 class="post-title__text">
         AI幻觉的本质、影响与创造性价值探讨
     </h1>
+    
     <div class="post-title__meta">
         <a href="/archives/2025/06/" class="post-meta__date button">2025-06-01</a>
         
@@ -148,6 +149,22 @@
 
 <article class="post content-card">
     <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
     <div class="post__content">
         <h2 id="一、什么是-AI-幻觉？"><a href="#一、什么是-AI-幻觉？" class="headerlink" title="一、什么是 AI 幻觉？"></a>一、什么是 AI 幻觉？</h2><p>所谓“AI 幻觉”（AI Hallucination），是指大型语言模型在缺乏真实依据的情况下，输出<strong>看似合理、实则虚构或错误的内容</strong>现象。这种幻觉不是偶发 bug，而是生成式语言模型工作机制的自然副产品。</p>
 <p>语言模型并非基于理解生成语言，而是通过庞大的文本数据学习“下一个词的概率分布”。在缺乏明确信号、上下文或训练样本不足的情况下，模型可能“编造”内容来填补知识空白，这种编造常常带有逻辑连贯性，反而增强了幻觉的“迷惑性”。</p>
@@ -427,6 +444,8 @@
     font-size: 1.2rem;
 }
 </style>
+
+
 
 </article>
 

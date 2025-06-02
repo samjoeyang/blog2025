@@ -131,6 +131,7 @@
     <h1 class="post-title__text">
         人类将突破一级文明？
     </h1>
+    
     <div class="post-title__meta">
         <a href="/archives/2025/05/" class="post-meta__date button">2025-05-28</a>
         
@@ -150,6 +151,22 @@
 
 <article class="post content-card">
     <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
     <div class="post__content">
         <p>马斯克昨天发推称人类将跨越卡尔达肖夫一级文明门槛（完全掌控地球能源）</p>
 <p>今天红杉资本就在一个放出的初创公司访谈中，描述了实现卡尔达肖夫二级文明的方法论  </p>
@@ -328,6 +345,8 @@
     font-size: 1.2rem;
 }
 </style>
+
+
 
 </article>
 
