@@ -1,13 +1,13 @@
 ---
 title: HalluPilot-G：驯服幻觉，释放想象力
 date: 2025-06-01 22:14:28
-tags:
+tags: [AI, AI幻觉, 幻觉研究, 人机协作, 生成式模型, 创新工具, 语言模型]
 ---
 
 # HalluPilot-G：驯服幻觉，释放想象力
 
 > ✨ 一个由幻觉驱动的 AI 协作平台  
-> 🤝 Powered by Generative Models · Co-created by Humans  
+> 🤝 Powered by Generative Models · Co-created by SamjoeYang  
 > 🧠 Naming: Hallucination + Pilot + G (Group / Gemini / Generation)
 
 ---

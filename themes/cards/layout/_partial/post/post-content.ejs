@@ -4,6 +4,7 @@
     <h1 class="post-title__text">
         <%= page.title || theme.meta.title %>
     </h1>
+    
     <div class="post-title__meta">
         <%- partial('_meta/date') %>
         <%- partial('_meta/categories') %> 
@@ -30,6 +31,22 @@
 
 <article class="post<% if (theme.meta.toc.enable && page.toc !== false) { %> post__with-toc<% } %> content-card">
     <div class="post__header"><%- partial('_meta/thumbnail') %><%- partial('_meta/expire') %></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
     <div class="post__content">
         <%- page.content %>
     </div>
@@ -37,6 +54,8 @@
     <%- partial('_meta/updated') %> 
     <%- partial('_meta/tags') %> 
     <%- partial('_partial/post/share-buttons') %>
+
+
 </article>
 
 <% if (post.prev || post.next) { %>
