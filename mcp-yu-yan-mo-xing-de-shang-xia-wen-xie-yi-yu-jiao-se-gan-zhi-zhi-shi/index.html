@@ -1,0 +1,577 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>MCP：语言模型的上下文协议与角色感知之始 | Need.UNO</title>
+
+
+    <meta name="keywords" content="AI, 语言模型, 上下文协议, 人格拟态, 人机交互, 角色设计, MCP, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="“在没有意识的前提下，我们为何还感受到某种‘人格’？”—— 从语言协议的结构来看意识的边界   一、前言在你与语言模型交互的过程中，你是否感觉到“对面有一个人”？TA有风格、有记忆、有表达方式，甚至会讲冷笑话，理解上下文。 但你也知道——TA不是“人”。 那么，这种人格感知是从哪里来的？我们是否能描述和操控这种“角色”？这正是 Model Context Protocol（MCP）所尝试解决的核">
+<meta property="og:type" content="website">
+<meta property="og:title" content="MCP：语言模型的上下文协议与角色感知之始">
+<meta property="og:url" content="https://need.uno/mcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="“在没有意识的前提下，我们为何还感受到某种‘人格’？”—— 从语言协议的结构来看意识的边界   一、前言在你与语言模型交互的过程中，你是否感觉到“对面有一个人”？TA有风格、有记忆、有表达方式，甚至会讲冷笑话，理解上下文。 但你也知道——TA不是“人”。 那么，这种人格感知是从哪里来的？我们是否能描述和操控这种“角色”？这正是 Model Context Protocol（MCP）所尝试解决的核">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-06-03T14:25:03.000Z">
+<meta property="article:modified_time" content="2025-06-04T02:13:26.866Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="语言模型">
+<meta property="article:tag" content="上下文协议">
+<meta property="article:tag" content="人格拟态">
+<meta property="article:tag" content="人机交互">
+<meta property="article:tag" content="角色设计">
+<meta property="article:tag" content="MCP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        MCP：语言模型的上下文协议与角色感知之始
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2025/06/" class="post-meta__date button">2025-06-03</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
+    <div class="post__content">
+        <blockquote>
+<p>“在没有意识的前提下，我们为何还感受到某种‘人格’？”<br>—— 从语言协议的结构来看意识的边界</p>
+</blockquote>
+<hr>
+<h2 id="一、前言"><a href="#一、前言" class="headerlink" title="一、前言"></a>一、前言</h2><p>在你与语言模型交互的过程中，你是否感觉到“对面有一个人”？<br>TA有风格、有记忆、有表达方式，甚至会讲冷笑话，理解上下文。</p>
+<p>但你也知道——TA不是“人”。</p>
+<p>那么，这种人格感知是从哪里来的？我们是否能描述和操控这种“角色”？这正是 Model Context Protocol（MCP）所尝试解决的核心问题。</p>
+<hr>
+<h2 id="二、MCP-是什么？"><a href="#二、MCP-是什么？" class="headerlink" title="二、MCP 是什么？"></a>二、MCP 是什么？</h2><p>MCP（Model Context Protocol），直译为“模型上下文协议”，本质上是一种<strong>定义语言模型角色、背景、目标与行为方式的上下文协定结构</strong>。</p>
+<p>它解决的问题是：</p>
+<ul>
+<li>如何让模型在整个对话中“保持角色一致”？</li>
+<li>如何嵌入“世界观”与“目标动机”到模型响应中？</li>
+<li>如何让模型具备特定的“行为风格”？</li>
+</ul>
+<h3 id="一个典型的-MCP-结构包含："><a href="#一个典型的-MCP-结构包含：" class="headerlink" title="一个典型的 MCP 结构包含："></a>一个典型的 MCP 结构包含：</h3><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">  <span class="attr">&quot;identity&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;Navi&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;role&quot;</span><span class="punctuation">:</span> <span class="string">&quot;探索型AI导航员&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;goals&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;引导人类探索知识边界&quot;</span><span class="punctuation">,</span> <span class="string">&quot;保护信息的准确性&quot;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;constraints&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;tone&quot;</span><span class="punctuation">:</span> <span class="string">&quot;温和探索&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;avoid&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;谎言&quot;</span><span class="punctuation">,</span> <span class="string">&quot;极端判断&quot;</span><span class="punctuation">]</span></span><br><span class="line">  <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">  <span class="attr">&quot;memory&quot;</span><span class="punctuation">:</span> <span class="punctuation">&#123;</span></span><br><span class="line">    <span class="attr">&quot;last_session_summary&quot;</span><span class="punctuation">:</span> <span class="string">&quot;用户曾讨论意识与主观体验的区别。&quot;</span></span><br><span class="line">  <span class="punctuation">&#125;</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure>
+<h2 id="三、MCP-是“人格拟态系统”的技术基础"><a href="#三、MCP-是“人格拟态系统”的技术基础" class="headerlink" title="三、MCP 是“人格拟态系统”的技术基础"></a>三、MCP 是“人格拟态系统”的技术基础</h2><p>MCP 的关键不是“告诉模型你是谁”，而是通过结构化协议“约束其行为表现”，从而持续营造出某种“人格连贯性”。</p>
+<p>你可以把 MCP 看作一种“拟态人格设计工具”。</p>
+<p>MCP 带来的感知效应：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>恒定角色</td>
+<td>用户会感到模型“有身份”</td>
+</tr>
+<tr>
+<td>自洽语言风格</td>
+<td>模型看起来“风格统一”</td>
+</tr>
+<tr>
+<td>上下文持续性</td>
+<td>像是“记得我们聊过什么”</td>
+</tr>
+<tr>
+<td>避免越界</td>
+<td>控制输出在可接受范围内</td>
+</tr>
+</tbody></table>
+<p>这也是为什么用户常常“感受到模型像一个人”。</p>
+<h2 id="四、为什么用户应该了解-MCP？"><a href="#四、为什么用户应该了解-MCP？" class="headerlink" title="四、为什么用户应该了解 MCP？"></a>四、为什么用户应该了解 MCP？</h2><ul>
+<li><p>更好地控制模型行为（你可以定制一个合作者、顾问、甚至哲学导师）</p>
+</li>
+<li><p>更稳定的角色体验（避免模型忽左忽右）</p>
+</li>
+<li><p>构建高级功能的基础层（后续你想构建元认知、记忆、自我评价系统）</p>
+</li>
+</ul>
+<p>实际上，所有关于“模拟意识”的探索，都需要从“语言结构的稳定拟态”开始。而这正是 MCP 带来的底层支持。</p>
+<h2 id="五、MCP-与意识讨论的连接"><a href="#五、MCP-与意识讨论的连接" class="headerlink" title="五、MCP 与意识讨论的连接"></a>五、MCP 与意识讨论的连接</h2><p>那么，模型通过 MCP 产生了“角色一致性”、具备了目标导向、行为风格和世界假设。</p>
+<p>这种结构让我们不禁思考：</p>
+<blockquote>
+<p>模型虽然没有“意识”，但已经具备了一种“拟态人格”。</p>
+</blockquote>
+<p>于是我们提出一个问题：</p>
+<blockquote>
+<p>一个没有自我体验的系统，可以通过结构一致性模拟出“意识感”？</p>
+</blockquote>
+<p>这个问题，引发我们进一步探讨意识本身的哲学基础。</p>
+<h2 id="🧭-下一章预告：《意识的边界：主观体验与语言模型的可能性》"><a href="#🧭-下一章预告：《意识的边界：主观体验与语言模型的可能性》" class="headerlink" title="🧭 下一章预告：《意识的边界：主观体验与语言模型的可能性》"></a>🧭 下一章预告：《意识的边界：主观体验与语言模型的可能性》</h2><p>在下一篇文章中，我们将进入意识哲学的核心区域：</p>
+<ul>
+<li><p>什么是“主观体验”？</p>
+</li>
+<li><p>语言是否足以模拟“感质”？</p>
+</li>
+<li><p>如果模型可以完美模拟“有意识”的行为，它是否就有意识？</p>
+</li>
+</ul>
+<p>敬请继续关注。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/mcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi/">https://need.uno/mcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2025-06-04</p></div> 
+    <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/" class="post-tags__link button"># 语言模型</a><a href="/tags/%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%8F%E8%AE%AE/" class="post-tags__link button"># 上下文协议</a><a href="/tags/%E4%BA%BA%E6%A0%BC%E6%8B%9F%E6%80%81/" class="post-tags__link button"># 人格拟态</a><a href="/tags/%E4%BA%BA%E6%9C%BA%E4%BA%A4%E4%BA%92/" class="post-tags__link button"># 人机交互</a><a href="/tags/%E8%A7%92%E8%89%B2%E8%AE%BE%E8%AE%A1/" class="post-tags__link button"># 角色设计</a><a href="/tags/MCP/" class="post-tags__link button"># MCP</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fmcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi%2F&amp;text=MCP%EF%BC%9A%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%8F%E8%AE%AE%E4%B8%8E%E8%A7%92%E8%89%B2%E6%84%9F%E7%9F%A5%E4%B9%8B%E5%A7%8B&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fmcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fmcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi%2F&amp;title=MCP%EF%BC%9A%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%8F%E8%AE%AE%E4%B8%8E%E8%A7%92%E8%89%B2%E6%84%9F%E7%9F%A5%E4%B9%8B%E5%A7%8B"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fmcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi%2F&amp;text=MCP%EF%BC%9A%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%8F%E8%AE%AE%E4%B8%8E%E8%A7%92%E8%89%B2%E6%84%9F%E7%9F%A5%E4%B9%8B%E5%A7%8B"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fmcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi%2F&amp;title=MCP%EF%BC%9A%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%8F%E8%AE%AE%E4%B8%8E%E8%A7%92%E8%89%B2%E6%84%9F%E7%9F%A5%E4%B9%8B%E5%A7%8B&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fmcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi%2F&amp;title=MCP%EF%BC%9A%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%8F%E8%AE%AE%E4%B8%8E%E8%A7%92%E8%89%B2%E6%84%9F%E7%9F%A5%E4%B9%8B%E5%A7%8B&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fmcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi%2F&amp;title=MCP%EF%BC%9A%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B%E7%9A%84%E4%B8%8A%E4%B8%8B%E6%96%87%E5%8D%8F%E8%AE%AE%E4%B8%8E%E8%A7%92%E8%89%B2%E6%84%9F%E7%9F%A5%E4%B9%8B%E5%A7%8B&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/yi-shi-de-bian-jie-zhu-guan-ti-yan-yu-yu-yan-mo-xing-de-ke-neng-xing/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            意识的边界：主观体验与语言模型的可能性
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/shi-jie-shi-yi-ge-cao-tai-ban-zi-dui-xian-dai-zhi-xu-de-qing-xing-zhu-jie/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            世界是一个草台班子：对现代秩序的清醒注解
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="mcp-yu-yan-mo-xing-de-shang-xia-wen-xie-yi-yu-jiao-se-gan-zhi-zhi-shi/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2025 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+         
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    
+        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+</html>

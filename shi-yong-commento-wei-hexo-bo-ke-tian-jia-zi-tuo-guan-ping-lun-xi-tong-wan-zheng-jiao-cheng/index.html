@@ -130,6 +130,7 @@
     <h1 class="post-title__text">
         使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程）
     </h1>
+    
     <div class="post-title__meta">
         <a href="/archives/2025/05/" class="post-meta__date button">2025-05-28</a>
         
@@ -149,6 +150,22 @@
 
 <article class="post content-card">
     <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
     <div class="post__content">
         <h1 id="💬-使用-Commento-为-Hexo-博客添加自托管评论系统（完整教程）"><a href="#💬-使用-Commento-为-Hexo-博客添加自托管评论系统（完整教程）" class="headerlink" title="💬 使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程）"></a>💬 使用 Commento 为 Hexo 博客添加自托管评论系统（完整教程）</h1><blockquote>
 <p>本文将介绍如何使用 Docker Compose 部署 Commento 评论系统，并将其集成到 Hexo 静态博客中，实现可控、轻量、无追踪的评论功能。</p>
@@ -365,14 +382,6 @@
                 <i class="fab fa-twitter"></i>
             </a>
         
-            <a href="https://x.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fshi-yong-commento-wei-hexo-bo-ke-tian-jia-zi-tuo-guan-ping-lun-xi-tong-wan-zheng-jiao-cheng%2F&amp;text=%E4%BD%BF%E7%94%A8%20Commento%20%E4%B8%BA%20Hexo%20%E5%8D%9A%E5%AE%A2%E6%B7%BB%E5%8A%A0%E8%87%AA%E6%89%98%E7%AE%A1%E8%AF%84%E8%AE%BA%E7%B3%BB%E7%BB%9F%EF%BC%88%E5%AE%8C%E6%95%B4%E6%95%99%E7%A8%8B%EF%BC%89&amp;via=samjoeyang"
-               class="share-button"
-               data-share="x"
-               target="_blank"
-               rel="noopener noreferrer">
-                <i class="fab fa-x-twitter"></i>
-            </a>
-        
             <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fshi-yong-commento-wei-hexo-bo-ke-tian-jia-zi-tuo-guan-ping-lun-xi-tong-wan-zheng-jiao-cheng%2F"
                class="share-button"
                data-share="facebook"
@@ -474,6 +483,8 @@
     font-size: 1.2rem;
 }
 </style>
+
+
 
 </article>
 

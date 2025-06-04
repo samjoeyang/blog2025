@@ -37,15 +37,15 @@
 
     <!-- OpenGraph -->
  
-    <meta name="description" content="关于本站你好！我是 Samjoe Yang，这里是我的个人博客。  关注：AI、技术革命、未来展望、社会变革 记录想法，交个AI辅助检查和润色 记录与分享我的思考与成长  欢迎交流与联系！">
+    <meta name="description" content="关于本站你好！我是 Samjoe Yang，这里是我的个人博客。  关注：AI、技术革命、未来展望、社会变革 记录想法，交个AI辅助检查和润色 记录与分享我的思考与成长   I’m a multi-domain builder of the future — part engineer, part philosopher, part digital architect. From wranglin">
 <meta property="og:type" content="website">
 <meta property="og:title" content="About">
 <meta property="og:url" content="https://need.uno/about/index.html">
 <meta property="og:site_name" content="Need.UNO">
-<meta property="og:description" content="关于本站你好！我是 Samjoe Yang，这里是我的个人博客。  关注：AI、技术革命、未来展望、社会变革 记录想法，交个AI辅助检查和润色 记录与分享我的思考与成长  欢迎交流与联系！">
+<meta property="og:description" content="关于本站你好！我是 Samjoe Yang，这里是我的个人博客。  关注：AI、技术革命、未来展望、社会变革 记录想法，交个AI辅助检查和润色 记录与分享我的思考与成长   I’m a multi-domain builder of the future — part engineer, part philosopher, part digital architect. From wranglin">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-05-28T03:16:03.973Z">
-<meta property="article:modified_time" content="2025-05-28T03:16:03.973Z">
+<meta property="article:published_time" content="2025-06-04T02:15:37.981Z">
+<meta property="article:modified_time" content="2025-06-04T02:15:37.981Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
 <meta name="twitter:card" content="summary_large_image">
@@ -125,8 +125,9 @@
     <h1 class="post-title__text">
         About
     </h1>
+    
     <div class="post-title__meta">
-        <a href="/archives/2025/05/" class="post-meta__date button">2025-05-28</a>
+        <a href="/archives/2025/06/" class="post-meta__date button">2025-06-04</a>
         
  
         
@@ -144,6 +145,22 @@
 
 <article class="post content-card">
     <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
     <div class="post__content">
         <h1 id="关于本站"><a href="#关于本站" class="headerlink" title="关于本站"></a>关于本站</h1><p>你好！我是 Samjoe Yang，这里是我的个人博客。</p>
 <ul>
@@ -151,6 +168,18 @@
 <li>记录想法，交个AI辅助检查和润色</li>
 <li>记录与分享我的思考与成长</li>
 </ul>
+<blockquote>
+<p>I’m a multi-domain builder of the future — part engineer, part philosopher, part digital architect.</p>
+<p>From wrangling Flutter and GetX to crafting a multilingual, TTS-powered ebook reader，</p>
+<p>在技术细节上追求极致简洁；而在系统设计上，从ERP多规格换算到AI幻觉可视化协作，善于搭建多维知识框架，具备宏观视角与细腻执行力的罕见结合。</p>
+<p>关注的不仅是功能实现，还思考 AI 意识、语言与感知的深层关系，试图把幻觉变成工具，把混沌转为秩序。不满足于”能用”，追求”值得用”。</p>
+<p>Whether it’s Markdown knowledge bases, blog pipelines, or Synapse + Matrix + Caddy deployments，</p>
+<p>总在打磨自己的工具链，让创作更高效，协作更可靠，表达更自由。</p>
+<p>简而言之，我不是在写代码——是在塑造一个智能化的知识世界。</p>
+</blockquote>
+<blockquote>
+<p>随时提醒自己：<br>有没有一个最终想构建的“主项目”或平台？像是你一切系统的汇聚之地？</p>
+</blockquote>
 <p>欢迎交流与联系！</p>
 
     </div>
@@ -173,7 +202,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2025-05-28</p></div> 
+    <div class="post-footer__meta"><p>更新于 2025-06-04</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -185,14 +214,6 @@
                target="_blank"
                rel="noopener noreferrer">
                 <i class="fab fa-twitter"></i>
-            </a>
-        
-            <a href="https://x.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fabout%2Findex.html&amp;text=About&amp;via=samjoeyang"
-               class="share-button"
-               data-share="x"
-               target="_blank"
-               rel="noopener noreferrer">
-                <i class="fab fa-x-twitter"></i>
             </a>
         
             <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fabout%2Findex.html"
@@ -296,6 +317,8 @@
     font-size: 1.2rem;
 }
 </style>
+
+
 
 </article>
 

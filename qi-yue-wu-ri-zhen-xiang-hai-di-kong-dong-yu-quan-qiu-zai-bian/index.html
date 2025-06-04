@@ -130,6 +130,7 @@
     <h1 class="post-title__text">
         七月五日真相：海底孔洞與全球災變
     </h1>
+    
     <div class="post-title__meta">
         <a href="/archives/2025/05/" class="post-meta__date button">2025-05-27</a>
         
@@ -149,6 +150,22 @@
 
 <article class="post content-card">
     <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
     <div class="post__content">
         <audio controls>
   <source src="/assets/七月五日真相：海底孔洞與全球災變.wav" type="audio/wav">
@@ -191,14 +208,6 @@
                target="_blank"
                rel="noopener noreferrer">
                 <i class="fab fa-twitter"></i>
-            </a>
-        
-            <a href="https://x.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fqi-yue-wu-ri-zhen-xiang-hai-di-kong-dong-yu-quan-qiu-zai-bian%2F&amp;text=%E4%B8%83%E6%9C%88%E4%BA%94%E6%97%A5%E7%9C%9F%E7%9B%B8%EF%BC%9A%E6%B5%B7%E5%BA%95%E5%AD%94%E6%B4%9E%E8%88%87%E5%85%A8%E7%90%83%E7%81%BD%E8%AE%8A&amp;via=samjoeyang"
-               class="share-button"
-               data-share="x"
-               target="_blank"
-               rel="noopener noreferrer">
-                <i class="fab fa-x-twitter"></i>
             </a>
         
             <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fqi-yue-wu-ri-zhen-xiang-hai-di-kong-dong-yu-quan-qiu-zai-bian%2F"
@@ -302,6 +311,8 @@
     font-size: 1.2rem;
 }
 </style>
+
+
 
 </article>
 

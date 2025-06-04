@@ -125,6 +125,7 @@
     <h1 class="post-title__text">
         Hello World
     </h1>
+    
     <div class="post-title__meta">
         <a href="/archives/2025/05/" class="post-meta__date button">2025-05-28</a>
         
@@ -144,6 +145,22 @@
 
 <article class="post content-card">
     <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
     <div class="post__content">
         <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
 <h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
@@ -193,14 +210,6 @@
                target="_blank"
                rel="noopener noreferrer">
                 <i class="fab fa-twitter"></i>
-            </a>
-        
-            <a href="https://x.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fhello-world%2F&amp;text=Hello%20World&amp;via=samjoeyang"
-               class="share-button"
-               data-share="x"
-               target="_blank"
-               rel="noopener noreferrer">
-                <i class="fab fa-x-twitter"></i>
             </a>
         
             <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fhello-world%2F"
@@ -304,6 +313,8 @@
     font-size: 1.2rem;
 }
 </style>
+
+
 
 </article>
 
