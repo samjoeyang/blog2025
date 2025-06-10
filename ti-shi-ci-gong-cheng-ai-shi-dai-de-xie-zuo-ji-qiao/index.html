@@ -1,0 +1,605 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>提示词工程：AI时代的写作技巧 | Need.UNO</title>
+
+
+    <meta name="keywords" content="人工智能, 写作技巧, 提示词工程, AI写作, 内容创作, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="在AI写作时代，提示词（Prompt）就像是我们与AI沟通的桥梁。一个好的提示词，能让AI生成的内容更接近我们的期望。让我们一起来探索提示词工程的奥秘。 什么是提示词工程？提示词工程，简单来说，就是设计有效的提示词来引导AI生成我们想要的内容。这就像是在给AI下达指令，告诉它我们想要什么样的文章。 想象一下，如果你在跟一个助手合作写文章，你会怎么描述你的需求？提示词工程就是在做这件事，只是我们的助">
+<meta property="og:type" content="website">
+<meta property="og:title" content="提示词工程：AI时代的写作技巧">
+<meta property="og:url" content="https://need.uno/ti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="在AI写作时代，提示词（Prompt）就像是我们与AI沟通的桥梁。一个好的提示词，能让AI生成的内容更接近我们的期望。让我们一起来探索提示词工程的奥秘。 什么是提示词工程？提示词工程，简单来说，就是设计有效的提示词来引导AI生成我们想要的内容。这就像是在给AI下达指令，告诉它我们想要什么样的文章。 想象一下，如果你在跟一个助手合作写文章，你会怎么描述你的需求？提示词工程就是在做这件事，只是我们的助">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-06-10T05:30:18.000Z">
+<meta property="article:modified_time" content="2025-06-10T04:23:30.387Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="人工智能">
+<meta property="article:tag" content="写作技巧">
+<meta property="article:tag" content="提示词工程">
+<meta property="article:tag" content="AI写作">
+<meta property="article:tag" content="内容创作">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        提示词工程：AI时代的写作技巧
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2025/06/" class="post-meta__date button">2025-06-10</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
+    <div class="post__content">
+        <p>在AI写作时代，提示词（Prompt）就像是我们与AI沟通的桥梁。一个好的提示词，能让AI生成的内容更接近我们的期望。让我们一起来探索提示词工程的奥秘。</p>
+<h2 id="什么是提示词工程？"><a href="#什么是提示词工程？" class="headerlink" title="什么是提示词工程？"></a>什么是提示词工程？</h2><p>提示词工程，简单来说，就是设计有效的提示词来引导AI生成我们想要的内容。这就像是在给AI下达指令，告诉它我们想要什么样的文章。</p>
+<p>想象一下，如果你在跟一个助手合作写文章，你会怎么描述你的需求？提示词工程就是在做这件事，只是我们的助手是AI。</p>
+<h2 id="提示词设计的基本原则"><a href="#提示词设计的基本原则" class="headerlink" title="提示词设计的基本原则"></a>提示词设计的基本原则</h2><h3 id="1-明确目标"><a href="#1-明确目标" class="headerlink" title="1. 明确目标"></a>1. 明确目标</h3><p>首先，我们要明确我们想要什么：</p>
+<ul>
+<li>文章的类型（技术文档、故事、评论等）</li>
+<li>目标读者（专业人士、普通读者等）</li>
+<li>写作风格（正式、轻松、幽默等）</li>
+<li>内容重点（要传达的核心信息）</li>
+</ul>
+<h3 id="2-结构设计"><a href="#2-结构设计" class="headerlink" title="2. 结构设计"></a>2. 结构设计</h3><p>一个好的提示词应该包含清晰的结构：</p>
+<ul>
+<li>开篇引导</li>
+<li>主要内容要求</li>
+<li>风格指导</li>
+<li>格式规范</li>
+</ul>
+<h3 id="3-语言表达"><a href="#3-语言表达" class="headerlink" title="3. 语言表达"></a>3. 语言表达</h3><p>提示词的语言要：</p>
+<ul>
+<li>清晰明确</li>
+<li>具体详细</li>
+<li>逻辑连贯</li>
+<li>易于理解</li>
+</ul>
+<h2 id="实用的提示词模板"><a href="#实用的提示词模板" class="headerlink" title="实用的提示词模板"></a>实用的提示词模板</h2><h3 id="1-故事创作模板"><a href="#1-故事创作模板" class="headerlink" title="1. 故事创作模板"></a>1. 故事创作模板</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请创作一个[类型]故事，要求：</span><br><span class="line">- 主角是[角色特征]</span><br><span class="line">- 故事发生在[背景设定]</span><br><span class="line">- 主要冲突是[冲突描述]</span><br><span class="line">- 结局要[结局要求]</span><br><span class="line">- 风格要[风格描述]</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-技术文档模板"><a href="#2-技术文档模板" class="headerlink" title="2. 技术文档模板"></a>2. 技术文档模板</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请编写一篇关于[技术主题]的技术文档，要求：</span><br><span class="line">- 面向[目标读者]</span><br><span class="line">- 包含[具体内容]</span><br><span class="line">- 使用[技术术语]</span><br><span class="line">- 提供[示例代码]</span><br><span class="line">- 格式要[格式要求]</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-评论文章模板"><a href="#3-评论文章模板" class="headerlink" title="3. 评论文章模板"></a>3. 评论文章模板</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">请写一篇关于[主题]的评论文章，要求：</span><br><span class="line">- 观点要[观点要求]</span><br><span class="line">- 论证要[论证要求]</span><br><span class="line">- 例子要[例子要求]</span><br><span class="line">- 结论要[结论要求]</span><br><span class="line">- 风格要[风格要求]</span><br></pre></td></tr></table></figure>
+
+<h2 id="提示词优化技巧"><a href="#提示词优化技巧" class="headerlink" title="提示词优化技巧"></a>提示词优化技巧</h2><h3 id="1-迭代优化"><a href="#1-迭代优化" class="headerlink" title="1. 迭代优化"></a>1. 迭代优化</h3><ul>
+<li>从简单开始</li>
+<li>逐步添加细节</li>
+<li>根据结果调整</li>
+<li>不断优化完善</li>
+</ul>
+<h3 id="2-参数调整"><a href="#2-参数调整" class="headerlink" title="2. 参数调整"></a>2. 参数调整</h3><ul>
+<li>调整长度要求</li>
+<li>修改风格指导</li>
+<li>改变结构设计</li>
+<li>优化语言表达</li>
+</ul>
+<h3 id="3-反馈利用"><a href="#3-反馈利用" class="headerlink" title="3. 反馈利用"></a>3. 反馈利用</h3><ul>
+<li>分析生成结果</li>
+<li>找出问题所在</li>
+<li>调整提示词</li>
+<li>再次尝试</li>
+</ul>
+<h2 id="常见问题与解决方案"><a href="#常见问题与解决方案" class="headerlink" title="常见问题与解决方案"></a>常见问题与解决方案</h2><h3 id="1-内容过于机械"><a href="#1-内容过于机械" class="headerlink" title="1. 内容过于机械"></a>1. 内容过于机械</h3><p>解决方案：</p>
+<ul>
+<li>添加情感要求</li>
+<li>要求加入个人经历</li>
+<li>指定具体的表达方式</li>
+<li>要求使用生动的比喻</li>
+</ul>
+<h3 id="2-结构过于规整"><a href="#2-结构过于规整" class="headerlink" title="2. 结构过于规整"></a>2. 结构过于规整</h3><p>解决方案：</p>
+<ul>
+<li>要求段落长度变化</li>
+<li>添加过渡要求</li>
+<li>指定不同的句式</li>
+<li>要求加入即兴发挥</li>
+</ul>
+<h3 id="3-缺乏个人特色"><a href="#3-缺乏个人特色" class="headerlink" title="3. 缺乏个人特色"></a>3. 缺乏个人特色</h3><p>解决方案：</p>
+<ul>
+<li>指定写作风格</li>
+<li>要求加入个人观点</li>
+<li>指定具体的表达方式</li>
+<li>要求使用独特的比喻</li>
+</ul>
+<h2 id="高级技巧"><a href="#高级技巧" class="headerlink" title="高级技巧"></a>高级技巧</h2><h3 id="1-角色扮演"><a href="#1-角色扮演" class="headerlink" title="1. 角色扮演"></a>1. 角色扮演</h3><p>让AI扮演特定角色：</p>
+<ul>
+<li>专业作家</li>
+<li>行业专家</li>
+<li>普通读者</li>
+<li>特定人物</li>
+</ul>
+<h3 id="2-场景设定"><a href="#2-场景设定" class="headerlink" title="2. 场景设定"></a>2. 场景设定</h3><p>设定具体的写作场景：</p>
+<ul>
+<li>写作目的</li>
+<li>目标读者</li>
+<li>写作环境</li>
+<li>时间背景</li>
+</ul>
+<h3 id="3-风格指导"><a href="#3-风格指导" class="headerlink" title="3. 风格指导"></a>3. 风格指导</h3><p>指定具体的写作风格：</p>
+<ul>
+<li>语言特点</li>
+<li>表达方式</li>
+<li>情感基调</li>
+<li>个人特色</li>
+</ul>
+<h2 id="实践建议"><a href="#实践建议" class="headerlink" title="实践建议"></a>实践建议</h2><h3 id="1-从简单开始"><a href="#1-从简单开始" class="headerlink" title="1. 从简单开始"></a>1. 从简单开始</h3><ul>
+<li>先写简单的提示词</li>
+<li>逐步添加细节</li>
+<li>观察生成结果</li>
+<li>不断优化调整</li>
+</ul>
+<h3 id="2-保持记录"><a href="#2-保持记录" class="headerlink" title="2. 保持记录"></a>2. 保持记录</h3><ul>
+<li>记录成功的提示词</li>
+<li>分析失败的原因</li>
+<li>总结优化经验</li>
+<li>建立提示词库</li>
+</ul>
+<h3 id="3-持续学习"><a href="#3-持续学习" class="headerlink" title="3. 持续学习"></a>3. 持续学习</h3><ul>
+<li>学习新的技巧</li>
+<li>尝试不同的方法</li>
+<li>分享使用经验</li>
+<li>不断改进提升</li>
+</ul>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>提示词工程是一门艺术，需要不断实践和探索。通过合理的设计和优化，我们可以让AI生成的内容更接近我们的期望。记住，好的提示词是成功的一半。</p>
+<h2 id="延伸阅读"><a href="#延伸阅读" class="headerlink" title="延伸阅读"></a>延伸阅读</h2><ul>
+<li><a href="/ai-xie-zuo-de-wei-lai-ren-ji-xie-zuo-de-xin-fan-shi/">AI写作的未来：人机协作的新范式</a></li>
+<li><a href="/ru-he-shi-bie-ai-sheng-cheng-de-nei-rong/">如何识别AI生成的内容</a></li>
+<li><a href="/ai-xie-zuo-ti-shi-ci-ru-he-rang-sheng-cheng-de-nei-rong-geng-jie-jin-zhen-shi/">AI写作提示词：如何让生成的内容更接近真实</a></li>
+</ul>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/ti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao/">https://need.uno/ti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2025-06-10</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-tags__link button"># 人工智能</a><a href="/tags/%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7/" class="post-tags__link button"># 写作技巧</a><a href="/tags/%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B/" class="post-tags__link button"># 提示词工程</a><a href="/tags/AI%E5%86%99%E4%BD%9C/" class="post-tags__link button"># AI写作</a><a href="/tags/%E5%86%85%E5%AE%B9%E5%88%9B%E4%BD%9C/" class="post-tags__link button"># 内容创作</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao%2F&amp;text=%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%EF%BC%9AAI%E6%97%B6%E4%BB%A3%E7%9A%84%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao%2F&amp;title=%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%EF%BC%9AAI%E6%97%B6%E4%BB%A3%E7%9A%84%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao%2F&amp;text=%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%EF%BC%9AAI%E6%97%B6%E4%BB%A3%E7%9A%84%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao%2F&amp;title=%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%EF%BC%9AAI%E6%97%B6%E4%BB%A3%E7%9A%84%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao%2F&amp;title=%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%EF%BC%9AAI%E6%97%B6%E4%BB%A3%E7%9A%84%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao%2F&amp;title=%E6%8F%90%E7%A4%BA%E8%AF%8D%E5%B7%A5%E7%A8%8B%EF%BC%9AAI%E6%97%B6%E4%BB%A3%E7%9A%84%E5%86%99%E4%BD%9C%E6%8A%80%E5%B7%A7&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/ru-he-shi-bie-ai-sheng-cheng-de-nei-rong/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            如何识别AI生成的内容
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="ti-shi-ci-gong-cheng-ai-shi-dai-de-xie-zuo-ji-qiao/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2025 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+         
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    
+        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>
