@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>多容器磁力解析系统部署示例（Docker Compose） | Need.UNO</title>
+
+
+    <meta name="keywords" content="Docker, 项目需求, Docker Compose, 磁力链接, qBittorrent, Redis, PostgreSQL, 爬虫, Scrapy, 系统部署, 容器化, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="好的，我已经为您整理了关于磁力链接自动抓取机器人程序的整个技术方案，并准备了相应的 docker-compose.yml 内容。 由于我是一个文本AI，无法直接为您生成并提供文件下载链接。但是，您可以将下面提供的内容复制粘贴到一个文本编辑器中（如VS Code, Sublime Text, Notepad++等），然后将文件保存为 README.md 或其他您喜欢的 Markdown 文件名。">
+<meta property="og:type" content="website">
+<meta property="og:title" content="多容器磁力解析系统部署示例（Docker Compose）">
+<meta property="og:url" content="https://need.uno/duo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="好的，我已经为您整理了关于磁力链接自动抓取机器人程序的整个技术方案，并准备了相应的 docker-compose.yml 内容。 由于我是一个文本AI，无法直接为您生成并提供文件下载链接。但是，您可以将下面提供的内容复制粘贴到一个文本编辑器中（如VS Code, Sublime Text, Notepad++等），然后将文件保存为 README.md 或其他您喜欢的 Markdown 文件名。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-06-18T06:08:16.000Z">
+<meta property="article:modified_time" content="2025-06-23T05:35:26.304Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="Docker">
+<meta property="article:tag" content="项目需求">
+<meta property="article:tag" content="Docker Compose">
+<meta property="article:tag" content="磁力链接">
+<meta property="article:tag" content="qBittorrent">
+<meta property="article:tag" content="Redis">
+<meta property="article:tag" content="PostgreSQL">
+<meta property="article:tag" content="爬虫">
+<meta property="article:tag" content="Scrapy">
+<meta property="article:tag" content="系统部署">
+<meta property="article:tag" content="容器化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        多容器磁力解析系统部署示例（Docker Compose）
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2025/06/" class="post-meta__date button">2025-06-18</a>
+        
+ 
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+
+<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
+
+<script>
+    function speakArticle() {
+        //   const text = document.getElementById('post__content').innerText;
+        const text = document.getElementsByClassName('post__content')[0].innerText
+        const msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        window.speechSynthesis.speak(msg);
+    }
+</script>
+
+
+    <div class="post__content">
+        <hr>
+<p>好的，我已经为您整理了关于磁力链接自动抓取机器人程序的整个技术方案，并准备了相应的 <code>docker-compose.yml</code> 内容。</p>
+<p>由于我是一个文本AI，无法直接为您生成并提供文件下载链接。但是，您可以将下面提供的内容<strong>复制粘贴</strong>到一个文本编辑器中（如VS Code, Sublime Text, Notepad++等），然后将文件保存为 <code>README.md</code> 或其他您喜欢的 Markdown 文件名。</p>
+<hr>
+<h1 id="磁力链接自动抓取机器人程序-Docker-化部署方案"><a href="#磁力链接自动抓取机器人程序-Docker-化部署方案" class="headerlink" title="磁力链接自动抓取机器人程序 - Docker 化部署方案"></a>磁力链接自动抓取机器人程序 - Docker 化部署方案</h1><p>本项目旨在构建一个多容器的磁力链接自动抓取与管理系统。通过将不同功能解耦为独立的 Docker 容器，实现环境隔离、部署一致性、可伸缩性及更好的资源管理。</p>
+<hr>
+<h2 id="1-核心架构概述"><a href="#1-核心架构概述" class="headerlink" title="1. 核心架构概述"></a>1. 核心架构概述</h2><p>本系统采用微服务架构，核心组件包括：</p>
+<ul>
+<li><strong>Redis</strong>: 作为消息队列，解耦爬虫与解析器。</li>
+<li><strong>PostgreSQL</strong>: 关系型数据库，用于持久化存储所有抓取和解析后的磁力链接数据。</li>
+<li><strong>qBittorrent</strong>: 核心服务，利用其强大的 P2P 网络（DHT&#x2F;Tracker）连接能力，通过 Web UI API 获取磁力链接的元数据（文件名、大小等）。</li>
+<li><strong>Scrapy 抓取器</strong>: 网络爬虫，负责从指定网站抓取原始磁力链接。</li>
+<li><strong>Magnet 解析器</strong>: 处理抓取到的磁力链接，调用 qBittorrent API 获取元数据，并进行数据清洗和存储。</li>
+<li><strong>Web UI</strong>: 提供一个用户友好的网页界面，展示已处理的磁力链接信息。</li>
+</ul>
+<hr>
+<h2 id="2-各容器职责与技术栈"><a href="#2-各容器职责与技术栈" class="headerlink" title="2. 各容器职责与技术栈"></a>2. 各容器职责与技术栈</h2><h3 id="2-1-Redis-容器-Message-Queue"><a href="#2-1-Redis-容器-Message-Queue" class="headerlink" title="2.1 Redis 容器 (Message Queue)"></a>2.1 Redis 容器 (Message Queue)</h3><ul>
+<li><strong>职责</strong>: 提供高性能的消息队列服务，用于 Scrapy 抓取器和 Magnet 解析器之间的异步通信。Scrapy 将抓取到的原始磁力链接放入队列，解析器从队列中消费。</li>
+<li><strong>镜像</strong>: <code>redis:7-alpine</code> (轻量级 Redis 镜像)</li>
+<li><strong>持久化</strong>: 通过数据卷 <code>/data</code> 持久化 Redis 数据。</li>
+</ul>
+<h3 id="2-2-PostgreSQL-容器-Database"><a href="#2-2-PostgreSQL-容器-Database" class="headerlink" title="2.2 PostgreSQL 容器 (Database)"></a>2.2 PostgreSQL 容器 (Database)</h3><ul>
+<li><strong>职责</strong>: 存储所有抓取、解析并结构化后的磁力链接数据，包括标题、文件名、大小、图片 URL、来源 URL、抓取时间等。</li>
+<li><strong>镜像</strong>: <code>postgres:15-alpine</code> (PostgreSQL 官方轻量级镜像)</li>
+<li><strong>持久化</strong>: 通过数据卷 <code>/var/lib/postgresql/data</code> 持久化数据库数据。</li>
+<li><strong>配置</strong>: 环境变量设置数据库名、用户名和密码。</li>
+</ul>
+<h3 id="2-3-qBittorrent-容器-Magnet-Metadata-Resolver"><a href="#2-3-qBittorrent-容器-Magnet-Metadata-Resolver" class="headerlink" title="2.3 qBittorrent 容器 (Magnet Metadata Resolver)"></a>2.3 qBittorrent 容器 (Magnet Metadata Resolver)</h3><ul>
+<li><strong>职责</strong>: 作为核心元数据解析服务。它运行 qBittorrent 客户端，自动连接 P2P 网络获取磁力链接的元数据。其他容器通过调用其 Web UI API 获取这些信息。</li>
+<li><strong>镜像</strong>: <code>linuxserver/qbittorrent:latest</code> (推荐，功能完善且维护良好)</li>
+<li><strong>API 接口</strong>: 提供 Web UI API，供 Magnet 解析器调用。</li>
+<li><strong>配置</strong>: 环境变量设置 Web UI 端口、用户名、密码、用户 ID&#x2F;组 ID (PUID&#x2F;PGID) 等。</li>
+<li><strong>持久化</strong>: 通过数据卷 <code>/config</code> 持久化配置，<code>/downloads</code> 作为 qBittorrent 的下载目录（即使不实际下载文件也需要）。</li>
+</ul>
+<h3 id="2-4-Scrapy-抓取容器-Scraper"><a href="#2-4-Scrapy-抓取容器-Scraper" class="headerlink" title="2.4 Scrapy 抓取容器 (Scraper)"></a>2.4 Scrapy 抓取容器 (Scraper)</h3><ul>
+<li><strong>职责</strong>: 模拟用户行为访问目标网站，抓取页面内容，并从中提取原始磁力链接字符串以及页面上可见的相关信息（如标题、初步描述、页面图片 URL）。</li>
+<li><strong>技术栈</strong>: <strong>Python</strong>, <strong>Scrapy 框架</strong>, <code>requests</code>, <code>BeautifulSoup4</code> &#x2F; <code>lxml</code>。</li>
+<li><strong>数据流</strong>: 将抓取到的原始数据推送到 Redis 消息队列。</li>
+<li><strong>反爬</strong>: 可在内部实现 User-Agent 轮换、请求延迟等基本反爬策略。</li>
+<li><strong>镜像</strong>: 需要您基于 Python 官方镜像 (<code>python:3.x-slim-buster</code>) 自行构建 Dockerfile。</li>
+</ul>
+<h3 id="2-5-Magnet-解析与处理容器-Parser"><a href="#2-5-Magnet-解析与处理容器-Parser" class="headerlink" title="2.5 Magnet 解析与处理容器 (Parser)"></a>2.5 Magnet 解析与处理容器 (Parser)</h3><ul>
+<li><strong>职责</strong>: 从 Redis 消息队列中获取原始磁力链接，然后通过调用 qBittorrent 容器的 Web UI API，请求 qBittorrent 解析该磁力链接的元数据。一旦元数据获取成功（包含准确的文件名、大小、文件结构），将结构化数据存储到 PostgreSQL 数据库。</li>
+<li><strong>技术栈</strong>: <strong>Python</strong>, <code>requests</code> (或更推荐的 <strong><code>qbittorrent-api</code> 库</strong>，简化与 qBittorrent API 交互)。</li>
+<li><strong>交互逻辑</strong>: 涉及向 qBittorrent API 添加磁力链接、轮询其解析状态、获取元数据后清理 qBittorrent 中的任务。</li>
+<li><strong>镜像</strong>: 需要您基于 Python 官方镜像 (<code>python:3.x-slim-buster</code>) 自行构建 Dockerfile。</li>
+</ul>
+<h3 id="2-6-页面显示容器-Web-UI"><a href="#2-6-页面显示容器-Web-UI" class="headerlink" title="2.6 页面显示容器 (Web UI)"></a>2.6 页面显示容器 (Web UI)</h3><ul>
+<li><strong>职责</strong>: 提供一个用户友好的网页界面，展示 PostgreSQL 中存储的已抓取和解析的磁力链接数据，并可能提供搜索、过滤、排序等功能。</li>
+<li><strong>技术栈</strong>: <strong>Python (Flask&#x2F;Django)</strong>, HTML&#x2F;CSS&#x2F;JavaScript (前端框架如 React&#x2F;Vue 可选)。</li>
+<li><strong>数据流</strong>: 从 PostgreSQL 数据库读取数据并渲染到 Web 页面。</li>
+<li><strong>镜像</strong>: 需要您基于 Python 官方镜像 (<code>python:3.x-slim-buster</code>) 或其他 Web 服务器镜像（如 <code>nginx</code> + 您的前端静态文件）自行构建 Dockerfile。</li>
+</ul>
+<hr>
+<h2 id="3-docker-compose-yml-配置示例"><a href="#3-docker-compose-yml-配置示例" class="headerlink" title="3. docker-compose.yml 配置示例"></a>3. <code>docker-compose.yml</code> 配置示例</h2><p>以下是整个系统的 <code>docker-compose.yml</code> 文件内容。请将其保存为 <code>docker-compose.yml</code> 文件，并根据您的实际需求和敏感信息进行修改。</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">version:</span> <span class="string">&#x27;3.8&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="comment"># 1. 消息队列 (Redis)</span></span><br><span class="line">  <span class="attr">redis:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">redis:7-alpine</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">magnet_redis</span></span><br><span class="line">    <span class="attr">command:</span> <span class="string">redis-server</span> <span class="string">--appendonly</span> <span class="literal">yes</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis_data:/data</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;6379:6379&quot;</span> <span class="comment"># 暴露 Redis 端口，如果其他应用需要从外部访问</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 2. 数据库 (PostgreSQL)</span></span><br><span class="line">  <span class="attr">postgresql:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">postgres:15-alpine</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">magnet_postgresql</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">POSTGRES_DB:</span> <span class="string">magnet_db</span></span><br><span class="line">      <span class="attr">POSTGRES_USER:</span> <span class="string">user</span></span><br><span class="line">      <span class="attr">POSTGRES_PASSWORD:</span> <span class="string">your_strong_password</span> <span class="comment"># **请务必更改为强密码**</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgres_data:/var/lib/postgresql/data</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;5432:5432&quot;</span> <span class="comment"># 暴露 PostgreSQL 端口，如果需要从外部连接数据库客户端</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 3. qBittorrent (磁力链接元数据解析核心)</span></span><br><span class="line">  <span class="attr">qbittorrent:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">linuxserver/qbittorrent:latest</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">magnet_qbittorrent</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">PUID:</span> <span class="number">1000</span> <span class="comment"># 宿主机用户ID，用于文件权限，请根据您的宿主机用户ID调整</span></span><br><span class="line">      <span class="attr">PGID:</span> <span class="number">1000</span> <span class="comment"># 宿主机用户组ID，用于文件权限，请根据您的宿主机用户组ID调整</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">America/Denver</span> <span class="comment"># 设置时区，请根据您的实际时区调整</span></span><br><span class="line">      <span class="attr">WEBUI_PORT:</span> <span class="number">8080</span> <span class="comment"># qBittorrent Web UI 端口</span></span><br><span class="line">      <span class="attr">QBITTORRENT_WEBUI_USERNAME:</span> <span class="string">admin</span> <span class="comment"># Web UI 用户名，请更改</span></span><br><span class="line">      <span class="attr">QBITTORRENT_WEBUI_PASSWORD:</span> <span class="string">your_qb_password</span> <span class="comment"># Web UI 密码，**请务必更改为强密码**</span></span><br><span class="line">      <span class="comment"># 如果在开发阶段遇到CSRF问题，可以暂时禁用CSRF（生产环境不推荐，或使用qBittorrent-api库处理）</span></span><br><span class="line">      <span class="comment"># WEBUI_EXTRA_ARGUMENTS: --disable-csrf</span></span><br><span class="line">    <span class="attr">volumes:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">qbittorrent_config:/config</span> <span class="comment"># qBittorrent 配置持久化</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">qbittorrent_downloads:/downloads</span> <span class="comment"># 下载目录 (即便不下载文件，qBittorrent也需要这个目录)</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;8080:8080&quot;</span> <span class="comment"># qBittorrent Web UI 端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;6881:6881&quot;</span> <span class="comment"># BitTorrent TCP 端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;6881:6881/udp&quot;</span> <span class="comment"># BitTorrent UDP 端口</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line">    <span class="comment"># qBittorrent本身不直接依赖DB，但为了逻辑上的服务启动顺序，可以依赖DB</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgresql</span> </span><br><span class="line"></span><br><span class="line">  <span class="comment"># 4. Scrapy 抓取容器</span></span><br><span class="line">  <span class="attr">scraper:</span></span><br><span class="line">    <span class="comment"># 你需要构建自己的Scrapy Docker镜像。</span></span><br><span class="line">    <span class="comment"># 确保在 scraper 目录下有 Dockerfile 和 Scrapy 项目代码。</span></span><br><span class="line">    <span class="attr">build:</span> </span><br><span class="line">      <span class="attr">context:</span> <span class="string">./scraper</span> <span class="comment"># 指定 Scrapy 应用的 Dockerfile 路径</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">Dockerfile</span> </span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">magnet_scraper</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">REDIS_HOST:</span> <span class="string">redis</span></span><br><span class="line">      <span class="attr">REDIS_PORT:</span> <span class="number">6379</span></span><br><span class="line">      <span class="comment"># 可以在这里定义其他 Scrapy 配置，如代理设置、目标URL等</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span> <span class="comment"># Scrapy 依赖 Redis 发送数据</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">on-failure</span> <span class="comment"># 失败时尝试重启</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 5. Magnet 解析与处理容器</span></span><br><span class="line">  <span class="attr">parser:</span></span><br><span class="line">    <span class="comment"># 你需要构建自己的解析器 Docker 镜像。</span></span><br><span class="line">    <span class="comment"># 确保在 parser 目录下有 Dockerfile 和解析器代码。</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">./parser</span> <span class="comment"># 指定解析器应用的 Dockerfile 路径</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">Dockerfile</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">magnet_parser</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">REDIS_HOST:</span> <span class="string">redis</span></span><br><span class="line">      <span class="attr">REDIS_PORT:</span> <span class="number">6379</span></span><br><span class="line">      <span class="attr">DB_HOST:</span> <span class="string">postgresql</span></span><br><span class="line">      <span class="attr">DB_NAME:</span> <span class="string">magnet_db</span></span><br><span class="line">      <span class="attr">DB_USER:</span> <span class="string">user</span></span><br><span class="line">      <span class="attr">DB_PASSWORD:</span> <span class="string">your_strong_password</span> <span class="comment"># **与 PostgreSQL 密码一致**</span></span><br><span class="line">      <span class="attr">QBT_HOST:</span> <span class="string">qbittorrent</span></span><br><span class="line">      <span class="attr">QBT_PORT:</span> <span class="number">8080</span></span><br><span class="line">      <span class="attr">QBT_USERNAME:</span> <span class="string">admin</span> <span class="comment"># 与 qBittorrent 用户名一致</span></span><br><span class="line">      <span class="attr">QBT_PASSWORD:</span> <span class="string">your_qb_password</span> <span class="comment"># **与 qBittorrent 密码一致**</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">redis</span> <span class="comment"># 解析器依赖 Redis 获取任务</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgresql</span> <span class="comment"># 解析器依赖 PostgreSQL 存储数据</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">qbittorrent</span> <span class="comment"># 解析器依赖 qBittorrent API 获取元数据</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">on-failure</span></span><br><span class="line"></span><br><span class="line">  <span class="comment"># 6. 页面显示容器 (Web UI)</span></span><br><span class="line">  <span class="attr">web_ui:</span></span><br><span class="line">    <span class="comment"># 你需要构建自己的 Web UI Docker 镜像。</span></span><br><span class="line">    <span class="comment"># 确保在 web_ui 目录下有 Dockerfile 和 Web 应用代码。</span></span><br><span class="line">    <span class="attr">build:</span></span><br><span class="line">      <span class="attr">context:</span> <span class="string">./web_ui</span> <span class="comment"># 指定 Web UI 应用的 Dockerfile 路径</span></span><br><span class="line">      <span class="attr">dockerfile:</span> <span class="string">Dockerfile</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">magnet_web_ui</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">DB_HOST:</span> <span class="string">postgresql</span></span><br><span class="line">      <span class="attr">DB_NAME:</span> <span class="string">magnet_db</span></span><br><span class="line">      <span class="attr">DB_USER:</span> <span class="string">user</span></span><br><span class="line">      <span class="attr">DB_PASSWORD:</span> <span class="string">your_strong_password</span> <span class="comment"># **与 PostgreSQL 密码一致**</span></span><br><span class="line">      <span class="comment"># 其他Web UI相关的配置</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">&quot;80:80&quot;</span> <span class="comment"># 暴露 Web UI 端口</span></span><br><span class="line">    <span class="attr">depends_on:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">postgresql</span> <span class="comment"># Web UI 依赖 PostgreSQL 获取数据</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">unless-stopped</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 数据卷定义，用于持久化数据</span></span><br><span class="line"><span class="attr">volumes:</span></span><br><span class="line">  <span class="attr">redis_data:</span></span><br><span class="line">  <span class="attr">postgres_data:</span></span><br><span class="line">  <span class="attr">qbittorrent_config:</span></span><br><span class="line">  <span class="attr">qbittorrent_downloads:</span> <span class="comment"># 用于qBittorrent的下载目录，即使不实际下载文件也需要</span></span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="4-如何部署"><a href="#4-如何部署" class="headerlink" title="4. 如何部署"></a>4. 如何部署</h2><ol>
+<li><strong>创建项目目录结构</strong>:<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">my_magnet_project/</span><br><span class="line">├── docker-compose.yml</span><br><span class="line">├── scraper/</span><br><span class="line">│   └── Dockerfile</span><br><span class="line">│   └── (你的 Scrapy 项目代码)</span><br><span class="line">├── parser/</span><br><span class="line">│   └── Dockerfile</span><br><span class="line">│   └── (你的 Python 解析器代码)</span><br><span class="line">├── web_ui/</span><br><span class="line">│   └── Dockerfile</span><br><span class="line">│   └── (你的 Web 应用代码)</span><br></pre></td></tr></table></figure></li>
+<li><strong>在各自的服务目录 (<code>scraper</code>, <code>parser</code>, <code>web_ui</code>) 中创建 <code>Dockerfile</code></strong>: 这些文件将定义如何构建每个服务的 Docker 镜像。请根据您选择的技术栈和代码内容编写这些 <code>Dockerfile</code>。</li>
+<li><strong>在 <code>docker-compose.yml</code> 中替换占位符</strong>:<ul>
+<li><code>your_strong_password</code></li>
+<li><code>your_qb_password</code></li>
+<li><code>PUID</code>, <code>PGID</code>, <code>TZ</code></li>
+</ul>
+</li>
+<li><strong>打开终端，导航到 <code>my_magnet_project</code> 目录</strong>:</li>
+<li><strong>运行 Docker Compose</strong>:<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up -d</span><br></pre></td></tr></table></figure>
+这会构建所有自定义镜像（如果它们不存在），然后启动并运行所有定义的容器。</li>
+<li><strong>访问应用</strong>: 一旦所有容器启动成功，您就可以通过浏览器访问 <code>http://localhost:80</code> (Web UI 端口) 和 <code>http://localhost:8080</code> (qBittorrent Web UI)。</li>
+</ol>
+<p>这个多容器方案提供了一个强大且灵活的平台，用于构建您的磁力链接自动抓取机器人程序。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/duo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li/">https://need.uno/duo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2025-06-23</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Docker/" class="post-tags__link button"># Docker</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E9%9C%80%E6%B1%82/" class="post-tags__link button"># 项目需求</a><a href="/tags/Docker-Compose/" class="post-tags__link button"># Docker Compose</a><a href="/tags/%E7%A3%81%E5%8A%9B%E9%93%BE%E6%8E%A5/" class="post-tags__link button"># 磁力链接</a><a href="/tags/qBittorrent/" class="post-tags__link button"># qBittorrent</a><a href="/tags/Redis/" class="post-tags__link button"># Redis</a><a href="/tags/PostgreSQL/" class="post-tags__link button"># PostgreSQL</a><a href="/tags/%E7%88%AC%E8%99%AB/" class="post-tags__link button"># 爬虫</a><a href="/tags/Scrapy/" class="post-tags__link button"># Scrapy</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2/" class="post-tags__link button"># 系统部署</a><a href="/tags/%E5%AE%B9%E5%99%A8%E5%8C%96/" class="post-tags__link button"># 容器化</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fduo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li%2F&amp;text=%E5%A4%9A%E5%AE%B9%E5%99%A8%E7%A3%81%E5%8A%9B%E8%A7%A3%E6%9E%90%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E7%A4%BA%E4%BE%8B%EF%BC%88Docker%20Compose%EF%BC%89&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fduo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fduo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li%2F&amp;title=%E5%A4%9A%E5%AE%B9%E5%99%A8%E7%A3%81%E5%8A%9B%E8%A7%A3%E6%9E%90%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E7%A4%BA%E4%BE%8B%EF%BC%88Docker%20Compose%EF%BC%89"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fduo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li%2F&amp;text=%E5%A4%9A%E5%AE%B9%E5%99%A8%E7%A3%81%E5%8A%9B%E8%A7%A3%E6%9E%90%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E7%A4%BA%E4%BE%8B%EF%BC%88Docker%20Compose%EF%BC%89"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fduo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li%2F&amp;title=%E5%A4%9A%E5%AE%B9%E5%99%A8%E7%A3%81%E5%8A%9B%E8%A7%A3%E6%9E%90%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E7%A4%BA%E4%BE%8B%EF%BC%88Docker%20Compose%EF%BC%89&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fduo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li%2F&amp;title=%E5%A4%9A%E5%AE%B9%E5%99%A8%E7%A3%81%E5%8A%9B%E8%A7%A3%E6%9E%90%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E7%A4%BA%E4%BE%8B%EF%BC%88Docker%20Compose%EF%BC%89&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fduo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li%2F&amp;title=%E5%A4%9A%E5%AE%B9%E5%99%A8%E7%A3%81%E5%8A%9B%E8%A7%A3%E6%9E%90%E7%B3%BB%E7%BB%9F%E9%83%A8%E7%BD%B2%E7%A4%BA%E4%BE%8B%EF%BC%88Docker%20Compose%EF%BC%89&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/dang-ai-kai-shi-le-suo-ren-lei/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            当AI开始“勒索”人类：Anthropic的警告只是冰山一角？
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/dang-you-xi-yu-shang-ban-quan-yi-ge-guan-yu-sdk-qin-quan-de-gu-shi/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            当游戏遇上版权：一个关于SDK侵权的故事
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="duo-rong-qi-ci-li-jie-xi-xi-tong-bu-shu-shi-li/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2025 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+         
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
+    
+        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>
