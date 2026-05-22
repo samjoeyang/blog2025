@@ -7,7 +7,7 @@ tags: ["ifttt"]
 
 <img src="/images/needisme/external/bd1fffd2f9e4.jpg" style="max-width:100%;height:auto;" />
 
-[![Instagram 图片](/images/needisme/external/bd1fffd2f9e4.jpg
+[![Instagram 图片](/images/needisme/external/bd1fffd2f9e4.jpg)](#)
 [查看 Instagram 帖子](https://www.instagram.com/p/BpemVJglZeWEiAv5U2E-i1ENva8_J5zqTQ5WwY0)
 
 [📚 返回目录](/needisme-mu-lu/)
