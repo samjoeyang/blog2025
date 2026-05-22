@@ -5,7 +5,7 @@ categories: NeedIsMe
 tags: ["Git", "Twitter", "Android", "Google", ".NET"]
 ---
 
-<p><a href="http://google.org.cn/wp-content/uploads/2009/08/ana-logo.png"><img title="ana-logo" src="http://google.org.cn/wp-content/uploads/2009/08/ana-logo.png" alt="ana-logo" width="540" height="210" /></a></p>
+<p><a href="/images/needisme/2010/11/ana-logo.png"><img title="ana-logo" src="/images/needisme/2010/11/ana-logo.png" alt="ana-logo" width="540" height="210" /></a></p>
 <p>由<a href="http://androidguys.com/">AndroidGuys</a>举办的首届<a href="http://www.androidawards.com/">ANA（Android Network Awards）</a>提名公布，大家等到下周一就可以去投票了，选出你心目中各个奖项的冠军。提名来自于全球60多个Android相关网站，下面是各个奖项和提名名单：</p>
 <p>1. Best Widget 最佳小工具</p>
 <ul>

@@ -8,7 +8,7 @@ tags: ["iOS", "iPhone", "HTML", "Blog", "Google", "WordPress"]
 <p>转载地址：http://www.williamlong.info/archives/2449.html</p>
 <p>互联网和移动电话业的发展已经极大地改变了我们的生活。这两项革命性的技术随着智能手机的推出已经融汇到一起了。现在智能手机几乎随处可见，创造了大量新的机会来为这些移动设备开发应用软件。<br />
 如果你拥有一个WordPress发布平台，或者你是一个为你的客户提供WordPress解决方案的开发者，这里编制了一些管理WordPress博客的手机软件，将会帮助你和你的客户在任何地方任何时候都可以来管理WordPress发布平台。</p>
-<div style="text-align: center;"><img src="http://needis.me/wp-content/uploads/auto_save_image/2010/12/080323rRI.jpg" alt="管理WordPress博客手机软件集锦" /></div>
+<div style="text-align: center;"><img src="/images/needisme/2010/12/080323rRI.jpg" alt="管理WordPress博客手机软件集锦" /></div>
 <p><strong>iPhone &amp; iPod Touch</strong></p>
 <ul>
 <li><a href="http://ios.wordpress.org/">WordPress for iOS</a></li>

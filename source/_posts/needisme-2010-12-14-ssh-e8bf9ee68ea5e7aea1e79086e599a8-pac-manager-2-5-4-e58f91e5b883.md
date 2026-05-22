@@ -13,7 +13,7 @@ tags: ["SSH", "LINUX", "Linux", "系统管理", "Google", "Ubuntu"]
 <li>为 VNC 功能添加 "listen mode" 和 "view only" 模式</li>
 </ul>
 <p>更多改变见<a href="http://sites.google.com/site/davidtv/">官方网站</a>。另外，在试用中发现， PAC 也已支持 SSH Key 认证方式，这样可进一步保证安全性。</p>
-<p><img src="http://wowubuntu.com/wp-content/uploads/2010/12/101214_Selection_01.png" /></p>
+<p><img src="/images/needisme/2010/12/101214_Selection_01.png" /></p>
 <p># 安装： 到<a href="http://sourceforge.net/projects/pacmanager/files/pac-2.0/">这里下载 DEB</a> ，安装完 Deb 包后再运行以下命令安装相应的依赖包。</p>
 <blockquote><p>sudo apt-get install -f</p></blockquote>
 

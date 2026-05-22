@@ -8,7 +8,7 @@ tags: ["Mobile", "Git", ".NET", "手机"]
 <p>Clinton Jeff 前段时间被 Tata DoCoMo 邀请到日本总部做了一次为期两天的旅行，体验了世界最前沿的手机科技。我们从他的<a href="http://zomgitscj.com/2010/11/21/editorial-why-japan-doesnt-care-about-your-phone-a-trip-to-ntt-docomos-hq/">游记</a>中节选了一部分，为大家展示日本 DoCoMo 最新潮的手机和最全面的服务。</p>
 <div style="margin: 0; padding: 5px 0;">
 <p>Tata Docomo 是印度第四大运营商，约有 3282 万用户（截止 2010 年 6月），是由印度 Tata 集团和日本 NTT DoCoMo 合资成立的。DoCoMo 官方的翻译是&ldquo;do communications over the mobile network&rdquo;，读起来很拗口吧。</p>
-<p>自从看了高达，玩了索尼克之后，我就非常想亲自来这个国家看看，并称那儿为&ldquo;Geek&rsquo;s dream country&rdquo;。这次终于有机会走进日本，当然是高兴极了。<img title="5170840704_89fcee4e8f" src="http://www.ifanr.com/wp-content/uploads/2010/11/5170840704_89fcee4e8f.jpg" border="0" alt="5170840704_89fcee4e8f" width="480" height="270" /></p>
+<p>自从看了高达，玩了索尼克之后，我就非常想亲自来这个国家看看，并称那儿为&ldquo;Geek&rsquo;s dream country&rdquo;。这次终于有机会走进日本，当然是高兴极了。<img title="5170840704_89fcee4e8f" src="/images/needisme/2010/11/5170840704_89fcee4e8f.jpg" border="0" alt="5170840704_89fcee4e8f" width="480" height="270" /></p>
 <p>我们降落在东京成田机场，迅速到酒店安顿好之后，洗了个澡。然后准备前往 NTT DoCoMo 公司总部。</p>
 <p>不到一会儿，我们就抵达了 NTT DoCoMo 位于千代田的总部。你可以想象我有多么兴奋，因为马上就能看到最前沿的科技成果。在这栋建筑里，有日本最先进的移动通信技术和产品。</p>
 <p><img title="5175686638_ef0eef2ea8" src="http://www.ifanr.com/wp-content/uploads/2010/11/5175686638_ef0eef2ea8.jpg" border="0" alt="5175686638_ef0eef2ea8" width="480" height="270" /></p>

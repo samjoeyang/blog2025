@@ -5,7 +5,7 @@ categories: NeedIsMe
 tags: ["微博", "Twitter", "Micro-Blog", "Facebook"]
 ---
 
-<p><img title="500x_twitter-vs-facebook1" src="http://www.ifanr.com/wp-content/uploads/2010/10/500x_twittervsfacebook1.jpg" border="0" alt="500x_twitter-vs-facebook1" width="480" height="345" /></p>
+<p><img title="500x_twitter-vs-facebook1" src="/images/needisme/2010/11/500x_twittervsfacebook1.jpg" border="0" alt="500x_twitter-vs-facebook1" width="480" height="345" /></p>
 <p>很有趣，是吗？这张趣图出自 Kiersten 之手。</p>
 <p>回顾你的网络生活吧：原本你很熟悉的人，突然之间就变成了一堆&ldquo;状态更新&rdquo;，&ldquo;文章分享&rdquo;，&ldquo;好友关联&rdquo;，&ldquo;生日提醒&rdquo;你会觉得很烦吗？</p>
 <p>说不定你早就厌倦了无尽的偷菜生活呢？</p>

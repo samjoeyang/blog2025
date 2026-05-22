@@ -5,7 +5,7 @@ categories: NeedIsMe
 tags: []
 ---
 
-<p><img class="alignnone size-full wp-image-5000" src="http://needis.me/wp-content/uploads/2016/04/qrcode_for_gh_6cdb81360314_430.jpg" alt="qrcode_for_gh_6cdb81360314_430" width="430" height="430" /></p>
+<p><img class="alignnone size-full wp-image-5000" src="/images/needisme/2013/09/qrcode_for_gh_6cdb81360314_430.jpg" alt="qrcode_for_gh_6cdb81360314_430" width="430" height="430" /></p>
 
 ---
 

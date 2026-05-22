@@ -9,7 +9,7 @@ tags: ["互联网", "iPhone", "Android", "Google", "Vim", "Internet"]
 <blockquote><p>前 言：基于通讯录的互动，在完成了电话、短信、彩信的基本功能之后，一直发展停止不前，传统运营商一直在寻求能够突破这些互动的延伸，然而智能手机性能的突 破以及 3G 网络的完善，创业企业们却让这种延伸得以延续，当 Kik 完美提升了短信互动体验，WhatsApp  扩展互动的内容，我们还可以期待哪些互动与创意？我们就也尝试着探讨下国内的创业团队又在怎么做。</p></blockquote>
 <p>Kik&nbsp; Messenger&nbsp; <!-- more -->自从 10 月 20 日 推出以来，短短 15 天内，用户量突破 100 万（目前已经突破 300  万）。破记录的速度让其成为手机 app 中的明星。很多人第一反应想到的是冲击了 Blackberry Messenger（ BBM  ）的市场，以至于 Kik 被驱逐出 BlackBerry 的应用商店。 事实上在 Kik&nbsp; 之前一直有一个叫做 WhatsApp 的应用在  iPhone 上存在了有一年之久，虽小有名气，但也是不温不火。</p>
 <p>自从国内关于 Kik  的模式被介绍进了中国，国内厂商以非常惊人的速度发布了各种信（个信、微信、友信），各种聊（米聊、速聊），盛大索性就直接叫 Kiki。  我不认为这些产品都是有了 Kik 以后才有这些山寨，这点对很多有创造力的小公司来说很不公平，至少国内一些应用无论在出现的时间上  还有在功能上都有贯彻了自己对产品的理解。相反大公司的出品山寨味更浓。</p>
-<p style="text-align: center;"><a rel="attachment wp-att-33213" href="http://needis.me/?attachment_id=33213" target="_blank"><img title="timeline" src="http://needis.me/wp-content/uploads/auto_save_image/2011/02/034946b3g.gif" alt="" width="521" height="380" /></a></p>
+<p style="text-align: center;"><a rel="attachment wp-att-33213" href="http://needis.me/?attachment_id=33213" target="_blank"><img title="timeline" src="/images/needisme/2011/02/034946b3g.gif" alt="" width="521" height="380" /></a></p>
 <p>图：以上时间均来自各官方报道。</p>
 <p>我体验了几乎上述所有的软件（以 iPhone 和 Android 的体验为主）。Vimi 无法注册完成，只能根据其官方博客的功能介绍以及截图推断。</p>
 <p>本文主要对目前相关软件的功能设计，以及设计思路进行比较，从产品完整性，可用性角度不做过多的分析，因为个人认为目前这些软件都处于一个  demo 启动的阶段，后面的存在的变数都会非常大，大家都有非常大的空间去竞争，去完善，当然过程中也会有产品夭折。 Kik 和 WhatsApp  两款应用，对自己的定位非常清晰，也基本稳定。  米聊以及微信的由于有着最优秀的产品团队的支撑，在上线以后基本可以流畅使用，也相对比较完善。而相比之下，其他小的团队的产品，在目前这种快速布局竞争 的环境中，研发方面感觉到吃力。 这对未来的移动互联网创业团队确实会是一个很大的考验。</p>
@@ -43,13 +43,13 @@ tags: ["互联网", "iPhone", "Android", "Google", "Vim", "Internet"]
 <p>对于初创企业来说往往也没有勇气去自主建立自己的网络，也似乎没有这个必要， 因此国外的 startup 项目中，很多都支持 Twitter  或者 Facebook 或者 Google Accounts  直接登陆，想借助这些成熟的关系网去推广，或者直接在这些关系网络上去进行应用的纵深。但是寄存于他们平台之上，多少有些不情愿，  这个时候，当我们发现象通讯录这样对社会现实关系高保真的，并且不隶属于任何一个大公司的，基于通讯录的社会关系网络，发现我们可以去利用它的时候，无疑 是一个机会。</p>
 <h3><strong>Kik 类工具之争说到底是关系网之争</strong></h3>
 <p>我们看见从对这些软件的好友关系的来源、对通讯录的应用、对本身手机号码的自带的利用的几个设计思路来比较，发现这些软件还是有明显的布局的差异的。</p>
-<p style="text-align: center;"><a rel="attachment wp-att-33232" href="http://needis.me/?attachment_id=33232" target="_blank"><img title="usernetwork" src="http://needis.me/wp-content/uploads/auto_save_image/2011/02/0349474UB.gif" alt="" width="520" height="600" /></a></p>
+<p style="text-align: center;"><a rel="attachment wp-att-33232" href="http://needis.me/?attachment_id=33232" target="_blank"><img title="usernetwork" src="/images/needisme/auto_save_image/2011/02/0349474UB.gif" alt="" width="520" height="600" /></a></p>
 <p style="text-align: center;">国内应用软件用户关系的形成与来源比较</p>
 <p>很明显的我们从表格中，可以看见大部分的软件还是以手机通讯录作为联系人基础， 但是值得注意的是微信和米聊的选择。</p>
 <p>微信的选择其实也完全是在意料之中，腾讯选择了以 QQ 好友作为用户基础，6  亿用户的用户基础足够可以叫板通讯录，因此刚使用微信的感受是这个是 QQ&nbsp; Lite 版，为 QQ  用户打造一个适合在手机上互动的轻量级工具，但是我对微信的设计过程中  ，需要重新设定昵称等设计有点不解。在眼下阶段，如果腾讯也跟着从通讯录入手的话，首先毫无优势。如果尝试跟 QQ 网络去整合未尝不可，但是 QQ  不是使用实名，两者整合的难度还是很大，非常容易带来糟糕的用户体验，类似的事情在 WP7 中已然发生（Live 帐号与通讯录之间的无缝）  Android 手机通讯录曾经花了我整个晚上去整理过去的邮件联系人并且跟手机联系人合并。</p>
 <p>米聊的选择是邮件联系人为主，并且设定米聊号，在这里我们甚至可以理解为雷军试图打造一个全新的适用于手机的社交网络，并以此作为起点, YY  语音可以在专业领域获得市场，但是很难在桌面系统去跟腾讯对抗，对用户来说，也不可能再接受一个可以替代 QQ  的客户端。但是在移动互联网领域，机会来了， MIUI 的支撑下，米聊是不是可以做的比 MSN 更好呢？至少再这里会有足够的想象空间  。我个人觉得也只有角度来考虑，可以理解米聊完全放弃通讯录，而是要自建关系网。</p>
 <p>Kiki 赤裸裸的山寨了名字和功能，效果上还是达到了宣传的目的，但是长期以来，产品只是在集团内测的阶段，且问题多多，这实在不是一个大佬该所为。从初步的体验来看，应该是最象 Kik 的一个产品，并且可能会有一些跟通讯录功能的交互。</p>
-<p style="text-align: center;"><a rel="attachment wp-att-33219" href="http://needis.me/?attachment_id=33219" target="_blank"><img title="network" src="http://needis.me/wp-content/uploads/auto_save_image/2011/02/034948HPS.gif" alt="" width="520" height="439" /></a></p>
+<p style="text-align: center;"><a rel="attachment wp-att-33219" href="http://needis.me/?attachment_id=33219" target="_blank"><img title="network" src="/images/needisme/auto_save_image/2011/02/034948HPS.gif" alt="" width="520" height="439" /></a></p>
 <p style="text-align: center;">基于通讯录的关系网在整个社交系统中具有最核心的地位</p>
 <p>在看到腾讯尝试在自身 QQ 网络上做了一个微信， 米聊的的野心初现，打造自己的关系网络，那在中国，我们是否需要一个类似 Kik  的纯粹的基于手机通讯录的的聊天工具呢？&nbsp; Kiki 、Vimi 以及友信都在这条路上走，我们拭目以待（ Kiki 、Vimi 象 Kik  的复制品而友信更像 WhatsApp 的仿照者）。</p>
 <p>我觉得这些产品都会一同瓜分短信的市场是毫无疑问。我相信最终会有一家专注于通讯录聊天服务提供商的类似 Kik 的服务商，但是他是否能与  Kik 一样顺利成长，能在整个聊天市场中占有份额，还是有蛮大的变数，并且国内有前后腾讯，后有米聊这样的，加上国内短信资费灵活等客观环境，&nbsp;  国内类似 Kik 服务商的创业难度可能要大不少。 相反倒是不用担心运营商的态度，运营商可以封 VoIP 但是不能封 Kik  类服务，话说回来，如果现在飞信团队能抓住这个机会，把产品做好，并且突破运营商限制，应该是一个非常好的机会，这本该就是运营商最应该去挖掘的机会。</p>
@@ -57,12 +57,12 @@ tags: ["互联网", "iPhone", "Android", "Google", "Vim", "Internet"]
 <p>除此之外也有象速聊这样选择自主注册，在没有强大资源的支撑下，并且在产品做的并没有任何优势的前提下，生存会比较艰难。</p>
 <h3><strong>聊天服务是通讯录产品的基础？</strong></h3>
 <p>无论各个软件把用户关系的定位如何，可以看到文本的即时通信服务是这些工具的基础功能，这个也是 Kik 的发力点，与能够成功的关键所在。在  Kik 把短信体验推向一个新的高度之后，其他厂商很难再忽视这部分的用户体验， 下面的图表我们对目前国内的软件的关于短信基本功能做了比较</p>
-<p style="text-align: center;"><a rel="attachment wp-att-33215" href="http://needis.me/?attachment_id=33215" target="_blank"><img title="messenger" src="http://needis.me/wp-content/uploads/auto_save_image/2011/02/034948gNv.gif" alt="" width="520" height="349" /></a></p>
+<p style="text-align: center;"><a rel="attachment wp-att-33215" href="http://needis.me/?attachment_id=33215" target="_blank"><img title="messenger" src="/images/needisme/auto_save_image/2011/02/034948gNv.gif" alt="" width="520" height="349" /></a></p>
 <p style="text-align: center;">应用短信功能细节实现比较</p>
 <p>我们可以看到消息的状态反馈与标清支持几乎成为软件的标配，相信微信很快在后面的版本会加上，而友信，个信因为其应用的设计深度的与现有短信整合，甚至希望替代现有系统自带的短信UI。</p>
 <h3><strong>基于通讯录产品的创新空间在哪儿？</strong></h3>
 <p>我们这里把从基于通讯录的聊天产品 衍生到基于通讯录的产品，因为我们在国内不仅看到了 Kik 的模仿者，也有 WhatsApp  的模仿者，如果whatsaspp是为了意图突破，基于通讯录用户关系之间，我们不仅仅可以聊天，发图片，这些传统 IM  可以干的事之外，可以做些什么大问题。 我们也可以看到国内有些厂商试图通过不同的角度，去尝试。</p>
-<p style="text-align: center;"><a rel="attachment wp-att-33216" href="http://needis.me/?attachment_id=33216" target="_blank"><img title="function" src="http://needis.me/wp-content/uploads/auto_save_image/2011/02/034949S7B.gif" alt="" width="520" height="529" /></a></p>
+<p style="text-align: center;"><a rel="attachment wp-att-33216" href="http://needis.me/?attachment_id=33216" target="_blank"><img title="function" src="/images/needisme/auto_save_image/2011/02/034949S7B.gif" alt="" width="520" height="529" /></a></p>
 <p style="text-align: center;">应用扩展功能比较</p>
 <p>以上表格整理了这些软件在除了聊天功能之外，一些功能尝试的方向列举，通过这个表格也可以更清楚的看见各个软件的定位与发展方向。&nbsp; Kik  因为自身明确的定位，专注聊天。 WhatsApp  象是个纯粹的热衷探索基于通信录的用户之间互动的可能性，并且优等生般的提供了一些标准化的常用功能。</p>
 <p>友信乍看很像 WhatsApp  的追随者，但是最近的版本更新也看到了开发者有非常大胆的探索，尝试突破对方没有客户端的前提下的互动，事实上，如果能通过强大的 HTML5  实现在手机浏览器上的良好体验，让互动由单方面发起，对方通过统一 UI 的浏览器页面进行互动，应该会有一些新鲜的创意  ，也不会因为双方都需要安装客户端，来限制互动的对象，只要能给对方下行一条短信发起请求即可，可以是互动游戏么？可以支持第三方应用么？让我们来想象一 下吧。</p>
@@ -72,10 +72,10 @@ tags: ["互联网", "iPhone", "Android", "Google", "Vim", "Internet"]
 <p>看到个信互动的时候，第一次打开有个非常的亮点功能，就是自动统计你发短信最多的几个人，并且推荐对这几个人进行推广，明确告知如果这些人也用个信   你可以节省多少短信费用。这个真的做的非常好，相比动辄打开整个通讯录的群发，毫无意义，事实上我们在做社交工具的时候，我们还需要考虑的问题是：我们是 面对的小范围的亲密好友，还是整个通讯录，如果仅仅是前者（因为我相信最亲密 10 个人的短信对话条数应该占有所有短信互动 95%  以上），那我们不如索性去深挖掘这 10 个人之间的互动，这个也应该是创新的方向吧。</p>
 <h3><strong>总结</strong></h3>
 <p>个人把这些应用归类成基于通讯录的点对点的互动应用，点对点的互动区别于现在的社会化的工具，更具私密性，针对性。如同现实中的大部分社交活动过程中都有明确的对象与动机。因此使这类互动活动更具备现实的意义。</p>
-<p style="text-align: center;"><a rel="attachment wp-att-33217" href="http://needis.me/?attachment_id=33217" target="_blank"><img title="p2pvssns" src="http://needis.me/wp-content/uploads/auto_save_image/2011/02/034949P1o.gif" alt="" width="520" height="160" /></a></p>
+<p style="text-align: center;"><a rel="attachment wp-att-33217" href="http://needis.me/?attachment_id=33217" target="_blank"><img title="p2pvssns" src="/images/needisme/auto_save_image/2011/02/034949P1o.gif" alt="" width="520" height="160" /></a></p>
 <p style="text-align: center;">点对点互动与传统 SNS 互动特征差异</p>
 <p>如果放在更长一个时间段考虑，这类应用的第一个具体实现就是  电话，接着是短信，彩信，传统通信行业止步于此，部分省市运营商推出过呼叫签名的服务，就是在呼叫的过程中，会在现实来电的者的签名档。这几年，GSMA  联盟一直试图突破点对点的基础业务能力。提出了 RCS（ Rich Communication Suite ）概念，并在一些欧洲运营商进行尝试，  但是运营商实在跟不上这两年的手机系统的进化，应用的进化，我们发现我们能过轻而易举的绕过运营商，从功能上非常快的实现了这些应用，  就是进入第三阶段，我们可以轻松的发不受大小限制的照片，视频，各种文件， 我们可以发送地理位置，交换名片&hellip;&hellip;</p>
-<p style="text-align: center;"><a rel="attachment wp-att-33218" href="http://needis.me/?attachment_id=33218" target="_blank"><img title="morep2p" src="http://needis.me/wp-content/uploads/auto_save_image/2011/02/0349494Hs.gif" alt="" width="520" height="180" /></a></p>
+<p style="text-align: center;"><a rel="attachment wp-att-33218" href="http://needis.me/?attachment_id=33218" target="_blank"><img title="morep2p" src="/images/needisme/auto_save_image/2011/02/0349494Hs.gif" alt="" width="520" height="180" /></a></p>
 <p>那么我们接下来的要交换的是什么呢？结合微博这样的开放接口会怎样的局面呢，如果我们忽略手机，把我们的笔记本和平板也做为一个通讯录终端呢？&nbsp; Kik 只是一个开始～：）</p>
 
 ---

@@ -6,7 +6,7 @@ tags: ["HTML", "LINUX", "Linux", "系统管理", "Google", "Ubuntu"]
 ---
 
 <p><a href="http://wowubuntu.com/greader-indicator.html">Google Reader Indicator</a> 是一个很简单的小工具，它可在 Gnome Panel 上显示 Google 阅读器中的未阅读条目，并利用 NotifyOSD 模块提供了新文章提醒功能，对于 Google Reader 深度使用者来说应该很有用。
-<p><img src="http://wowubuntu.com/wp-content/uploads/2010/12/101224_Workspace-1_02.png" width="600" /></p>
+<p><img src="/images/needisme/2010/12/101224_Workspace-1_02.png" width="600" /></p>
 <p>
 <p>项目主页： <a href="http://www.atareao.es/ubuntu/software-para-tu-ubuntu/google-reader-indicator-para-ubuntu/">atareao.es</a></p>
 <p>

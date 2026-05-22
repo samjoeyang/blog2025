@@ -7,7 +7,7 @@ tags: ["API", "iPhone", "HTML", "Android", "Google"]
 
 <p>Google Analytics Data Export API发布以来，相关的应用层出不穷，其中最后意义的当属运行在各个主流移动平台上的Analytics的手机客户端，Analytics用户可以方便的在自己手机上查看自己网站或者AdWords的报告了。各个平台的下载链接如下：</p>
 <p><a title="Mobile GA" href="http://www.analyticsmarket.com/mobileapps/mobile-ga/android">Mobile GA</a> for Android，作者<a href="http://www.actualmetrics.com/">Actual Metrics</a></p>
-<p><img title="20090627-mobilega" src="http://google.org.cn/wp-content/uploads/2009/06/20090627-mobilega.jpg" alt="20090627-mobilega" width="400" height="192" /></p>
+<p><img title="20090627-mobilega" src="/images/needisme/2010/11/20090627-mobilega.jpg" alt="20090627-mobilega" width="400" height="192" /></p>
 <p>iPhone平台的应用比较多，包括以下三款。</p>
 <table style="width: 540px; height: 309px;" border="0" cellspacing="0" cellpadding="3">
 <tbody>

@@ -5,7 +5,7 @@ categories: NeedIsMe
 tags: []
 ---
 
-<p><a href="http://needis.me/wp-content/uploads/2016/09/img_2914.jpg"><img src="http://needis.me/wp-content/uploads/2016/09/img_2914.jpg" alt="" width="670" height="894" class="alignnone size-full wp-image-5204"></a></p>
+<p><a href="/images/needisme/2016/09/img_2914.jpg"><img src="/images/needisme/2016/09/img_2914.jpg" alt="" width="670" height="894" class="alignnone size-full wp-image-5204"></a></p>
 
 ---
 

@@ -6,7 +6,7 @@ tags: ["Windows", "Google", "Google Fans"]
 ---
 
 <div>从 <a href="https://www.google.com/reader/view/feed/http%3A%2F%2Ffeed.google.org.cn%2F" target="_blank">谷奥</a> 作者：gkp</div>
-<p><img title="googlechromedesktop01" src="http://www.guao.hk/wp-content/uploads/2011/01/googlechromedesktop01.jpg" border="0" alt="googlechromedesktop01" width="550" height="445" /></p>
+<p><img title="googlechromedesktop01" src="/images/needisme/2011/01/googlechromedesktop01.jpg" border="0" alt="googlechromedesktop01" width="550" height="445" /></p>
 <p>想让你的 Windows 变成上图的样子吗？今天这个帖子为大家收集了15个 Google 产品图标文件包，包括 ico，png，svg，gif 等多种格式，具体请点击继续观看，多图杀猫！（上图中的壁纸在<a href="http://eg-art.deviantart.com/art/EgFox-Chrome-Edition-2010-164212714" target="_blank">这里</a>下载）</p>
 <p><img title="googlethemediconpacks01" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks01.png" border="0" alt="googlethemediconpacks01" width="480" height="480" /></p>
 <p>第一包：ico png 格式，<a href="http://tempest.deviantart.com/art/Simply-Google-Icon-Collection-117952063" target="_blank">点此下载</a></p>

@@ -10,7 +10,7 @@ tags: ["Google", "Google Fans"]
 <p>这个应该是普及最广泛的Google搜索技巧了吧，格式为</p>
 <blockquote><p>keyword site:someweb.com</p></blockquote>
 <p>可以在指定网站范围内搜索用户给出关键字。</p>
-<p><img title="20090527-10-google-search-tips-1" src="http://google.org.cn/wp-content/uploads/2009/05/20090527-10-google-search-tips-1.jpg" alt="20090527-10-google-search-tips-1" width="551" height="505" /></p>
+<p><img title="20090527-10-google-search-tips-1" src="/images/needisme/2010/11/20090527-10-google-search-tips-1.jpg" alt="20090527-10-google-search-tips-1" width="551" height="505" /></p>
 <p>2，排除某些关键字</p>
 <p>如果你想搜索某个关键字，但是同时不想让另外一个关键字出现，可以使用以下的格式</p>
 <blockquote><p>keyword1 -keyword2</p></blockquote>

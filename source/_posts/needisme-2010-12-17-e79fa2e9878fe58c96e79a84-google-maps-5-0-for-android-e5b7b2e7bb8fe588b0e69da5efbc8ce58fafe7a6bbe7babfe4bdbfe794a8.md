@@ -5,7 +5,7 @@ categories: NeedIsMe
 tags: ["iOS", "HTML", "Android", "Google"]
 ---
 
-<p><img title="screen-capture-2" src="http://android.guao.hk/wp-content/uploads/2010/12/screen-capture-23.jpg" alt="" height="418" width="534" />
+<p><img title="screen-capture-2" src="/images/needisme/2010/12/screen-capture-23.jpg" alt="" height="418" width="534" />
 <p>盼星星盼月亮，盼来了Android平台（哦不，是全平台）地图范儿软Google Maps 5.0 for Android，之前我们已经看过了Nexus S首发内置Gingerbread 2.3系统里集成的Google Maps 5.0了，但没想到Google这么快就让广大非2.3用户用上了，而不是逼我们买2.3系统的手机，感激涕零。</p>
 <p>
 <p>Google Maps 5.0 for Android亮点非常之多：</p>

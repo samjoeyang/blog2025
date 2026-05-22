@@ -17,9 +17,9 @@ tags: ["SEO"]
 <p>优化账户结构，不但有利于账户管理和操作，对质量度的提高也极有好处。</p>
 <p>首先，根据不同的营销目标，需要分别建立特定的推广计划和推广单元，便于后续数据的分析和账户的优化；其次，尽量将意义相近、结构相同的关键词划分到一个推广组中，这样才能更好的根据推广组里的关键词细化创意，并进行相应嵌套。与谷歌结构优化的标准-黄金账户法则中&ldquo;每个广告组关键字在5-15个之间，每个广告组所有关键字应共享同一词根&rdquo;出发点相同。百度的质量度升级后，关键词账户结构的优劣对质量度的影响更加凸现。</p>
 <p>下面是某账户中的一个推广系列结构重构示例，该推广计划重构后从7个推广单元细化到33个推广单元）。</p>
-<p><a rel="lightbox[4021]" href="http://semwatch.org/wp-content/uploads/2010/12/1.jpg"><img title="实例讲解如何提高百度关键词质量度" src="http://semwatch.org/wp-content/uploads/2010/12/1.jpg" alt="账户结构重构关键词分组示例" width="400" height="200" /></a></p>
+<p><a rel="lightbox[4021]" href="/images/needisme/2011/04/1.jpg"><img title="实例讲解如何提高百度关键词质量度" src="/images/needisme/2011/04/1.jpg" alt="账户结构重构关键词分组示例" width="400" height="200" /></a></p>
 <p>经过一段时间的跟踪，我们发现质量度3星的关键词，由7%增至73%,涨幅达942%，质量度优化效果明显。</p>
-<p><a rel="lightbox[4021]" href="http://semwatch.org/wp-content/uploads/2010/12/2.jpg"><img title="实例讲解如何提高百度关键词质量度" src="http://semwatch.org/wp-content/uploads/2010/12/2.jpg" alt="质量度变化趋势" width="340" height="299" /></a></p>
+<p><a rel="lightbox[4021]" href="/images/needisme/2011/04/2.jpg"><img title="实例讲解如何提高百度关键词质量度" src="/images/needisme/2011/04/2.jpg" alt="质量度变化趋势" width="340" height="299" /></a></p>
 <p>其中质量度一直是1颗星的词无消费或消费极少，这类关键词或则本身流量较低或则过于长尾，因此可以试情况暂停或者删除，避免影响账户整体质量度。</p>
 <p>2， 完善创意：</p>
 <p>创意是链接搜索用户和推广页面的一个入口，高质量的创意，可以更好的传播产品信息，提升品牌知名度，提高点击率，对账户中质量度的提升有至关重要的作用。</p>

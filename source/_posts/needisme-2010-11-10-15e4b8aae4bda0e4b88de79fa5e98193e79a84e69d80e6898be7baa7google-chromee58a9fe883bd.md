@@ -7,7 +7,7 @@ tags: ["互联网", "Internet", "Google"]
 
 <p>之前写过一篇<a title="我为什么使用google chrome浏览器" href="http://wangyueblog.com/2010/02/03/why-choose-google-chrome/">我为什么使用Google Chrome浏览器</a>，算是在使用了一段时间的Google Chrome后的一点粗浅认识，最近读到一篇文章<a title="15 Killer Google Chrome Features You Might Not Know About" href="http://www.guidingtech.com/5319/killer-google-chrome-features/">15 Killer Google Chrome Features You Might Not Know About</a>，感觉很是惊讶，原来Chrome还有如此多的实用功能是我所部知道的，在这15个功能中，我知道的仅仅是那个复制并粘贴的功能，所以，翻译了这篇文章，以下为翻译内容：</p>
 <p>自从两年前Google Chrome发布以来，就一直保持稳步上升的态势，她并非没有缺点，但她简便、简约，却功能丰富。下面列举的一些特点，有些也许你早就知道，但你肯定会找到隐藏于这个浏览器中让你吃惊的功能，这，也是这篇文章的意义所在。</p>
-<p><a href="http://wangyueblog.com/wp-content/uploads/google_chrome_extensions.jpg"><img title="google_chrome_extensions" src="http://wangyueblog.com/wp-content/uploads/google_chrome_extensions.jpg" alt="" width="450" height="292" /></a></p>
+<p><a href="/images/needisme/2010/11/google_chrome_extensions.jpg"><img title="google_chrome_extensions" src="/images/needisme/2010/11/google_chrome_extensions.jpg" alt="" width="450" height="292" /></a></p>
 <p><span> </span></p>
 <h3 style="background: none repeat scroll 0 0 #99cc00; font-size: 21px; color: #000000; padding: 3px 6px;">一、固定标签页</h3>
 <blockquote><p><a href="http://wangyueblog.com/wp-content/uploads/pintab1.png"><img title="pintab" src="http://wangyueblog.com/wp-content/uploads/pintab1.png" alt="" width="360" height="214" /></a></p>

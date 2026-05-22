@@ -5,7 +5,7 @@ categories: NeedIsMe
 tags: ["Facebook", "Twitter", "Google", "Google Fans"]
 ---
 
-<p><img title="gmail_love" src="http://needis.me/wp-content/uploads/auto_save_image/2010/12/081002iwg.jpg" alt="" width="366" height="324" /></p>
+<p><img title="gmail_love" src="/images/needisme/2010/12/081002iwg.jpg" alt="" width="366" height="324" /></p>
 <p>Gmail本身就拥有很多功能，而Gmail Labs更是助Gmail一臂之力，但毕竟还是有Google照顾不到的地方，下面我们就给出10个让Gmail如虎添翼的第三方网页应用。<br />
 1. <a href="http://www.otherinbox.com/"><strong>Other Inbox</strong></a>。轻松帮助你整理Gmail收件箱。帮你检索收件箱里那些不重要的邮件并将它们分门别类放到文件夹里。比如你订阅的新闻邮件将放到News文件夹里，而来自Amazon或iTunes的邮件则放到Shopping文件夹里。</p>
 <p>2. <a href="http://www.unsubscribe.com/"><strong>Unsubscribe.me</strong></a>。为你的Gmail收件箱增加一个&ldquo;退订&rdquo;按钮，方便一键退订新闻列表邮件。它不会把你的新闻列表邮件放到垃圾桶里，而是给来源发退订邮件。</p>
