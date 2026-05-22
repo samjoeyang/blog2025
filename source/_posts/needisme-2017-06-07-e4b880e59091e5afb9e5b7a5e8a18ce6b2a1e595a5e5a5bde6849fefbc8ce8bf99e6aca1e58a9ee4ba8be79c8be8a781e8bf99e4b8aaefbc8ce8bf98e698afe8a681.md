@@ -5,13 +5,9 @@ categories: NeedIsMe
 tags: ["PHP"]
 ---
 
-<br/>
-https://www.instagram.com/p/BVCCUrzgMqxWhK187KDCSpnsJV86NYGpHp7_eA0/</div>
-</div>
+<img src="/images/needisme/external/73d475ce89a0.jpg" style="max-width:100%;height:auto;" />
 
----
+[![Instagram 图片](/images/needisme/external/73d475ce89a0.jpg
+[查看 Instagram 帖子](https://www.instagram.com/p/BVCCUrzgMqxWhK187KDCSpnsJV86NYGpHp7_eA0)
 
 [📚 返回目录](/needisme-mu-lu/)
-
-
-<a href="https://www.instagram.com/p/BVCCUrzgMqxWhK187KDCSpnsJV86NYGpHp7_eA0/" target="_blank" rel="nofollow">查看 Instagram 帖子</a>

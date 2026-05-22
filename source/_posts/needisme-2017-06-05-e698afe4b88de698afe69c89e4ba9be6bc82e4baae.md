@@ -5,13 +5,9 @@ categories: NeedIsMe
 tags: []
 ---
 
-<br/>
+<img src="/images/needisme/external/e5a55c34e994.jpg" style="max-width:100%;height:auto;" />
 
-</div>
-
----
+[![Instagram 图片](/images/needisme/external/e5a55c34e994.jpg
+[查看 Instagram 帖子](https://www.instagram.com/p/BU8p6iFgNo-N_fUO3n0E4FGLUyaTCAnGoY6Uvw0)
 
 [📚 返回目录](/needisme-mu-lu/)
-
-
-<a href="https://www.instagram.com/p/BU8p6iFgNo-N_fUO3n0E4FGLUyaTCAnGoY6Uvw0/" target="_blank" rel="nofollow">查看 Instagram 帖子</a>
