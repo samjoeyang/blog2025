@@ -31,14 +31,17 @@ jobs:
       - name: Install Dependencies
         run: yarn install --frozen-lockfile
 
-      - name: Deploy Site
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Build Site
         run: |
-          git config --global user.name "GitHub Actions"
-          git config --global user.email "actions@github.com"
-          # 使用 extraheader 注入 Token，避免 password 提示
-          git config --global http.https://github.com/.extraheader "AUTHORIZATION: basic $(echo -n "x-access-token:${GITHUB_TOKEN}" | base64)"
           yarn clean
           yarn build
-          yarn deploy
+
+      - name: Deploy to GitHub Pages
+        run: |
+          cd public
+          git init
+          git checkout -b pages
+          git add -A
+          git -c user.name="GitHub Actions" -c user.email="actions@github.com" commit -m "Site updated: $(date '+%Y-%m-%d %H:%M:%S')"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push -f origin pages
