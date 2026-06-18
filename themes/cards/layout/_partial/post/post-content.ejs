@@ -56,21 +56,26 @@ var speechPartIndex = 0;
     }
 })();
 
-// 获取文章正文，分段朗读（每段不超过200字）
+// 获取文章正文，分段朗读（每段不超过 80 字，避免浏览器TTS超时）
 function getArticleSegments() {
     var el = document.getElementsByClassName('post__content')[0];
     if (!el) return [];
     var text = el.innerText.trim();
     if (!text) return [];
-    // 按句号、问号、感叹号分段
-    var segments = text.split(/(?<=[。！？\n])/);
+    // 先以句号/问号/感叹号/换行切分，再按80字合并
+    var sentences = text.split(/(?<=[。！？\n])/);
     var result = [];
     var buf = '';
-    for (var i = 0; i < segments.length; i++) {
-        var s = segments[i].trim();
+    for (var i = 0; i < sentences.length; i++) {
+        var s = sentences[i].trim();
         if (!s) continue;
-        if ((buf + s).length > 500) {
-            if (buf) result.push(buf);
+        if ((buf + s).length > 80) {
+            if (buf) { result.push(buf); buf = ''; }
+            // 如果句子本身超过80字，继续切分
+            while (s.length > 80) {
+                result.push(s.slice(0, 80));
+                s = s.slice(80);
+            }
             buf = s;
         } else {
             buf += s;
@@ -106,6 +111,8 @@ function findBestChineseVoice() {
     return voices[0] || null;
 }
 
+var speechWatchdog = null;
+
 function speakSegments(segments) {
     if (!segments || segments.length === 0) return;
     speechQueue = segments;
@@ -121,37 +128,62 @@ function goToNextArticle() {
     }
 }
 
+function clearWatchdog() {
+    if (speechWatchdog) {
+        clearTimeout(speechWatchdog);
+        speechWatchdog = null;
+    }
+}
+
 function speakNextSegment() {
+    clearWatchdog();
+    
     if (speechPartIndex >= speechQueue.length) {
         // 朗读完毕
         isSpeaking = false;
         isPaused = false;
         updateSpeechButton();
-        // 自动跳到下一篇
+        // 自动跳到下一篇（1.5秒延迟）
         setTimeout(goToNextArticle, 1500);
         return;
     }
     
+    // 暂停中不继续播
+    if (isPaused) return;
+    
     var text = speechQueue[speechPartIndex];
     var msg = new SpeechSynthesisUtterance(text);
     msg.lang = 'zh-CN';
-    msg.rate = 0.85;  // 稍慢，更清晰
+    msg.rate = 0.85;
     msg.pitch = 1.0;
     msg.volume = 1.0;
     
     var voice = findBestChineseVoice();
     if (voice) msg.voice = voice;
     
+    msg.onstart = function() {
+        // 看门狗：若30秒内onend未触发，强制推进（Chrome超时保护）
+        clearWatchdog();
+        speechWatchdog = setTimeout(function() {
+            speechPartIndex++;
+            speakNextSegment();
+        }, 30000);
+    };
+    
     msg.onend = function() {
+        clearWatchdog();
         speechPartIndex++;
         if (isPaused) return;
         speakNextSegment();
     };
     
-    msg.onerror = function() {
-        isSpeaking = false;
-        isPaused = false;
-        updateSpeechButton();
+    msg.onerror = function(e) {
+        clearWatchdog();
+        // 如果是被中断的错误（pause/cancel），忽略
+        if (e && e.error === 'interrupted') return;
+        // 其他错误：跳过当前段继续
+        speechPartIndex++;
+        if (!isPaused) speakNextSegment();
     };
     
     speechUtterance = msg;
