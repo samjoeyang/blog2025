@@ -38,10 +38,23 @@
 // --- 朗读功能 ---
 var isSpeaking = false;
 var isPaused = false;
+var isAutoMode = false;
 var speechSynth = window.speechSynthesis;
 var speechUtterance = null;
 var speechQueue = [];
 var speechPartIndex = 0;
+
+// 自动连播：页面加载时检查是否需自动朗读
+(function(){
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        // 等页面渲染完毕，再触发音量
+        setTimeout(function() {
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+})();
 
 // 获取文章正文，分段朗读（每段不超过200字）
 function getArticleSegments() {
@@ -100,11 +113,22 @@ function speakSegments(segments) {
     speakNextSegment();
 }
 
+function goToNextArticle() {
+    var nextLink = document.querySelector('.nav__next a.nav__link');
+    if (nextLink && nextLink.href) {
+        sessionStorage.setItem('speech_autoplay', '1');
+        window.location.href = nextLink.href;
+    }
+}
+
 function speakNextSegment() {
     if (speechPartIndex >= speechQueue.length) {
         // 朗读完毕
         isSpeaking = false;
+        isPaused = false;
         updateSpeechButton();
+        // 自动跳到下一篇
+        setTimeout(goToNextArticle, 1500);
         return;
     }
     
