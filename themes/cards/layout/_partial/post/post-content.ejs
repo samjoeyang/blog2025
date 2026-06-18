@@ -35,20 +35,16 @@
 
 
 <script>
-// ===== 朗读引擎 v3 —— 基于轮询的稳定方案 =====
-var SPEECH = {
-    syn: window.speechSynthesis,
-    queue: [],              // 分段队列
-    idx: 0,                 // 当前段索引
-    speaking: false,        // 是否在朗读
-    paused: false,          // 是否暂停
-    timer: null,            // 轮询定时器
-    voice: null,            // 选中的语音
-    articleEndCb: null      // 读完回调
-};
-
-// ---- 自动连播 ----
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
 (function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
     if (sessionStorage.getItem('speech_autoplay') === '1') {
         sessionStorage.removeItem('speech_autoplay');
         setTimeout(function(){
@@ -56,171 +52,119 @@ var SPEECH = {
             if (btn) btn.click();
         }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        startPoll();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
 })();
-
-function getArticleSegments() {
-    var el = document.getElementsByClassName('post__content')[0];
-    if (!el) return [];
-    var text = el.innerText.trim();
-    if (!text) return [];
-    // 按句子切分，每段不超过 80 字
-    var sents = text.split(/(?<=[。！？\n])/);
-    var result = [], buf = '';
-    for (var i = 0; i < sents.length; i++) {
-        var s = sents[i].trim();
-        if (!s) continue;
-        if ((buf + s).length > 80) {
-            if (buf) { result.push(buf); buf = ''; }
-            while (s.length > 80) { result.push(s.slice(0,80)); s = s.slice(80); }
-            buf = s;
-        } else { buf += s; }
-    }
-    if (buf) result.push(buf);
-    return result;
-}
-
-function pickVoice() {
-    if (SPEECH.voice) return SPEECH.voice;
-    var voices = SPEECH.syn.getVoices();
-    var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
-    for (var p = 0; p < picks.length; p++) {
-        for (var v = 0; v < voices.length; v++) {
-            if (voices[v].lang.startsWith('zh') &&
-                voices[v].name.toLowerCase().indexOf(picks[p]) !== -1) {
-                SPEECH.voice = voices[v];
-                return SPEECH.voice;
-            }
-        }
-    }
-    for (var v = 0; v < voices.length; v++) {
-        if (voices[v].lang.startsWith('zh')) { SPEECH.voice = voices[v]; return SPEECH.voice; }
-    }
-    SPEECH.voice = voices[0] || null;
-    return SPEECH.voice;
-}
-
-function goToNextArticle() {
-    var link = document.querySelector('.nav__next a.nav__link');
-    if (link && link.href) {
-        sessionStorage.setItem('speech_autoplay', '1');
-        window.location.href = link.href;
-    }
-}
-
-function speechBtn(el) {
-    if (!el) el = document.getElementById('btn-speech');
-    if (!el) return;
-    if (SPEECH.paused) {
-        el.innerHTML = '▶️ 继续'; el.classList.add('speaking');
-    } else if (SPEECH.speaking) {
-        el.innerHTML = '⏹ 停止'; el.classList.add('speaking');
-    } else {
-        el.innerHTML = '🎧 朗读'; el.classList.remove('speaking');
-    }
-}
-
-function pollSpeech() {
-    if (SPEECH.paused) return;   // 暂停中，不操作
-    if (SPEECH.syn.speaking) return;  // 还在朗读，继续等
-    
-    // 当前段读完了
-    SPEECH.idx++;
-    
-    if (SPEECH.idx >= SPEECH.queue.length) {
-        // 整篇文章读完了
-        SPEECH.speaking = false;
-        SPEECH.paused = false;
-        clearInterval(SPEECH.timer);
-        SPEECH.timer = null;
-        speechBtn();
-        setTimeout(goToNextArticle, 1500);
-        return;
-    }
-    
-    // 播下一段
-    playSegment();
-}
-
-function playSegment() {
-    if (SPEECH.idx >= SPEECH.queue.length) return;
-    var text = SPEECH.queue[SPEECH.idx];
-    var msg = new SpeechSynthesisUtterance(text);
-    msg.lang = 'zh-CN';
-    msg.rate = 0.85;
-    msg.pitch = 1.0;
-    msg.volume = 1.0;
-    var v = pickVoice();
-    if (v) msg.voice = v;
-    
-    // 开始轮询
-    if (!SPEECH.timer) {
-        SPEECH.timer = setInterval(pollSpeech, 300);
-    }
-    
-    SPEECH.syn.speak(msg);
-}
-
-function toggleSpeech() {
-    var btn = document.getElementById('btn-speech');
-    
-    // 暂停 -> 继续
-    if (SPEECH.paused) {
-        SPEECH.syn.resume();
-        SPEECH.paused = false;
-        if (!SPEECH.timer) {
-            SPEECH.timer = setInterval(pollSpeech, 300);
-        }
-        speechBtn(btn);
-        return;
-    }
-    
-    // 朗读中 -> 暂停
-    if (SPEECH.speaking) {
-        SPEECH.syn.pause();
-        SPEECH.paused = true;
-        speechBtn(btn);
-        return;
-    }
-    
-    // 有未读完的队列 —> 继续
-    if (SPEECH.queue.length > 0 && SPEECH.idx < SPEECH.queue.length) {
-        SPEECH.speaking = true;
-        SPEECH.paused = false;
-        speechBtn(btn);
-        playSegment();
-        return;
-    }
-    
-    // 开始新的朗读
-    var segs = getArticleSegments();
-    if (segs.length === 0) return;
-    
-    if (SPEECH.syn.getVoices().length === 0) {
-        SPEECH.syn.onvoiceschanged = function() {
-            SPEECH.syn.onvoiceschanged = null;
-            SPEECH.queue = segs;
-            SPEECH.idx = 0;
-            SPEECH.speaking = true;
-            SPEECH.paused = false;
-            speechBtn(btn);
-            playSegment();
-        };
-        SPEECH.syn.getVoices();
-        return;
-    }
-    
-    SPEECH.queue = segs;
-    SPEECH.idx = 0;
-    SPEECH.speaking = true;
-    SPEECH.paused = false;
-    speechBtn(btn);
-    playSegment();
-}
-
-window.addEventListener('beforeunload', function() {
-    if (SPEECH.timer) clearInterval(SPEECH.timer);
-    SPEECH.syn.cancel();
-});
 </script>
 
 
