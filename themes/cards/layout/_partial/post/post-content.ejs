@@ -37,6 +37,7 @@
 <script>
 // --- 朗读功能 ---
 var isSpeaking = false;
+var isPaused = false;
 var speechSynth = window.speechSynthesis;
 var speechUtterance = null;
 var speechQueue = [];
@@ -119,11 +120,13 @@ function speakNextSegment() {
     
     msg.onend = function() {
         speechPartIndex++;
+        if (isPaused) return;
         speakNextSegment();
     };
     
     msg.onerror = function() {
         isSpeaking = false;
+        isPaused = false;
         updateSpeechButton();
     };
     
@@ -132,28 +135,31 @@ function speakNextSegment() {
 }
 
 function toggleSpeech() {
-    if (isSpeaking) {
-        // 正在朗读 -> 停止
-        speechSynth.cancel();
-        isSpeaking = false;
-        speechQueue = [];
+    // 正在朗读 -> 暂停
+    if (isSpeaking && !isPaused) {
+        speechSynth.pause();
+        isPaused = true;
         updateSpeechButton();
         return;
     }
-    
-    // 检查是否有待继续的朗读
+    // 已暂停 -> 继续
+    if (isSpeaking && isPaused) {
+        speechSynth.resume();
+        isPaused = false;
+        updateSpeechButton();
+        return;
+    }
+    // 之前有朗读记录 -> 继续
     if (speechQueue.length > 0 && speechPartIndex < speechQueue.length) {
-        speakNextSegment();
         isSpeaking = true;
+        isPaused = false;
         updateSpeechButton();
+        speakNextSegment();
         return;
     }
-    
     // 开始新的朗读
     var segments = getArticleSegments();
     if (segments.length === 0) return;
-    
-    // 先确保语音列表已加载
     if (speechSynth.getVoices().length === 0) {
         speechSynth.onvoiceschanged = function() {
             speechSynth.onvoiceschanged = null;
@@ -161,12 +167,11 @@ function toggleSpeech() {
             updateSpeechButton();
             speakSegments(segments);
         };
-        // 触发加载
         speechSynth.getVoices();
         return;
     }
-    
     isSpeaking = true;
+    isPaused = false;
     updateSpeechButton();
     speakSegments(segments);
 }
@@ -174,7 +179,10 @@ function toggleSpeech() {
 function updateSpeechButton() {
     var btn = document.getElementById('btn-speech');
     if (!btn) return;
-    if (isSpeaking) {
+    if (isSpeaking && isPaused) {
+        btn.innerHTML = '▶️ 继续';
+        btn.classList.add('speaking');
+    } else if (isSpeaking) {
         btn.innerHTML = '⏹ 停止';
         btn.classList.add('speaking');
     } else {
