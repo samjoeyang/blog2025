@@ -8,6 +8,7 @@
     <div class="post-title__meta">
         <%- partial('_meta/date') %>
         <%- partial('_meta/categories') %> 
+        <%- partial('_meta/speech') %>
         <%- partial('_plugins/statistics/index', {position: 'page'}) %> 
     </div>
 </div>
@@ -33,17 +34,159 @@
     <div class="post__header"><%- partial('_meta/thumbnail') %><%- partial('_meta/expire') %></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// --- 朗读功能 ---
+var isSpeaking = false;
+var speechSynth = window.speechSynthesis;
+var speechUtterance = null;
+var speechQueue = [];
+var speechPartIndex = 0;
+
+// 获取文章正文，分段朗读（每段不超过200字）
+function getArticleSegments() {
+    var el = document.getElementsByClassName('post__content')[0];
+    if (!el) return [];
+    var text = el.innerText.trim();
+    if (!text) return [];
+    // 按句号、问号、感叹号分段
+    var segments = text.split(/(?<=[。！？\n])/);
+    var result = [];
+    var buf = '';
+    for (var i = 0; i < segments.length; i++) {
+        var s = segments[i].trim();
+        if (!s) continue;
+        if ((buf + s).length > 500) {
+            if (buf) result.push(buf);
+            buf = s;
+        } else {
+            buf += s;
+        }
     }
+    if (buf) result.push(buf);
+    return result;
+}
+
+// 找到最佳的中文语音
+function findBestChineseVoice() {
+    var voices = speechSynth.getVoices();
+    // 语音优先级：神经语音 > macOS Siri 语音 > 标准中文语音
+    var priorityList = ['xiao', 'xiaoxiao', 'yunxi', 'yunyang', 
+                        'zhong', 'mei-jia', 'meijia', 'ting-ting', 'tingting', 
+                        'huihui', 'yaoyao', 'zhiyu', 'zeina', 'zira'];
+    // 1. 按优先级找
+    for (var p = 0; p < priorityList.length; p++) {
+        for (var v = 0; v < voices.length; v++) {
+            if (voices[v].lang.startsWith('zh') && 
+                voices[v].name.toLowerCase().indexOf(priorityList[p]) !== -1) {
+                return voices[v];
+            }
+        }
+    }
+    // 2. 找任意中文语音
+    for (var v = 0; v < voices.length; v++) {
+        if (voices[v].lang.startsWith('zh')) {
+            return voices[v];
+        }
+    }
+    // 3. 默认返回第一个可用语音
+    return voices[0] || null;
+}
+
+function speakSegments(segments) {
+    if (!segments || segments.length === 0) return;
+    speechQueue = segments;
+    speechPartIndex = 0;
+    speakNextSegment();
+}
+
+function speakNextSegment() {
+    if (speechPartIndex >= speechQueue.length) {
+        // 朗读完毕
+        isSpeaking = false;
+        updateSpeechButton();
+        return;
+    }
+    
+    var text = speechQueue[speechPartIndex];
+    var msg = new SpeechSynthesisUtterance(text);
+    msg.lang = 'zh-CN';
+    msg.rate = 0.85;  // 稍慢，更清晰
+    msg.pitch = 1.0;
+    msg.volume = 1.0;
+    
+    var voice = findBestChineseVoice();
+    if (voice) msg.voice = voice;
+    
+    msg.onend = function() {
+        speechPartIndex++;
+        speakNextSegment();
+    };
+    
+    msg.onerror = function() {
+        isSpeaking = false;
+        updateSpeechButton();
+    };
+    
+    speechUtterance = msg;
+    speechSynth.speak(msg);
+}
+
+function toggleSpeech() {
+    if (isSpeaking) {
+        // 正在朗读 -> 停止
+        speechSynth.cancel();
+        isSpeaking = false;
+        speechQueue = [];
+        updateSpeechButton();
+        return;
+    }
+    
+    // 检查是否有待继续的朗读
+    if (speechQueue.length > 0 && speechPartIndex < speechQueue.length) {
+        speakNextSegment();
+        isSpeaking = true;
+        updateSpeechButton();
+        return;
+    }
+    
+    // 开始新的朗读
+    var segments = getArticleSegments();
+    if (segments.length === 0) return;
+    
+    // 先确保语音列表已加载
+    if (speechSynth.getVoices().length === 0) {
+        speechSynth.onvoiceschanged = function() {
+            speechSynth.onvoiceschanged = null;
+            isSpeaking = true;
+            updateSpeechButton();
+            speakSegments(segments);
+        };
+        // 触发加载
+        speechSynth.getVoices();
+        return;
+    }
+    
+    isSpeaking = true;
+    updateSpeechButton();
+    speakSegments(segments);
+}
+
+function updateSpeechButton() {
+    var btn = document.getElementById('btn-speech');
+    if (!btn) return;
+    if (isSpeaking) {
+        btn.innerHTML = '⏹ 停止';
+        btn.classList.add('speaking');
+    } else {
+        btn.innerHTML = '🔊 朗读';
+        btn.classList.remove('speaking');
+    }
+}
+
+// 页面离开时停止朗读
+window.addEventListener('beforeunload', function() {
+    if (speechSynth) speechSynth.cancel();
+});
 </script>
 
 
