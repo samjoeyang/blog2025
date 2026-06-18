@@ -152,11 +152,20 @@
         var v = pickVoice();
         if (v) msg.voice = v;
 
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
         curMsg = msg;
         speaking = true;
         paused = false;
         updateBtn();
-        startPoll();
         syn.speak(msg);
     }
 
