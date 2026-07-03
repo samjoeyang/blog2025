@@ -4,8 +4,8 @@
 
 # Site
 title: Need.UNO
-subtitle: '见证AI时代'
-description: '见证AI时代'
+subtitle: '一个技术人的知行笔记'
+description: '一个技术人的知行笔记'
 keywords: AI, 人工智能, 技术革命, 未来展望, 社会变革
 author: Samjoe Yang
 language: zh-CN
@@ -96,6 +96,7 @@ pagination_dir: page
 # Include / Exclude file(s)
 ## include:/exclude: options only apply to the 'source/' folder
 include:
+  - '.nojekyll'
 exclude:
 ignore:
 
