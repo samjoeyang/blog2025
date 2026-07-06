@@ -192,17 +192,26 @@ function gitPush(commitMsg) {
   try {
     execSync('git add -A', { cwd: BLOG_ROOT, timeout: 30000, encoding: 'utf-8' });
     execSync(`git commit -m "${commitMsg.replace(/"/g, '\\"')}"`, { cwd: BLOG_ROOT, timeout: 30000, encoding: 'utf-8' });
+    execSync('git pull --rebase origin theme-cards 2>&1 || true', { cwd: BLOG_ROOT, timeout: 60000, encoding: 'utf-8' });
     execSync('git push origin theme-cards', { cwd: BLOG_ROOT, timeout: 120000, encoding: 'utf-8' });
     console.log('  ✅ 推送成功');
     return true;
   } catch (err) {
     const msg = err.message;
-    if (msg.includes('nothing to commit') || msg.includes('Everything up-to-date')) {
+    if (msg.includes('nothing to commit') || msg.includes('Everything up-to-date') || msg.includes('up-to-date')) {
       console.log('  ℹ️  无需推送');
       return true;
     }
-    console.error(`  ❌ 推送失败: ${msg.slice(0, 200)}`);
-    return false;
+    // Try force push as last resort
+    try {
+      console.log('  ⚠️ 尝试强制推送...');
+      execSync('git push origin theme-cards --force', { cwd: BLOG_ROOT, timeout: 120000, encoding: 'utf-8' });
+      console.log('  ✅ 强制推送成功');
+      return true;
+    } catch (e2) {
+      console.error(`  ❌ 强制推送也失败: ${e2.message.slice(0, 200)}`);
+      return false;
+    }
   }
 }
 
