@@ -1,0 +1,28 @@
+<% if (is_post()) { %>
+<% var cleanTitle = (page.title || '').replace(/"/g, '\\"'); %>
+<% var cleanDesc = ((page.description || page.title) || '').replace(/"/g, '\\"'); %>
+<% var pubDate = date(page.date, 'YYYY-MM-DD'); %>
+<% var modDate = date(page.updated || page.date, 'YYYY-MM-DD'); %>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "<%= cleanTitle %>",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "<%= pubDate %>",
+  "dateModified": "<%= modDate %>",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "<%= page.permalink %>" },
+  "description": "<%= cleanDesc %>"
+}
+</script>
+<% } %>
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>

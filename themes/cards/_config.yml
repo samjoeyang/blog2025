@@ -32,7 +32,7 @@ head:
     fb_app_id: 
 
   # 自定义 head
-  custom_head: 
+  custom_head:
     # - ''
     # - ''
 
@@ -406,7 +406,7 @@ footer:
 
 # 图片懒加载插件
 lazyload:
-  enable: false
+  enable: true
   loadingImage: 
 
 # 站内搜索插件

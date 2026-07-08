@@ -5,8 +5,8 @@
 # Site
 title: Need.UNO
 subtitle: '一个技术人的知行笔记'
-description: '一个技术人的知行笔记'
-keywords: AI, 人工智能, 技术革命, 未来展望, 社会变革
+description: '一个技术人的知行笔记 —— 分享技术、管理、编程与商业思考的原创博客'
+keywords: 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化
 author: Samjoe Yang
 language: zh-CN
 timezone: Asia/Shanghai
@@ -140,6 +140,21 @@ sitemap:
 # Baidu Sitemap
 baidusitemap:
   path: baidusitemap.xml
+
+# RSS Feed
+feed:
+  enable: true
+  type:
+    - atom
+    - rss2
+  path:
+    - atom.xml
+    - rss2.xml
+  limit: 50
+  hub:
+  content: true
+  content_limit: 140
+  content_limit_delim: ' '
 
 # Google Analytics
 google_analytics:

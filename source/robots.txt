@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /page/
+Disallow: /archives/
+Disallow: /tags/
+Disallow: /categories/
+
+Sitemap: https://need.uno/sitemap.xml
+Sitemap: https://need.uno/baidusitemap.xml
+
+# Crawl-delay: 10
