@@ -623,7 +623,7 @@ vendors:
 # 去 Google Search Console / 百度站长平台注册后填入验证码即可
 site_verification:
   google: ''  # Google meta 验证码
-  baidu: ''   # 百度 meta 验证码
+  baidu: 'codeva-cUEi2fKc7m'   # 百度 meta 验证码
 
 
 # ---------------------------------------------------------------
