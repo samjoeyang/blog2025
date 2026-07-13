@@ -12,8 +12,11 @@ import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 
 const BLOG_DIR = '/Users/samjoeyang/workspace/blog2025';
 const POSTS_DIR = `${BLOG_DIR}/source/_posts`;
-const STATE_FILE = `${BLOG_DIR}/scripts/pmp-state.json`;
+const STATE_FILE = `${BLOG_DIR}/_scripts/pmp-state.json`;
 const DIR_PAGE_FILE = `${POSTS_DIR}/PMP职场实战108问.md`;
+
+// 确保 Hexo 不加载本脚本目录
+// 本脚本已移至 _scripts/ 避免被 Hexo 误加载
 const MODEL = 'deepseek/deepseek-v4-flash';
 const MAX_RETRIES = 3;
 const MIN_ARTICLE_LENGTH = 800;
