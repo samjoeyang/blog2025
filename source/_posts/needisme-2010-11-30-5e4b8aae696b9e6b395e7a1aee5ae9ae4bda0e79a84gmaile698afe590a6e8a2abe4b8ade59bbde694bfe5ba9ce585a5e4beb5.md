@@ -1,26 +1,25 @@
 ---
-title: "5个方法确定你的Gmail是否被中国政府入侵"
+title: "Gmail 安全自查清单：5个步骤确保你的邮箱不被盗用"
 date: 2010-11-30 10:55:00
 categories: NeedIsMe
-tags: ["HTML", "Google", "Google Fans"]
+tags: ["Google", "Gmail", "网络安全", "隐私保护"]
 ---
 
-<p>原始来源：<a href="http://www.chinagfw.org/2010/10/gmail_08.html">http://www.chinagfw.org/2010/10/gmail_08.html</a></p>
-<div>编辑说明：想确定你的Gmail是否安全？请访问：<a href="http://mail.google.com/support/bin/static.py?page=checklist.cs&amp;tab=29488">http://mail.google.com/support/bin/static.py?page=checklist.cs&amp;tab=29488</a></p>
-<p>Gmail的支持页面里<a href="http://mail.google.com/support/bin/static.py?page=checklist.cs&amp;tab=29488">更新了一篇安全清单</a>，通过以下5个方法即可知道自己的Gmail是否有安全隐患。敏感词人士必读：</p>
+<p>想确定你的Gmail是否安全？请访问：<a href="http://mail.google.com/support/bin/static.py?page=checklist.cs&amp;tab=29488">http://mail.google.com/support/bin/static.py?page=checklist.cs&amp;tab=29488</a></p>
+<p>Gmail的支持页面里<a href="http://mail.google.com/support/bin/static.py?page=checklist.cs&amp;tab=29488">更新了一篇安全清单</a>，通过以下5个方法即可检查自己的Gmail是否有安全隐患：</p>
 <ol>
 <li><a href="https://www.google.com/accounts/IssuedAuthSubTokens">在这里</a>查看授权获取Google帐户数据的网站。我自认为自己的安全功夫做的很到家，但在这里依然发现了1个奇怪的网站获得了Google帐户的访问权，赶紧ban掉</li>
 <li>检查你浏览器的插件、扩展和第三方应用是否需要访问你的Google帐户。比如你安装了一个可检查Gmail新邮件的扩展，那么Google是无法控制这个扩展的安全性的，如果你安装了并不知名的扩展，需要小心了</li>
 <li>查看邮件设置，以确保你的Gmail邮件没有被转发出去，有四个地方的设置会有安全隐患：
 <ul>
-<li><a href="http://www.chinagfw.org/2010/10/gmail_08.html?shva=1#settings/general">常规</a>：检查签名、外出回复</li>
-<li><a href="http://www.chinagfw.org/2010/10/gmail_08.html?shva=1#settings/accounts">帐户</a>：检查'用这个地址发送邮件'、</li>
-<li><a href="http://www.chinagfw.org/2010/10/gmail_08.html?shva=1#settings/filters">过滤器</a>：检查是否有过滤器将你的邮件转发到垃圾箱、垃圾邮件，或是转发到其它邮箱里</li>
-<li><a href="http://www.chinagfw.org/2010/10/gmail_08.html?shva=1#settings/fwdandpop">转发和POP/IMAP</a>：查看这里是否有位置的帐户或邮件客户端</li>
+<li><strong>常规</strong>：检查签名、外出回复</li>
+<li><strong>帐户</strong>：检查'用这个地址发送邮件'、</li>
+<li><strong>过滤器</strong>：检查是否有过滤器将你的邮件转发到垃圾箱、垃圾邮件，或是转发到其它邮箱里</li>
+<li><strong>转发和POP/IMAP</strong>：查看这里是否有未知的帐户或邮件客户端</li>
 </ul>
 </li>
 <li>检查帐户最近的可疑活动。点击Gmail最下面的'上次帐户活动时间'后的'详细信息'链接，看看是否有可疑的IP访问了你的Gmail</li>
-<li>进入设置的'<a href="http://www.chinagfw.org/2010/10/gmail_08.html?shva=1#settings/general">常规</a>'里，将'浏览器连接'设置为'始终使用 https'，以确保当你使用咖啡厅或酒店的公众网络访问邮箱时不会泄露信息。</li>
+<li>进入设置的'常规'里，将'浏览器连接'设置为'始终使用 https'，以确保当你使用咖啡厅或酒店的公众网络访问邮箱时不会泄露信息。</li>
 </ol>
 <p>原文：<br />
 Gmail's support site has <a href="http://mail.google.com/support/bin/static.py?page=checklist.cs&amp;tab=29488">a security checklist</a><br />
