@@ -58,7 +58,7 @@ tags: ["API", "iPhone", "Mac"]
 <p>* 抽烟...男的女的一起抽，教授学生一起抽，是一种最好的搭讪机会：&ldquo;嗨，来一根？&rdquo;</p>
 <p>英国不是你想来，你想来就能来。</p>
 <p>来源：<a href="http://blog.renren.com/share/250352255/3978808850">http://blog.renren.com/share/250352255/3978808850</a></p>
-<p><a href="http://luo.bo/2476/"><img src="http://dulei.si/files/823fce7754663069ac8177906cd41b7e.jpg" alt="" border="0" /><br /></a></p>
+<p><a href="http://luo.bo/2476/"><img src="/images/dulei/823fce7754663069ac8177906cd41b7e.jpg" alt="" border="0" /><br /></a></p>
 <p>--------<br />最后一句才是真的气人（by me）</p>
 
 ---

@@ -53,7 +53,7 @@ tags: ["互联网", "Internet"]
 <p>42.藻雷貔(pi)：传说中的神兽，因善装死，又称装毙藻雷貔。</p>
 <p>43.甘鲸：井叉在长期斗争中产生的副产品</p>
 <p>44.症懈萎猿：河蟹的跟班，盛产于全国各地</p>
-<p><img src="http://i.dulei.si/files/38a416495dddf5942bea3c8a6b75d4cd.jpg" border="0" alt="" /></p>
+<p><img src="/images/dulei/38a416495dddf5942bea3c8a6b75d4cd.jpg" border="0" alt="" /></p>
 
 ---
 

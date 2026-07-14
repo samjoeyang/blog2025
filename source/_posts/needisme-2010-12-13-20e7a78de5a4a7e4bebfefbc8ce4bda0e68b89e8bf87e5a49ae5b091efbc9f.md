@@ -5,7 +5,7 @@ categories: NeedIsMe
 tags: []
 ---
 
-<p><img src="http://dulei.si/files/74c9cf2d3d04d51eb929045d9186897a.jpg" alt="" border="" />
+<p><img src="/images/dulei/74c9cf2d3d04d51eb929045d9186897a.jpg" alt="" border="" />
 <p>1.幽灵屎：<br />就是你已经感觉大出来，但在马桶内找不到屎的那种。</p>
 <p>2。清白屎：<br />就是你把他大出来，看见他在马桶内，但却在卫生纸上找不到痕迹的那种。</p>
 <p>3。濡湿屎：<br />就是你擦屁股五十次之后，仍旧感觉没擦过一样，因此，你得在你的屁股和内裤之间垫上一些卫生纸，免得裤子被沾污的那种。</p>

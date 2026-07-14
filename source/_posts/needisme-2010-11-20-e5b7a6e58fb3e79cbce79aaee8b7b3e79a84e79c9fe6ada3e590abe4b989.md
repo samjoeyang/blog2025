@@ -5,7 +5,7 @@ categories: NeedIsMe
 tags: []
 ---
 
-<p><img src="http://dulei.si/files/805fd574b8d5070cf4e877415166bc2d.jpg" border="0" alt="" /></p>
+<p><img src="/images/dulei/805fd574b8d5070cf4e877415166bc2d.jpg" border="0" alt="" /></p>
 <p><strong>星期一：</strong><br />
 左眼跳，今天有事情要发生！<br />
 右眼跳，平常事，不要紧。</p>
@@ -33,7 +33,7 @@ tags: []
 卯时：左贵客来，右平安进。酉时：左有客来，右远客至。<br />
 辰时：左远客来，右主损害。戌时：左有客至，右主聚会。<br />
 巳时：左有饮食，右有凶恶。亥时：左主客至，右主官非。</p>
-<p><img src="http://dulei.si/files/268c22bdfc8c789ccd5b605b78516ff5.jpg" border="0" alt="" /></p>
+<p><img src="/images/dulei/268c22bdfc8c789ccd5b605b78516ff5.jpg" border="0" alt="" /></p>
 <p><strong>子时：23点&mdash;&mdash;01点前</strong><br />
 左眼：意外之喜降临，会有不错好运，你的心脏要强一点，别兴奋过了头。<br />
 右眼：有人请你吃饭，可以省下一笔钱，但是这个人的目的不明，你要多多斟酌。</p>

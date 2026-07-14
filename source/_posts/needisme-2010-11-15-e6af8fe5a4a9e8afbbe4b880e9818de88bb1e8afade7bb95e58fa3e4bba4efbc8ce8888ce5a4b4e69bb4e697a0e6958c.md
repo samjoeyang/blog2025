@@ -27,7 +27,7 @@ tags: []
 <p>20. Ted sent Fred ten hens yesterday so Fred's fresh bread is ready already.<br />特德昨天给弗莱德送去了十只母鸡，所以弗莱德的新鲜面包已经准备好了。</p>
 <p>21. A Finnish fisher named Fisher failed to fish any fish one Friday afternoon and finally he found out a big fissure in his fishing net.<br />一个名叫费希尔的芬兰渔民在一个星期五的下午未能捕捉到任何鱼，结果他民现他的渔网上有一个大裂口。</p>
 <p>22. Franc's father is frying French fries for his five fire-fighter friends after they finished a fire-fighting in a factory.<br />在结束对一家工厂的灭火战斗以后，弗兰克的父亲在为他的五个消防队员朋友炸制法式土豆(炸薯条)</p>
-<p><a href="http://luo.bo/2564/"><img src="http://dulei.si/files/6e47d390f5d25ece60bc296ec1002910.gif" alt="" border="0" /></a></p>
+<p><a href="http://luo.bo/2564/"><img src="/images/dulei/6e47d390f5d25ece60bc296ec1002910.gif" alt="" border="0" /></a></p>
 
 ---
 

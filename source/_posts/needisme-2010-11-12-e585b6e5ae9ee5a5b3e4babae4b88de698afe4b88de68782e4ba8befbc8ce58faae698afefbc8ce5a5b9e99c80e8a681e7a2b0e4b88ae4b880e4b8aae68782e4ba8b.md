@@ -66,7 +66,7 @@ tags: []
 <p>没等她说完。他很强势的告诉她&ldquo;好了。听我的。你收拾一下。我一会儿去接你。&rdquo;</p>
 <p>其实女人不是不懂事，只是，她需要碰上一个懂事的男人。其实，情侣之间，是可以互相的。</p>
 <p><strong>男人真的应该多从女性的角度看问题，这个文章很好，我会经常看的。 </strong></p>
-<p><a href="http://luo.bo/2479/"><img src="http://dulei.si/files/813308a819915e540c491854751f9ca3.jpg" border="0" alt="" /></a></p>
+<p><a href="http://luo.bo/2479/"><img src="/images/dulei/813308a819915e540c491854751f9ca3.jpg" border="0" alt="" /></a></p>
 
 ---
 
