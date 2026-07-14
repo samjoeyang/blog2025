@@ -10,7 +10,12 @@
 import { execSync } from 'child_process';
 import { readFileSync, writeFileSync, existsSync, mkdirSync } from 'fs';
 
-const BLOG_DIR = '/Users/samjoeyang/workspace/blog2025';
+// 引入图表生成器
+import { generateDiagram, inferDiagramType, safeSlug } from '../tools/generate-pmp-diagram.mjs';
+import { resolve } from 'path';
+
+const __dirname = import.meta.dirname;
+const BLOG_DIR = resolve(__dirname, '..');
 const POSTS_DIR = `${BLOG_DIR}/source/_posts`;
 const STATE_FILE = `${BLOG_DIR}/_scripts/pmp-state.json`;
 const DIR_PAGE_FILE = `${POSTS_DIR}/PMP职场实战108问.md`;
@@ -149,6 +154,49 @@ function run(cmd, opts = {}) {
   return execSync(cmd, { encoding: 'utf-8', cwd: BLOG_DIR, timeout: 120000, ...opts }).trim();
 }
 
+// ===== 配图生成函数 =====
+function addDiagramToArticle(q, articlePath) {
+  const type = inferDiagramType(q.num);
+  const slug = `q${String(q.num).padStart(3, '0')}-${safeSlug(q.title)}`;
+
+  try {
+    const diagramRelPath = generateDiagram(q.num, q.title, type, slug);
+
+    // 在文章末尾插入配图引用（放在返回目录链接之前）
+    let content = readFileSync(articlePath, 'utf-8');
+
+    // 如果已经包含配图引用，跳过
+    if (content.includes(`![](${diagramRelPath})`) || content.includes(diagramRelPath)) {
+      console.log(`  ℹ️ 配图已存在，跳过`);
+      return diagramRelPath;
+    }
+
+    // 在文末插入配图
+    const imageTag = `
+
+---
+
+![第${q.num}问：${q.title}](/images/pmp/${slug}.svg)
+
+`;
+
+    // 寻找返回目录链接，在它之前插入
+    const dirLinkIdx = content.lastIndexOf('📚');
+    if (dirLinkIdx >= 0) {
+      content = content.slice(0, dirLinkIdx) + imageTag + content.slice(dirLinkIdx);
+    } else {
+      // 在末尾追加
+      content = content.trimEnd() + '\n' + imageTag;
+    }
+
+    writeFileSync(articlePath, content);
+    return diagramRelPath;
+  } catch (e) {
+    console.warn(`  ⚠️ 配图生成失败: ${e.message}`);
+    return null;
+  }
+}
+
 function getState() {
   if (existsSync(STATE_FILE)) {
     return JSON.parse(readFileSync(STATE_FILE, 'utf-8'));
@@ -261,6 +309,13 @@ tags: [PMP, 项目管理, 职场]
   const filePath = `${POSTS_DIR}/${q.slug}.md`;
   writeFileSync(filePath, frontMatter + content);
   console.log(`  ✅ 已保存: ${q.slug}.md (${content.length}字)`);
+
+  // 生成配图
+  const diagramPath = addDiagramToArticle(q, filePath);
+  if (diagramPath) {
+    console.log(`  🖼️ 配图已添加: ${diagramPath}`);
+  }
+
   return filePath;
 }
 
