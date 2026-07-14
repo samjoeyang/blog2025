@@ -1,0 +1,51 @@
+name: Deploy Hexo Site
+
+on:
+  push:
+    branches:
+      - main
+      - theme-cards
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+      id-token: write
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          submodules: true
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'yarn'
+
+      - name: Install Dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build Site
+        run: |
+          yarn clean
+          yarn build
+
+      - name: Deploy to GitHub Pages
+        run: |
+          cd public
+          git init
+          git checkout -b pages
+          git add -A
+          git -c user.name="GitHub Actions" -c user.email="actions@github.com" commit -m "Site updated: $(date '+%Y-%m-%d %H:%M:%S')"
+          git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
+          git push -f origin pages
+
+      - name: Sync to Blogger
+        env:
+          AGENTMAIL_KEY: ${{ secrets.AGENTMAIL_KEY }}
+        run: node tools/sync-to-blogger.mjs
