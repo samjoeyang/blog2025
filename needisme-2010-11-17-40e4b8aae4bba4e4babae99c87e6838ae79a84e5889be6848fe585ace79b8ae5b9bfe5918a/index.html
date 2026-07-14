@@ -30,7 +30,7 @@
 <title>40个令人震惊的创意公益广告 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -66,9 +66,9 @@
 <meta property="og:image" content="http://img.uuhy.com/uploads/2010/11/extremeads41.jpg">
 <meta property="og:image" content="http://img.uuhy.com/uploads/2010/11/extremeads17.jpg">
 <meta property="article:published_time" content="2010-11-17T11:52:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.238Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.795Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://img.uuhy.com/uploads/2010/11/extremeads20.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -89,8 +89,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "40个令人震惊的创意公益广告",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-17",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-17-40e4b8aae4bba4e4babae99c87e6838ae79a84e5889be6848fe585ace79b8ae5b9bfe5918a/" },
+  "description": "40个令人震惊的创意公益广告"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -105,6 +144,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -129,6 +170,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -156,6 +199,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -173,17 +220,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -193,47 +369,47 @@
 <p>今天分享的40个令人震惊的创意公益广告，内容都是以反对家庭暴力，吸烟，酗酒和药物滥用，以及侵犯人权和自然保护运动为主。也许我们真的应该反思一下社会中一些存在的现象了。</p>
 <p>其中某些图片可以会让你不舒服，往下看请慎重。</p>
 <p><strong><a target="_blank" rel="noopener" href="http://img.uuhy.com/uploads/2010/11/wwf_ad_03_.jpg">Imagine This is Yours</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://img.uuhy.com/uploads/2010/11/wwf_ad_03_.jpg"><img src="http://img.uuhy.com/uploads/2010/11/extremeads20.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://img.uuhy.com/uploads/2010/11/wwf_ad_03_.jpg"><img src="http://img.uuhy.com/uploads/2010/11/extremeads20.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads20.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/the_roy_castle_lung_cancer_foundation_chair?size=_original">The Roy Castle Lung Cancer Foundation: Chair</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/the_roy_castle_lung_cancer_foundation_chair?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads44.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/the_roy_castle_lung_cancer_foundation_chair?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads44.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads44.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/amnesty_international_archery?size=_original">Amnesty International: Archery</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/amnesty_international_archery?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads1.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/amnesty_international_archery?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads1.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/wwf_blood?size=_original">WWF: Blood</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/wwf_blood?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads2.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/wwf_blood?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads2.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://thedesigninspiration.com/articles/top-45-creative-anti-smoking-advertisements/">Anti-Smoking</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://thedesigninspiration.com/articles/top-45-creative-anti-smoking-advertisements/"><img src="http://img.uuhy.com/uploads/2010/11/extremeads15.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://thedesigninspiration.com/articles/top-45-creative-anti-smoking-advertisements/"><img src="http://img.uuhy.com/uploads/2010/11/extremeads15.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads15.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/stella_coffee_pot_spider?size=_original">Stella Coffee Pot: Spider</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/stella_coffee_pot_spider?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads3.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/stella_coffee_pot_spider?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads3.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads3.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/save_the_children_child_labour?size=_original">Save the Children: Child labour</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/save_the_children_child_labour?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads5.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/save_the_children_child_labour?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads5.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads5.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/humans_for_animals_monkey">Humans for Animals: Monkey</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/humans_for_animals_monkey"><img src="http://img.uuhy.com/uploads/2010/11/extremeads10.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/humans_for_animals_monkey"><img src="http://img.uuhy.com/uploads/2010/11/extremeads10.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads10.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/rspca_woman?size=_original">RSPCA: Woman</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/rspca_woman?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads6.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/rspca_woman?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads6.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads6.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/forum/stop_violence_against_women">Stop violence against women</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/forum/stop_violence_against_women"><img src="http://img.uuhy.com/uploads/2010/11/extremeads45.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/forum/stop_violence_against_women"><img src="http://img.uuhy.com/uploads/2010/11/extremeads45.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads45.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://webecoist.com/2008/12/27/creative-ads-environment-humanity/">They Weren&rsquo;t Born to be Worn</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://webecoist.com/2008/12/27/creative-ads-environment-humanity/"><img src="http://img.uuhy.com/uploads/2010/11/extremeads46.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://webecoist.com/2008/12/27/creative-ads-environment-humanity/"><img src="http://img.uuhy.com/uploads/2010/11/extremeads46.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads46.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/masterlock_hippies?size=_original">Masterlock: Hippies</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/masterlock_hippies?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads7.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/masterlock_hippies?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads7.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads7.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/rsf_ink?size=_original">RSF: Ink</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/rsf_ink?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads8.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/rsf_ink?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads8.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads8.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/skins_defy_genetics_2?size=_original">Skins: Defy genetics, 2</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/skins_defy_genetics_2?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads4.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/skins_defy_genetics_2?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads4.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads4.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/fur_free_angry_fox_2?size=_original">Fur Free: Angry fox, 2</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/fur_free_angry_fox_2?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads11.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/fur_free_angry_fox_2?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads11.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads11.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/online/ashtraymouth_roach_girl?size=_original">Ashtraymouth: Roach girl</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/online/ashtraymouth_roach_girl?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads12.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/online/ashtraymouth_roach_girl?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads12.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads12.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/domestic_violence_livingroom?size=_original">Domestic violence: Livingroom</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/domestic_violence_livingroom?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads13.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/domestic_violence_livingroom?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads13.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads13.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/lung_cancer_awareness_one?size=_original">Lung cancer awareness: One</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/lung_cancer_awareness_one?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads14.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/lung_cancer_awareness_one?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads14.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads14.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://thedesigninspiration.com/articles/top-45-creative-anti-smoking-advertisements/">Smoking Kills</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://thedesigninspiration.com/articles/top-45-creative-anti-smoking-advertisements/"><img src="http://img.uuhy.com/uploads/2010/11/extremeads16.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://thedesigninspiration.com/articles/top-45-creative-anti-smoking-advertisements/"><img src="http://img.uuhy.com/uploads/2010/11/extremeads16.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads16.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/humans_for_animals_seal?size=_original">Humans for Animals: Seal (Don&rsquo;t treat others the way you don&rsquo;t want to be treated.)</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/humans_for_animals_seal?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads41.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://adsoftheworld.com/media/print/humans_for_animals_seal?size=_original"><img src="http://img.uuhy.com/uploads/2010/11/extremeads41.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads41.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><strong><a target="_blank" rel="noopener" href="http://www.adverblog.com/archives/002848.htm">Money isn&rsquo;t everything</a></strong></p>
-<p><a target="_blank" rel="noopener" href="http://www.adverblog.com/archives/002848.htm"><img src="http://img.uuhy.com/uploads/2010/11/extremeads17.jpg" border="0" alt="" width="540" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://www.adverblog.com/archives/002848.htm"><img src="http://img.uuhy.com/uploads/2010/11/extremeads17.jpg" class="lazy" data-srcset="http://img.uuhy.com/uploads/2010/11/extremeads17.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="540" /></a></p>
 <p><a target="_blank" rel="noopener" href="http://uuhy.com/?p=15332#more-15332">(全文 &hellip;)</a></p>
 </div>
 
@@ -260,7 +436,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -487,7 +663,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

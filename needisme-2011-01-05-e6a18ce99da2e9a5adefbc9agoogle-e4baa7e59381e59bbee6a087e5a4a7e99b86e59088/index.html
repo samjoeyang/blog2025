@@ -30,7 +30,7 @@
 <title>桌面饭：Google 产品图标大集合 | Need.UNO</title>
 
 
-    <meta name="keywords" content="Google, Windows, Google Fans, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Google, Windows, Google Fans, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -63,7 +63,7 @@
 <meta property="og:image" content="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks14.png">
 <meta property="og:image" content="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks15.png">
 <meta property="article:published_time" content="2011-01-05T01:49:55.000Z">
-<meta property="article:modified_time" content="2026-05-22T06:06:50.437Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.872Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Google">
 <meta property="article:tag" content="Windows">
@@ -88,8 +88,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "桌面饭：Google 产品图标大集合",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2011-01-05",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2011-01-05-e6a18ce99da2e9a5adefbc9agoogle-e4baa7e59381e59bbee6a087e5a4a7e99b86e59088/" },
+  "description": "桌面饭：Google 产品图标大集合"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -104,6 +143,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -128,6 +169,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -155,6 +198,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -172,55 +219,184 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <div>从 <a href="https://www.google.com/reader/view/feed/http%3A%2F%2Ffeed.google.org.cn%2F" target="_blank">谷奥</a> 作者：gkp</div>
-<p><img title="googlechromedesktop01" src="/images/needisme/2011/01/googlechromedesktop01.jpg" border="0" alt="googlechromedesktop01" width="550" height="445" /></p>
+<p><img title="googlechromedesktop01" src="/images/needisme/2011/01/googlechromedesktop01.jpg" class="lazy" data-srcset="/images/needisme/2011/01/googlechromedesktop01.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlechromedesktop01" width="550" height="445" /></p>
 <p>想让你的 Windows 变成上图的样子吗？今天这个帖子为大家收集了15个 Google 产品图标文件包，包括 ico，png，svg，gif 等多种格式，具体请点击继续观看，多图杀猫！（上图中的壁纸在<a href="http://eg-art.deviantart.com/art/EgFox-Chrome-Edition-2010-164212714" target="_blank">这里</a>下载）</p>
-<p><img title="googlethemediconpacks01" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks01.png" border="0" alt="googlethemediconpacks01" width="480" height="480" /></p>
+<p><img title="googlethemediconpacks01" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks01.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks01.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks01" width="480" height="480" /></p>
 <p>第一包：ico png 格式，<a href="http://tempest.deviantart.com/art/Simply-Google-Icon-Collection-117952063" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks02" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks02.png" border="0" alt="googlethemediconpacks02" width="550" height="211" /></p>
+<p><img title="googlethemediconpacks02" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks02.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks02.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks02" width="550" height="211" /></p>
 <p>第二包：ico png 格式，<a href="http://monolistic.deviantart.com/art/Google-icons-46082833" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks03" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks03.png" border="0" alt="googlethemediconpacks03" width="550" height="138" /></p>
+<p><img title="googlethemediconpacks03" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks03.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks03.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks03" width="550" height="138" /></p>
 <p>第三包：png svg 格式，<a href="http://unit66.deviantart.com/art/Tango-Google-Icon-Set-66470842" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks04" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks04.png" border="0" alt="googlethemediconpacks04" width="550" height="220" /></p>
+<p><img title="googlethemediconpacks04" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks04.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks04.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks04" width="550" height="220" /></p>
 <p>第四包：png svg 格式，<a href="http://unit66.deviantart.com/art/Google-Tango-Icon-Set-Vol-2-97149817" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks05a" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05a.png" border="0" alt="googlethemediconpacks05a" width="514" height="480" /></p>
-<p><img title="googlethemediconpacks05b" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05b.png" border="0" alt="googlethemediconpacks05b" width="514" height="480" /></p>
-<p><img title="googlethemediconpacks05c" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05c.png" border="0" alt="googlethemediconpacks05c" width="550" height="412" /></p>
+<p><img title="googlethemediconpacks05a" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05a.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05a.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks05a" width="514" height="480" /></p>
+<p><img title="googlethemediconpacks05b" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05b.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05b.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks05b" width="514" height="480" /></p>
+<p><img title="googlethemediconpacks05c" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05c.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks05c.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks05c" width="550" height="412" /></p>
 <p>第五包：ico png gif 格式，<a href="http://carlosjj.deviantart.com/art/New-Google-Product-Icons-175617374" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks06" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks06.png" border="0" alt="googlethemediconpacks06" width="510" height="150" /></p>
+<p><img title="googlethemediconpacks06" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks06.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks06.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks06" width="510" height="150" /></p>
 <p>第六包：png 格式，<a href="http://carlosjj.deviantart.com/art/New-google-docs-icons-181693155" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks07" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks07.png" border="0" alt="googlethemediconpacks07" width="410" height="130" /></p>
+<p><img title="googlethemediconpacks07" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks07.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks07.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks07" width="410" height="130" /></p>
 <p>第七包：ico png gif 格式，<a href="http://www.softpedia.com/get/Desktop-Enhancements/Icons-Related/Google-Docs-pack-Icons.shtml" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks08" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks08.png" border="0" alt="googlethemediconpacks08" width="410" height="150" /></p>
+<p><img title="googlethemediconpacks08" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks08.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks08.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks08" width="410" height="150" /></p>
 <p>第八包：png 格式，<a href="http://15judges.deviantart.com/art/GCal-66622853" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks09" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks09.png" border="0" alt="googlethemediconpacks09" width="550" height="211" /></p>
+<p><img title="googlethemediconpacks09" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks09.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks09.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks09" width="550" height="211" /></p>
 <p>第九包：png 格式，<a href="http://www.softpedia.com/get/Desktop-Enhancements/Icons-Related/Google-Earth-Icon-Color-Pack.shtml" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks10" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks10.png" border="0" alt="googlethemediconpacks10" width="550" height="202" /></p>
+<p><img title="googlethemediconpacks10" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks10.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks10.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks10" width="550" height="202" /></p>
 <p>第十包：ico png icns 格式，<a href="http://xs.deviantart.com/art/Google-Earth-Dock-Icons-108890253" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks11" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks11.png" border="0" alt="googlethemediconpacks11" width="550" height="238" /></p>
+<p><img title="googlethemediconpacks11" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks11.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks11.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks11" width="550" height="238" /></p>
 <p>第十一包：png 格式，<a href="http://www.softpedia.com/get/Desktop-Enhancements/Icons-Related/Gtalk-Color-Icons.shtml" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks12" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks12.png" border="0" alt="googlethemediconpacks12" width="550" height="412" /></p>
+<p><img title="googlethemediconpacks12" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks12.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks12.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks12" width="550" height="412" /></p>
 <p>第十二包：png 格式，<a href="http://www.softpedia.com/get/Desktop-Enhancements/Icons-Related/Google-Buzz-Icons.shtml" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks13" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks13.png" border="0" alt="googlethemediconpacks13" width="550" height="138" /></p>
+<p><img title="googlethemediconpacks13" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks13.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks13.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks13" width="550" height="138" /></p>
 <p>第十三包：png 格式，<a href="http://ilnanny.deviantart.com/art/Google-Chrome-icon-pack-169239552" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks14" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks14.png" border="0" alt="googlethemediconpacks14" width="310" height="130" /></p>
+<p><img title="googlethemediconpacks14" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks14.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks14.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks14" width="310" height="130" /></p>
 <p>第十四包：ico png icns 格式，<a href="http://gcl721.deviantart.com/art/Google-Chrome-X-127817175" target="_blank">点此下载</a></p>
-<p><img title="googlethemediconpacks15" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks15.png" border="0" alt="googlethemediconpacks15" width="410" height="170" /></p>
+<p><img title="googlethemediconpacks15" src="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks15.png" class="lazy" data-srcset="http://www.guao.hk/wp-content/uploads/2011/01/googlethemediconpacks15.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="googlethemediconpacks15" width="410" height="170" /></p>
 <p>第十五包：png 格式，<a href="http://www.softpedia.com/get/Desktop-Enhancements/Icons-Related/Google-Chrome-icon-pack.shtml" target="_blank">点此下载</a></p>
 <p>via <a href="http://www.howtogeek.com/howto/39849/desktop-fun-google-themed-icon-packs/" target="_blank">howtogeek</a></p>
 
@@ -247,7 +423,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-22</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Google/" class="post-tags__link button"># Google</a><a href="/tags/Windows/" class="post-tags__link button"># Windows</a><a href="/tags/Google-Fans/" class="post-tags__link button"># Google Fans</a></div> 
     
 <div class="post-share">
@@ -474,7 +650,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

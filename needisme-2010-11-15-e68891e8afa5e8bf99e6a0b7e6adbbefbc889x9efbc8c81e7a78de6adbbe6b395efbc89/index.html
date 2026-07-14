@@ -30,7 +30,7 @@
 <title>我该这样死（9X9，81种死法） | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -127,9 +127,9 @@
 <meta property="og:image" content="http://dulei.si/files/62a3103460fa69ef28af354eb45ce363.jpg">
 <meta property="og:image" content="http://dulei.si/files/d8616f356f9b5181539f062c2409c209.jpg">
 <meta property="article:published_time" content="2010-11-15T03:17:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.094Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.790Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://need.uno/images/needisme/2010/11/0f3f3d097e8255dabfa56e741218a2b2.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -150,8 +150,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "我该这样死（9X9，81种死法）",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-15",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-15-e68891e8afa5e8bf99e6a0b7e6adbbefbc889x9efbc8c81e7a78de6adbbe6b395efbc89/" },
+  "description": "我该这样死（9X9，81种死法）"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -166,6 +205,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -190,6 +231,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -217,6 +260,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -234,104 +281,233 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>来源：<a target="_blank" rel="noopener" href="http://photo.renren.com/photo/305500986/album-393929161">http://photo.renren.com/photo/305500986/album-393929161</a></p>
-<p><img src="/images/needisme/2010/11/0f3f3d097e8255dabfa56e741218a2b2.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/48ca17f9fcf1fcbd79a6d74854ec91d2.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/d0e766fae5c3c76917000b97c4ecdc50.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/c9cdacbf9c8b6ca75dd0d0d5484b85a0.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/910f66281a37.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/6d7089a24ec47a785e5f87a7210de802.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/5eaff5b957785661d26eeed0b0c5f5c4.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/2acea7e9db081e410f0a60d60622b4ce.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/1e40cd0139d7.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/9a53ea14d28e.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/85ad07ae8380428a824a82d170b4cf1d.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/34130627dd98.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/69670e4783065dd2c2b92058c6f36c17.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/de12456fa1105d156e6abd2c11955a5a.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/7aab3b80882e060d1d065e9b7def9ada.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b47fce5059c3d579a95144a1b96392eb.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/e58077fa2eb8fbb5f710fa89b92a263f.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b76d52066afe7922b45b7d931c697c95.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/700bdad7f1060c080c17b7c9b73b2d20.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b208b1a4dbbb5aae42089bfdb9380406.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/43f9930b7a2ff4b2a11414749be6b05d.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/2b348cdebd1984911081d69988d6104f.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/e23633972f0a93083e861e5d62f1f97b.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/efa50173df7e312f0317d1cba09173cf.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/efb9fd810715b62acd33ce385cc6bee2.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/7517f85c99bf1e9a8cbe8c07f0f1509d.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/6d8f235b57930642e2f9fa5ff2baf0a1.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/9b04954b2a93cdeb56e14206aa1aaf92.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/83aa2854d7a869610f959c8bb4ea5633.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/f149d0dee2d7ef6079cacb8775d1f939.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/65d85cc53e7f.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/51405d158b01.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/da42cf94c669190623f2b15b70a4c40a.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b3297ffa5555a8893342c394fc6b38c5.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/87b7f4687b835607efec257beb523686.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/c21ff0dd73c0d90768c5a6e8e1e8b7e3.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/98dfcb4309ba4f2610ad52f1747080d0.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/e32f8c6311a3.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/24c24b3d848992ba6fdf1c69a8b5b9cc.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/7aa7f4db85fa6e825e2f7cbad8074ab2.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/8b4ae19b2f739cc4f078d611c4f1f00e.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/bf96f296ab02400694e95eac73dded29.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/5da2b68e03a062bfe9de290f0ba60f4b.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/aaccf0a57232251a73c955defb0afb91.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/c8a6546c27e7b6e5ebdfc701d9555dab.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/9167dacc2f683f61c4aef4e4daffe356.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/ddaafdab8eaa.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/db460701e6719aa0445b4ba421f7e338.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/4e3de540efcf77c64d0bca8dbaefc300.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b74a46009ede005e6bc0c19d106cde67.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/e69e3ba77ff5b65bb35a77247f1b6efe.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b187157eb3c3e05168d33090862a2073.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/6f059e22415e6addf6e78fb3de6b8f65.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/edf9537f9dd2e4583b471bbc8f146d37.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/2e7239e4d89ccf97dcded326aef81d88.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/7ac41188cc0ff9031d1b303e4e0c4946.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/d50729d61209.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/7f99c82f35c31641174ed4aa3b64f6a8.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/0bce4580e492.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b7f1a42c0b572e043bae53c4da1a1dc9.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/bdfa8d8250638d9854a0cef7586dbf48.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/660101c5e3e768750f6cec592d47e009.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/37edda844e05d455cdc957c18419447f.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/e2f057c3522e6cede256d5f6c1bee5db.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/e6ffe8e0b6b7acd51595442c9c47e384.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/308c39b4eca1a2690f3f990a6a474567.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/571aeb7c0c8738349aaeb37980d8b057.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b10d5f8a639f820c94c8a6f9e6dcb3c0.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/9face9929879f4f02bf5252c247c98d7.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/d986375f988c29bde5da9516fac4199f.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/2a5e6c7e702d17152aa6c791359beb95.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/704a5caf79ed2344f34aa7d4e99b73bd.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/5799ec8703d92032cffb076feda35452.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/c7d98bcb59815e516d2abc18eed2ff1b.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/4ede81b815f45802ef4f67bc16adfa3c.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b9b23a4cc0c9ea7563713e72146bf664.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/56fd18321041ad2efc43578a8a00b548.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/4430c4ff0e4ed9b14628340220fb227f.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/fcd1c5d5f3aa8e9b8b7fc7f17554bfaf.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/b1bb16e1b871354b32fd0cf996f8a706.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/62a3103460fa69ef28af354eb45ce363.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/d8616f356f9b5181539f062c2409c209.jpg" alt="" /></p>
+<p><img src="/images/needisme/2010/11/0f3f3d097e8255dabfa56e741218a2b2.jpg" class="lazy" data-srcset="/images/needisme/2010/11/0f3f3d097e8255dabfa56e741218a2b2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/48ca17f9fcf1fcbd79a6d74854ec91d2.jpg" class="lazy" data-srcset="http://dulei.si/files/48ca17f9fcf1fcbd79a6d74854ec91d2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/d0e766fae5c3c76917000b97c4ecdc50.jpg" class="lazy" data-srcset="http://dulei.si/files/d0e766fae5c3c76917000b97c4ecdc50.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/c9cdacbf9c8b6ca75dd0d0d5484b85a0.jpg" class="lazy" data-srcset="http://dulei.si/files/c9cdacbf9c8b6ca75dd0d0d5484b85a0.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/910f66281a37.jpg" class="lazy" data-srcset="/images/needisme/external/910f66281a37.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/6d7089a24ec47a785e5f87a7210de802.jpg" class="lazy" data-srcset="http://dulei.si/files/6d7089a24ec47a785e5f87a7210de802.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/5eaff5b957785661d26eeed0b0c5f5c4.jpg" class="lazy" data-srcset="http://dulei.si/files/5eaff5b957785661d26eeed0b0c5f5c4.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/2acea7e9db081e410f0a60d60622b4ce.jpg" class="lazy" data-srcset="http://dulei.si/files/2acea7e9db081e410f0a60d60622b4ce.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/1e40cd0139d7.jpg" class="lazy" data-srcset="/images/needisme/external/1e40cd0139d7.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/9a53ea14d28e.jpg" class="lazy" data-srcset="/images/needisme/external/9a53ea14d28e.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/85ad07ae8380428a824a82d170b4cf1d.jpg" class="lazy" data-srcset="http://dulei.si/files/85ad07ae8380428a824a82d170b4cf1d.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/34130627dd98.jpg" class="lazy" data-srcset="/images/needisme/external/34130627dd98.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/69670e4783065dd2c2b92058c6f36c17.jpg" class="lazy" data-srcset="http://dulei.si/files/69670e4783065dd2c2b92058c6f36c17.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/de12456fa1105d156e6abd2c11955a5a.jpg" class="lazy" data-srcset="http://dulei.si/files/de12456fa1105d156e6abd2c11955a5a.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/7aab3b80882e060d1d065e9b7def9ada.jpg" class="lazy" data-srcset="http://dulei.si/files/7aab3b80882e060d1d065e9b7def9ada.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b47fce5059c3d579a95144a1b96392eb.jpg" class="lazy" data-srcset="http://dulei.si/files/b47fce5059c3d579a95144a1b96392eb.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/e58077fa2eb8fbb5f710fa89b92a263f.jpg" class="lazy" data-srcset="http://dulei.si/files/e58077fa2eb8fbb5f710fa89b92a263f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b76d52066afe7922b45b7d931c697c95.jpg" class="lazy" data-srcset="http://dulei.si/files/b76d52066afe7922b45b7d931c697c95.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/700bdad7f1060c080c17b7c9b73b2d20.jpg" class="lazy" data-srcset="http://dulei.si/files/700bdad7f1060c080c17b7c9b73b2d20.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b208b1a4dbbb5aae42089bfdb9380406.jpg" class="lazy" data-srcset="http://dulei.si/files/b208b1a4dbbb5aae42089bfdb9380406.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/43f9930b7a2ff4b2a11414749be6b05d.jpg" class="lazy" data-srcset="http://dulei.si/files/43f9930b7a2ff4b2a11414749be6b05d.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/2b348cdebd1984911081d69988d6104f.jpg" class="lazy" data-srcset="http://dulei.si/files/2b348cdebd1984911081d69988d6104f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/e23633972f0a93083e861e5d62f1f97b.jpg" class="lazy" data-srcset="http://dulei.si/files/e23633972f0a93083e861e5d62f1f97b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/efa50173df7e312f0317d1cba09173cf.jpg" class="lazy" data-srcset="http://dulei.si/files/efa50173df7e312f0317d1cba09173cf.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/efb9fd810715b62acd33ce385cc6bee2.jpg" class="lazy" data-srcset="http://dulei.si/files/efb9fd810715b62acd33ce385cc6bee2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/7517f85c99bf1e9a8cbe8c07f0f1509d.jpg" class="lazy" data-srcset="http://dulei.si/files/7517f85c99bf1e9a8cbe8c07f0f1509d.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/6d8f235b57930642e2f9fa5ff2baf0a1.jpg" class="lazy" data-srcset="http://dulei.si/files/6d8f235b57930642e2f9fa5ff2baf0a1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/9b04954b2a93cdeb56e14206aa1aaf92.jpg" class="lazy" data-srcset="http://dulei.si/files/9b04954b2a93cdeb56e14206aa1aaf92.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/83aa2854d7a869610f959c8bb4ea5633.jpg" class="lazy" data-srcset="http://dulei.si/files/83aa2854d7a869610f959c8bb4ea5633.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/f149d0dee2d7ef6079cacb8775d1f939.jpg" class="lazy" data-srcset="http://dulei.si/files/f149d0dee2d7ef6079cacb8775d1f939.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/65d85cc53e7f.jpg" class="lazy" data-srcset="/images/needisme/external/65d85cc53e7f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/51405d158b01.jpg" class="lazy" data-srcset="/images/needisme/external/51405d158b01.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/da42cf94c669190623f2b15b70a4c40a.jpg" class="lazy" data-srcset="http://dulei.si/files/da42cf94c669190623f2b15b70a4c40a.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b3297ffa5555a8893342c394fc6b38c5.jpg" class="lazy" data-srcset="http://dulei.si/files/b3297ffa5555a8893342c394fc6b38c5.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/87b7f4687b835607efec257beb523686.jpg" class="lazy" data-srcset="http://dulei.si/files/87b7f4687b835607efec257beb523686.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/c21ff0dd73c0d90768c5a6e8e1e8b7e3.jpg" class="lazy" data-srcset="http://dulei.si/files/c21ff0dd73c0d90768c5a6e8e1e8b7e3.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/98dfcb4309ba4f2610ad52f1747080d0.jpg" class="lazy" data-srcset="http://dulei.si/files/98dfcb4309ba4f2610ad52f1747080d0.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/e32f8c6311a3.jpg" class="lazy" data-srcset="/images/needisme/external/e32f8c6311a3.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/24c24b3d848992ba6fdf1c69a8b5b9cc.jpg" class="lazy" data-srcset="http://dulei.si/files/24c24b3d848992ba6fdf1c69a8b5b9cc.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/7aa7f4db85fa6e825e2f7cbad8074ab2.jpg" class="lazy" data-srcset="http://dulei.si/files/7aa7f4db85fa6e825e2f7cbad8074ab2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/8b4ae19b2f739cc4f078d611c4f1f00e.jpg" class="lazy" data-srcset="http://dulei.si/files/8b4ae19b2f739cc4f078d611c4f1f00e.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/bf96f296ab02400694e95eac73dded29.jpg" class="lazy" data-srcset="http://dulei.si/files/bf96f296ab02400694e95eac73dded29.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/5da2b68e03a062bfe9de290f0ba60f4b.jpg" class="lazy" data-srcset="http://dulei.si/files/5da2b68e03a062bfe9de290f0ba60f4b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/aaccf0a57232251a73c955defb0afb91.jpg" class="lazy" data-srcset="http://dulei.si/files/aaccf0a57232251a73c955defb0afb91.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/c8a6546c27e7b6e5ebdfc701d9555dab.jpg" class="lazy" data-srcset="http://dulei.si/files/c8a6546c27e7b6e5ebdfc701d9555dab.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/9167dacc2f683f61c4aef4e4daffe356.jpg" class="lazy" data-srcset="http://dulei.si/files/9167dacc2f683f61c4aef4e4daffe356.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/ddaafdab8eaa.jpg" class="lazy" data-srcset="/images/needisme/external/ddaafdab8eaa.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/db460701e6719aa0445b4ba421f7e338.jpg" class="lazy" data-srcset="http://dulei.si/files/db460701e6719aa0445b4ba421f7e338.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/4e3de540efcf77c64d0bca8dbaefc300.jpg" class="lazy" data-srcset="http://dulei.si/files/4e3de540efcf77c64d0bca8dbaefc300.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b74a46009ede005e6bc0c19d106cde67.jpg" class="lazy" data-srcset="http://dulei.si/files/b74a46009ede005e6bc0c19d106cde67.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/e69e3ba77ff5b65bb35a77247f1b6efe.jpg" class="lazy" data-srcset="http://dulei.si/files/e69e3ba77ff5b65bb35a77247f1b6efe.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b187157eb3c3e05168d33090862a2073.jpg" class="lazy" data-srcset="http://dulei.si/files/b187157eb3c3e05168d33090862a2073.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/6f059e22415e6addf6e78fb3de6b8f65.jpg" class="lazy" data-srcset="http://dulei.si/files/6f059e22415e6addf6e78fb3de6b8f65.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/edf9537f9dd2e4583b471bbc8f146d37.jpg" class="lazy" data-srcset="http://dulei.si/files/edf9537f9dd2e4583b471bbc8f146d37.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/2e7239e4d89ccf97dcded326aef81d88.jpg" class="lazy" data-srcset="http://dulei.si/files/2e7239e4d89ccf97dcded326aef81d88.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/7ac41188cc0ff9031d1b303e4e0c4946.jpg" class="lazy" data-srcset="http://dulei.si/files/7ac41188cc0ff9031d1b303e4e0c4946.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/d50729d61209.jpg" class="lazy" data-srcset="/images/needisme/external/d50729d61209.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/7f99c82f35c31641174ed4aa3b64f6a8.jpg" class="lazy" data-srcset="http://dulei.si/files/7f99c82f35c31641174ed4aa3b64f6a8.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/0bce4580e492.jpg" class="lazy" data-srcset="/images/needisme/external/0bce4580e492.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b7f1a42c0b572e043bae53c4da1a1dc9.jpg" class="lazy" data-srcset="http://dulei.si/files/b7f1a42c0b572e043bae53c4da1a1dc9.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/bdfa8d8250638d9854a0cef7586dbf48.jpg" class="lazy" data-srcset="http://dulei.si/files/bdfa8d8250638d9854a0cef7586dbf48.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/660101c5e3e768750f6cec592d47e009.jpg" class="lazy" data-srcset="http://dulei.si/files/660101c5e3e768750f6cec592d47e009.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/37edda844e05d455cdc957c18419447f.jpg" class="lazy" data-srcset="http://dulei.si/files/37edda844e05d455cdc957c18419447f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/e2f057c3522e6cede256d5f6c1bee5db.jpg" class="lazy" data-srcset="http://dulei.si/files/e2f057c3522e6cede256d5f6c1bee5db.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/e6ffe8e0b6b7acd51595442c9c47e384.jpg" class="lazy" data-srcset="http://dulei.si/files/e6ffe8e0b6b7acd51595442c9c47e384.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/308c39b4eca1a2690f3f990a6a474567.jpg" class="lazy" data-srcset="http://dulei.si/files/308c39b4eca1a2690f3f990a6a474567.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/571aeb7c0c8738349aaeb37980d8b057.jpg" class="lazy" data-srcset="http://dulei.si/files/571aeb7c0c8738349aaeb37980d8b057.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b10d5f8a639f820c94c8a6f9e6dcb3c0.jpg" class="lazy" data-srcset="http://dulei.si/files/b10d5f8a639f820c94c8a6f9e6dcb3c0.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/9face9929879f4f02bf5252c247c98d7.jpg" class="lazy" data-srcset="http://dulei.si/files/9face9929879f4f02bf5252c247c98d7.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/d986375f988c29bde5da9516fac4199f.jpg" class="lazy" data-srcset="http://dulei.si/files/d986375f988c29bde5da9516fac4199f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/2a5e6c7e702d17152aa6c791359beb95.jpg" class="lazy" data-srcset="http://dulei.si/files/2a5e6c7e702d17152aa6c791359beb95.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/704a5caf79ed2344f34aa7d4e99b73bd.jpg" class="lazy" data-srcset="http://dulei.si/files/704a5caf79ed2344f34aa7d4e99b73bd.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/5799ec8703d92032cffb076feda35452.jpg" class="lazy" data-srcset="http://dulei.si/files/5799ec8703d92032cffb076feda35452.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/c7d98bcb59815e516d2abc18eed2ff1b.jpg" class="lazy" data-srcset="http://dulei.si/files/c7d98bcb59815e516d2abc18eed2ff1b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/4ede81b815f45802ef4f67bc16adfa3c.jpg" class="lazy" data-srcset="http://dulei.si/files/4ede81b815f45802ef4f67bc16adfa3c.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b9b23a4cc0c9ea7563713e72146bf664.jpg" class="lazy" data-srcset="http://dulei.si/files/b9b23a4cc0c9ea7563713e72146bf664.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/56fd18321041ad2efc43578a8a00b548.jpg" class="lazy" data-srcset="http://dulei.si/files/56fd18321041ad2efc43578a8a00b548.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/4430c4ff0e4ed9b14628340220fb227f.jpg" class="lazy" data-srcset="http://dulei.si/files/4430c4ff0e4ed9b14628340220fb227f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/fcd1c5d5f3aa8e9b8b7fc7f17554bfaf.jpg" class="lazy" data-srcset="http://dulei.si/files/fcd1c5d5f3aa8e9b8b7fc7f17554bfaf.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b1bb16e1b871354b32fd0cf996f8a706.jpg" class="lazy" data-srcset="http://dulei.si/files/b1bb16e1b871354b32fd0cf996f8a706.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/62a3103460fa69ef28af354eb45ce363.jpg" class="lazy" data-srcset="http://dulei.si/files/62a3103460fa69ef28af354eb45ce363.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/d8616f356f9b5181539f062c2409c209.jpg" class="lazy" data-srcset="http://dulei.si/files/d8616f356f9b5181539f062c2409c209.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -356,7 +532,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -583,7 +759,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

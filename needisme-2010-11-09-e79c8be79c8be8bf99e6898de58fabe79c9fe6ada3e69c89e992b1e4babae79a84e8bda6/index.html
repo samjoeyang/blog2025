@@ -30,7 +30,7 @@
 <title>看看这才叫真正有钱人的车 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -58,9 +58,9 @@
 <meta property="og:image" content="http://img.blog.163.com/photo/6TRpx_rFxIZ9ToMTu2-ZaQ==/327355397915469962.jpg">
 <meta property="og:image" content="http://img.blog.163.com/photo/tyta6m4qRe4robggbHmKDg==/4233946599682906819.jpg">
 <meta property="article:published_time" content="2010-11-09T14:42:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.975Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.781Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://img.blog.163.com/photo/8HJhp4SmcNlOgJHlF0bMsw==/4512043876672757375.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -81,8 +81,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "看看这才叫真正有钱人的车",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-09",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-09-e79c8be79c8be8bf99e6898de58fabe79c9fe6ada3e69c89e992b1e4babae79a84e8bda6/" },
+  "description": "看看这才叫真正有钱人的车"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -97,6 +136,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -121,6 +162,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -148,6 +191,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -165,35 +212,164 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>有钱人的车是这样子滴！
-<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e0155e78223f4eb1b202f4c6f13b807e407b75a644243a05541b74c7d59fcc158f917284aac8441ac4ae3f7d1e57bfbadaa0081ceea38abf7e50766942dfa412fc24f3fee"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/8HJhp4SmcNlOgJHlF0bMsw==/4512043876672757375.jpg" border="0" height="355" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e3c99fb4daae7655eee6c65011175f5194db3ba8568998a82d2c297ac89961a82e5dcf36b70d4c9f25b68dc9b65b67fb19e4dfc416ae30e4bd39916c8aa14bab108e18789"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/RaQpAtykSc3C6FYyuw9MSA==/4512043876672757371.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b19.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ea27a80ba94f200f6749b2050103ebbdca0ce50cca96d048a8ac5a46eef75bcfb32773e9e50842e1c0073a458f290573de905936c67954eb6d48102b863861d10ce5c3c1e"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/DovqP15KBHguO8EZFHi2qA==/4512043876672757370.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b17.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e99cc3c44053f2d9448321e8c218e8fddff94f622eec2f729ff2f05088bb7658bb88cd7aa9aa16e7545e7cd7ebffaef74f94afa4448d597545cd2ca0c64b6754a62f523f3"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/T2dWWv9q5vJD3M3rUSJmQg==/4512043876672757369.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ee813494a1376a888eefe5c9ec977491354ca6c42b6dadbffc2638958f5bfe6bd0cf14c45b57c9ae07bc5d0a128dd9d85f10c9f09e3eb3bff22b699737c5fb5a2a0c0d367"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/sCedFgztdzzqCcL6tNsxVw==/4512043876672757367.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b19.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e8ee44bf4424a80852161bf6194c3b675a526848304ad45f38ecbb1816e98a924292dc48a0e948ba4650d589fbfdd17ca3733ed5540f6a66de8b4c6afe9ba8fd35cafd216"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/sC8muW_WrFRDrOKhA7Nh7Q==/4512043876672757363.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e3ab7788b7b9f0d21d0f9d1c9159da347370fa96c367796e1dfb5c7ec4c1ca877f35ca4197ab569b3cc3a10e37cdb85047816518f040e1e33d80df8cc5e9be6838f88a1df"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/4G9Ae-hhkUy19SGOJWTZCw==/2332020182048306073.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b17.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e5cbe5437472f69b8942b239c0a322bee12d12d2c8e468d76328490acaf5fe058167337c5ca60d893cbb7b7292a08ec7616aacf38ca44f0f3ad5e3111685c6aad565de813"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/85T6oVFdMIXUjsLPhOphOA==/327355397915469966.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e095c940da8f6d8ae8a3c9433f849b92c722e0f461c6cf77bf6ce5cffb5c5fc66f70d56d5af1db9c649c410e5dee8d5836472e1575f5f0f716ab058fc60e2c1bfbdeef187"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/cdTNi6MvYCunTNDbi0J1FA==/327355397915469965.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ed6e006acdc2e7a28c62fd2d58ea8c833fc9b6c7ef451d9cb65105326e410115a25940c1acfc37ce780565188d98e48539e9581badb2b87857d7cda10a12682edcff3c5ee"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/TAKu8NJHctVvXqFciXOwdA==/327355397915469964.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ea6fea2b8b1caade3c05528269b82b8a11da8a68ad4383732bd015dd2f22822b3c309c45e23e3bbb59c94765ce62b50826e81a43d614f2c7e05bb0b4624748f3cad9280a6"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/19Qo16OQHZEciUT4U0GhVg==/327355397915469963.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b17.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ef32272518fad23b8815c171fb615f3feb935eda8c40ad283a61acfb91d0485bcecf14eeb44936ff229765e30555be328904142b797393add255a5836e6aef3bb7aa20a0a"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/6TRpx_rFxIZ9ToMTu2-ZaQ==/327355397915469962.jpg" border="0" width="500" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e7b3e0284601c70c2586b5e1bfd9fd6291d649843d47059af3085b560cd823f050458f07cd883068260974c38b89a9e6e77558e7e7ca0b999253ef692825f3a4164352536"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/tyta6m4qRe4robggbHmKDg==/4233946599682906819.jpg" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e0155e78223f4eb1b202f4c6f13b807e407b75a644243a05541b74c7d59fcc158f917284aac8441ac4ae3f7d1e57bfbadaa0081ceea38abf7e50766942dfa412fc24f3fee"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/8HJhp4SmcNlOgJHlF0bMsw==/4512043876672757375.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/8HJhp4SmcNlOgJHlF0bMsw==/4512043876672757375.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" height="355" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e3c99fb4daae7655eee6c65011175f5194db3ba8568998a82d2c297ac89961a82e5dcf36b70d4c9f25b68dc9b65b67fb19e4dfc416ae30e4bd39916c8aa14bab108e18789"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/RaQpAtykSc3C6FYyuw9MSA==/4512043876672757371.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/RaQpAtykSc3C6FYyuw9MSA==/4512043876672757371.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b19.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ea27a80ba94f200f6749b2050103ebbdca0ce50cca96d048a8ac5a46eef75bcfb32773e9e50842e1c0073a458f290573de905936c67954eb6d48102b863861d10ce5c3c1e"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/DovqP15KBHguO8EZFHi2qA==/4512043876672757370.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/DovqP15KBHguO8EZFHi2qA==/4512043876672757370.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b17.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e99cc3c44053f2d9448321e8c218e8fddff94f622eec2f729ff2f05088bb7658bb88cd7aa9aa16e7545e7cd7ebffaef74f94afa4448d597545cd2ca0c64b6754a62f523f3"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/T2dWWv9q5vJD3M3rUSJmQg==/4512043876672757369.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/T2dWWv9q5vJD3M3rUSJmQg==/4512043876672757369.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ee813494a1376a888eefe5c9ec977491354ca6c42b6dadbffc2638958f5bfe6bd0cf14c45b57c9ae07bc5d0a128dd9d85f10c9f09e3eb3bff22b699737c5fb5a2a0c0d367"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/sCedFgztdzzqCcL6tNsxVw==/4512043876672757367.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/sCedFgztdzzqCcL6tNsxVw==/4512043876672757367.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b19.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e8ee44bf4424a80852161bf6194c3b675a526848304ad45f38ecbb1816e98a924292dc48a0e948ba4650d589fbfdd17ca3733ed5540f6a66de8b4c6afe9ba8fd35cafd216"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/sC8muW_WrFRDrOKhA7Nh7Q==/4512043876672757363.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/sC8muW_WrFRDrOKhA7Nh7Q==/4512043876672757363.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e3ab7788b7b9f0d21d0f9d1c9159da347370fa96c367796e1dfb5c7ec4c1ca877f35ca4197ab569b3cc3a10e37cdb85047816518f040e1e33d80df8cc5e9be6838f88a1df"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/4G9Ae-hhkUy19SGOJWTZCw==/2332020182048306073.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/4G9Ae-hhkUy19SGOJWTZCw==/2332020182048306073.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b17.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e5cbe5437472f69b8942b239c0a322bee12d12d2c8e468d76328490acaf5fe058167337c5ca60d893cbb7b7292a08ec7616aacf38ca44f0f3ad5e3111685c6aad565de813"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/85T6oVFdMIXUjsLPhOphOA==/327355397915469966.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/85T6oVFdMIXUjsLPhOphOA==/327355397915469966.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e095c940da8f6d8ae8a3c9433f849b92c722e0f461c6cf77bf6ce5cffb5c5fc66f70d56d5af1db9c649c410e5dee8d5836472e1575f5f0f716ab058fc60e2c1bfbdeef187"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/cdTNi6MvYCunTNDbi0J1FA==/327355397915469965.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/cdTNi6MvYCunTNDbi0J1FA==/327355397915469965.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ed6e006acdc2e7a28c62fd2d58ea8c833fc9b6c7ef451d9cb65105326e410115a25940c1acfc37ce780565188d98e48539e9581badb2b87857d7cda10a12682edcff3c5ee"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/TAKu8NJHctVvXqFciXOwdA==/327355397915469964.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/TAKu8NJHctVvXqFciXOwdA==/327355397915469964.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ea6fea2b8b1caade3c05528269b82b8a11da8a68ad4383732bd015dd2f22822b3c309c45e23e3bbb59c94765ce62b50826e81a43d614f2c7e05bb0b4624748f3cad9280a6"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/19Qo16OQHZEciUT4U0GhVg==/327355397915469963.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/19Qo16OQHZEciUT4U0GhVg==/327355397915469963.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b17.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17ef32272518fad23b8815c171fb615f3feb935eda8c40ad283a61acfb91d0485bcecf14eeb44936ff229765e30555be328904142b797393add255a5836e6aef3bb7aa20a0a"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/6TRpx_rFxIZ9ToMTu2-ZaQ==/327355397915469962.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/6TRpx_rFxIZ9ToMTu2-ZaQ==/327355397915469962.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://b16.photo.store.qq.com/http_imgload.cgi/rurl4_b=2ee8ee055f9476d7dd47134a2e24d17e7b3e0284601c70c2586b5e1bfd9fd6291d649843d47059af3085b560cd823f050458f07cd883068260974c38b89a9e6e77558e7e7ca0b999253ef692825f3a4164352536"><img title="不看不知道 一看吓一跳.有钱人的车 - 艺菲 - 2009liuyaguang2009" alt="图片" src="http://img.blog.163.com/photo/tyta6m4qRe4robggbHmKDg==/4233946599682906819.jpg" class="lazy" data-srcset="http://img.blog.163.com/photo/tyta6m4qRe4robggbHmKDg==/4233946599682906819.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" width="500" /></a></p>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -218,7 +394,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -445,7 +621,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

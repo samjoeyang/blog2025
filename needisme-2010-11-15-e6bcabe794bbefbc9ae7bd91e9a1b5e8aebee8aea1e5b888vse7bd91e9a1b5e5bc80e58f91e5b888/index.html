@@ -30,7 +30,7 @@
 <title>漫画：网页设计师vs网页开发师 | Need.UNO</title>
 
 
-    <meta name="keywords" content="HTML, .NET, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="HTML, .NET, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -50,7 +50,7 @@
 <meta property="og:image" content="http://76.13.18.79/4001/5168542697_6c61b54f67.jpg">
 <meta property="og:image" content="http://76.13.18.79/4060/5169139132_aebf312e33.jpg">
 <meta property="article:published_time" content="2010-11-15T01:43:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.826Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.791Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="HTML">
 <meta property="article:tag" content=".NET">
@@ -74,8 +74,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "漫画：网页设计师vs网页开发师",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-15",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-15-e6bcabe794bbefbc9ae7bd91e9a1b5e8aebee8aea1e5b888vse7bd91e9a1b5e5bc80e58f91e5b888/" },
+  "description": "漫画：网页设计师vs网页开发师"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -90,6 +129,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -114,6 +155,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -141,6 +184,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -158,24 +205,153 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <div style="margin: 0; padding: 10px 0;"><a target="_blank" rel="noopener" href="http://srmeme.com/author/%E7%85%8E%E8%9B%8B%E5%85%A8%E6%96%87%E7%89%88"><strong>煎蛋全文版</strong></a>发表于2010-11-12 14:31:30</div>
 <div style="margin: 0; padding: 5px 0;">
-<p><img title="漫画：网页设计师vs网页开发师" src="http://pic.yupoo.com/jdvip/ACkFestr/medium.jpg" alt="http://jandan.net/" /></p>
+<p><img title="漫画：网页设计师vs网页开发师" src="http://pic.yupoo.com/jdvip/ACkFestr/medium.jpg" class="lazy" data-srcset="http://pic.yupoo.com/jdvip/ACkFestr/medium.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="http://jandan.net/" /></p>
 <p>左边：Web Designers 网页设计师（大概就是，我们看到漂亮网页都是出自他们之手）</p>
 <p>右边：Web developers 网页开发师（大概就是，网站牛逼的功能都出自他们之手）</p>
 <p><a rel="nofollow noopener" target="_blank" href="http://sixrevisions.com/infographs/web-designers-vs-web-developers/">by:sixrevisions</a></p>
@@ -186,21 +362,21 @@
 <p>到哪里都不能没有MBP</p>
 <p>Skinny（细腿） 牛仔裤：看上去很cool，但实际上蹦得紧不方便，或者说对精子不利。</p>
 <p>最上瘾的东东，手机</p>
-<p><img title="漫画：网页设计师vs网页开发师" src="http://76.13.18.79/4004/5169139128_243aec970c.jpg" alt="http://jandan.net/" /></p>
+<p><img title="漫画：网页设计师vs网页开发师" src="http://76.13.18.79/4004/5169139128_243aec970c.jpg" class="lazy" data-srcset="http://76.13.18.79/4004/5169139128_243aec970c.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="http://jandan.net/" /></p>
 <p><strong>右边：网页开发师</strong>&darr;</p>
 <p>无法避免的碎渣胡子（最后一次洗澡和刮胡子的时间，未知）</p>
 <p>内涵T恤：代码方面的内涵</p>
 <p>工作只戴上自己喜欢的键盘即可</p>
 <p>工装裤，很实用的裤子，就是不时髦</p>
 <p>最上瘾额东东，咖啡</p>
-<p><img title="漫画：网页设计师vs网页开发师" src="http://69.147.90.156/1243/5169139130_a7d9db7d74.jpg" alt="http://jandan.net/" /></p>
+<p><img title="漫画：网页设计师vs网页开发师" src="http://69.147.90.156/1243/5169139130_a7d9db7d74.jpg" class="lazy" data-srcset="http://69.147.90.156/1243/5169139130_a7d9db7d74.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="http://jandan.net/" /></p>
 <p>网页设计师平均工资：47820美元，提供职位200870个</p>
 <p>网页程序员平均工资：85430美元，提供职位1336300个</p>
-<p><img title="漫画：网页设计师vs网页开发师" src="http://76.13.18.79/4001/5168542697_6c61b54f67.jpg" alt="http://jandan.net/" /></p>
+<p><img title="漫画：网页设计师vs网页开发师" src="http://76.13.18.79/4001/5168542697_6c61b54f67.jpg" class="lazy" data-srcset="http://76.13.18.79/4001/5168542697_6c61b54f67.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="http://jandan.net/" /></p>
 <p>黄圈图，网页设害怕的事情（这&hellip;&hellip;比较复杂自己看吧）</p>
 <p>蓝圈图，网页程序员害怕的事情</p>
 <p>* 虽然也有程序员和设计师是女性，但总得来说还是男性居多，他们都有一个共同特点，害怕MM。</p>
-<p><img title="漫画：网页设计师vs网页开发师" src="http://76.13.18.79/4060/5169139132_aebf312e33.jpg" alt="http://jandan.net/" /></p>
+<p><img title="漫画：网页设计师vs网页开发师" src="http://76.13.18.79/4060/5169139132_aebf312e33.jpg" class="lazy" data-srcset="http://76.13.18.79/4060/5169139132_aebf312e33.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="http://jandan.net/" /></p>
 <p><a title="copyright" rel="nofollow noopener" target="_blank" href="http://jandan.net/2010/11/12/web-designers-vs-web-developers.html">&copy;</a> Jandan.net</p>
 </div>
 
@@ -227,7 +403,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/NET/" class="post-tags__link button"># .NET</a></div> 
     
 <div class="post-share">
@@ -454,7 +630,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

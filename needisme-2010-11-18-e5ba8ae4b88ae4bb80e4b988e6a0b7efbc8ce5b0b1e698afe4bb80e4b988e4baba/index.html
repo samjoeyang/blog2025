@@ -30,7 +30,7 @@
 <title>床上什么样，就是什么人 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -61,9 +61,9 @@
 <meta property="og:image" content="http://dulei.si/files/2ee66471e2025ab5b5648771dde0fff9.jpg">
 <meta property="og:image" content="http://dulei.si/files/d6d41166b18537fad61045079125c400.jpg">
 <meta property="article:published_time" content="2010-11-18T01:46:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.434Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.804Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://dulei.si/files/ca05386ba13ecdc4b4bfa0cb696d061e.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -84,8 +84,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "床上什么样，就是什么人",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-18",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-18-e5ba8ae4b88ae4bb80e4b988e6a0b7efbc8ce5b0b1e698afe4bb80e4b988e4baba/" },
+  "description": "床上什么样，就是什么人"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -100,6 +139,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -124,6 +165,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -151,6 +194,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -168,54 +215,183 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>有人说，在床上什么样，可能就是什么人？某网友用图诠释了人的各种睡姿，很逗，。睡姿很重要，不仅有可能影响健康，还有可能影响个人形象，所以以后要带着微笑睡觉了。比如在睡觉时说梦话的人，个性孤僻，处于心神不定中。</p>
 <p>1、睡觉时手脚缩成一团的人：肠胃都有问题，正为生活四处奔波。</p>
-<p><a target="_blank" rel="noopener" href="http://luo.bo/2679/"><img src="http://dulei.si/files/ca05386ba13ecdc4b4bfa0cb696d061e.jpg" border="0" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://luo.bo/2679/"><img src="http://dulei.si/files/ca05386ba13ecdc4b4bfa0cb696d061e.jpg" class="lazy" data-srcset="http://dulei.si/files/ca05386ba13ecdc4b4bfa0cb696d061e.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></a></p>
 <p>2、睡觉时常常要翻动身体的人：居无定所，心事烦重，性格急燥。</p>
-<p><img src="http://dulei.si/files/c4e3b8f470d10ec7ce69162e2d532584.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/c4e3b8f470d10ec7ce69162e2d532584.jpg" class="lazy" data-srcset="http://dulei.si/files/c4e3b8f470d10ec7ce69162e2d532584.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>3、睡觉时眼睛稍微张开的人：忧思重重，常与人发生摩擦。</p>
-<p><img src="http://dulei.si/files/70dd66c10426bc14e420151f72b49721.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/70dd66c10426bc14e420151f72b49721.jpg" class="lazy" data-srcset="http://dulei.si/files/70dd66c10426bc14e420151f72b49721.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>4、睡觉时说梦话的人：个性孤僻，处于心神不定中。</p>
-<p><img src="http://dulei.si/files/4464b8d609d3ff1eacbd11064da5df16.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/4464b8d609d3ff1eacbd11064da5df16.jpg" class="lazy" data-srcset="http://dulei.si/files/4464b8d609d3ff1eacbd11064da5df16.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>5、睡觉时头部中枕头一直往下溜的人：消极悲观，内向胆小。</p>
-<p><img src="/images/needisme/external/aabc616ece9e.jpg" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/aabc616ece9e.jpg" class="lazy" data-srcset="/images/needisme/external/aabc616ece9e.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>6、睡觉时把双手当成枕头的人：爱怀旧，感情细腻丰富。</p>
-<p><img src="http://dulei.si/files/f7a5e69cf287d151c116e082a343c952.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/f7a5e69cf287d151c116e082a343c952.jpg" class="lazy" data-srcset="http://dulei.si/files/f7a5e69cf287d151c116e082a343c952.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>7、睡觉时打鼾的人：自信，为人磊落，但不够虚心受教。</p>
-<p><img src="/images/needisme/external/f1f3ea9fe4d4.jpg" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/f1f3ea9fe4d4.jpg" class="lazy" data-srcset="/images/needisme/external/f1f3ea9fe4d4.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>8、睡觉时把牙根咬得咯咯响的人：具有收藏癖。</p>
-<p><img src="http://dulei.si/files/3d45cfb5e77c6721dfb2371e0cd3f5a0.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/3d45cfb5e77c6721dfb2371e0cd3f5a0.jpg" class="lazy" data-srcset="http://dulei.si/files/3d45cfb5e77c6721dfb2371e0cd3f5a0.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>9、睡觉时张着嘴巴的人：爱幻想，缺乏耐心与毅力。</p>
-<p><img src="http://dulei.si/files/c7288a0df530c8cf2114cb162e92bc5b.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/c7288a0df530c8cf2114cb162e92bc5b.jpg" class="lazy" data-srcset="http://dulei.si/files/c7288a0df530c8cf2114cb162e92bc5b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>10、睡觉时不断做梦并且呻吟的人：一生劳碌，有事未解决时总是不安。</p>
-<p><img src="http://dulei.si/files/5a8ab9ee64c2165b6f8c0d6702a8d3a9.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/5a8ab9ee64c2165b6f8c0d6702a8d3a9.jpg" class="lazy" data-srcset="http://dulei.si/files/5a8ab9ee64c2165b6f8c0d6702a8d3a9.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>11、睡觉时容易惊醒的人：心机细密，聪慧灵敏，健康好运。</p>
-<p><img src="/images/needisme/external/d08d8964b326.jpg" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/d08d8964b326.jpg" class="lazy" data-srcset="/images/needisme/external/d08d8964b326.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>12、睡觉时流口水的人：消化器官较衰弱，子女缘薄。</p>
-<p><img src="http://dulei.si/files/4ae5fceaba01b97c3143dc687e098bb3.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/4ae5fceaba01b97c3143dc687e098bb3.jpg" class="lazy" data-srcset="http://dulei.si/files/4ae5fceaba01b97c3143dc687e098bb3.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>13、睡觉时手脚经常乱动的人：保守内向，缺乏关爱。</p>
-<p><img src="http://dulei.si/files/8394f84daf5ee0e45578deac021c434f.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/8394f84daf5ee0e45578deac021c434f.jpg" class="lazy" data-srcset="http://dulei.si/files/8394f84daf5ee0e45578deac021c434f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>14、睡觉时呼吸声调均匀的人：无忧无虑，身心健康，有福之人。</p>
-<p><img src="http://dulei.si/files/0afdb4457c4a7fd6b71c30b988eb27a9.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/0afdb4457c4a7fd6b71c30b988eb27a9.jpg" class="lazy" data-srcset="http://dulei.si/files/0afdb4457c4a7fd6b71c30b988eb27a9.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>15、睡觉时双手握成拳头的人：忠诚，吃苦耐劳，意志坚定。</p>
-<p><img src="http://dulei.si/files/2ee66471e2025ab5b5648771dde0fff9.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/2ee66471e2025ab5b5648771dde0fff9.jpg" class="lazy" data-srcset="http://dulei.si/files/2ee66471e2025ab5b5648771dde0fff9.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>16、睡觉时脸宠带着微笑的人：善良坦荡，深得人心，有福之人。</p>
-<p><img src="http://dulei.si/files/d6d41166b18537fad61045079125c400.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/d6d41166b18537fad61045079125c400.jpg" class="lazy" data-srcset="http://dulei.si/files/d6d41166b18537fad61045079125c400.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -240,7 +416,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -467,7 +643,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

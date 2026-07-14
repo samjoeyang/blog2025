@@ -30,7 +30,7 @@
 <title>求包养系列完整版 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -55,9 +55,9 @@
 <meta property="og:image" content="http://dulei.si/files/9dc49755a16217f71eb0db91d7b5732d.jpg">
 <meta property="og:image" content="http://dulei.si/files/3d5c3a7496066cedb4f03c903f8e3116.jpg">
 <meta property="article:published_time" content="2010-11-10T13:24:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.217Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.784Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://dulei.si/files/4cb4a74562111c89bdace77207c41f3a.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -78,8 +78,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "求包养系列完整版",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-10",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-10-e6b182e58c85e585bbe7b3bbe58897e5ae8ce695b4e78988/" },
+  "description": "求包养系列完整版"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -94,6 +133,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -118,6 +159,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -145,6 +188,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -162,17 +209,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -182,56 +358,56 @@
 声音甜美技术强，<br />
 哪怕官人色如狼，<br />
 不到天亮不起床！</p>
-<p><a target="_blank" rel="noopener" href="http://luo.bo/2428/"><img src="http://dulei.si/files/4cb4a74562111c89bdace77207c41f3a.jpg" border="0" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://luo.bo/2428/"><img src="http://dulei.si/files/4cb4a74562111c89bdace77207c41f3a.jpg" class="lazy" data-srcset="http://dulei.si/files/4cb4a74562111c89bdace77207c41f3a.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></a></p>
 <p>求包养，会捆绑，<br />
 身形矫健气质郎！<br />
 阅片无数耐力强，<br />
 即便太太两鬓霜，<br />
 夜夜回春人激昂！</p>
-<p><img src="http://dulei.si/files/fed32b758889129c0936ddc807ef7d0d.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/fed32b758889129c0936ddc807ef7d0d.jpg" class="lazy" data-srcset="http://dulei.si/files/fed32b758889129c0936ddc807ef7d0d.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养 会灌肠<br />
 身段妖娆赛美娘<br />
 菊花一紧会锁阳<br />
 即便倾是灰太狼<br />
 夜夜笙箫忘母狼</p>
-<p><img src="http://dulei.si/files/cff6a53d0a6cd9885e926f6ca57b04d9.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/cff6a53d0a6cd9885e926f6ca57b04d9.jpg" class="lazy" data-srcset="http://dulei.si/files/cff6a53d0a6cd9885e926f6ca57b04d9.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养 会滚床<br />
 滴蜡调教我在行，<br />
 技术一流前戏长。<br />
 日日都做七次郎，<br />
 能攻能受才叫强！</p>
-<p><img src="http://dulei.si/files/a1bb06649a80a3534b88adbfa4a9267e.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/a1bb06649a80a3534b88adbfa4a9267e.jpg" class="lazy" data-srcset="http://dulei.si/files/a1bb06649a80a3534b88adbfa4a9267e.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养，技术强<br />
 不问庄家女或郎<br />
 前有铁棍耐力长<br />
 后有美菊静候郎<br />
 口技舌技美名扬</p>
-<p><img src="http://dulei.si/files/32504722038b69fb2ffa6a325b10a40b.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/32504722038b69fb2ffa6a325b10a40b.jpg" class="lazy" data-srcset="http://dulei.si/files/32504722038b69fb2ffa6a325b10a40b.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养，身材壮，<br />
 血气方刚火力旺！<br />
 技巧无数不重样，<br />
 不论主人啥状况，<br />
 坚决陪到心花放！</p>
-<p><img src="http://dulei.si/files/8a7a01275fcd6a64cff59649cf7a08d2.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/8a7a01275fcd6a64cff59649cf7a08d2.jpg" class="lazy" data-srcset="http://dulei.si/files/8a7a01275fcd6a64cff59649cf7a08d2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养，会弄枪<br />
 夜战千次心不慌<br />
 日理万鸡口活强<br />
 芙蓉凤姐亦不拒<br />
 只怪老子性欲强</p>
-<p><img src="http://dulei.si/files/624c5cc77d3bf30ae4f48bfa8e7ef29c.gif" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/624c5cc77d3bf30ae4f48bfa8e7ef29c.gif" class="lazy" data-srcset="http://dulei.si/files/624c5cc77d3bf30ae4f48bfa8e7ef29c.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养，精飞扬。<br />
 刚去韩国壮了阳！<br />
 又为练手爆伪娘！<br />
 闲来无事扶扶墙！<br />
 一条白光射向梁！</p>
-<p><img src="http://dulei.si/files/44d4698e1798810956bd5b57d93a4530.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/44d4698e1798810956bd5b57d93a4530.jpg" class="lazy" data-srcset="http://dulei.si/files/44d4698e1798810956bd5b57d93a4530.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养，火力旺<br />
 夜战百次力气长<br />
 国际标准来认证<br />
 勃大精深才叫强<br />
 夜夜欢声闹春宵<br />
 人送外号不倒枪</p>
-<p><img src="http://dulei.si/files/9dc49755a16217f71eb0db91d7b5732d.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/9dc49755a16217f71eb0db91d7b5732d.jpg" class="lazy" data-srcset="http://dulei.si/files/9dc49755a16217f71eb0db91d7b5732d.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养，美周郎，<br />
 金链男子白玉床。<br />
 战罢娇娘三百万，<br />
@@ -239,7 +415,7 @@
 银镯宓妃常留寝，<br />
 夸我活好耐力强。<br />
 嘿，耐力强！</p>
-<p><img src="http://dulei.si/files/3d5c3a7496066cedb4f03c903f8e3116.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/3d5c3a7496066cedb4f03c903f8e3116.jpg" class="lazy" data-srcset="http://dulei.si/files/3d5c3a7496066cedb4f03c903f8e3116.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>求包养，机关枪<br />
 样样技巧皆在行<br />
 气势可比虎狼猛<br />
@@ -342,7 +518,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -569,7 +745,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

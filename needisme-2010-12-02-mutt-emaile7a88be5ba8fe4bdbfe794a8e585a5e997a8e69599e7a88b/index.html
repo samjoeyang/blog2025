@@ -30,7 +30,7 @@
 <title>Mutt email程序使用入门教程 | Need.UNO</title>
 
 
-    <meta name="keywords" content="Mac, Linux, LINUX, 系统管理, Vim, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Mac, Linux, LINUX, 系统管理, Vim, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -52,7 +52,7 @@
 <meta property="og:image" content="http://www.linuxhobby.com/images/mutt-indexpager.png">
 <meta property="og:image" content="http://www.linuxhobby.com/images/mutt-list.png">
 <meta property="article:published_time" content="2010-12-02T07:09:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.831Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.820Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Mac">
 <meta property="article:tag" content="Linux">
@@ -79,8 +79,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Mutt email程序使用入门教程",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-02",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-02-mutt-emaile7a88be5ba8fe4bdbfe794a8e585a5e997a8e69599e7a88b/" },
+  "description": "Mutt email程序使用入门教程"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -95,6 +134,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -119,6 +160,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -146,6 +189,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -163,17 +210,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -194,7 +370,7 @@
 <li>新的而上次忘了读的信件(old), +1 分。可能太忙了上次忘了看的信，这次应该先看。</li>
 </ul>
 <p>信件最后的得分就是它的这些分数相加的结果。这样处理之后，你最想看的信件肯定就在最上面了。</li>
-<li><em>几乎任意条件的彩色设置</em>你看我的 Mutt 可以变成这个样子。当然这太花了，我不会设置这么多颜色的。<a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-color.png"><img title="mutt-color" src="http://www.linuxhobby.com/images/mutt-color.png" alt="Mutt email 程序使用入门 作者：王垠 " width="483" height="302" /></a></li>
+<li><em>几乎任意条件的彩色设置</em>你看我的 Mutt 可以变成这个样子。当然这太花了，我不会设置这么多颜色的。<a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-color.png"><img title="mutt-color" src="http://www.linuxhobby.com/images/mutt-color.png" class="lazy" data-srcset="http://www.linuxhobby.com/images/mutt-color.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Mutt email 程序使用入门 作者：王垠 " width="483" height="302" /></a></li>
 <li><em>可以随意绑定热键</em>这个功能类似 Emacs。你可以把几乎任意的功能绑定到键盘。你可以让 Mutt 的行为变成你喜欢的编辑器。比如我习惯了 VIM  的控制方式，我就把 &ldquo;gg&rdquo; 绑定到 &ldquo;first-entry&rdquo;, 把 &ldquo;G&rdquo; 绑定到 &ldquo;last-entry&rdquo;, 把 &ldquo;Ctrl-F&rdquo; 绑定到  next-page, 把 &ldquo;Ctrl-B&rdquo; 绑定到 previous-page.</li>
 <li><em>设置条件挂钩</em>你可以对满足不同条件的信件，信箱采取不同的设置。比如，对于用来收邮件的那些信箱，显示邮件时只显示 from, date,  subject, x-mailer 这几个邮件头，而对 sent-mail 信箱还显示 to  这个邮件头；发给我家人，朋友的信件都存到一个特别的信箱中保存。</li>
 <li><em>批量邮件处理</em>你可以把一些邮件作上标记(tag)，然后对它们进行同意操作，比如删除，存到其它文件，删除附件，&hellip;&hellip;</li>
@@ -237,11 +413,11 @@ l></p>
 <li>L: 表示这是一封你已经加入的邮件列表寄来的。</li>
 </ul>
 <p>你看看下面这幅图，就是mutt 有可能出现的一种列表，你看到地址特征没有？实际上地址特征出现在列表中的位置是可以改变的。待会儿在  $index_format 里你会看到的。</p>
-<p><a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-to.png"><img title="mutt-to" src="http://www.linuxhobby.com/images/mutt-to.png" alt="Mutt email 程序使用入门 作者：王垠 " width="294" height="165" /></a></li>
+<p><a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-to.png"><img title="mutt-to" src="http://www.linuxhobby.com/images/mutt-to.png" class="lazy" data-srcset="http://www.linuxhobby.com/images/mutt-to.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Mutt email 程序使用入门 作者：王垠 " width="294" height="165" /></a></li>
 <li>index_format这是一个格式字符串，用来控制你的index的列表显示。它的缺省定义是：
 <pre>set index_format='%4C %Z %%b %d %-15.15L (%4l) %s'</pre>
 <p>显示出来就是这个样子：</p>
-<p><a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/index-original.png"><img title="index-original" src="http://www.linuxhobby.com/images/index-original.png" alt="Mutt email 程序使用入门 作者：王垠 " width="423" height="17" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/index-original.png"><img title="index-original" src="http://www.linuxhobby.com/images/index-original.png" class="lazy" data-srcset="http://www.linuxhobby.com/images/index-original.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Mutt email 程序使用入门 作者：王垠 " width="423" height="17" /></a></p>
 <p>这里有一个简单的对应关系，%4C表示4位数的序号，%Z是邮件状态，你看到那个 &ldquo;r&rdquo; 了吗？也就是说我已经回了这封信。%Z  还包含那个 &ldquo;T&rdquo;, 也就是说这封信不只是寄给我一个人的，我爸爸每次寄信都会CC他自己一份。 %%b %d 是日期格式，它是由  strftime() 函数的格式定义的。这里 %b 就是根据当前的 locale 设置的月份简称，&ldquo;12月&rdquo;。%d  就是十进制表示的每月的日号，&ldquo;31&rdquo;。后面的&hellip;&hellip;你自己看看manual吧，我不罗嗦了。</li>
 <li>mailboxes指定你有那些信箱文件。当你按 &ldquo;c&rdquo; 切换信箱时，再按 Tab 键，这些信箱就可供你选择。
 <pre>mailboxes Mailbox sent-mail</pre>
@@ -249,7 +425,7 @@ l></p>
 <li>header这是一个 bool 型变量。它表明你在回信时引用原文是否加入原文的邮件头。
 <pre>set header=no</pre>
 </li>
-<li>quit<a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-quit.png"><img title="mutt-quit" src="http://www.linuxhobby.com/images/mutt-quit.png" alt="Mutt email 程序使用入门 作者：王垠 " width="287" height="47" /></a>可以设置为 yes, no, ask-yes, 或者 ask-no.  这是说，当你按q退出时，是否提示你(ask-yes,ask-no)，还是直接就退出了(yes)，还是根本不理你(no)。
+<li>quit<a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-quit.png"><img title="mutt-quit" src="http://www.linuxhobby.com/images/mutt-quit.png" class="lazy" data-srcset="http://www.linuxhobby.com/images/mutt-quit.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Mutt email 程序使用入门 作者：王垠 " width="287" height="47" /></a>可以设置为 yes, no, ask-yes, 或者 ask-no.  这是说，当你按q退出时，是否提示你(ask-yes,ask-no)，还是直接就退出了(yes)，还是根本不理你(no)。
 <pre>set quit=ask-yes</pre>
 </li>
 <li>auto_view那些类型的附件是允许直接通过 .mailcap 浏览的？
@@ -261,7 +437,7 @@ l></p>
 <li>ascii_chars当 Mutt 用 thread 方式显示时，是否用纯 ascii 表示树状列表。
 <pre>set ascii_chars=yes</pre>
 <p>如果设置了就是这个样子：</p>
-<p><a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-ascii.png"><img title="mutt-ascii" src="http://www.linuxhobby.com/images/mutt-ascii.png" alt="Mutt email 程序使用入门 作者：王垠 " width="399" height="104" /></a></li>
+<p><a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-ascii.png"><img title="mutt-ascii" src="http://www.linuxhobby.com/images/mutt-ascii.png" class="lazy" data-srcset="http://www.linuxhobby.com/images/mutt-ascii.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Mutt email 程序使用入门 作者：王垠 " width="399" height="104" /></a></li>
 <li>include回信时是否包含原文。
 <pre>set include</pre>
 </li>
@@ -314,12 +490,12 @@ l></p>
 </li>
 <li>pager_index_lines当你在用 pager 看信件时，在 index 留出多少行显示邮件列表？
 <pre>set pager_index_lines=4</pre>
-<p>比如我留下4行显示列表，其它的用来显示正文： <a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-indexpager.png"><img title="mutt-indexpager" src="http://www.linuxhobby.com/images/mutt-indexpager.png" alt="Mutt email 程序使用入门 作者：王垠 " width="442" height="174" /></a></li>
+<p>比如我留下4行显示列表，其它的用来显示正文： <a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-indexpager.png"><img title="mutt-indexpager" src="http://www.linuxhobby.com/images/mutt-indexpager.png" class="lazy" data-srcset="http://www.linuxhobby.com/images/mutt-indexpager.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Mutt email 程序使用入门 作者：王垠 " width="442" height="174" /></a></li>
 <li>subscribe <a><br />
 href="" name="subscribe"></a>告诉 Mutt 你已经订阅了那些邮件列表(mailing-list). 这有助于 Mutt  判断那些信件是邮件列表转过来的，避免你错误的回复到别人的私人信箱。也避免别人回复到你的私人信箱。</p>
 <pre>subscribe fvwm@fvwm.org</pre>
 <p>之后，收到的 To: 是 fvwm@fvwm.org 的信件看起来是这样：</p>
-<p><a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-list.png"><img title="mutt-list" src="http://www.linuxhobby.com/images/mutt-list.png" alt="Mutt email 程序使用入门 作者：王垠 " width="707" height="19" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://www.linuxhobby.com/images/mutt-list.png"><img title="mutt-list" src="http://www.linuxhobby.com/images/mutt-list.png" class="lazy" data-srcset="http://www.linuxhobby.com/images/mutt-list.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Mutt email 程序使用入门 作者：王垠 " width="707" height="19" /></a></p>
 <p>地址前面那个 &ldquo;L&rdquo; 表示这是一个邮件列表转过来的。你看到以后就不要按 &ldquo;r&rdquo; 回信，这样会回到别人的私人信箱去。按  &ldquo;L&rdquo;，就可以回复到邮件列表地址，这里就是 fvwm@fvwm.org。</p>
 <h3>Mutt中文FAQ<a name="chinese"></a></h3>
 <p>以下是一些常见问题和解决方法。很多是我遇到的一些不能直接连接国外网络，没有自己的域名和邮件服务器的人遇到的问题。</p>
@@ -407,7 +583,7 @@ href="" name="subscribe"></a>告诉 Mutt 你已经订阅了那些邮件列表(ma
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Mac/" class="post-tags__link button"># Mac</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a><a href="/tags/Vim/" class="post-tags__link button"># Vim</a></div> 
     
 <div class="post-share">
@@ -634,7 +810,15 @@ href="" name="subscribe"></a>告诉 Mutt 你已经订阅了那些邮件列表(ma
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

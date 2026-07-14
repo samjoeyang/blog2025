@@ -30,7 +30,7 @@
 <title>你还想被&amp;ldquo;芥末&amp;rdquo;骗多久？ | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -48,9 +48,9 @@
 <meta property="og:image" content="http://www.guokr.com/gkimage/6e/sn/op/6esnop.png">
 <meta property="og:image" content="http://www.guokr.com/gkimage/e3/56/76/e35676.png">
 <meta property="article:published_time" content="2011-01-05T01:21:59.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.366Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.871Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://www.guokr.com/gkimage/sx/7w/qq/sx7wqq.png">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -71,8 +71,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "你还想被&amp;ldquo;芥末&amp;rdquo;骗多久？",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2011-01-05",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2011-01-05-e4bda0e8bf98e683b3e8a2abe2809ce88aa5e69cabe2809de9aa97e5a49ae4b985efbc9f/" },
+  "description": "你还想被&amp;ldquo;芥末&amp;rdquo;骗多久？"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -87,6 +126,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -111,6 +152,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -138,6 +181,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -155,17 +202,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -173,13 +349,13 @@
         <p>小编我很爱吃生鱼片，准确地说，是爱吃搭配生鱼片的那种绿色芥末酱&mdash;&mdash;那种冲透鼻腔，醍醐灌顶的感觉，让我深陷日本料理，不能自拔。一次去寿司店， 正准备大快朵颐的时候，忽然发现酱料袋上印的不是我最爱的&ldquo;芥末酱&rdquo;三个字，而是&ldquo;山葵酱&rdquo;。挤出来尝了尝，颜色和味道都和原来吃的芥末酱一样。Why?  山葵是神马？和芥末有什么关系？</p>
 <h1>此芥末非彼芥末</h1>
 <p>我曾很傻很天真地认为芥末酱（mustard）是以一种叫做芥末的植物为原料制作而成的，如同辣椒酱一样。但我错了（我的植物学老师，我对不住您啊 ）。其实芥末是由成熟的芥菜（ <em>Brassica juncea</em> ）&mdash;&mdash;十字花科芸苔属&mdash;&mdash;的种子碾磨成的粉状调料，一般呈黄色。就是宜家卖的3块钱热狗搭配的那一条黄黄的膏状物体。</p>
-<p><img src="http://www.guokr.com/gkimage/sx/7w/qq/sx7wqq.png" alt="/gkimage/sx/7w/qq/sx7wqq.png" /><em>其实中国早在周代起宫廷里就开始食用这种芥末酱了</em></p>
+<p><img src="http://www.guokr.com/gkimage/sx/7w/qq/sx7wqq.png" class="lazy" data-srcset="http://www.guokr.com/gkimage/sx/7w/qq/sx7wqq.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="/gkimage/sx/7w/qq/sx7wqq.png" /><em>其实中国早在周代起宫廷里就开始食用这种芥末酱了</em></p>
 <h1>Mustard？Wasabi？</h1>
 <p>现在来看看弄得我一头雾水的山葵。山葵（ <em>Wasabia japonica</em> ），哈哈，从它的拉丁名里看出点什么来了吗？没错，日本料理中配寿司和生鱼片的绿色瓦沙比（wasabi）其实是山葵酱。山葵酱（wasabi）是由山葵 根磨成细泥状制成的。它和由芥菜种子磨成的芥末酱（Mustard）压根不是一回事儿，只是气味和味道类似而已。山葵属于十字花科的山葵属，与芸苔属的芥 菜是表亲。</p>
-<p><img src="http://www.guokr.com/gkimage/6e/sn/op/6esnop.png" alt="/gkimage/6e/sn/op/6esnop.png" /><em>1. 川崎カレン于1828年绘制的山葵绘图；2. 野生山葵；3. 山葵的根和山葵泥的做法</em></p>
+<p><img src="http://www.guokr.com/gkimage/6e/sn/op/6esnop.png" class="lazy" data-srcset="http://www.guokr.com/gkimage/6e/sn/op/6esnop.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="/gkimage/6e/sn/op/6esnop.png" /><em>1. 川崎カレン于1828年绘制的山葵绘图；2. 野生山葵；3. 山葵的根和山葵泥的做法</em></p>
 <h1>鱼目混珠的&ldquo;芥末&rdquo;</h1>
 <p>知道了此芥末酱非彼芥末酱，再告诉你一个不幸的消息：真正的山葵根是很昂贵的，哪家寿司店也不可能随手给你两包免费吃喝，所以你所体验的那种冲鼻涨脑的自虐感，其实来自于另一种十字花科的植物&mdash;&mdash;辣根（ <em>Armoracia rusticana</em> ）。辣根原产于欧洲东南部和西亚，欧洲国家常用来做烤牛肉等菜肴的佐料，因为其味道与山葵根类似，于是便成了仿制山葵调料的材料。但是它既不属于芸苔属也 不属于山葵属而属于马萝卜属，你没有看错，是马萝卜属。其实辣根酱本身是淡黄色的，要用食用色素调成青绿色后才成能为山寨的山葵酱。</p>
-<p><img src="http://www.guokr.com/gkimage/e3/56/76/e35676.png" alt="/gkimage/e3/56/76/e35676.png" /><em>辣根植株照片,以及一瓶真正的辣根酱</em></p>
+<p><img src="http://www.guokr.com/gkimage/e3/56/76/e35676.png" class="lazy" data-srcset="http://www.guokr.com/gkimage/e3/56/76/e35676.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="/gkimage/e3/56/76/e35676.png" /><em>辣根植株照片,以及一瓶真正的辣根酱</em></p>
 <p>由于山葵根价格昂贵，山葵酱（wasabi）保存困难，目前中国几乎所有的寿司店和日本大部分的寿司店都是用的仿制山葵酱，即用&ldquo;染过色的&rdquo;辣根酱作为替代品。悲剧了，科普完了发现原来自己压根就没有吃过真正的wasabi, 难道这就是所谓的不能知道太多&hellip;&hellip;</p>
 <h1>自然控也来山寨&mdash;&mdash;谣言粉碎机</h1>
 <p>Wasabi山葵的独特味道是由异硫氰酸酯（Isothiocyanate，简称ITC）类有机化合物而来的，研究发现异硫氰酸盐能够抑制微生物生 长，这就是为什么容易变质的海鲜通常佐以山葵酱来吃。另外，&ldquo;山寨wasabi&rdquo;辣根（T  T，我怨念啊～）中也含有异硫氰酸酯类有机化合物，但组分上有差别：比如2-苯乙基异硫氰酸酯（2-phenylethyl  ITC）是辣根独有的，而且辣根中烷基异硫氰酸酯（alkyl ITCs）和 &omega;-烯基异硫氰酸酯（&omega;-alkenyl  ITCs）的含量要低于山葵的，这些化合物含量的差异使得真假山葵酱在气味上还是有些不同的。</p>
@@ -211,7 +387,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -438,7 +614,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

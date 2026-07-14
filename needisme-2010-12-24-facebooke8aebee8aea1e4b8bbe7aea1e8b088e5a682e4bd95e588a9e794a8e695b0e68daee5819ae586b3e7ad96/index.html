@@ -30,7 +30,7 @@
 <title>Facebook设计主管谈如何利用数据做决策 | Need.UNO</title>
 
 
-    <meta name="keywords" content="Java, Facebook, Twitter, SNS, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Java, Facebook, Twitter, SNS, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -48,7 +48,7 @@
 <meta property="og:image" content="http://pic003.cnblogs.com/2010/1/201012/2010121814364732.png">
 <meta property="og:image" content="http://pic003.cnblogs.com/2010/1/201012/2010121814395116.jpg">
 <meta property="article:published_time" content="2010-12-24T05:27:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.108Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.854Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Java">
 <meta property="article:tag" content="Facebook">
@@ -74,8 +74,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Facebook设计主管谈如何利用数据做决策",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-24",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-24-facebooke8aebee8aea1e4b8bbe7aea1e8b088e5a682e4bd95e588a9e794a8e695b0e68daee5819ae586b3e7ad96/" },
+  "description": "Facebook设计主管谈如何利用数据做决策"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -90,6 +129,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -114,6 +155,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -141,6 +184,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -158,22 +205,151 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
-        <p><img alt="" src="http://pic003.cnblogs.com/2010/1/201012/2010121814345088.jpg" /><br />Facebook设计主管<a target="_blank" rel="noopener" href="http://twitter.com/joulee">Julie Zhuo</a>在上周五的<a target="_blank" rel="noopener" href="http://zurbsoapbox.com/">ZURBsoapbox</a>活动上分享了她的团队如何利用数据得出决策方面的相关经验，其中许多案例让人叫绝，下面是现场音频和内容概要，跟大家分享下。(音频地址：<a target="_blank" rel="noopener" href="http://podcast.zurb.com/15_ZURBSoapbox_with_Julie_Zhuo.mp3">http://podcast.zurb.com/15_ZURBSoapbox_with_Julie_Zhuo.mp3</a>)</p>
+        <p><img alt="" src="http://pic003.cnblogs.com/2010/1/201012/2010121814345088.jpg" class="lazy" data-srcset="http://pic003.cnblogs.com/2010/1/201012/2010121814345088.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />Facebook设计主管<a target="_blank" rel="noopener" href="http://twitter.com/joulee">Julie Zhuo</a>在上周五的<a target="_blank" rel="noopener" href="http://zurbsoapbox.com/">ZURBsoapbox</a>活动上分享了她的团队如何利用数据得出决策方面的相关经验，其中许多案例让人叫绝，下面是现场音频和内容概要，跟大家分享下。(音频地址：<a target="_blank" rel="noopener" href="http://podcast.zurb.com/15_ZURBSoapbox_with_Julie_Zhuo.mp3">http://podcast.zurb.com/15_ZURBSoapbox_with_Julie_Zhuo.mp3</a>)</p>
 <p>
 <h2>　　分析数据而不是渴求数据</h2>
 <p>Julie讲述了自己的产品设计团队通过数据来分析用户是如何利用不同功能的，她以图片上传功能为例进行讲述。她的团队得出了以下几个数据：</p>
@@ -189,7 +365,7 @@
 <p><strong>解决方案</strong>：团队发现用户不知道使用shift来选择多个图片进行上传，所以加了一个提示，在上传开始前出现上传多张图片的提示。结果数据从85%降低到40%。</p>
 <h2>　　利用数据检查功能</h2>
 <p>Julie以Status Updates Composer（状态更新编辑器）为例。团队的目标是提高内容分享，对编辑器进行改进。</p>
-<div style="text-align:center;"><img alt="" src="http://pic003.cnblogs.com/2010/1/201012/2010121814364732.png" /></div>
+<div style="text-align:center;"><img alt="" src="http://pic003.cnblogs.com/2010/1/201012/2010121814364732.png" class="lazy" data-srcset="http://pic003.cnblogs.com/2010/1/201012/2010121814364732.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></div>
 <p>他们试了很多办法来改善分享行为：</p>
 <p>&ndash;用编辑器进行文字输入是很简单的，但是图片分享或通过链接分享都不容易，所以团队对编辑器进行改善，简化这些功能。</p>
 <p><strong>结果：没有明显的改善。</strong></p>
@@ -200,7 +376,7 @@
 <p><strong>结论：</strong>数据显示状态更新编辑器并不是改善分享的最佳途径，所以团队决定不改动这项功能。</p>
 <p><strong>利用数据提高项目成功率</strong></p>
 <p>Facebook原来的注销页面真的很纠结无聊，&ldquo;<em>We&rsquo;re sorry you&rsquo;re leaving. Tell us why Facebook was not useful</em>.&rdquo;（很遗憾你选择离开，请告诉我们facebook的不足之处。）最后一名设计师进行了改动（如下图），让注销账户如同离开一个夏令营（让用户感觉自己是要离开一个朋友呆的地方。）这一<strong>改动减少了</strong><strong>7%</strong><strong>的账户注销率。</strong></p>
-<div style="text-align:center;"><img alt="" src="http://pic003.cnblogs.com/2010/1/201012/2010121814395116.jpg" /><strong> </strong></div>
+<div style="text-align:center;"><img alt="" src="http://pic003.cnblogs.com/2010/1/201012/2010121814395116.jpg" class="lazy" data-srcset="http://pic003.cnblogs.com/2010/1/201012/2010121814395116.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><strong> </strong></div>
 <p>
 <blockquote>原文链接：<a target="_blank" rel="noopener" href="http://www.zurb.com/article/515/podcast-of-julie-zhuos-talk-on-how-facebo">http://www.zurb.com/article/515/podcast-of-julie-zhuos-talk-on-how-facebo</a><br />本文链接：<a target="_blank" rel="noopener" href="http://www.socialbeta.cn/articles/how-facebook-uses-data.html">http://www.socialbeta.cn/articles/how-facebook-uses-data.html</a><br />译者:<a target="_blank" rel="noopener" href="http://www.socialbeta.cn/articles/how-facebook-uses-data.html"> wisp</a></p></blockquote>
 
@@ -227,7 +403,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Java/" class="post-tags__link button"># Java</a><a href="/tags/Facebook/" class="post-tags__link button"># Facebook</a><a href="/tags/Twitter/" class="post-tags__link button"># Twitter</a><a href="/tags/SNS/" class="post-tags__link button"># SNS</a></div> 
     
 <div class="post-share">
@@ -454,7 +630,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

@@ -30,7 +30,7 @@
 <title>24 个很酷的Linux/Unix工具 | Need.UNO</title>
 
 
-    <meta name="keywords" content="SSH, Linux, LINUX, 系统管理, iOS, Vim, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="SSH, Linux, LINUX, 系统管理, iOS, Vim, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -69,7 +69,7 @@
 <meta property="og:image" content="https://need.uno/images/needisme/2011/05/calcurse-screenshot.png">
 <meta property="og:image" content="https://need.uno/images/needisme/2011/05/ttytter-screenshot.png">
 <meta property="article:published_time" content="2011-05-10T06:33:57.000Z">
-<meta property="article:modified_time" content="2026-05-22T06:06:50.457Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.884Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="SSH">
 <meta property="article:tag" content="Linux">
@@ -97,8 +97,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "24 个很酷的Linux/Unix工具",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2011-05-10",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2011-05-10-24-e4b8aae5be88e985b7e79a84linuxunixe5b7a5e585b7/" },
+  "description": "24 个很酷的Linux/Unix工具"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -113,6 +152,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -137,6 +178,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -164,6 +207,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -181,93 +228,222 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p><a href="http://kkovacs.eu/" target="_blank">KKovacs</a> 收集了 24 个 Linux/Unix 平台上的工具，既有熟悉的，也有鲜为人知的。这些运行于终端的工具都很酷，很有用。</p>
 <h3>dstat &amp; sar</h3>
-<p><a href="/images/needisme/2011/05/dstat-screenshot.png"><img class="alignnone size-full wp-image-1374" alt="dstat screenshot" src="/images/needisme/2011/05/dstat-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/dstat-screenshot.png"><img class="alignnone size-full wp-image-1374" alt="dstat screenshot" src="/images/needisme/2011/05/dstat-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/dstat-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>iostat、vmstat、ifstat 等。</p>
 <h3>htop &amp; iotop</h3>
-<p><a href="/images/needisme/2011/05/htop-screenshot.png"><img class="alignnone size-full wp-image-1376" alt="htop screenshot" src="/images/needisme/2011/05/htop-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/htop-screenshot.png"><img class="alignnone size-full wp-image-1376" alt="htop screenshot" src="/images/needisme/2011/05/htop-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/htop-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>进程、内存、以及 io 监视。</p>
 <h3>slurm</h3>
-<p><a href="/images/needisme/2011/05/slurm-screenshot.png"><img class="alignnone size-full wp-image-1377" alt="slurm screenshot" src="/images/needisme/2011/05/slurm-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/slurm-screenshot.png"><img class="alignnone size-full wp-image-1377" alt="slurm screenshot" src="/images/needisme/2011/05/slurm-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/slurm-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>可视化网络流量。</p>
 <h3>ttyrec &amp; ipbt</h3>
-<p><a href="/images/needisme/2011/05/ipbt-screenshot.png"><img class="alignnone size-full wp-image-1378" alt="ipbt screenshot" src="/images/needisme/2011/05/ipbt-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/ipbt-screenshot.png"><img class="alignnone size-full wp-image-1378" alt="ipbt screenshot" src="/images/needisme/2011/05/ipbt-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/ipbt-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>录制并播放终端会话。</p>
 <h3>vim (&amp;ctags)</h3>
-<p><a href="/images/needisme/2011/05/vim-screenshot.png"><img class="alignnone size-full wp-image-1379" alt="vim screenshot" src="/images/needisme/2011/05/vim-screenshot.png" width="400" height="326" /></a><br />
+<p><a href="/images/needisme/2011/05/vim-screenshot.png"><img class="alignnone size-full wp-image-1379" alt="vim screenshot" src="/images/needisme/2011/05/vim-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/vim-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a><br />
 程序员的编辑器。</p>
 <h3>rsync</h3>
-<p><a href="/images/needisme/2011/05/rsync-screenshot.png"><img class="alignnone size-full wp-image-1388" alt="rsync screenshot" src="/images/needisme/2011/05/rsync-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/rsync-screenshot.png"><img class="alignnone size-full wp-image-1388" alt="rsync screenshot" src="/images/needisme/2011/05/rsync-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/rsync-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>通过 SSH 保持文件系统同步。</p>
 <h3>screen, dtach, tmux, byobu</h3>
-<p><a href="/images/needisme/2011/05/gnu-screen-screenshot.png"><img class="alignnone size-full wp-image-1390" alt="gnu screen screenshot" src="/images/needisme/2011/05/gnu-screen-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/gnu-screen-screenshot.png"><img class="alignnone size-full wp-image-1390" alt="gnu screen screenshot" src="/images/needisme/2011/05/gnu-screen-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/gnu-screen-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>保持你的终端会话。</p>
 <h3>mtr</h3>
-<p><a href="/images/needisme/2011/05/mtr-screenshot.png"><img class="alignnone size-full wp-image-1391" alt="mtr screenshot" src="/images/needisme/2011/05/mtr-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/mtr-screenshot.png"><img class="alignnone size-full wp-image-1391" alt="mtr screenshot" src="/images/needisme/2011/05/mtr-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/mtr-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>traceroute 2.0。</p>
 <h3>multitail</h3>
-<p><a href="/images/needisme/2011/05/multitail-screenshot.png"><img class="alignnone size-full wp-image-1393" alt="multitail screenshot" src="/images/needisme/2011/05/multitail-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/multitail-screenshot.png"><img class="alignnone size-full wp-image-1393" alt="multitail screenshot" src="/images/needisme/2011/05/multitail-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/multitail-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>在分隔的窗口中查看你的日志。</p>
 <h3>socat &amp; netpipes</h3>
-<p><a href="/images/needisme/2011/05/socat-screenshot.png"><img class="alignnone size-full wp-image-1394" alt="socat screenshot" src="/images/needisme/2011/05/socat-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/socat-screenshot.png"><img class="alignnone size-full wp-image-1394" alt="socat screenshot" src="/images/needisme/2011/05/socat-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/socat-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>socket 输入、输出更容易。</p>
 <h3>tpp</h3>
-<p><a href="/images/needisme/2011/05/tpp-screenshot.png"><img class="alignnone size-full wp-image-1395" alt="tpp screenshot" src="/images/needisme/2011/05/tpp-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/tpp-screenshot.png"><img class="alignnone size-full wp-image-1395" alt="tpp screenshot" src="/images/needisme/2011/05/tpp-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/tpp-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>适用于终端的幻灯演示工具。</p>
 <h3>iftop &amp; iptraf</h3>
-<p><a href="/images/needisme/2011/05/iftop-screenshot.png"><img class="alignnone size-full wp-image-1396" alt="iftop screenshot" src="/images/needisme/2011/05/iftop-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/iftop-screenshot.png"><img class="alignnone size-full wp-image-1396" alt="iftop screenshot" src="/images/needisme/2011/05/iftop-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/iftop-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>查看你的网络流量。</p>
 <h3>xargs</h3>
-<p><a href="/images/needisme/2011/05/xargs-screenshot.png"><img class="alignnone size-full wp-image-1398" alt="xargs screenshot" src="/images/needisme/2011/05/xargs-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/xargs-screenshot.png"><img class="alignnone size-full wp-image-1398" alt="xargs screenshot" src="/images/needisme/2011/05/xargs-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/xargs-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>从标准输入执行任务。</p>
 <h3>siege &amp; tsung</h3>
-<p><a href="/images/needisme/2011/05/siege-screenshot.png"><img class="alignnone size-full wp-image-1399" alt="siege screenshot" src="/images/needisme/2011/05/siege-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/siege-screenshot.png"><img class="alignnone size-full wp-image-1399" alt="siege screenshot" src="/images/needisme/2011/05/siege-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/siege-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>web 载入测试工具。</p>
 <h3>duplicity &amp; rsyncrypto</h3>
-<p><a href="/images/needisme/2011/05/duplicity-screenshot.png"><img class="alignnone size-full wp-image-1400" alt="duplicity screenshot" src="/images/needisme/2011/05/duplicity-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/duplicity-screenshot.png"><img class="alignnone size-full wp-image-1400" alt="duplicity screenshot" src="/images/needisme/2011/05/duplicity-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/duplicity-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>加密备份工具。</p>
 <h3>ledger</h3>
-<p><a href="/images/needisme/2011/05/ledger-screenshot.png"><img class="alignnone size-full wp-image-1402" alt="ledger screenshot" src="/images/needisme/2011/05/ledger-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/ledger-screenshot.png"><img class="alignnone size-full wp-image-1402" alt="ledger screenshot" src="/images/needisme/2011/05/ledger-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/ledger-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>基于终端的帐单管理工具。</p>
 <h3>nethack &amp; slash'em</h3>
-<p><a href="/images/needisme/2011/05/nethack-screenshot.png"><img class="alignnone size-full wp-image-1403" alt="nethack screenshot" src="/images/needisme/2011/05/nethack-screenshot.png" width="400" height="326" /></a><br />
+<p><a href="/images/needisme/2011/05/nethack-screenshot.png"><img class="alignnone size-full wp-image-1403" alt="nethack screenshot" src="/images/needisme/2011/05/nethack-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/nethack-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a><br />
 游戏。</p>
 <h3>taskwarrior</h3>
-<p><a href="/images/needisme/2011/05/taskwarrior-screenshot.png"><img class="alignnone size-full wp-image-1404" alt="taskwarrior screenshot" src="/images/needisme/2011/05/taskwarrior-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/taskwarrior-screenshot.png"><img class="alignnone size-full wp-image-1404" alt="taskwarrior screenshot" src="/images/needisme/2011/05/taskwarrior-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/taskwarrior-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>任务管理。</p>
 <h3>lftp</h3>
-<p><a href="/images/needisme/2011/05/lftp-screenshot.png"><img class="alignnone size-full wp-image-1405" alt="lftp screenshot" src="/images/needisme/2011/05/lftp-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/lftp-screenshot.png"><img class="alignnone size-full wp-image-1405" alt="lftp screenshot" src="/images/needisme/2011/05/lftp-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/lftp-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>ftp 客户端。</p>
 <h3>curl</h3>
-<p><a href="/images/needisme/2011/05/curl-screenshot.png"><img class="alignnone size-full wp-image-1406" alt="curl screenshot" src="/images/needisme/2011/05/curl-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/curl-screenshot.png"><img class="alignnone size-full wp-image-1406" alt="curl screenshot" src="/images/needisme/2011/05/curl-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/curl-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>大家喜爱的 HTTP 工具。</p>
 <h3>ack</h3>
-<p><a href="/images/needisme/2011/05/ack-screenshot.png"><img class="alignnone size-full wp-image-1407" alt="ack screenshot" src="/images/needisme/2011/05/ack-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/ack-screenshot.png"><img class="alignnone size-full wp-image-1407" alt="ack screenshot" src="/images/needisme/2011/05/ack-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/ack-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>类似 grep，比 grep 更好。</p>
 <h3>rtorrent &amp; aria2</h3>
-<p><a href="/images/needisme/2011/05/rtorrent-screenshot.png"><img class="alignnone size-full wp-image-1408" alt="rtorrent screenshot" src="/images/needisme/2011/05/rtorrent-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/rtorrent-screenshot.png"><img class="alignnone size-full wp-image-1408" alt="rtorrent screenshot" src="/images/needisme/2011/05/rtorrent-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/rtorrent-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>命令行的 torrent 下载器。</p>
 <h3>calcurse &amp; remind + wyrd</h3>
-<p><a href="/images/needisme/2011/05/calcurse-screenshot.png"><img class="alignnone size-full wp-image-1409" alt="calcurse screenshot" src="/images/needisme/2011/05/calcurse-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/calcurse-screenshot.png"><img class="alignnone size-full wp-image-1409" alt="calcurse screenshot" src="/images/needisme/2011/05/calcurse-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/calcurse-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>日程系统。</p>
 <h3>ttytter</h3>
-<p><a href="/images/needisme/2011/05/ttytter-screenshot.png"><img class="alignnone size-full wp-image-1410" alt="ttytter screenshot" src="/images/needisme/2011/05/ttytter-screenshot.png" width="400" height="326" /></a></p>
+<p><a href="/images/needisme/2011/05/ttytter-screenshot.png"><img class="alignnone size-full wp-image-1410" alt="ttytter screenshot" src="/images/needisme/2011/05/ttytter-screenshot.png" class="lazy" data-srcset="/images/needisme/2011/05/ttytter-screenshot.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="400" height="326" /></a></p>
 <p>不错的 Twitter 客户端。</p>
 <p>原文地址：http://linuxtoy.org/archives/cool-linux-tools.html</p>
 
@@ -294,7 +470,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-22</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/SSH/" class="post-tags__link button"># SSH</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a><a href="/tags/iOS/" class="post-tags__link button"># iOS</a><a href="/tags/Vim/" class="post-tags__link button"># Vim</a></div> 
     
 <div class="post-share">
@@ -521,7 +697,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

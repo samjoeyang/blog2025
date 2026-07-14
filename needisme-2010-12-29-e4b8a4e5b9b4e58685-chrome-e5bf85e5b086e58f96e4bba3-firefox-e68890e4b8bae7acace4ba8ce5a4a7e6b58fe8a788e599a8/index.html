@@ -30,7 +30,7 @@
 <title>两年内 Chrome 必将取代 Firefox 成为第二大浏览器 | Need.UNO</title>
 
 
-    <meta name="keywords" content="Google, Google Fans, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Google, Google Fans, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -47,7 +47,7 @@
 <meta property="og:image" content="https://need.uno/images/needisme/2010/12/080922CF5.png">
 <meta property="og:image" content="https://need.uno/images/needisme/auto_save_image/2010/12/080922z1e.png">
 <meta property="article:published_time" content="2010-12-29T14:26:00.000Z">
-<meta property="article:modified_time" content="2026-05-22T06:06:50.393Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.859Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Google">
 <meta property="article:tag" content="Google Fans">
@@ -71,8 +71,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "两年内 Chrome 必将取代 Firefox 成为第二大浏览器",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-29",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-29-e4b8a4e5b9b4e58685-chrome-e5bf85e5b086e58f96e4bba3-firefox-e68890e4b8bae7acace4ba8ce5a4a7e6b58fe8a788e599a8/" },
+  "description": "两年内 Chrome 必将取代 Firefox 成为第二大浏览器"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -87,6 +126,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -111,6 +152,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -138,6 +181,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -155,17 +202,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -174,9 +350,9 @@
 <p>Firefox 曾一度是技术型用户的首选浏览器，这些用户如果发现身边有人在使用IE浏览器，都多多少少会觉得和他们完全不是一路人。不过现在的情况却在逐步改变，一方面 Safari 和 Opera 逐渐从小众变得主流，另一方面连IE浏览器近两年的变化也非常大，特别是IE9的发布更是让很多技术型用户都开始对IE浏览器另眼想看，浏览器大战已经爆发。<br />
 然而，和 Chrome 的影响力比起来，上述浏览器的进步都显得不足一提。从去年 Chrome 的市场发展来看，毋庸质疑的成为了 Firefox 最大竞争对手，其正一口一口的蚕食着 Firefox 的市场份额并慢慢降低 Firefox 的地位。</p>
 <p>我们来看一组来自 <a target="_blank" rel="noopener" href="http://getclicky.com/marketshare/global/web-browsers/google-chrome/#/marketshare/global/web-browsers/">Clicky Web Analytics</a> 的数据图表：</p>
-<p><a rel="lightbox[9677]" href="/images/needisme/2010/12/080922CF5.png"><img title="browser_1" src="/images/needisme/2010/12/080922CF5.png" alt="" width="550" /></a></p>
+<p><a rel="lightbox[9677]" href="/images/needisme/2010/12/080922CF5.png"><img title="browser_1" src="/images/needisme/2010/12/080922CF5.png" class="lazy" data-srcset="/images/needisme/2010/12/080922CF5.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" width="550" /></a></p>
 <p>从上图中可以看出，Safari 的表现一直很平稳，即使有波动也非常小，而Opera的市场份额很小，几乎可以忽略不计。但IE和Firefox的市场份额在过去的一年中都很大幅度的下滑了，到底是谁吃掉了这一大块蛋糕？很显然是非常饥饿的 Chrome，其市场份额一直都呈上升趋势。我们再来看一个更加能够体现出细节的图表：</p>
-<p><a rel="lightbox[9677]" href="/images/needisme/auto_save_image/2010/12/080922z1e.png"><img title="chrome_1" src="/images/needisme/auto_save_image/2010/12/080922z1e.png" alt="" width="550" /></a></p>
+<p><a rel="lightbox[9677]" href="/images/needisme/auto_save_image/2010/12/080922z1e.png"><img title="chrome_1" src="/images/needisme/auto_save_image/2010/12/080922z1e.png" class="lazy" data-srcset="/images/needisme/auto_save_image/2010/12/080922z1e.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" width="550" /></a></p>
 <p>上面这个图表更加详细的体现出了各个版本 Chrome 在过去一年中的市场变化情况，可以看到 Chrome 的市场份额一直都保持着上升的趋势，尤其是 Chrome 3 发布以后，更是保持了线性的增长。</p>
 <p>现在的问题是，Chrome 需要多长时间就可以拉下 Firefox 占据浏览器市场第二的位置？我们再仔细看上面的两张图表，可以看到在在过去的一年中 Chrome 市场份额上涨了8-9%，而Firefox下降了4%。那么如果明年 Chrome 市场份额再涨8%，Firefox再降4%，这两个浏览器的市场份额就应该差不多了。</p>
 <p>所以，我敢肯定两年内 Chrome 一定能取代 Firefox 成为第二大浏览器。</p>
@@ -206,7 +382,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-22</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Google/" class="post-tags__link button"># Google</a><a href="/tags/Google-Fans/" class="post-tags__link button"># Google Fans</a></div> 
     
 <div class="post-share">
@@ -433,7 +609,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

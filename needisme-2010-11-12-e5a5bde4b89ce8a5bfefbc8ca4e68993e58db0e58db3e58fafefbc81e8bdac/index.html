@@ -30,7 +30,7 @@
 <title>好东西，A4打印即可！[转] | Need.UNO</title>
 
 
-    <meta name="keywords" content="Google, .NET, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Google, .NET, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -111,7 +111,7 @@
 <meta property="og:image" content="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_063.jpg">
 <meta property="og:image" content="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_064.jpg">
 <meta property="article:published_time" content="2010-11-12T07:03:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.822Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.787Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Google">
 <meta property="article:tag" content=".NET">
@@ -135,8 +135,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "好东西，A4打印即可！[转]",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-12",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-12-e5a5bde4b89ce8a5bfefbc8ca4e68993e58db0e58db3e58fafefbc81e8bdac/" },
+  "description": "好东西，A4打印即可！[转]"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -151,6 +190,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -175,6 +216,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -202,6 +245,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -219,150 +266,279 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p><a target="_blank" rel="noopener" href="http://feedproxy.google.com/%7Er/blogspot/CRBRG/%7E3/9qY3LYcAJh8/">好东西，A4打印即可！[转]</a>: "
-<p><a target="_blank" rel="noopener" href="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/0/da"><img src="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/0/di" border="0" /></a></p>
-<p><a target="_blank" rel="noopener" href="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/1/da"><img src="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/1/di" border="0" /></a></p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_001.jpg" alt="" /></p>
+<p><a target="_blank" rel="noopener" href="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/0/da"><img src="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/0/di" class="lazy" data-srcset="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/0/di" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/1/da"><img src="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/1/di" class="lazy" data-srcset="http://feedads.g.doubleclick.net/%7Ea/PcsQKB5_p-_UV84toL3WJiRGbec/1/di" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" /></a></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_001.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_001.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_002.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_002.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_002.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_003.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_003.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_003.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_004.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_004.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_004.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_005.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_005.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_005.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_006.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_006.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_006.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_007.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_007.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_007.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_008.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_008.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_008.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_009.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_009.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_009.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_010.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_010.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_010.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_011.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_011.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_011.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_012.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_012.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_012.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_013.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_013.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_013.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_014.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_014.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_014.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_015.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_015.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_015.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_016.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_016.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_016.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_017.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_017.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_017.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_018.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_018.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_018.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_019.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_019.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_019.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_020.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_020.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_020.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_021.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_021.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_021.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_022.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_022.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_022.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_023.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_023.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_023.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_024.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_024.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_024.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_025.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_025.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_025.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_026.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_026.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_026.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_027.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_027.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_027.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_028.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_028.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_028.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_029.jpg" alt="" /></p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_030.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_029.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_029.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_030.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_030.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_031.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_031.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_031.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_032.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_032.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_032.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_033.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_033.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_033.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_034.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_034.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_034.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_035.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_035.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_035.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_036.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_036.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_036.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_037.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_037.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_037.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_038.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_038.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_038.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_039.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_039.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_039.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_040.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_040.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_040.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_041.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_041.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_041.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_042.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_042.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_042.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_043.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_043.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_043.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_044.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_044.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_044.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_045.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_045.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_045.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_046.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_046.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_046.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_047.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_047.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_047.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_048.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_048.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_048.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_049.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_049.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_049.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_050.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_050.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_050.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_051.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_051.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_051.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_052.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_052.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_052.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_053.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_053.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_053.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_054.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_054.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_054.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_055.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_055.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_055.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_056.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_056.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_056.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_057.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_057.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_057.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_058.jpg" alt="" /></p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_059.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_058.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_058.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_059.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_059.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_060.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_060.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_060.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_061.jpg" al<br />
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_061.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_061.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" al<br />
 t="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_062.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_062.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_062.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_063.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_063.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_063.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
-<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_064.jpg" alt="" /></p>
+<p><img src="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_064.jpg" class="lazy" data-srcset="http://img208.poco.cn/mypoco/myphoto/20101110/22/55932346201011102221582671656076350_064.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>
 <p><a target="_blank" rel="noopener" href="http://letaoba.info/?p=2091">好东西，A4打印即可！[转]</a> is a post from: <a target="_blank" rel="noopener" href="http://letaoba.info/">乐淘吧-淘快乐</a></p>
 
@@ -389,7 +565,7 @@ t="" /></p>
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Google/" class="post-tags__link button"># Google</a><a href="/tags/NET/" class="post-tags__link button"># .NET</a></div> 
     
 <div class="post-share">
@@ -616,7 +792,15 @@ t="" /></p>
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

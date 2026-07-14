@@ -30,7 +30,7 @@
 <title>如何成为一个合格的网站分析师 &amp;ndash; 写在2010年末 | Need.UNO</title>
 
 
-    <meta name="keywords" content="HTML, Google, SEO, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="HTML, Google, SEO, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://semwatch.org/wp-content/uploads/2010/12/58104_130809073635837_130806596969418_248637_8255219_n-custom-363x500.jpg">
 <meta property="article:published_time" content="2010-12-24T07:50:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.809Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.851Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="HTML">
 <meta property="article:tag" content="Google">
@@ -71,8 +71,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "如何成为一个合格的网站分析师 &amp;ndash; 写在2010年末",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-24",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-24-e5a682e4bd95e68890e4b8bae4b880e4b8aae59088e6a0bce79a84e7bd91e7ab99e58886e69e90e5b888-e28093-e58699e59ca82010e5b9b4e69cab/" },
+  "description": "如何成为一个合格的网站分析师 &amp;ndash; 写在2010年末"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -87,6 +126,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -111,6 +152,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -138,6 +181,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -155,24 +202,153 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>From:http://semwatch.org/2010/12/how-to-become-a-qualified-web-analyst</p>
 <p>题记：也许大家不知道，SEMWatch的作者们正在做2010年SEM行业或者个人的总结和整理工作。这些工作，可能是一些重大事件的剖析，可能是一些趋势展望，更可能是一些实战经验或者针对某个专题的解析和小窍门等等。如果进展顺利的话，最终这份工作将会以白皮书的形式在年末或者明年初和大家见面。我因为离开SEM比较久了，又不甘寂寞;-),所以做了网站分析方面的一个从业经历总结。我冒险透漏这个消息，是希望大家持续关注semwatch，共同迎接新年。这里，提前祝大家圣诞节快乐！</p>
-<div style="text-align:center;"><a target="_blank" href="http://semwatch.org/wp-content/uploads/2010/12/58104_130809073635837_130806596969418_248637_8255219_n-custom-363x500.jpg" rel="lightbox[4073] noopener"><img alt="58104 130809073635837 130806596969418 248637 8255219 n custom 363x500 如何成为一个合格的网站分析师   写在2010年末" height="500" src="http://semwatch.org/wp-content/uploads/2010/12/58104_130809073635837_130806596969418_248637_8255219_n-custom-363x500.jpg" title="58104_130809073635837_130806596969418_248637_8255219_n-custom-363x500" width="363" /></a></div>
+<div style="text-align:center;"><a target="_blank" href="http://semwatch.org/wp-content/uploads/2010/12/58104_130809073635837_130806596969418_248637_8255219_n-custom-363x500.jpg" rel="lightbox[4073] noopener"><img alt="58104 130809073635837 130806596969418 248637 8255219 n custom 363x500 如何成为一个合格的网站分析师   写在2010年末" height="500" src="http://semwatch.org/wp-content/uploads/2010/12/58104_130809073635837_130806596969418_248637_8255219_n-custom-363x500.jpg" class="lazy" data-srcset="http://semwatch.org/wp-content/uploads/2010/12/58104_130809073635837_130806596969418_248637_8255219_n-custom-363x500.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" title="58104_130809073635837_130806596969418_248637_8255219_n-custom-363x500" width="363" /></a></div>
 <p><strong> Web Analyst，</strong>好听一点的翻译，叫做网站分析师。作为一个相对较新的职业，对于这份工作所需要的能力和日常的事务并没有一个清晰的界限。我有幸在一家业务非常齐全的360度营销公司带着这顶帽子为大大小小的各行业的顾客工作了2年多。在这期间，关于网站分析构成的图形做了一版又一版，越画越大；也越来越多的发现自己的能力的欠缺，甚至有时候也会迷失到极端。</p>
 <p>尽管很多人不同意，我仍然认为，作为一个边缘学科，网站分析入门很简单。只要你愿意学习并且思维灵活，一点点Html+JS，一点点datamining，marketing的基础知识最后加上一个免费的Google Analytics的使用技巧，你就可以成为一个<strong>入门级的网站分析师</strong>了.</p>
 <p>然后，在做网站分析的过程中，你能够理解网站分析工具数据采集的原理和各种工具的个性化变量，知道如何做人群分组（Segment）和Campaign Tracking，能够深刻了解各种标准参数的含义和他们之间的区别，并且知道如何在各种主流工具中（诸如GA, SiteCatalyst，Unica, Webtrends, Cormetrics）提取这些数据，展示这些数据，那你就是一个<strong>初级网站分析师</strong>（Junior Web Analyst）了，在这同时，如果你还了解一点点广告服务器（Adserver），邮件服务器（Email Router），SEO和SEM的原理那就更好了。</p>
@@ -221,7 +397,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/Google/" class="post-tags__link button"># Google</a><a href="/tags/SEO/" class="post-tags__link button"># SEO</a></div> 
     
 <div class="post-share">
@@ -448,7 +624,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

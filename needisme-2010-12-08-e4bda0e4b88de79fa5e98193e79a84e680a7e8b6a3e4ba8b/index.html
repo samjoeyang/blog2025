@@ -30,7 +30,7 @@
 <title>你不知道的性趣事 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -46,9 +46,9 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://dulei.si/files/758e1150bcd84c074d861ad8f5fb0f45.jpg">
 <meta property="article:published_time" content="2010-12-08T05:49:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.006Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.826Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://dulei.si/files/758e1150bcd84c074d861ad8f5fb0f45.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -69,8 +69,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "你不知道的性趣事",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-08",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-08-e4bda0e4b88de79fa5e98193e79a84e680a7e8b6a3e4ba8b/" },
+  "description": "你不知道的性趣事"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -85,6 +124,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -109,6 +150,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -136,6 +179,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -153,23 +200,152 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>@女性私处平均长3-6英寸，而勃起的小弟弟们平均4-6英寸长！<br />@蓝鲸拥有地球上最巨大的阴道：6-8英尺！<br />@据报导，一位7&lsquo;8&lsquo;&rsquo;高的女人拥有人类最长的阴道。</p>
-<p>@而人类最短的小妹妹只有一英寸。可以借助手术来改善这一状况。<br />@Wo&hellip;可不能错过这个！据报导，最大的阴蒂长4.5&lsquo;&rsquo;，周长1.5&lsquo;&rsquo;<br />@最大的胸部？重44磅&amp;33英寸的胸围！打赌她的背一定不太好<br />@1886年，一位法国女性被报导拥有10个胸部！ 这可真是&hellip;满胸都是&hellip;满手都是&hellip;满嘴都是&hellip;<br />@女性最多高潮世界记录：一小时134次！最长：43秒，连续收缩25次！<br />@阴道和眼睛都是可以自我清洁的器官。<br />@Cleopatra (埃及艳后) 使用牛粪来作为避孕工具。最早的现代子宫内避孕器出现在1909年。<br />@Cleopatra很懂性生活啊！传说她每天要有2次高潮。并且她是距今为止所了解到的最早使用按摩棒的。她让仆人捕捉蜜蜂聚集在盒子里，然后她摇晃盒子并坐在上面。<br />@黄瓜经常跟女性自慰联系在一起，但是据Hite报导称，女性在手边没有工具的时候更喜欢用蜡烛来自慰！<br />@在A片中的振动器没有引入之前的几十年中，女性预约到诊所接受阴蒂震动从而得到高潮的现象很常见。这样可以让她们减轻精神上和身体上的压力！<br />@最新研究发现，10个女性中有8个用使用振动器刺激阴蒂高潮，而不是把它插进小妹妹里。<br />@一次性高潮可以缓解月经绞痛因为强烈的肌肉收缩把血跟其它液体挤出了充血的器官，另外高潮还可以帮助你缩短月经长度。<br />@女士们，你们的头发黯淡无光吗？当你做爱的时候，可以分泌出大量的雌性荷尔蒙，从而是你的头发更加闪亮，皮肤更加光滑。<br />@说道皮肤，性爱可以降低你患皮肤炎，皮疹，雀斑的几率，以为做爱时产生的汗液会清洁毛孔，而且会使你的皮肤灼热有光泽。<br />@20-30分钟的床上运动可以燃烧总计300卡的热量；这相当于你跑步3英里！可比跑步安全多了&hellip;在大多数情况下！它能伸展并增强体内的每一块肌肉，却不需要任何跑步鞋！<br />@性爱可以让你瞬间排解清愁，因为它可向血液中释放安多芬，使你精神欢愉，浑身舒爽。安多芬还可以缓解你的头疼和大脑中的紧张情绪。以后你就不能以头疼为借口逃避性爱了&hellip;<br />@做的越多，收获的越多。性爱活动给于人体大量的信息素。这种微妙的，天然的物质简直就是一剂春药，把你的对手玩的欲死欲活。<br />@睡不着？云雨之欢可是世界上最安全的镇定剂了额，效果是安定的10多倍。<br />@接吻可以摆脱牙科医生！它促进唾液分泌从而扫清牙齿中的残余食物，降低导致腐烂的酸度，预防血小板积聚&hellip;<br />@性爱是天然的抗组胺药物。它能够通畅鼻塞，并能帮助缓解哮喘和花粉症。<br />@我们已经取得了很大的进步了，宝贝&hellip;一本19世纪90年代的医学书籍记载，自慰的女性吃大量的食物：包括芥末和醋！中世纪的女性不鼓励性高潮因为人们认为那会降低女性的生育能力！<br />源地址：<a target="_blank" rel="noopener" href="http://article.yeeyan.org/view/137420/154790">http://article.yeeyan.org/view/137420/154790</a><br /><img alt="" border="" src="http://dulei.si/files/758e1150bcd84c074d861ad8f5fb0f45.jpg" /></p>
+<p>@而人类最短的小妹妹只有一英寸。可以借助手术来改善这一状况。<br />@Wo&hellip;可不能错过这个！据报导，最大的阴蒂长4.5&lsquo;&rsquo;，周长1.5&lsquo;&rsquo;<br />@最大的胸部？重44磅&amp;33英寸的胸围！打赌她的背一定不太好<br />@1886年，一位法国女性被报导拥有10个胸部！ 这可真是&hellip;满胸都是&hellip;满手都是&hellip;满嘴都是&hellip;<br />@女性最多高潮世界记录：一小时134次！最长：43秒，连续收缩25次！<br />@阴道和眼睛都是可以自我清洁的器官。<br />@Cleopatra (埃及艳后) 使用牛粪来作为避孕工具。最早的现代子宫内避孕器出现在1909年。<br />@Cleopatra很懂性生活啊！传说她每天要有2次高潮。并且她是距今为止所了解到的最早使用按摩棒的。她让仆人捕捉蜜蜂聚集在盒子里，然后她摇晃盒子并坐在上面。<br />@黄瓜经常跟女性自慰联系在一起，但是据Hite报导称，女性在手边没有工具的时候更喜欢用蜡烛来自慰！<br />@在A片中的振动器没有引入之前的几十年中，女性预约到诊所接受阴蒂震动从而得到高潮的现象很常见。这样可以让她们减轻精神上和身体上的压力！<br />@最新研究发现，10个女性中有8个用使用振动器刺激阴蒂高潮，而不是把它插进小妹妹里。<br />@一次性高潮可以缓解月经绞痛因为强烈的肌肉收缩把血跟其它液体挤出了充血的器官，另外高潮还可以帮助你缩短月经长度。<br />@女士们，你们的头发黯淡无光吗？当你做爱的时候，可以分泌出大量的雌性荷尔蒙，从而是你的头发更加闪亮，皮肤更加光滑。<br />@说道皮肤，性爱可以降低你患皮肤炎，皮疹，雀斑的几率，以为做爱时产生的汗液会清洁毛孔，而且会使你的皮肤灼热有光泽。<br />@20-30分钟的床上运动可以燃烧总计300卡的热量；这相当于你跑步3英里！可比跑步安全多了&hellip;在大多数情况下！它能伸展并增强体内的每一块肌肉，却不需要任何跑步鞋！<br />@性爱可以让你瞬间排解清愁，因为它可向血液中释放安多芬，使你精神欢愉，浑身舒爽。安多芬还可以缓解你的头疼和大脑中的紧张情绪。以后你就不能以头疼为借口逃避性爱了&hellip;<br />@做的越多，收获的越多。性爱活动给于人体大量的信息素。这种微妙的，天然的物质简直就是一剂春药，把你的对手玩的欲死欲活。<br />@睡不着？云雨之欢可是世界上最安全的镇定剂了额，效果是安定的10多倍。<br />@接吻可以摆脱牙科医生！它促进唾液分泌从而扫清牙齿中的残余食物，降低导致腐烂的酸度，预防血小板积聚&hellip;<br />@性爱是天然的抗组胺药物。它能够通畅鼻塞，并能帮助缓解哮喘和花粉症。<br />@我们已经取得了很大的进步了，宝贝&hellip;一本19世纪90年代的医学书籍记载，自慰的女性吃大量的食物：包括芥末和醋！中世纪的女性不鼓励性高潮因为人们认为那会降低女性的生育能力！<br />源地址：<a target="_blank" rel="noopener" href="http://article.yeeyan.org/view/137420/154790">http://article.yeeyan.org/view/137420/154790</a><br /><img alt="" border="" src="http://dulei.si/files/758e1150bcd84c074d861ad8f5fb0f45.jpg" class="lazy" data-srcset="http://dulei.si/files/758e1150bcd84c074d861ad8f5fb0f45.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -194,7 +370,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -421,7 +597,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

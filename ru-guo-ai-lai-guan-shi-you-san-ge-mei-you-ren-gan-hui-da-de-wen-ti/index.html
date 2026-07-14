@@ -30,7 +30,7 @@
 <title>如果AI来管石油，三个没有人敢回答的问题 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 未来, 社会, 能源, 地缘政治, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="AI, 未来, 能源, 社会, 地缘政治, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -45,12 +45,12 @@
 <meta property="og:description" content="如果AI来管石油，三个没有人敢回答的问题上一篇文章我们聊了一个问题：如果AI把”怎么生产”这件事的效率推到极致，那”为什么生产”这个决定，该交给谁来回答？ 那篇文章更像一个哲学框架。这一篇，是同一个框架的压力测试——我用的是最硬的材料：石油。 选石油的原因很简单——它可能是人类文明里最”不讲道理”的商品。它在地底下埋了几亿年，位置分布完全随机，中东地底下有全世界一半的便宜油，日本地底下几乎没有。这">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-11T07:00:00.000Z">
-<meta property="article:modified_time" content="2026-06-11T07:01:34.231Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.967Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="AI">
 <meta property="article:tag" content="未来">
-<meta property="article:tag" content="社会">
 <meta property="article:tag" content="能源">
+<meta property="article:tag" content="社会">
 <meta property="article:tag" content="地缘政治">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -71,8 +71,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "如果AI来管石油，三个没有人敢回答的问题",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-06-11",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/ru-guo-ai-lai-guan-shi-you-san-ge-mei-you-ren-gan-hui-da-de-wen-ti/" },
+  "description": "如果AI来管石油，三个没有人敢回答的问题"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -87,6 +126,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -111,6 +152,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -138,6 +181,10 @@
     <span class="separate-dot"></span><a href="/categories/%E6%80%9D%E8%80%83/" class="button">思考</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -155,17 +202,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -247,8 +423,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-06-11</p></div> 
-    <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/%E6%9C%AA%E6%9D%A5/" class="post-tags__link button"># 未来</a><a href="/tags/%E7%A4%BE%E4%BC%9A/" class="post-tags__link button"># 社会</a><a href="/tags/%E8%83%BD%E6%BA%90/" class="post-tags__link button"># 能源</a><a href="/tags/%E5%9C%B0%E7%BC%98%E6%94%BF%E6%B2%BB/" class="post-tags__link button"># 地缘政治</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
+    <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/%E6%9C%AA%E6%9D%A5/" class="post-tags__link button"># 未来</a><a href="/tags/%E8%83%BD%E6%BA%90/" class="post-tags__link button"># 能源</a><a href="/tags/%E7%A4%BE%E4%BC%9A/" class="post-tags__link button"># 社会</a><a href="/tags/%E5%9C%B0%E7%BC%98%E6%94%BF%E6%B2%BB/" class="post-tags__link button"># 地缘政治</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -474,7 +650,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

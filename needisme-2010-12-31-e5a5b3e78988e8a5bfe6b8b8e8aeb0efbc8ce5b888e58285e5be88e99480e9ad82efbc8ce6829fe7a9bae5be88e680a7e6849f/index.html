@@ -30,7 +30,7 @@
 <title>女版西游记，师傅很销魂，悟空很性感 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -56,9 +56,9 @@
 <meta property="og:image" content="http://cdn.dulei.si/files/7278709671bdddca50cd76e142749c8d.jpg">
 <meta property="og:image" content="http://cdn.dulei.si/files/3e263216930021a1900b4695bad1b1c6.jpg">
 <meta property="article:published_time" content="2010-12-31T14:56:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.524Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.867Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://cdn.dulei.si/files/709503549ee8be6206b1a7381951e521.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -79,8 +79,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "女版西游记，师傅很销魂，悟空很性感",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-31",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-31-e5a5b3e78988e8a5bfe6b8b8e8aeb0efbc8ce5b888e58285e5be88e99480e9ad82efbc8ce6829fe7a9bae5be88e680a7e6849f/" },
+  "description": "女版西游记，师傅很销魂，悟空很性感"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -95,6 +134,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -119,6 +160,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -146,6 +189,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -163,23 +210,152 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
-        <p><img alt="" border="0" src="http://cdn.dulei.si/files/709503549ee8be6206b1a7381951e521.jpg" /></p>
-<p>牛魔王 - -，有点太爷们了<br /><img alt="" border="0" src="http://cdn.dulei.si/files/a5f6f0b02abf9792c2b4f08bd57545e0.jpg" /><br />琵琶精啊<br /><img alt="" border="0" src="http://cdn.dulei.si/files/ed577e91868bd41751714e068b3ac863.jpg" /><br />金鼻白毛老鼠精<br /><img alt="" border="0" src="http://cdn.dulei.si/files/c0ee7c79d5380db9fca0e3436a129b46.jpg" /><br />金角大王银角大王<br /><img alt="" border="0" src="http://cdn.dulei.si/files/cd2fd6ce7710bd8f257be218b9f49c4a.jpg" /><br />白骨精<br /><img alt="" border="0" src="http://cdn.dulei.si/files/0480ddbfafd3b8363c453db0770fddc9.jpg" /><br />师徒四人<br /><img alt="" border="0" src="http://cdn.dulei.si/files/ec73ca582bee4f01421cc6991743ecc6.jpg" /><br />唐三藏<br /><img alt="" border="0" src="http://cdn.dulei.si/files/baa59ebfc61aa0295b99a334d47c1e91.jpg" /><br />沙师弟<br /><img alt="" border="0" src="http://cdn.dulei.si/files/801a3f13d915845dc016d5600bcdb19f.jpg" /><br />猪八戒<br /><img alt="" border="0" src="http://cdn.dulei.si/files/7278709671bdddca50cd76e142749c8d.jpg" /><br />孙大圣<br /><img alt="" border="0" src="http://cdn.dulei.si/files/3e263216930021a1900b4695bad1b1c6.jpg" /><br />白龙马<br />来自： http://photo.renren.com/photo/287510926/album-405881545?curpage=0&amp;t=</p>
+        <p><img alt="" border="0" src="http://cdn.dulei.si/files/709503549ee8be6206b1a7381951e521.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/709503549ee8be6206b1a7381951e521.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
+<p>牛魔王 - -，有点太爷们了<br /><img alt="" border="0" src="http://cdn.dulei.si/files/a5f6f0b02abf9792c2b4f08bd57545e0.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/a5f6f0b02abf9792c2b4f08bd57545e0.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />琵琶精啊<br /><img alt="" border="0" src="http://cdn.dulei.si/files/ed577e91868bd41751714e068b3ac863.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/ed577e91868bd41751714e068b3ac863.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />金鼻白毛老鼠精<br /><img alt="" border="0" src="http://cdn.dulei.si/files/c0ee7c79d5380db9fca0e3436a129b46.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/c0ee7c79d5380db9fca0e3436a129b46.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />金角大王银角大王<br /><img alt="" border="0" src="http://cdn.dulei.si/files/cd2fd6ce7710bd8f257be218b9f49c4a.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/cd2fd6ce7710bd8f257be218b9f49c4a.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />白骨精<br /><img alt="" border="0" src="http://cdn.dulei.si/files/0480ddbfafd3b8363c453db0770fddc9.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/0480ddbfafd3b8363c453db0770fddc9.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />师徒四人<br /><img alt="" border="0" src="http://cdn.dulei.si/files/ec73ca582bee4f01421cc6991743ecc6.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/ec73ca582bee4f01421cc6991743ecc6.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />唐三藏<br /><img alt="" border="0" src="http://cdn.dulei.si/files/baa59ebfc61aa0295b99a334d47c1e91.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/baa59ebfc61aa0295b99a334d47c1e91.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />沙师弟<br /><img alt="" border="0" src="http://cdn.dulei.si/files/801a3f13d915845dc016d5600bcdb19f.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/801a3f13d915845dc016d5600bcdb19f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />猪八戒<br /><img alt="" border="0" src="http://cdn.dulei.si/files/7278709671bdddca50cd76e142749c8d.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/7278709671bdddca50cd76e142749c8d.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />孙大圣<br /><img alt="" border="0" src="http://cdn.dulei.si/files/3e263216930021a1900b4695bad1b1c6.jpg" class="lazy" data-srcset="http://cdn.dulei.si/files/3e263216930021a1900b4695bad1b1c6.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />白龙马<br />来自： http://photo.renren.com/photo/287510926/album-405881545?curpage=0&amp;t=</p>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -204,7 +380,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -431,7 +607,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

@@ -30,7 +30,7 @@
 <title>【转发】Linux下如何使用虚拟用户增加FTP的安全性 | Need.UNO</title>
 
 
-    <meta name="keywords" content="Linux, LINUX, 系统管理, FTP, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Linux, LINUX, 系统管理, FTP, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -83,7 +83,7 @@
 <meta property="og:image" content="http://img1.51cto.com/attachment/200905/24/418026_1243177775L3YE.jpg">
 <meta property="og:image" content="http://img1.51cto.com/attachment/200905/24/418026_1243177777oO5f.jpg">
 <meta property="article:published_time" content="2010-04-29T02:33:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.741Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.750Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Linux">
 <meta property="article:tag" content="LINUX">
@@ -109,8 +109,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "【转发】Linux下如何使用虚拟用户增加FTP的安全性",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-04-29",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-04-29-e38090e8bdace58f91e38091linuxe4b88be5a682e4bd95e4bdbfe794a8e8999ae68b9fe794a8e688b7e5a29ee58aa0ftpe79a84e5ae89e585a8e680a7/" },
+  "description": "【转发】Linux下如何使用虚拟用户增加FTP的安全性"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -125,6 +164,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -149,6 +190,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -176,6 +219,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -193,17 +240,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -223,22 +399,22 @@
 <div>为了更方便的测试实验环境，本实验采用ftpall作为所有员工的公共用 户，xiaonuo作为每个用户的代表。</div>
 <div></div>
 <div>一、挂在第一张RHEL4安装光盘，并安装vsftpd软件包。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177670hDpK.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177671WET3.jpg" border="0" alt="clip_image002" height="41" /></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177672fIy0.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177674tzSp.jpg" border="0" alt="clip_image004" height="98" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177670hDpK.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177671WET3.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177671WET3.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image002" height="41" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177672fIy0.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177674tzSp.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177674tzSp.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image004" height="98" /></a></div>
 <div></div>
 <div>二、建立虚拟用户口令库文件</div>
 <div>建立虚拟用户的口令库文件，文件中奇数行设置虚拟用户的用户名，偶数行设置用户的口令。为了便于记忆可以将文件 命名为.txt文件。不过Linux下文件是不支持扩展名滴哦，只是为了标示而已。</div>
 <div>注意：用户的口令库文件中，不要存在空格和空行</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177675WF0X.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_124317767839GY.jpg" border="0" alt="clip_image006" height="76" /></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177678BmEV.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177679KGjg.jpg" border="0" alt="clip_image008" height="135" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177675WF0X.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_124317767839GY.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_124317767839GY.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image006" height="76" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177678BmEV.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177679KGjg.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177679KGjg.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image008" height="135" /></a></div>
 <div></div>
 <div>三、生成vsftpd的认证文件</div>
 <div>使用db_load命令生成认证文件，&ldquo;-f&rdquo;命令选项设置的值是虚拟用户的口令库文件，即 vsftpd_login.txt，命令的参数设置为需要生成的认证文件名vsftpd_login.db，该文件必须放在&ldquo;/etc/vsftpd/&rdquo; 中。</div>
 <div>注意：db_load是软件包db4_utils带的命令，在RHEL4是默认安装的，在 RHEL5上没有安装，需要安装db4_utils这个软件包才支持db_load命令。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177680SkFb.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177681QJnz.jpg" border="0" alt="clip_image010" height="95" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177680SkFb.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177681QJnz.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177681QJnz.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image010" height="95" /></a></div>
 <div></div>
 <div>由于vsftpd的认证文件vsftpd_login.db里保存了所有虚拟用户的用户名和密码，为了增强其安 全性，应当设置只有root才可以查看。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177681Acsq.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431776825KyQ.jpg" border="0" alt="clip_image012" height="67" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177681Acsq.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431776825KyQ.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_12431776825KyQ.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image012" height="67" /></a></div>
 <div></div>
 <div>四、建立虚拟用户所需的PAM配置文件</div>
 <div>修改/etc/pam.d/vsftpd文件</div>
@@ -246,25 +422,25 @@
 <div>auth required /lib/security/pam_userdb.so  db=/etc/vsftpd/vsftpd_login</div>
 <div>account required /lib/security/pam_userdb.so  db=/etc/vsftpd/vsftpd_login</div>
 <div>注意：也可以另外建立一个文件，但是要在/etc/vsftpd/vsftpd.conf中将 pam_service_name=vsftpd后面的值改为新建文件的名称。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177683c6p9.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177684aM9N.jpg" border="0" alt="clip_image014" height="72" /></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_12431776867i9Q.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177689apvq.jpg" border="0" alt="clip_image016" height="223" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177683c6p9.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177684aM9N.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177684aM9N.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image014" height="72" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_12431776867i9Q.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177689apvq.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177689apvq.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image016" height="223" /></a></div>
 <div></div>
 <div>五、建立虚拟用户及要访问的目录并设置相应的权限。</div>
 <div>建立vsftpd虚拟目录所需的系统公共用户账号，账号名为ftpall，指定用户的宿主目录是&ldquo;/var /ftp/ftpall&rdquo;</div>
 <div>建立vsftpd虚拟目录所需的系统单用户账号，账号名为xiaonuo，指定用户的宿主目录是&ldquo;/var /ftp/xiaonuo&rdquo;</div>
 <div>参数&ldquo;-d&rdquo;是建立用户之后，并将自己的宿主目录指向指定的位置。</div>
 <div>注意：用户名和宿主目录名称最好一样，便于记忆。这些用户都会存放在系统的/etc /passwd下，并且用户密码都存放在vsftpd认证文件中。所以是不能用虚拟用户登录系统的，安全性自然而然也加强了。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_12431776906uoc.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177692aGdB.jpg" border="0" alt="clip_image018" /><br />
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_12431776906uoc.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177692aGdB.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177692aGdB.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image018" /><br />
 eight="94"></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177693WzwS.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177694RiGG.jpg" border="0" alt="clip_image020" height="94" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177693WzwS.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177694RiGG.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177694RiGG.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image020" height="94" /></a></div>
 <div></div>
 <div>建立的虚拟用户的宿主目录默认都是700权限，由于ftpall是公共目录，是不允许普通用户修改、添加、删除 和重命名的，所以将其改成500（读+执行）即可。</div>
 <div>参数&ldquo;-R&rdquo;是修改用户宿主目录以及目录里所有子文件的属性。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177695cog9.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177697efEw.jpg" border="0" alt="clip_image022" height="142" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177695cog9.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177697efEw.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177697efEw.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image022" height="142" /></a></div>
 <div></div>
 <div>六、设置vsftpd.cong主配置文件。</div>
 <div>在对vsftpd.conf配置文件进行修改前，应先将原有的文件进行备份，以便出现配置错误时可进行恢复。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177698JbQI.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177698eKR9.jpg" border="0" alt="clip_image024" height="67" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177698JbQI.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177698eKR9.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177698eKR9.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image024" height="67" /></a></div>
 <div></div>
 <div>在vsftpd.conf配置文件中添加虚拟用的配置项，内容如下：</div>
 <div>anonymous_enable=NO 禁用匿名用户登录</div>
@@ -276,21 +452,21 @@ eight="94"></a></div>
 <div>max_per_ip=3 设置每个IP地址最大连接数为3个</div>
 <div>local_max_rate=300000 FTP服务器的本地用户最大传输速率设置为300KB/s</div>
 <div>anon_max_rate=100000 FTP服务器匿名用户最大传输速率设置为100KB/s</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177699X1cv.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177700k4yJ.jpg" border="0" alt="clip_image026" height="90" /></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177701adn3.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_124317770207io.jpg" border="0" alt="clip_image028" height="181" /></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177704eIW3.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431777062qgs.jpg" border="0" alt="clip_image030" height="293" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177699X1cv.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177700k4yJ.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177700k4yJ.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image026" height="90" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177701adn3.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_124317770207io.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_124317770207io.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image028" height="181" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177704eIW3.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431777062qgs.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_12431777062qgs.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image030" height="293" /></a></div>
 <div></div>
 <div>七、设置公用用户ftpall的配置文件</div>
 <div>首先创建虚拟用户配置文件的主文件夹users_config，并在此文件夹下建立虚拟用户的文件ftpall 和xiaonuo。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177708HILI.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177709VcDz.jpg" border="0" alt="clip_image032" height="105" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177708HILI.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177709VcDz.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177709VcDz.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image032" height="105" /></a></div>
 <div></div>
 <div>在/etc/vsftpd/user_config/ftpall配置文件中添加虚拟用的配置项，内容如下：</div>
 <div>guest_enable=YES 开启虚拟账户登录</div>
 <div>guest_username=ftpall 设置ftpall对应的系统账户为ftpall</div>
 <div>anon_world_readable_only=NO 允许用户浏览FTP目录和下载文件</div>
 <div>anon_max_rate=100000 限制传输速率为100KB/s</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177711bvN7.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431777135TKh.jpg" border="0" alt="clip_image034" height="69" /></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177713uble.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177714jcAq.jpg" border="0" alt="clip_image036" height="154" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177711bvN7.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431777135TKh.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_12431777135TKh.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image034" height="69" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177713uble.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177714jcAq.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177714jcAq.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image036" height="154" /></a></div>
 <div></div>
 <div>八、设置单用户xiaonuo的配置文件</div>
 <div>在/etc/vsftpd/user_config/xiaonuo配置文件中添加虚拟用的配置项，内容如下：</div>
@@ -301,69 +477,69 @@ eight="94"></a></div>
 <div>anon_mkdir_write_enable=YES 表示用户具有建立和删除目录的权利</div>
 <div>anon_upload_enable=YES 表示用户可以上传文件</div>
 <div>anon_max_rate=300000 限制传输速度为300KB/s</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177715eUod.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177716XmlO.jpg" border="0" alt="clip_image038" height="71" /></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177717PnXw.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177719VsZm.jpg" border="0" alt="clip_image040" height="204" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177715eUod.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177716XmlO.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177716XmlO.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image038" height="71" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177717PnXw.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177719VsZm.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177719VsZm.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image040" height="204" /></a></div>
 <div></div>
 <div>通过对以上配置项的组合设置，vsftpd可以为每个虚拟用户配置不同的FTP权限，用户配置文件中没有的配置 项将按照vsftpd.conf配置文件中的内容设置。</div>
 <div></div>
 <div>九、重新启动vsftpd服务，使所有配置文件的设置生效。</div>
 <div>使用/etc/rc.d/init.d/vsftpd restart或者services vsftpd  restart命令重新启动vsftpd服务。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177720qzmE.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177722gayP.jpg" border="0" alt="clip_image042" height="83" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177720qzmE.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177722gayP.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177722gayP.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image042" height="83" /></a></div>
 <div></div>
 <div>十、测试公共用户ftpall的权限。</div>
 <div>在测试之前，首先在/var/ftp/ftpall和/var/ftp/xiaonuo中创建文件和文件夹做测 试用。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177723k8Jx.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177725KXAz.jpg" border="0" alt="clip_image044" height="188" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177723k8Jx.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177725KXAz.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177725KXAz.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image044" height="188" /></a></div>
 <div></div>
 <div>公共用户ftpall使用常用的IE浏览器进行访问FTP服务器，测试ftpall的权限。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177726Wnm5.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177728cpKQ.jpg" border="0" alt="clip_image046" height="383" /></a></div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177730jKt3.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431777319LdP.jpg" alt="clip_image048" /><br />
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177726Wnm5.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177728cpKQ.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177728cpKQ.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image046" height="383" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177730jKt3.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431777319LdP.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_12431777319LdP.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="clip_image048" /><br />
 er="0" height="297"></a></div>
 <div></div>
 <div>将客户机机上的文件复制到FTP服务器上提示出错，测试成功！</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177734ZtSe.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177736NrAu.jpg" border="0" alt="clip_image050" height="324" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177734ZtSe.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177736NrAu.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177736NrAu.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image050" height="324" /></a></div>
 <div></div>
 <div>重命名FTP服务器上的文件提示出错，测试成功！</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177738reKu.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177741DYA1.jpg" border="0" alt="clip_image052" height="318" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177738reKu.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177741DYA1.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177741DYA1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image052" height="318" /></a></div>
 <div></div>
 <div>删除FTP服务器上的文件提示出错，测试成功！</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177742Y3Yr.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177745Ra8l.jpg" border="0" alt="clip_image054" height="306" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177742Y3Yr.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177745Ra8l.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177745Ra8l.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image054" height="306" /></a></div>
 <div></div>
 <div>重命名FTP服务器上的文件夹提示出错，测试成功！</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177747aJ60.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177750gDqK.jpg" border="0" alt="clip_image056" height="312" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177747aJ60.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177750gDqK.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177750gDqK.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image056" height="312" /></a></div>
 <div></div>
 <div>将FTP服务器上的文件拖拽的本地文件夹中，测试成功。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177754nhBK.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177755MCEH.jpg" border="0" alt="clip_image058" height="259" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177754nhBK.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177755MCEH.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177755MCEH.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image058" height="259" /></a></div>
 <div></div>
 <div>整个测试过程说明使用ftpall用户登录FTP服务器，只能下载文件，不允许增加、删除、修改、重命名文件或 文件夹。</div>
 <div></div>
 <div>十一、测试xiaonuo用户</div>
 <div>使用命令提示符窗口测试虚拟用户xiaonuo的权限。</div>
 <div>首先使用匿名用户登录，可以看到登录失败，原因是因为在主配置文件vsftpd.conf的 anonymous_enable=NO的缘故，如果开启，则登录成功，而且能够看到所有用户的宿主目录名称，虽然不能访问，但如果恶意用户使用用户名猜 测密码则会造成一定的危害。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177756Yp7y.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177757xMiv.jpg" border="0" alt="clip_image060" height="153" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177756Yp7y.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177757xMiv.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177757xMiv.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image060" height="153" /></a></div>
 <div></div>
 <div>使用虚拟用户xiaonuo登录FTP服务器。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177758BqjR.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177759Xayo.jpg" border="0" alt="clip_image062" height="176" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177758BqjR.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177759Xayo.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177759Xayo.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image062" height="176" /></a></div>
 <div></div>
 <div>使用dir或者ls  &ndash;l命令可以查看到xiaonuo用户宿主目录里的内容，而ftpall里的内容是看不到的，这也就实现了用户目录的隔离。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177760ODvr.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177762Hs7v.jpg" border="0" alt="clip_image064" height="174" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177760ODvr.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177762Hs7v.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177762Hs7v.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image064" height="174" /></a></div>
 <div></div>
 <div>使用get命令下载文件到本地测试成功。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_12431777621gYN.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177763qpd4.jpg" border="0" alt="clip_image066" height="89" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_12431777621gYN.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177763qpd4.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177763qpd4.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image066" height="89" /></a></div>
 <div></div>
 <div>使用put命令上传文件到FTP服务器上测试成功</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177764GVrv.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177764njyL.jpg" border="0" alt="clip_image068" height="104" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177764GVrv.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177764njyL.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177764njyL.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image068" height="104" /></a></div>
 <div></div>
 <div>使用rename命令重命名FTP服务器上的文件测试成功。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177766hnqF.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431777697adH.jpg" border="0" alt="clip_image070" height="376" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177766hnqF.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_12431777697adH.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_12431777697adH.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image070" height="376" /></a></div>
 <div></div>
 <div>使用rename命令重命名FTP服务器上的文件夹测试成功。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177771HveG.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177772jgij.jpg" border="0" alt="clip_image072" height="229" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177771HveG.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177772jgij.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177772jgij.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image072" height="229" /></a></div>
 <div></div>
 <div>使用delete删除FTP服务器上的文件测试成功。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_12431777743Xal.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177775L3YE.jpg" border="0" alt="clip_image074" height="204" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_12431777743Xal.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177775L3YE.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177775L3YE.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image074" height="204" /></a></div>
 <div></div>
 <div>使用rmdir删除FTP服务器上的空目录测试成功。</div>
-<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177776dv6D.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177777oO5f.jpg" border="0" alt="clip_image076" height="183" /></a></div>
+<div><a target="_blank" rel="noopener" href="http://img1.51cto.com/attachment/200905/24/418026_1243177776dv6D.jpg"><img src="http://img1.51cto.com/attachment/200905/24/418026_1243177777oO5f.jpg" class="lazy" data-srcset="http://img1.51cto.com/attachment/200905/24/418026_1243177777oO5f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="clip_image076" height="183" /></a></div>
 <div></div>
 <div>下载速度或者上传速度的测试，可将速度调整低一点，便可以看出效果来。</div>
 <div>通过上面的实验可以看出，所有员工使用公共虚拟用户ftpall登录FTP服务器只能查看和下载FTP服务器上 共享的文件，而每个员工使用分发的虚拟用户名登录FTP服务器可以实现添加、删除、修改、查询宿主目录里的文件或文件夹，这也就实现了Dreanfire 公司的业务需求，同时也增强了FTP服务器的安全性。</div>
@@ -392,7 +568,7 @@ er="0" height="297"></a></div>
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a><a href="/tags/FTP/" class="post-tags__link button"># FTP</a></div> 
     
 <div class="post-share">
@@ -619,7 +795,15 @@ er="0" height="297"></a></div>
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

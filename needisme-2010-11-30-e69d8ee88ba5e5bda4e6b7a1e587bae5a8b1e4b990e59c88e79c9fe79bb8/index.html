@@ -30,7 +30,7 @@
 <title>李若彤淡出娱乐圈真相 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -49,9 +49,9 @@
 <meta property="og:image" content="https://need.uno/images/needisme/external/0929a9416470.jpg">
 <meta property="og:image" content="https://need.uno/images/needisme/external/17aee578681d.jpg">
 <meta property="article:published_time" content="2010-11-30T03:55:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.647Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.817Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://dulei.si/files/2e74396f4ccc75857079e4e86d91ffc6.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -72,8 +72,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "李若彤淡出娱乐圈真相",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-30",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-30-e69d8ee88ba5e5bda4e6b7a1e587bae5a8b1e4b990e59c88e79c9fe79bb8/" },
+  "description": "李若彤淡出娱乐圈真相"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -88,6 +127,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -112,6 +153,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -139,6 +182,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -156,23 +203,152 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>屏幕中似幻似真的古墓传人，现实中带给我另一份传奇和惊叹，自从04年之后逐渐退出娱乐圈，鲜有出现在屏幕时总称自己居家，其实她为了她的另外一重身份&mdash;&mdash;生物摄影师，愿意褪去镜头上的那道光环。<br /><b>美国国家地理杂志御用摄影师 全球十七位女性超级摄影师中唯一的中国人</b><br />这些年来她拍摄的纪录片已经在国内播放，当节目的最后她的英文名CARMAN  LEE一闪而过的时候，没有人知道之前这些精美的画面出自曾经红极一时的影星之手。非常骄傲也非常自豪，作为女性，并且是业余的摄影爱好者可以达到超级摄 影师的水平，可见她在这个领域付出的艰辛</p>
-<p><b>为通过摄影师考核参加魔鬼化训练 吞活鼠涂大粪</b><br />体力极限突破，野外求生，危 险规避训练，野外遇袭自救等18项课程的训练，这些在拍戏的时候都可以做假，但是在国家地理学会的特警化训练营里，再没有什么古装美女，超凡脱俗的头衔， 有的只是硬碰硬的挑战，因为在野外拍摄专题片会遇到很多的危险，所以考核项目里面居然会出现生吞老鼠，对于女生来说，拍蟑螂都有些可怕，一个大美女，吞掉 一只活老鼠，我简直要对其仰视膜拜。<br /><b>为拍摄纪录片跋山涉水 身染重病毫不退缩</b><br />因为早年是Cathay  Pacific的空姐，所以周游世界的梦想对其来说并未泯灭，在世界各个角落拍摄关于生物的专题片，以她做演员时候的敏锐触觉捕捉那些生物的习性，当然并 非剧情中江湖儿女闲云野鹤般悠闲自得，她须进行很多的观察和实践，除了要配合动物的作息规律进行跟踪，还要接受自然环境的考验。坦桑尼亚胡狼的专题片被采 用之后，她染上了非洲果蝇传播的传染病，在与病魔殊死斗争之后，她毅然踏上了北极的征途<br /><b>巨毒响尾蛇对其俯首称臣 静态作品被微软采用为待机画面</b><br />她的开山之作竟然是世界上最大的毒蛇&mdash;东部菱斑响尾蛇，很多人都知道，被这种毒蛇咬伤之后人的肌肉迅速腐烂，当人脑的神经纤维被破坏后就会导致死亡，鲜 有生还者依稀能够回忆起自己胳膊腐烂的恐怖画面。正如在武侠世界中被毒掌一举击中一般，对李若彤来说这样的画面显得司空见惯，回忆起自己曾经身处在肉糜的 娱乐世界中可能遭受到的比毒蛇更加猛烈而无法防备的攻击，面对长达两米的巨蛇，她的眼神中流露出更多的爱怜。它们是那么友善，我完全感觉不到它们会对我造 成威胁。她笑着说，是的，东部菱班蛇们也抗拒不了小龙女冰冷的温柔，它们乖乖地为这个陌生而可爱的新主人做着模特的工作。<br /><b>美貌不能长久 但是新的工作可以另我帅一辈子</b><br />尽管被险恶之人报导容颜衰老，但是近日出席东南卫视的音乐颁奖礼时见到她风采依然，还是那个被人形容成有古典美态的墓中仙子，还是那个开朗中偶尔流露羞怯的善良女孩，谁又知道，如同屏幕中她从天而降一般，她将在她新的生物世界里驰骋江湖。<br /><b>曾經的神仙眷侶</b><br /><img alt="" border="0" src="http://dulei.si/files/2e74396f4ccc75857079e4e86d91ffc6.jpg" /><br /><b>在外灘參加某商業聚會</b><br /><img alt="" border="0" src="http://dulei.si/files/a9f80872fe401eb054f5fda1d163c889.jpg" /><br /><b>近日出席東南音樂大典</b><br /><img alt="" border="0" src="/images/needisme/external/0929a9416470.jpg" /><br /><b>報導圖</b><br /><img alt="" border="0" src="/images/needisme/external/17aee578681d.jpg" /></p>
+<p><b>为通过摄影师考核参加魔鬼化训练 吞活鼠涂大粪</b><br />体力极限突破，野外求生，危 险规避训练，野外遇袭自救等18项课程的训练，这些在拍戏的时候都可以做假，但是在国家地理学会的特警化训练营里，再没有什么古装美女，超凡脱俗的头衔， 有的只是硬碰硬的挑战，因为在野外拍摄专题片会遇到很多的危险，所以考核项目里面居然会出现生吞老鼠，对于女生来说，拍蟑螂都有些可怕，一个大美女，吞掉 一只活老鼠，我简直要对其仰视膜拜。<br /><b>为拍摄纪录片跋山涉水 身染重病毫不退缩</b><br />因为早年是Cathay  Pacific的空姐，所以周游世界的梦想对其来说并未泯灭，在世界各个角落拍摄关于生物的专题片，以她做演员时候的敏锐触觉捕捉那些生物的习性，当然并 非剧情中江湖儿女闲云野鹤般悠闲自得，她须进行很多的观察和实践，除了要配合动物的作息规律进行跟踪，还要接受自然环境的考验。坦桑尼亚胡狼的专题片被采 用之后，她染上了非洲果蝇传播的传染病，在与病魔殊死斗争之后，她毅然踏上了北极的征途<br /><b>巨毒响尾蛇对其俯首称臣 静态作品被微软采用为待机画面</b><br />她的开山之作竟然是世界上最大的毒蛇&mdash;东部菱斑响尾蛇，很多人都知道，被这种毒蛇咬伤之后人的肌肉迅速腐烂，当人脑的神经纤维被破坏后就会导致死亡，鲜 有生还者依稀能够回忆起自己胳膊腐烂的恐怖画面。正如在武侠世界中被毒掌一举击中一般，对李若彤来说这样的画面显得司空见惯，回忆起自己曾经身处在肉糜的 娱乐世界中可能遭受到的比毒蛇更加猛烈而无法防备的攻击，面对长达两米的巨蛇，她的眼神中流露出更多的爱怜。它们是那么友善，我完全感觉不到它们会对我造 成威胁。她笑着说，是的，东部菱班蛇们也抗拒不了小龙女冰冷的温柔，它们乖乖地为这个陌生而可爱的新主人做着模特的工作。<br /><b>美貌不能长久 但是新的工作可以另我帅一辈子</b><br />尽管被险恶之人报导容颜衰老，但是近日出席东南卫视的音乐颁奖礼时见到她风采依然，还是那个被人形容成有古典美态的墓中仙子，还是那个开朗中偶尔流露羞怯的善良女孩，谁又知道，如同屏幕中她从天而降一般，她将在她新的生物世界里驰骋江湖。<br /><b>曾經的神仙眷侶</b><br /><img alt="" border="0" src="http://dulei.si/files/2e74396f4ccc75857079e4e86d91ffc6.jpg" class="lazy" data-srcset="http://dulei.si/files/2e74396f4ccc75857079e4e86d91ffc6.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br /><b>在外灘參加某商業聚會</b><br /><img alt="" border="0" src="http://dulei.si/files/a9f80872fe401eb054f5fda1d163c889.jpg" class="lazy" data-srcset="http://dulei.si/files/a9f80872fe401eb054f5fda1d163c889.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br /><b>近日出席東南音樂大典</b><br /><img alt="" border="0" src="/images/needisme/external/0929a9416470.jpg" class="lazy" data-srcset="/images/needisme/external/0929a9416470.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br /><b>報導圖</b><br /><img alt="" border="0" src="/images/needisme/external/17aee578681d.jpg" class="lazy" data-srcset="/images/needisme/external/17aee578681d.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -197,7 +373,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -424,7 +600,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

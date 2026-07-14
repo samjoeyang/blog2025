@@ -30,7 +30,7 @@
 <title>揭开Wayland的面纱（二）：Wayland应运而生 | Need.UNO</title>
 
 
-    <meta name="keywords" content="HTML, Linux, LINUX, 系统管理, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="HTML, Linux, LINUX, 系统管理, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -49,7 +49,7 @@
 <meta property="og:image" content="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png">
 <meta property="og:image" content="http://imtx.me/static/pictures/2010/11/wayland-clutter.png">
 <meta property="article:published_time" content="2010-11-08T03:46:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.085Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.779Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="HTML">
 <meta property="article:tag" content="Linux">
@@ -75,8 +75,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "揭开Wayland的面纱（二）：Wayland应运而生",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-08",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f/" },
+  "description": "揭开Wayland的面纱（二）：Wayland应运而生"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -91,6 +130,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -115,6 +156,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -142,6 +185,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -159,17 +206,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -189,7 +365,7 @@
 <li>它复用了所有Linux内核的图形、输入输出技术：KMS、evdev，因此已支持的驱动可以直接拿来用；</li>
 <li>Wayland没有传统的Server/Client的模式，取而代之的是：Compositor/Client，这不仅仅是换一个名称而已，后面会讲到具体区别；</li>
 </ul>
-<p><a target="_blank" rel="noopener" href="http://imtx.me/static/uploads/2010/11/wayland-architecture.png"><img src="http://imtx.me/static/uploads/2010/11/wayland-architecture.png" alt="Wayland Architecture" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://imtx.me/static/uploads/2010/11/wayland-architecture.png"><img src="http://imtx.me/static/uploads/2010/11/wayland-architecture.png" class="lazy" data-srcset="http://imtx.me/static/uploads/2010/11/wayland-architecture.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Wayland Architecture" /></a></p>
 <p>还记得前文中&ldquo;点击Firefox的刷新按钮&rdquo;这个应用场景吧？在Wayland里，所有的流程是这样的：</p>
 <ol>
 <li>内核收到了鼠标发出的信息，经过处理后转发到了Wayland Compositor，就像之前发往X Server一样。</li>
@@ -222,7 +398,7 @@
 <li>GTK+的Wayland后端，已经在路上了！</li>
 </ul>
 <p>见GTK+跑在Wayland上，截图引自：<a target="_blank" rel="noopener" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=ODQ1MQ">Kristian Shows Off GTK+ 3.0 On Wayland</a></p>
-<p><a target="_blank" rel="noopener" href="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg"><img src="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg" alt="Wayland and GTK+" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg"><img src="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg" class="lazy" data-srcset="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Wayland and GTK+" /></a></p>
 <p>当然，Qt也有了，限于篇福，这里就不介绍了。</p>
 <p>另外一个已经在主开发分支便支持Wayland的东西便是：<a target="_blank" rel="noopener" href="http://www.ibentu.org/tag/clutter">Clutter<br />
 </a>。这是一个基于OpenGL的动画框架，我以前介绍过很多次的<a target="_blank" rel="noopener" href="http://imtx.me/tag/gnome-shell/">GNOME Shell</a>、<a target="_blank" rel="noopener" href="http://www.ibentu.org/2009/07/10/moblin-2-0-beta-media.html">Moblin</a>，都是基于Clutter的。在Clutter当前1.5.x的开发分支，Wayland作为其中一个&ldquo;backend&rdquo;，已经得到了&ldquo;experimental&rdquo;的支持。所以说，GNOME 3.0、MeeGo Netbook很可能会成为第一个应用Wayland的桌面环境。</p>
@@ -243,9 +419,9 @@
 <li>支持透明、阴影和简单的窗口管理；</li>
 <li>所有的图形绘制，都是通过Cairo-gl（Cairo的OpenGL后端）进行；</li>
 </ul>
-<p><a target="_blank" rel="noopener" href="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png"><img src="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png" alt="Wayland Terminal" width="550" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png"><img src="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png" class="lazy" data-srcset="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Wayland Terminal" width="550" /></a></p>
 <p>这是又一个例子，我编译了Clutter的Wayland后端，成功地跑起了一个Clutter的Demo：即同中Ubuntu Tweak的3D Logo。</p>
-<p><a target="_blank" rel="noopener" href="http://imtx.me/static/pictures/2010/11/wayland-clutter.png"><img src="http://imtx.me/static/pictures/2010/11/wayland-clutter.png" alt="Wayland and Clutter" width="550" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://imtx.me/static/pictures/2010/11/wayland-clutter.png"><img src="http://imtx.me/static/pictures/2010/11/wayland-clutter.png" class="lazy" data-srcset="http://imtx.me/static/pictures/2010/11/wayland-clutter.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Wayland and Clutter" width="550" /></a></p>
 <p>除了这个Wayland Compositor本身是跑在X Window之上，其本身合成效果、处理窗口布局等等，都完全没有用到X，而且整个代码非常简洁。未来的Linux图形，就会像是这样一个结构简单又高效的样子。</p>
 <p>相信看完我这些介绍，大家对Wayland是个什么角色，已经比较清楚了吧？</p>
 <p>简单的说，它就是一个去除X Window中不必要的设计、充分利用现代Linux内核图形技术的一个显示机制，它的出现是自然而然的，它的使命不是为了消灭X Window，而是将Linux的图形技术发挥至更高的一个境界。传统的X Window（即经典X应用、Gtk 1.x/2.x等旧应用），也会在相当长一段时间内得到继续支持，通过Wayland Client的形式跑在Wayland Compositor上，直到最终升级、取代或被淘汰。</p>
@@ -274,7 +450,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a></div> 
     
 <div class="post-share">
@@ -501,7 +677,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

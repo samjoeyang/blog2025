@@ -30,7 +30,7 @@
 <title>10个Google搜索小技巧 | Need.UNO</title>
 
 
-    <meta name="keywords" content="Google, Google Fans, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Google, Google Fans, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -55,7 +55,7 @@
 <meta property="og:image" content="http://google.org.cn/wp-content/uploads/2009/06/20090629-time.jpg">
 <meta property="og:image" content="http://google.org.cn/wp-content/uploads/2009/06/20090629-google-tips1.jpg">
 <meta property="article:published_time" content="2010-11-05T05:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-22T06:06:49.936Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.759Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Google">
 <meta property="article:tag" content="Google Fans">
@@ -79,8 +79,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "10个Google搜索小技巧",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-05",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-05-10e4b8aagooglee6909ce7b4a2e5b08fe68a80e5b7a7/" },
+  "description": "10个Google搜索小技巧"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -95,6 +134,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -119,6 +160,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -146,6 +189,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -163,17 +210,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -183,32 +359,32 @@
 <p>这个应该是普及最广泛的Google搜索技巧了吧，格式为</p>
 <blockquote><p>keyword site:someweb.com</p></blockquote>
 <p>可以在指定网站范围内搜索用户给出关键字。</p>
-<p><img title="20090527-10-google-search-tips-1" src="/images/needisme/2010/11/20090527-10-google-search-tips-1.jpg" alt="20090527-10-google-search-tips-1" width="551" height="505" /></p>
+<p><img title="20090527-10-google-search-tips-1" src="/images/needisme/2010/11/20090527-10-google-search-tips-1.jpg" class="lazy" data-srcset="/images/needisme/2010/11/20090527-10-google-search-tips-1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090527-10-google-search-tips-1" width="551" height="505" /></p>
 <p>2，排除某些关键字</p>
 <p>如果你想搜索某个关键字，但是同时不想让另外一个关键字出现，可以使用以下的格式</p>
 <blockquote><p>keyword1 -keyword2</p></blockquote>
 <p>Google将返回所有包括keyword1但是不包括keyword2的所有搜索结果。如下图：</p>
-<p><img title="20090527-10-google-search-tips-2" src="http://google.org.cn/wp-content/uploads/2009/05/20090527-10-google-search-tips-2.jpg" alt="20090527-10-google-search-tips-2" width="552" height="581" /></p>
+<p><img title="20090527-10-google-search-tips-2" src="http://google.org.cn/wp-content/uploads/2009/05/20090527-10-google-search-tips-2.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/05/20090527-10-google-search-tips-2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090527-10-google-search-tips-2" width="552" height="581" /></p>
 <p>3，搜索官方消息（仅限美国）和学术论文</p>
 <p><a target="_blank" rel="noopener" href="http://www.google.com/unclesam">unclesam搜索</a>可以让用户的搜索结果范围限定在.gov网站内，以便用户查找政府官方消息。</p>
 <p><a target="_blank" rel="noopener" href="http://scholar.google.com/">学术论文搜索</a>搜索的内容当然是论文，学生和科研行业人员的最爱。</p>
 <p>4，搜索公共数据</p>
 <p>谷奥此前曾详细报道过此功能，请点击<a target="_blank" rel="noopener" href="http://google.org.cn/2009/04/29/google-tells-you-unemployment-rate-and-population/">Google 告诉你失业率和人口数量</a></p>
-<p><img src="http://google.org.cn/wp-content/uploads/2009/04/florida-unemployment-rate-580x243.jpg" alt="" width="580" height="243" /></p>
+<p><img src="http://google.org.cn/wp-content/uploads/2009/04/florida-unemployment-rate-580x243.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/04/florida-unemployment-rate-580x243.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" width="580" height="243" /></p>
 <p>5，搜索相似的图片</p>
 <p>Google Labs中的<a target="_blank" rel="noopener" href="http://similar-images.googlelabs.com/">搜索相似图片</a>是个非常有意思的功能，可以找出和用户指定的图片显示内容类似的图片。比如我搜索颐和园，并且点击一张十七孔桥的照片下面的similar images链接，就可以得到下图的效果：</p>
-<p><img title="20090629-similar-images" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-similar-images.jpg" alt="20090629-similar-images" width="650" height="480" />6，使用超级快捷方式</p>
+<p><img title="20090629-similar-images" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-similar-images.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/06/20090629-similar-images.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090629-similar-images" width="650" height="480" />6，使用超级快捷方式</p>
 <p>所谓超级快捷方式就是这个页面中所提到的一些小技巧，比如说</p>
 <p>在搜索框输入define后面跟一个词，google会告诉你这个词的定义。</p>
-<p><img title="20090629-search-define" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-search-define.jpg" alt="20090629-search-define" width="462" height="208" /></p>
+<p><img title="20090629-search-define" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-search-define.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/06/20090629-search-define.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090629-search-define" width="462" height="208" /></p>
 <p>在搜索框输入计算式，Google会为你计算出结果。</p>
-<p><img title="20090629-cacular" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-cacular.jpg" alt="20090629-cacular" width="459" height="192" /></p>
+<p><img title="20090629-cacular" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-cacular.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/06/20090629-cacular.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090629-cacular" width="459" height="192" /></p>
 <p>在搜索框输入一个计量单位，Google会为你进行单位换算</p>
-<p><img title="20090629-convert" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-convert.jpg" alt="20090629-convert" width="456" height="194" /></p>
+<p><img title="20090629-convert" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-convert.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/06/20090629-convert.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090629-convert" width="456" height="194" /></p>
 <p>在搜索框输入weather 城市名可以得到某个城市的天气。</p>
-<p><img title="20090629-weather" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-weather.jpg" alt="20090629-weather" width="466" height="221" /></p>
+<p><img title="20090629-weather" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-weather.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/06/20090629-weather.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090629-weather" width="466" height="221" /></p>
 <p>在输入框输入time 城市名可以得到某个城市的当前时间。</p>
-<p><img title="20090629-time" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-time.jpg" alt="20090629-time" width="628" height="255" />7，将最感兴趣的新闻放在最上面</p>
+<p><img title="20090629-time" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-time.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/06/20090629-time.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090629-time" width="628" height="255" />7，将最感兴趣的新闻放在最上面</p>
 <p>进入<a target="_blank" rel="noopener" href="http://www.google.com/news">Google News</a>页面，并且点击&ldquo;Edit this page&rdquo;，之后你就可以在弹出的窗口中按照个人喜好重新排列新闻源了。</p>
 <p>8，搜索从前</p>
 <p>Google将一些过去报纸的内容数字化并且放到<a rel="external nofollow noopener" target="_blank" href="http://news.google.com/archivesearch">Google News Archives</a>，虽然其中部分可能需要收费，但是你可以在<a rel="external nofollow noopener" target="_blank" href="http://news.google.com/archivesearch/advanced_search">Advanced News Archive</a>搜索页面选择no price来查找所有免费内容。</p>
@@ -216,7 +392,7 @@
 <p>如果你没有iPhone，blackberry等智能手机，但是还想在外面问Google点什么的话，可以拨打1-800-GOOG-411或者发短信到46645，不过貌似只适合北美地区。</p>
 <p>10，获得最新的Google技巧</p>
 <p>将<a rel="external nofollow noopener" target="_blank" href="http://www.google.com/ig/directory?url=www.google.com/ig/modules/google_tips.xml">Tip of the Day</a> 添加到你的<a rel="external nofollow noopener" target="_blank" href="http://www.google.com/ig">iGoogle</a>个性主页中，这个gadget会每天告诉你一个关于Google的技巧。</p>
-<p><img title="20090629-google-tips" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-google-tips1.jpg" alt="20090629-google-tips" width="450" height="211" /></p>
+<p><img title="20090629-google-tips" src="http://google.org.cn/wp-content/uploads/2009/06/20090629-google-tips1.jpg" class="lazy" data-srcset="http://google.org.cn/wp-content/uploads/2009/06/20090629-google-tips1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20090629-google-tips" width="450" height="211" /></p>
 <p>via <a target="_blank" rel="noopener" href="http://postcards.blogs.fortune.cnn.com/2009/05/11/ten-tips-from-google-on-googling/">fortune</a></p>
 
 <hr>
@@ -242,7 +418,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-22</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Google/" class="post-tags__link button"># Google</a><a href="/tags/Google-Fans/" class="post-tags__link button"># Google Fans</a></div> 
     
 <div class="post-share">
@@ -469,7 +645,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

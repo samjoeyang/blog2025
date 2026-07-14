@@ -30,7 +30,7 @@
 <title>中国传统新年旧习俗 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -51,9 +51,9 @@
 <meta property="og:image" content="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222014910286.jpg">
 <meta property="og:image" content="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222014911170.jpg">
 <meta property="article:published_time" content="2018-02-26T02:25:45.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.840Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.952Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020614266.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -74,8 +74,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "中国传统新年旧习俗",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2018-02-26",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2018-02-26-e4b8ade59bbde4bca0e7bb9fe696b0e5b9b4e697a7e4b9a0e4bf97/" },
+  "description": "中国传统新年旧习俗"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -90,6 +129,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -114,6 +155,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -141,6 +184,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -158,25 +205,154 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
-        <p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020614266.jpg" alt="20180222020614266.jpg" /></span></p>
+        <p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020614266.jpg" class="lazy" data-srcset="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020614266.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20180222020614266.jpg" /></span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">中国的传统历法以&ldquo;天干&rdquo;&ldquo;地支&rdquo;纪年。其中&ldquo;甲乙丙丁戊己庚辛壬癸&rdquo;为十天干，&ldquo;子丑寅卯辰巳午未申酉戌亥&rdquo;为十二地支。纪年则按顺序取干支各一字，以甲子为始，六十年循环一次，周而复始，直至无穷。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">这种干支纪年的方式使中国历史摆脱了年代的定位问题，几千年后，中国人仍能很轻易地将中国史书中的纪年对应到西元的纪年上。另外中国人也以干支来纪月、日和时。由于天干地支对应着五行，因此成为周易预测学的主要依据。</span></p>
-<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020614742.jpg" alt="20180222020614742.jpg" /></span></p>
+<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020614742.jpg" class="lazy" data-srcset="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020614742.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20180222020614742.jpg" /></span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">中国最早的历法是轩辕黄帝颁布的，也称为&ldquo;黄历&rdquo;或&ldquo;皇历&rdquo;。轩辕黄帝被尊为&ldquo;人文初祖&rdquo;，也是道家文化的创始人，历法也表达了阴阳平衡的概念，中国的传统历法是阴阳合历，既不是单纯的阴历，也不是单纯的阳历，同时兼顾了月亮的盈亏周期和地球绕太阳的公转周期。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">黄历以干支纪年，包括二十四节气的日期表。书中还介绍，中国历法充分体现了阴阳五行的思想，蕴含着自然循环运化的规律，即时空互动，和&ldquo;阴&rdquo;与&ldquo;阳&rdquo;的作用结果，同时反映了中国古人对宇宙相生相克、祸福转换、改朝换代、循环往复等规律的理解，其背后反映的是道家文化和中国传统社会敬畏天地神明、考虑天时、地利、人和的价值观。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">把传统的皇历叫作农历，使人产生一种错觉，似乎传统历法的作用仅限于农业，是计算农时的需要。实际上是籍此贬低掏空蕴含博大文化内涵的传统皇历，截断传统文化的承传。</span></p>
@@ -184,14 +360,14 @@
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">传统的新年是从腊月八日开始，直到正月十五结束。&ldquo;腊八&rdquo;是佛祖释迦牟尼开悟成佛的日子，民间与寺院都在这一天喝腊八粥，祈祷来年五谷丰登、六畜兴旺。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">腊月廿三，俗称&ldquo;小年&rdquo;。传说中，这天是&ldquo;灶王爷上天&rdquo;的日子。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">腊月廿四，是送神日。传说中，玉皇大帝派很多神明司管人间，以察世人言行。古人谦恭的对待神明，崇善重德，故而有&ldquo;三尺头上有神明&rdquo;的说法。</span></p>
-<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020615792.jpg" alt="20180222020615792.jpg" /></span></p>
+<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020615792.jpg" class="lazy" data-srcset="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020615792.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20180222020615792.jpg" /></span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">灶王爷《河南博物院藏》。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">这一天，也是民间约定俗称的扫除日。家家户户掸尘扫房，为迎接新神的到来做准备。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">腊月廿五，要推磨做豆腐。传说中，这天玉皇大帝巡视民间。人们以吃豆腐残渣，向天帝表明全家人的清白，祈求上天能多赐予福德。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">廿六、廿七人们赶集办置年货，为迎接大年做准备。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">腊月廿八，古时要悬挂桃木桃符辟邪，后来被红纸春联取代。这天，家家户户还要打糕、蒸馍、贴年花呢！</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">中国古代讲&ldquo;取仁于祢，取义于祖&rdquo;，从先父身上取仁，从先祖身上取义。腊月廿九，上大供祭祖，以燃香引领先祖回家，以感念先祖的恩德。</span></p>
-<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020615617.jpg" alt="20180222020615617.jpg" /></span></p>
+<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020615617.jpg" class="lazy" data-srcset="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222020615617.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20180222020615617.jpg" /></span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">除夕辞岁祭祖</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">腊月三十，就是大年，这天晚上，家家户户都要守岁，称为&ldquo;除夕&rdquo;，意为一年到此夜而除，也称辞年。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">这一天忌洒污水、倒垃圾、动针线；忌讳纷争哭闹、恶声骂语。</span></p>
@@ -199,7 +375,7 @@
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">人们敬拜天地四方神明，在院里焚香祭祀天地神祉，在屋里供养诸神。为祈求年年康泰，神坛上的香烛须终日燃烧，不息不灭。有的家庭在神明前供奉甜汤圆，以表全家和美团圆；早起更换新鞋新衣，表示万象更新。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">正月初二，是出嫁的女儿偕女婿回娘家的日子，称为&ldquo;回门&rdquo;，也称&ldquo;迎婿日&rdquo;。回门时，须带双数的礼物和红包，禁忌单数，分送给娘家的小孩，在娘家吃完午饭，就必须在晚饭前赶回婆家。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">这天要祭拜土地神，早期多以牲礼祭拜，现代逐渐改为鲜花水果。</span></p>
-<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222014910286.jpg" alt="20180222014910286.jpg" /></span></p>
+<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222014910286.jpg" class="lazy" data-srcset="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222014910286.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20180222014910286.jpg" /></span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">正月初二，是出嫁的女儿偕女婿回娘家的日子，称为&ldquo;回门&rdquo;，也称&ldquo;迎婿日&rdquo;。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">正月初三，又称小年朝，也称赤狗日。赤狗是熛怒之神，主管夏天。遇到赤狗，这一年都会不吉利。所以，这天老人多是足不出户，以免撞煞。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">这天不扫地、不生火、不打水，在家祀祖祭神。</span></p>
@@ -208,7 +384,7 @@
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">初六这天，民间要把破烂的衣服，杂乱的东西扫出门外，点火焚烧穷气，称为送穷。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">由于孤苦伶仃的孤魂野鬼、穷鬼，飘游不定，无吃无喝，异常艰苦。初六天，百姓要做七张煎饼，放在还没有人行走的路上，洒杯酒，以供奉无吃无喝的穷鬼，使他们早日得到超度。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">大年初七，是为人日，也叫人节。传说中，这天女娲娘娘抟土造就万物生灵。前六天造出了家禽畜牧，第七天造出了人。几经演变，民间形成吃七样羮（七草粥）的习俗。</span></p>
-<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222014911170.jpg" alt="20180222014911170.jpg" /></span></p>
+<p style="margin: 9px 0px 8px; font-size: 17px; line-height: normal; font-family: '.SF UI Text'; color: #454545;"><span style="font-family: '.SFUIText'; font-size: 17pt;"><img src="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222014911170.jpg" class="lazy" data-srcset="webkit-fake-url://0E73F365-CAD1-475C-8C98-2FBF406D3BA8/20180222014911170.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="20180222014911170.jpg" /></span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">相传女娲抟土造人，那一天就是&ldquo;人日&rdquo;。</span></p>
 <p style="margin: 0px; font-size: 17px; line-height: normal; font-family: '.PingFang SC'; color: #454545;"><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">大年初八，诸天星君聚会的日子。中国民间制做油灯，燃烧而祭。所以，初八也称顺星日、接星节、祭星日。</span></p>
 <div><span style="font-family: '.PingFangSC-Regular'; font-size: 17pt;">&nbsp;</span></div>
@@ -236,7 +412,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -463,7 +639,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

@@ -30,7 +30,7 @@
 <title>解剖CPU | Need.UNO</title>
 
 
-    <meta name="keywords" content="互联网, Internet, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="互联网, Internet, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -63,7 +63,7 @@
 <meta property="og:image" content="http://image.beekka.com/blog/201011/bg2010111418s.jpg">
 <meta property="og:image" content="http://image.beekka.com/blog/201011/bg2010111417s.jpg">
 <meta property="article:published_time" content="2010-11-15T01:38:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.124Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.791Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="互联网">
 <meta property="article:tag" content="Internet">
@@ -87,8 +87,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "解剖CPU",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-15",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-15-e8a7a3e58996cpu/" },
+  "description": "解剖CPU"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -103,6 +142,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -127,6 +168,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -154,6 +197,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -171,17 +218,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -193,60 +369,60 @@
 <p>1.</p>
 <p>他先找到一块Intel公司的奔三（Pentium III）Coppermine芯片，主频800MHZ，生产于2000年。（我查了一下，网上的报价现在是15~30元人民币/块。）</p>
 <p>下面是这块CPU的正面。你可以看到它分成两部分，周围是一圈绿色的电路板，中间那块蓝色的就是芯片。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111401.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111401s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111401.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111401s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111401s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>（本文所有图片，都可以点击看大图。）</p>
 <p>2.</p>
 <p>CPU的背面是密密麻麻的针脚，用来从主板取电和通信。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111402.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111402s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111402.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111402s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111402s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>3.</p>
 <p>为了把芯片从电路板取出，动用了电锯。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111403.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111403s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111403.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111403s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111403s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>4.</p>
 <p>切断电路板，就可以取出芯片了。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111404.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111404s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111404.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111404s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111404s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>5.</p>
 <p>去掉上面的金属保护盖，芯片的庐山真面目显现了，上面有很多闪光的小点。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111405.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111405s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111405.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111405s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111405s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>6.</p>
 <p>把这块芯片放到光学显微镜下，看到那些小点都是一个个金属垫（metal pad），用来连接芯片内部与外面的电路板。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111406.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111406s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111406.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111406s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111406s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>7.</p>
 <p>拉近距离，可以看到金属垫中间的小洞里面有一些特殊结构。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111407.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111407s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111407.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111407s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111407s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>8.</p>
 <p>那里原来是一层层的导线，好像三明治叠在一起。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111408.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111408s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111408.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111408s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111408s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>9.</p>
 <p>调整显微镜，依次把焦点对准不同的导线，先是上层。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111409.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111409s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111409.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111409s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111409s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>10.</p>
 <p>然后，焦点对准中间的那层导线。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111410.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111410s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111410.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111410s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111410s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>11.</p>
 <p>最后是下层导线。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111411.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111411s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111411.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111411s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111411s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>12.</p>
 <p>导线的下面就是硅片层（晶圆），也就是晶体管的位置。但是这时，光学显微镜已经到放大的极限了，只好改用电子扫描显微镜（scanning electron microscope）。</p>
 <p>因为没有办法去掉导线层，所以先把芯片一切二，观察横截面。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111412.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111412s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111412.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111412s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111412s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>13.</p>
 <p>可以看到芯片的底部，也就是金属层底部有一些线条。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111413.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111413s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111413.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111413s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111413s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>14.</p>
 <p>把底部放大。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111414.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111414s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111414.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111414s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111414s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>15.</p>
 <p>肉眼看到大概有六层，全部都是金属导线，估计就是刚才光学显微镜里看到的导线层。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111415.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111415s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111415.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111415s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111415s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>16.</p>
 <p>换一个更好的角度。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111416.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111416s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111416.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111416s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111416s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>17.</p>
 <p>这台电子扫描显微镜的极限是250纳米，而奔三的制造工艺是180纳米（根据wikipedia），所以没法看见更细的导线层，更不要说下面的晶体管了。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111418.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111418s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111418.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111418s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111418s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>18.</p>
 <p>换一个角度，从上往下看，依然是一层层叠加的导线。由于暂时没办法把这些导线去掉，所以晶体管层还是看不见。</p>
-<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111417.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111417s.jpg" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://image.beekka.com/blog/201011/bg2010111417.jpg"><img src="http://image.beekka.com/blog/201011/bg2010111417s.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201011/bg2010111417s.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>（完）</p>
 </div>
 
@@ -273,7 +449,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" class="post-tags__link button"># 互联网</a><a href="/tags/Internet/" class="post-tags__link button"># Internet</a></div> 
     
 <div class="post-share">
@@ -500,7 +676,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

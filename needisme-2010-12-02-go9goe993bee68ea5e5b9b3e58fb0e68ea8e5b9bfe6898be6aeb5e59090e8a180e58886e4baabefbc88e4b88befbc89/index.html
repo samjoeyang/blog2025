@@ -30,7 +30,7 @@
 <title>go9go链接平台推广手段吐血分享（下） | Need.UNO</title>
 
 
-    <meta name="keywords" content="HTML, PHP, SEO, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="HTML, PHP, SEO, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -51,7 +51,7 @@
 <meta property="og:image" content="http://www.muchangqing.com/blog/upload/201012010026262850.JPG">
 <meta property="og:image" content="http://www.muchangqing.com/blog/upload/201012010025421168.JPG">
 <meta property="article:published_time" content="2010-12-02T08:00:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.416Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.820Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="HTML">
 <meta property="article:tag" content="PHP">
@@ -76,8 +76,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "go9go链接平台推广手段吐血分享（下）",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-02",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-02-go9goe993bee68ea5e5b9b3e58fb0e68ea8e5b9bfe6898be6aeb5e59090e8a180e58886e4baabefbc88e4b88befbc89/" },
+  "description": "go9go链接平台推广手段吐血分享（下）"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -92,6 +131,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -116,6 +157,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -143,6 +186,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -160,17 +207,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -178,13 +354,13 @@
         <p>go9go是我现做的网站里，人气最旺的一个，也是我目前比较满意的一个。现在go9go上已经有10多万个网站发布了链接信息，可以说不管多少PR值，不管什么类型网站的友情链接在go9go上都能找到。每天还有几千个网站在go9go上更新最新的链接信息。现在go9go的ALEXA综合排名4000多，遥遥领先业内同行网站，是国内人气最旺的&ldquo;<a target="_blank" rel="noopener" href="http://www.go9go.cn/">友情链接平台</a>&rdquo;。<br />
 很多站长朋友也很好奇go9go是如何推广出去的，在今年7月份的时候，我写了&ldquo;<a target="_blank" rel="noopener" href="http://www.muchangqing.com/post/273.html">go9go链接平台推广手段吐血分享（上）</a>&rdquo;这篇博文，无保留的分享了go9go在发展过程中有用到的一些推广手段。但写了&ldquo;上&rdquo;，我一直没继续写&ldquo;下&rdquo;，现在4个多月的时间过去了，今天终于静下心来，跟大家继续分享下go9go链接平台还用哪些推广手段，希望能给大家有所借鉴和启发。<br />
 如图，从8月23日公测到今天的一些网站数据<br />
-<img src="http://www.muchangqing.com/blog/upload/201012010020443111.jpg" alt="" /><br />
+<img src="http://www.muchangqing.com/blog/upload/201012010020443111.jpg" class="lazy" data-srcset="http://www.muchangqing.com/blog/upload/201012010020443111.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /><br />
 上次分享了go9go从去年8月份到今年7月份的数据，当时7月中旬的时候go9goALEXA综合排名是6499，当时已经算不错的成绩。但截止到今天11月30日，go9go的ALEXA 3个月综合排名已经达到4299了，比起7月中旬的时候，在人气上又有了很大的进步。<br />
 之前的文章里主要分享go9go用了&ldquo;站长类网站友情推荐&rdquo;&ldquo;QQ群推广&rdquo;&ldquo;软文推广&rdquo;等这3个主要手段。今天继续分享go9go在这1年多的发展历程里，还用了哪些推广手段。<br />
 一：SEO优化<br />
 1：go9go的SEO现状<br />
 和友情链接平台相关的关键词主要有3个，分别是&ldquo;友情链接&rdquo;&ldquo;友情链接平台&rdquo;&ldquo;友情链接交换&rdquo;。如下图可见，在百度搜索这个3个词，go9go都是排在第一位。在谷歌搜索这3个词也都是在第一页非常靠前的位置。其中&ldquo;友情链接平台&rdquo;这词，基本上在所有主流搜索引擎里面，go9go都是排在第一位。<br />
-<img src="http://www.muchangqing.com/blog/upload/201012010022161106.JPG" alt="" /><br />
+<img src="http://www.muchangqing.com/blog/upload/201012010022161106.JPG" class="lazy" data-srcset="http://www.muchangqing.com/blog/upload/201012010022161106.JPG" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /><br />
 关键词排名这么好，很多朋友就会好奇是怎么优化上去的，现在就说说我都做了哪些工作。<br />
 2：外链策略（一步到位）<br />
 Go9go建站初期我主要是用了自己的一些网站资源，对go9go进行了单向的链接。在很长段时间里，都没进行链接互换。因为go9go一个新站，一开始人气一般，PR又低。这个时候如果去互换链接，很难找质量特别好的。如果初期勉强找一些普通的网站做了互换，以后再想撤下就不方便了。而我当时也不想再麻烦业内一些朋友的好网站进行链接互换，从而也是欠人情。<br />
@@ -206,12 +382,12 @@ Go9go初期使用的网站tite：&ldquo;友情链接交换、出售、购买、�
 <p>在go9go推广初期，论坛推广也是当时主要来流量的一个渠道。当时我做论坛推广主要是发2种类型推广帖子，第一种类型的帖子比较直白，比如当时在A5论 坛和落伍论坛的链接版块。我都发了条标题为&ldquo;站长们，你妈妈叫你来go9go换链接了&rdquo;，这个算是硬广，也算品牌曝光。</p>
 <p>第2种类型的推广帖子，是软文性质的论坛帖。因为网站初期，来发布链接的网站少，一些用户的网站经常能出现在go9go首页，当时我查了几个在go9go 发布链接信息的新网站，查他们的雅虎外链，都能明显看到go9go在第一位。因此我就拿这个为卖点，以用户的名义写了篇论坛帖，说在go9go发布链接， 还能增加一个高质量外链，并在帖子里切下雅虎外链的图例。</p>
 <p>如图：当时在A5发的一个软文论坛帖，被浏览了1728次，回复了197次。</p>
-<p><a target="_blank" rel="noopener" href="http://www.muchangqing.com/blog/upload/201012010023035315.JPG"><img src="http://www.muchangqing.com/blog/upload/201012010023035315.JPG" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://www.muchangqing.com/blog/upload/201012010023035315.JPG"><img src="http://www.muchangqing.com/blog/upload/201012010023035315.JPG" class="lazy" data-srcset="http://www.muchangqing.com/blog/upload/201012010023035315.JPG" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>当时我在落伍，A5，chinaz，百度友情链接贴吧，SEO贴吧，都发布了这个软文帖，然后坚持每天用马甲去顶一次，后面陆陆续续来了不少用户访问。不知道我的同行网站有没有去做过类似的事情，或者去做过，但有没有做到这么极致了？</p>
 <p>三：微博品牌曝光</p>
 <p>如果经常玩腾讯微博的站长朋友，应该知道go9go在腾讯有个官方微博，而且有1600多的听众。而这1600多个听众怎么来的了。主要就是通过2次活动来的，而收听go9go微博的人，可以说99%都是站长，都是go9go的目标用户。</p>
 <p>如图:在腾讯微博搞的一个活动</p>
-<p><a target="_blank" rel="noopener" href="http://www.muchangqing.com/blog/upload/201012010023301147.JPG"><img src="http://www.muchangqing.com/blog/upload/201012010023301147.JPG" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://www.muchangqing.com/blog/upload/201012010023301147.JPG"><img src="http://www.muchangqing.com/blog/upload/201012010023301147.JPG" class="lazy" data-srcset="http://www.muchangqing.com/blog/upload/201012010023301147.JPG" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>当时搞的其中一个活动，转播了681次。要求参与活动的用户都必须关注go9go微博然后就能获得活动分享的数据。为了在活动中更好的传播go9go的品 牌，因此在活动的附图里，嵌套了一篇go9go功能性介绍的软文。通过这活动，让很多不知道go9go的站长朋友，都知道了go9go是做什么的。</p>
 <p>后来又做了次类似的活动，就因为这2个活动，让go9go的微博听众从0快速涨到了1600多。因为活动分享的数据，都是业内人士会感兴趣，所以保证了用 户群都是go9go网站的目标用户。而且这些资源不是一次性的，在活动的进行中给go9go做了品牌推广。活动结束后，还有1600多个听众可以继续的去 影响。后来通过go9go微博，还做一些很多有意义的事情。比如寻求链接赞助群，广告位出售等等。</p>
 <p>通过腾讯微博，也间接给go9go带来了不少目标访问用户。所以在这也算go9go比较重要的一个推广渠道。</p>
@@ -220,7 +396,7 @@ Go9go初期使用的网站tite：&ldquo;友情链接交换、出售、购买、�
 <p>1：博友主动提到go9go</p>
 <p>但我不写，不代表就没人写了。后来陆续看到有站长朋友，在自己的原创经验文章里提到go9go链接平台。百度新闻搜索&ldquo;go9go&rdquo;，就能发现很多夸奖go9go链接平台的文章，都是博友自发去写的，我想这就是口碑传播吧。</p>
 <p>如图：百度新闻&ldquo;go9go&rdquo;发现大量有提到go9go的经验文章。</p>
-<p><img src="http://www.muchangqing.com/blog/upload/201012010026262850.JPG" alt="" /></p>
+<p><img src="http://www.muchangqing.com/blog/upload/201012010026262850.JPG" class="lazy" data-srcset="http://www.muchangqing.com/blog/upload/201012010026262850.JPG" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <p>因为经常有这样提到go9go的文章，在外面大量的传播，对go9go的人气也起到了非常大的作用。让业内的人，只要想到换友情链接，一定会想到来go9go链接平台。</p>
 <p>2：沾同行软文的光</p>
 <p>我常在网上见到别人总结的，最好的链接平台网站汇总，或者免费增加外链的网站汇总等等之类的文章。Go9go总是排在文章推荐的网站里第2的位置，而排第一的链接网站，随着总结的人不同，而一直在变化。</p>
@@ -229,7 +405,7 @@ Go9go初期使用的网站tite：&ldquo;友情链接交换、出售、购买、�
 <p>如果大家有关注我之前的招徒任务，就会注意到。我给28推成员的第二个任务就是收集国内的所有链接平台网站，并分析相关的数据。</p>
 <p>当时让徒弟做这个任务，主要是为了锻炼他们收集数据和分析数据的能力，另外我也是想了解下国内到底有多少链接平台网站。后来惊人的发现竟然有接近300来 个。后来大部分徒弟们都写了做这次任务的感想，因为任务的内容就是链接平台，文章中自然会提到go9go，还会和业内别的网站做比较，也间接给go9go 做了口碑推广。</p>
 <p>如图：这几篇提到go9go文章，就是因为当时的任务而产生的</p>
-<p><a target="_blank" rel="noopener" href="http://www.muchangqing.com/blog/upload/201012010025421168.JPG"><img src="http://www.muchangqing.com/blog/upload/201012010025421168.JPG" alt="" /></a></p>
+<p><a target="_blank" rel="noopener" href="http://www.muchangqing.com/blog/upload/201012010025421168.JPG"><img src="http://www.muchangqing.com/blog/upload/201012010025421168.JPG" class="lazy" data-srcset="http://www.muchangqing.com/blog/upload/201012010025421168.JPG" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></a></p>
 <p>发现不知不觉又写了3000多字了，今天再次无保留的分享了，go9go的一些推广渠道和方式。这些都是对go9go的发展有巨大的影响。但最后我想说的 是，推广手段虽然重要，但最关键的还是用户体验，用户来这里能够满足他们的需求，这才是最重要的。如果没好的用户体验，再好的推广，人来了留不住也是没用 的。</p>
 <p>最后希望这篇文章，能给大家在推广上有所借鉴，也感谢博友们一直对go9go的支持。对我的新站<a href="http://bbs.28tui.com/" target="_blank">28推论坛</a>的支持。</p>
 <p>go9go初级26群（PR0-PR3）78255547&nbsp;&nbsp; go9go中级11群（PR4-PR5）85324928&nbsp;&nbsp; go9go高级5群（-PR6）104774229</p>
@@ -259,7 +435,7 @@ Go9go初期使用的网站tite：&ldquo;友情链接交换、出售、购买、�
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/PHP/" class="post-tags__link button"># PHP</a><a href="/tags/SEO/" class="post-tags__link button"># SEO</a></div> 
     
 <div class="post-share">
@@ -486,7 +662,15 @@ Go9go初期使用的网站tite：&ldquo;友情链接交换、出售、购买、�
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

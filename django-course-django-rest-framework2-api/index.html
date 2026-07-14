@@ -30,7 +30,7 @@
 <title>Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API | Need.UNO</title>
 
 
-    <meta name="keywords" content="Django REST Framework, DRF, 序列化器, API开发, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Django REST Framework, DRF, 序列化器, API开发, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -51,7 +51,7 @@
 <meta property="og:image" content="https://need.uno/images/django/2-5-0.webp">
 <meta property="og:image" content="https://need.uno/images/django/2-6-0.png">
 <meta property="article:published_time" content="2022-01-20T02:05:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T03:03:13.926Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.671Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Django REST Framework">
 <meta property="article:tag" content="DRF">
@@ -77,8 +77,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2022-01-20",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/django-course-django-rest-framework2-api/" },
+  "description": "Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -93,6 +132,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -117,6 +158,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -144,6 +187,10 @@
     <span class="separate-dot"></span><a href="/categories/Django%E5%AE%9E%E6%88%98%E6%95%99%E7%A8%8B/" class="button">Django实战教程</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -161,17 +208,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -180,7 +356,7 @@
 <h2 id="description-转自：大江狗-https-mp-weixin-qq-com-s-57aoG2aSdhWgCoXPmQd5zQ"><a href="#description-转自：大江狗-https-mp-weixin-qq-com-s-57aoG2aSdhWgCoXPmQd5zQ" class="headerlink" title="description: 转自：大江狗 https://mp.weixin.qq.com/s/57aoG2aSdhWgCoXPmQd5zQ"></a>description: 转自：大江狗 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/57aoG2aSdhWgCoXPmQd5zQ">https://mp.weixin.qq.com/s/57aoG2aSdhWgCoXPmQd5zQ</a></h2><h1 id="Django-REST-Framework教程-2-序列化器介绍及以博客为例开发基于函数视图的API"><a href="#Django-REST-Framework教程-2-序列化器介绍及以博客为例开发基于函数视图的API" class="headerlink" title="Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API"></a>Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API</h1><p>在上篇文章中，我们已经介绍了为什么要学习DRF，什么是序列化以及什么是符合RESTful规范的Web API。在本篇文章中我们将以博客为例，使用DRF提供的序列化器(Serializers类)开发两个API接口并测试。这两个API端点的简单描述如下所示 (注意：规范的API文档需要更多信息)。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"># 接口描述：文章列表资源。GET请求获取文章列表资源, POST请求提交新文章</span><br><span class="line"># 接口地址: http://127.0.0.1:8000/api/v1/articles# 请求方式：GET, POST</span><br><span class="line"># 返回参数：JSON格式文章列表和状态码</span><br><span class="line"># 接口描述：单篇文章资源。GET获取文章详情, PUT修改，DELETE删除</span><br><span class="line"># 接口地址: http://127.0.0.1:8000/api/v1/articles/&#123;id&#125;</span><br><span class="line"># 请求方式：GET, PUT, DELETE# 返回参数: GET和PUT(JSON格式文章详情和状态码), DELETE(状态码)</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/django/2-1.jpg"></p>
+<p><img src="/images/django/2-1.jpg" class="lazy" data-srcset="/images/django/2-1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg=="></p>
 <h3 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a><strong>准备工作</strong></h3><p>在正式开始前，我们先要用virtualenv创建一个新的Python虚拟环境。如果你使用PyCharm创建Django项目，它会自动为你创建好一个虚拟环境。</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">virtualenv env</span><br><span class="line">source env/bin/activate</span><br></pre></td></tr></table></figure>
 
@@ -259,18 +435,18 @@
 <p>启动Django服务器后，就可以开始测试我们的API是否工作正常了。测试工具有很多，比如简便的curl命令和强大的postman，我们这里使用DRF自带的图形化测试界面。</p>
 <p>[<strong>GET</strong>] <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/v1/articles">http://127.0.0.1:8000/v1/articles</a></p>
 <p>发送GET请求到&#x2F;v1&#x2F;articles, 我们可以看HTTP&#x3D;200 OK的字样和json格式的文章列表数据。</p>
-<p><img src="/images/django/2-2.webp"></p>
+<p><img src="/images/django/2-2.webp" class="lazy" data-srcset="/images/django/2-2.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg=="></p>
 <p>注意：DRF默认是以可浏览的api形式展示返回响应结果的(articles.api)，如果你只需要返回最简单的json格式的数据，只需要在访问地址后面加上.json后缀即可(articles.json)，如下所示：\</p>
-<p><img src="/images/django/2-3-0.png"></p>
+<p><img src="/images/django/2-3-0.png" class="lazy" data-srcset="/images/django/2-3-0.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg=="></p>
 <p>[<strong>POST</strong>] <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/v1/articles">http://127.0.0.1:8000/v1/articles</a></p>
 <p>发送POST请求到&#x2F;v1&#x2F;articles。在GET页面下方下拉框选择json格式数据，数据为由序列化器中定义的非read-only字段组成的json对象，点击POST提交后即可看到新的文章已经添加。</p>
-<p><img src="/images/django/2-4-0.png"></p>
+<p><img src="/images/django/2-4-0.png" class="lazy" data-srcset="/images/django/2-4-0.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg=="></p>
 <p>[<strong>GET</strong>] <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/v1/articles/3">http://127.0.0.1:8000/v1/articles/3</a></p>
 <p>发送get请求到&#x2F;v1&#x2F;articles&#x2F;3，获取第3篇文章详情。</p>
-<p><img src="/images/django/2-5-0.webp"></p>
+<p><img src="/images/django/2-5-0.webp" class="lazy" data-srcset="/images/django/2-5-0.webp" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg=="></p>
 <p>[<strong>PUT</strong>] <a target="_blank" rel="noopener" href="http://127.0.0.1:8000/v1/articles/3">http://127.0.0.1:8000/v1/articles/3</a></p>
 <p>发送PUT请求到&#x2F;v1&#x2F;articles。在GET页面下方下拉框下选择json格式数据，数据为由序列化器中定义的非read-only字段组成的json对象，点击PUT提交后即可看到第3篇文章标题及状态已经由draft变成published。</p>
-<p><img src="/images/django/2-6-0.png"></p>
+<p><img src="/images/django/2-6-0.png" class="lazy" data-srcset="/images/django/2-6-0.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg=="></p>
 <p>DELETE请求非常简单，点击页面上DELETE按钮即可，这里就不展示了。</p>
 <p><strong>小结</strong></p>
 <p>本文总结了定义序列化器的两种方式，并以博客为例使用了基于函数的视图开发了两个简单的API端点。需要值得注意的有以下几点：</p>
@@ -302,7 +478,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Django-REST-Framework/" class="post-tags__link button"># Django REST Framework</a><a href="/tags/DRF/" class="post-tags__link button"># DRF</a><a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96%E5%99%A8/" class="post-tags__link button"># 序列化器</a><a href="/tags/API%E5%BC%80%E5%8F%91/" class="post-tags__link button"># API开发</a></div> 
     
 <div class="post-share">
@@ -529,7 +705,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

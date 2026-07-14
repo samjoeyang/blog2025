@@ -30,7 +30,7 @@
 <title>天天向上20091218 天天兄弟识百草中医达人针灸浩二 | Need.UNO</title>
 
 
-    <meta name="keywords" content="Google, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="Google, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -46,7 +46,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://2.gvt0.cn/ThumbnailServer2?app=vss&amp;contentid=23ac76c367940812&amp;offsetms=1&amp;itag=w160&amp;hl=zh-CN&amp;sigh=TDWpaZfPniwgP2WeEDFTQRV9cYw">
 <meta property="article:published_time" content="2010-11-05T03:46:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.979Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.764Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="Google">
 <meta name="twitter:card" content="summary_large_image">
@@ -69,8 +69,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "天天向上20091218 天天兄弟识百草中医达人针灸浩二",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-05",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-05-e5a4a9e5a4a9e59091e4b88a20091218-e5a4a9e5a4a9e58584e5bc9fe8af86e799bee88d89e4b8ade58cbbe8bebee4babae99288e781b8e6b5a9e4ba8c/" },
+  "description": "天天向上20091218 天天兄弟识百草中医达人针灸浩二"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -85,6 +124,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -109,6 +150,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -136,6 +179,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -153,22 +200,151 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
-        <p><a target="_blank" rel="noopener" href="http://www.google.cn/url?q=http://tv.hunantv.com/watch_tv.aspx%3FClipId%3D19784%26OTypeId%3D18%26TypeId%3D18%26cid%3D19784%26fid%3D29083%26fstlvlId%3D1%26styleId%3D1%26tid%3D18&amp;source=video&amp;vgc=cat_rss&amp;usg=AFQjCNGDfb45cKyFw14WhhKB5G-vwCUxOg"><img src="http://2.gvt0.cn/ThumbnailServer2?app=vss&amp;contentid=23ac76c367940812&amp;offsetms=1&amp;itag=w160&amp;hl=zh-CN&amp;sigh=TDWpaZfPniwgP2WeEDFTQRV9cYw" alt="" width="160" height="120" /></a><br />
+        <p><a target="_blank" rel="noopener" href="http://www.google.cn/url?q=http://tv.hunantv.com/watch_tv.aspx%3FClipId%3D19784%26OTypeId%3D18%26TypeId%3D18%26cid%3D19784%26fid%3D29083%26fstlvlId%3D1%26styleId%3D1%26tid%3D18&amp;source=video&amp;vgc=cat_rss&amp;usg=AFQjCNGDfb45cKyFw14WhhKB5G-vwCUxOg"><img src="http://2.gvt0.cn/ThumbnailServer2?app=vss&amp;contentid=23ac76c367940812&amp;offsetms=1&amp;itag=w160&amp;hl=zh-CN&amp;sigh=TDWpaZfPniwgP2WeEDFTQRV9cYw" class="lazy" data-srcset="http://2.gvt0.cn/ThumbnailServer2?app=vss&amp;contentid=23ac76c367940812&amp;offsetms=1&amp;itag=w160&amp;hl=zh-CN&amp;sigh=TDWpaZfPniwgP2WeEDFTQRV9cYw" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" width="160" height="120" /></a><br />
 本期《天天向上》为大家介绍我国的传统医学&mdash;&mdash;中医，请到了一群医学院的中医研究生 ...</p>
 <div style="color: green; font-size: smaller;">芒果TV</div>
 
@@ -195,7 +371,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/Google/" class="post-tags__link button"># Google</a></div> 
     
 <div class="post-share">
@@ -422,7 +598,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

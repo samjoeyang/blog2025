@@ -30,7 +30,7 @@
 <title>世界情色漫画大师的人类史 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -68,9 +68,9 @@
 <meta property="og:image" content="http://dulei.si/files/c51039b2ec67fec06203994a4fee7c22.jpg">
 <meta property="og:image" content="https://need.uno/images/needisme/external/d62733cb7fdc.jpg">
 <meta property="article:published_time" content="2010-11-24T09:06:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.399Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.814Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://dulei.si/files/8cde7260108283c2fb3b89e4fc021c87.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -91,8 +91,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "世界情色漫画大师的人类史",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-24",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-24-e4b896e7958ce68385e889b2e6bcabe794bbe5a4a7e5b888e79a84e4babae7b1bbe58fb2/" },
+  "description": "世界情色漫画大师的人类史"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -107,6 +146,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -131,6 +172,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -158,6 +201,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -175,45 +222,174 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>来源：<a target="_blank" rel="noopener" href="http://article.yeeyan.org/view/140316/152400">http://article.yeeyan.org/view/140316/152400</a>
 <p>Milo Manara（米罗&middot;马那哈），意大利人，生于1945年，是世界著名的情色漫画大师，1995年的作品成人版《小人国（Gulliveriana）》广为中国网友熟知。这里是他的一组漫画，表现的是人类的整个历史，只是有些&ldquo;又黄又暴力&rdquo;。他的官网是 <a target="_blank" rel="noopener" href="http://www.milomanara.it/">http://www.milomanara.it/</a></p>
-<p><img src="http://dulei.si/files/8cde7260108283c2fb3b89e4fc021c87.jpg" alt="" border="0" /></p>
-<p><img src="/images/needisme/external/ebc06054a18a.jpg" alt="" border="0" /><br /><span></span><br /><img src="http://dulei.si/files/3588b8335827f335bc425df33c7650ef.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/791809ea96bcb9c07f2ac672b020de90.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/b16e118b4b74b561a27c5f4e4e009342.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/29fb94ac8ad5ed84b6d9769fde2ba475.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/aa8877885b3e759fb65cb60f7f5df125.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/2fbf6106bf82f2682bfd041fee9d2f61.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/a0bac245dc21be82ffc93aa8516776fd.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/de3c423d7743a89916ecb47b4e6e4a87.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/f59d4dd0caf68041018fc91c0134a431.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/4d07e41fed4a54e9bf89d1808ed3a449.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/bb333d675d7b2b5a61da7699830b0ad7.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/4a89a328cac87db7bc83c65592e6fa9a.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/bb046eaa51be57f6a7c21f0db4552f35.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/25e7dc37bbeb7cfe22135b42f39b7f36.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/997ef36d1f845fc89304c4e7ae520ce9.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/ce5b45ecdb1b0f2c2aa6d5120c0baced.jpg" alt="" border="0" /></p>
-<p><img src="/images/needisme/external/775ae270e9d2.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/9fb9fe060c09ba3c9bded1e72b355bab.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/62eece78b89434c19e8a3d313ee822bf.jpg" alt="" border="0" /></p>
-<p><img src="http://dulei.si/files/c51039b2ec67fec06203994a4fee7c22.jpg" alt="" border="0" /></p>
-<p><img src="/images/needisme/external/d62733cb7fdc.jpg" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/8cde7260108283c2fb3b89e4fc021c87.jpg" class="lazy" data-srcset="http://dulei.si/files/8cde7260108283c2fb3b89e4fc021c87.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="/images/needisme/external/ebc06054a18a.jpg" class="lazy" data-srcset="/images/needisme/external/ebc06054a18a.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /><br /><span></span><br /><img src="http://dulei.si/files/3588b8335827f335bc425df33c7650ef.jpg" class="lazy" data-srcset="http://dulei.si/files/3588b8335827f335bc425df33c7650ef.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/791809ea96bcb9c07f2ac672b020de90.jpg" class="lazy" data-srcset="http://dulei.si/files/791809ea96bcb9c07f2ac672b020de90.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/b16e118b4b74b561a27c5f4e4e009342.jpg" class="lazy" data-srcset="http://dulei.si/files/b16e118b4b74b561a27c5f4e4e009342.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/29fb94ac8ad5ed84b6d9769fde2ba475.jpg" class="lazy" data-srcset="http://dulei.si/files/29fb94ac8ad5ed84b6d9769fde2ba475.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/aa8877885b3e759fb65cb60f7f5df125.jpg" class="lazy" data-srcset="http://dulei.si/files/aa8877885b3e759fb65cb60f7f5df125.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/2fbf6106bf82f2682bfd041fee9d2f61.jpg" class="lazy" data-srcset="http://dulei.si/files/2fbf6106bf82f2682bfd041fee9d2f61.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/a0bac245dc21be82ffc93aa8516776fd.jpg" class="lazy" data-srcset="http://dulei.si/files/a0bac245dc21be82ffc93aa8516776fd.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/de3c423d7743a89916ecb47b4e6e4a87.jpg" class="lazy" data-srcset="http://dulei.si/files/de3c423d7743a89916ecb47b4e6e4a87.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/f59d4dd0caf68041018fc91c0134a431.jpg" class="lazy" data-srcset="http://dulei.si/files/f59d4dd0caf68041018fc91c0134a431.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/4d07e41fed4a54e9bf89d1808ed3a449.jpg" class="lazy" data-srcset="http://dulei.si/files/4d07e41fed4a54e9bf89d1808ed3a449.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/bb333d675d7b2b5a61da7699830b0ad7.jpg" class="lazy" data-srcset="http://dulei.si/files/bb333d675d7b2b5a61da7699830b0ad7.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/4a89a328cac87db7bc83c65592e6fa9a.jpg" class="lazy" data-srcset="http://dulei.si/files/4a89a328cac87db7bc83c65592e6fa9a.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/bb046eaa51be57f6a7c21f0db4552f35.jpg" class="lazy" data-srcset="http://dulei.si/files/bb046eaa51be57f6a7c21f0db4552f35.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/25e7dc37bbeb7cfe22135b42f39b7f36.jpg" class="lazy" data-srcset="http://dulei.si/files/25e7dc37bbeb7cfe22135b42f39b7f36.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/997ef36d1f845fc89304c4e7ae520ce9.jpg" class="lazy" data-srcset="http://dulei.si/files/997ef36d1f845fc89304c4e7ae520ce9.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/ce5b45ecdb1b0f2c2aa6d5120c0baced.jpg" class="lazy" data-srcset="http://dulei.si/files/ce5b45ecdb1b0f2c2aa6d5120c0baced.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="/images/needisme/external/775ae270e9d2.jpg" class="lazy" data-srcset="/images/needisme/external/775ae270e9d2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/9fb9fe060c09ba3c9bded1e72b355bab.jpg" class="lazy" data-srcset="http://dulei.si/files/9fb9fe060c09ba3c9bded1e72b355bab.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/62eece78b89434c19e8a3d313ee822bf.jpg" class="lazy" data-srcset="http://dulei.si/files/62eece78b89434c19e8a3d313ee822bf.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="http://dulei.si/files/c51039b2ec67fec06203994a4fee7c22.jpg" class="lazy" data-srcset="http://dulei.si/files/c51039b2ec67fec06203994a4fee7c22.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
+<p><img src="/images/needisme/external/d62733cb7fdc.jpg" class="lazy" data-srcset="/images/needisme/external/d62733cb7fdc.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" border="0" /></p>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -238,7 +414,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -465,7 +641,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

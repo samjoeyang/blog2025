@@ -30,7 +30,7 @@
 <title>车上的男女，节操震了一地 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -52,9 +52,9 @@
 <meta property="og:image" content="https://need.uno/images/needisme/2013/09/20130926050449709.jpg">
 <meta property="og:image" content="https://need.uno/images/needisme/2013/09/20130926050503704.jpg">
 <meta property="article:published_time" content="2013-09-27T01:29:24.000Z">
-<meta property="article:modified_time" content="2026-05-22T06:06:50.516Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.903Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://need.uno/images/needisme/2013/09/20130926050336464.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -75,8 +75,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "车上的男女，节操震了一地",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2013-09-27",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2013-09-27-e8bda6e4b88ae79a84e794b7e5a5b3efbc8ce88a82e6938de99c87e4ba86e4b880e59cb0/" },
+  "description": "车上的男女，节操震了一地"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -91,6 +130,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -115,6 +156,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -142,6 +185,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -159,44 +206,173 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>秋高气爽之际又迎来了从五一以后就盼望的长假。趁着长假，又是高速路不收费，各路型男衰男大叔大哥计划开上车子带上妹子出游去。游着游着，性致来了，于是停车坐爱枫林晚的事儿就集中发生了。</p>
 <p>本来吧，孤男寡女共处一室，又都风华正茂，有些事儿就可以趁着月黑风高，找个荒芜人烟的地儿顺理成章滴给做了。可是吧，偏有些人不挑地儿，猴儿急猴儿急的，结果事儿没办成，还遭到处罚和围观。唉，大家看看他们选的这些地儿吧。<br />
-<a href="/images/needisme/2013/09/20130926050336464.jpg"><img class="alignnone size-full wp-image-1626" alt="20130926050336464" src="/images/needisme/2013/09/20130926050336464.jpg" width="500" height="468" /></a><br />
+<a href="/images/needisme/2013/09/20130926050336464.jpg"><img class="alignnone size-full wp-image-1626" alt="20130926050336464" src="/images/needisme/2013/09/20130926050336464.jpg" class="lazy" data-srcset="/images/needisme/2013/09/20130926050336464.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="500" height="468" /></a><br />
 高速路上<br />
 某日，风清云淡，安徽交警高速三大队民警巡逻至一路段时，发现前方有辆小轿车停在了应急车道上，应急嘛，可能车子出啥状况了，民警也没放心上，继续巡逻。结果，巡了一圈回来，发现那辆车还停在那里，车尾也没放置任何警示标志，只打开了双闪，过往车辆嗖嗖滴，情况十分危险。</p>
 <p>民警就纳了闷了，于是就下车走到了车旁，就发现有一件女式上衣悬挂在车内后视镜上，前排木有人。民警觉得这不科学啊，就趴在前挡风玻璃上往里看，结果就发现后排座位上一对白花花，肉滚滚的男女正在激吻。</p>
 <p>民警看得小心肝扑腾扑腾滴，俩人也没发现车前站了个人，继续酣战。民警看不下去了，便敲了敲玻璃要求驾驶员下车检查。过了三四分钟，赤裸上身、光着脚丫的男子一边极不情愿的下来，一边用手提着裤子，对着民警喊：&ldquo;你们干什么？&rdquo;民警要求其出示驾驶证和行驶证。</p>
 <p>然后，民警要上前检查车辆，结果男子用车门死死抵住民警不配合检查，并怒吼道&ldquo;看什么看，这不很正常吗？&rdquo;。民警觉得这怎么能叫正常呢，就这态度还正常，于是对男子进行调查：男子姓谢，只有20岁。因他在非紧急情况下在高速公路应急车道内停车，罚他200元，记6分。</p>
-<p><a href="/images/needisme/2013/09/20130926050347329.jpg"><img class="alignnone size-full wp-image-1627" alt="20130926050347329" src="/images/needisme/2013/09/20130926050347329.jpg" width="500" height="357" /></a><br />
+<p><a href="/images/needisme/2013/09/20130926050347329.jpg"><img class="alignnone size-full wp-image-1627" alt="20130926050347329" src="/images/needisme/2013/09/20130926050347329.jpg" class="lazy" data-srcset="/images/needisme/2013/09/20130926050347329.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="500" height="357" /></a><br />
 出租车上<br />
 9月1日，小盆友们开学日。一网友发微博称，自己在乘车途中目击现场版车震，震惊之余偷偷拍下了 两人亲热照片：&ldquo;一开始只是看见两个人比较亲热，所以没能抓拍全过程，也没敢太张扬的拍，怕人家下车殴我，具体过程太过露骨。&rdquo;</p>
 <p>这组现场直播一共包含8张照片，根据图片显示，当时出租车正行驶在高架桥上，车内一名女乘客正双手圈住男乘客，由于车内空间有限，high爆了的女乘客顺势坐到了男乘客身上，忘情地上下摆动身体。与后座乘客情绪高涨形成反差的是，出租车司机仍然目视前方正常行驶。据直播网友讲，当时出租车旁有一辆大巴，大巴司机由于高度优势，看的眼珠都要瞪出来了。<br />
-<a href="/images/needisme/2013/09/20130926050408670.jpg"><img class="alignnone size-full wp-image-1628" alt="20130926050408670" src="/images/needisme/2013/09/20130926050408670.jpg" width="500" height="375" /></a></p>
+<a href="/images/needisme/2013/09/20130926050408670.jpg"><img class="alignnone size-full wp-image-1628" alt="20130926050408670" src="/images/needisme/2013/09/20130926050408670.jpg" class="lazy" data-srcset="/images/needisme/2013/09/20130926050408670.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="500" height="375" /></a></p>
 <p>霸王硬上弓<br />
 4月的一天中午，春风徐徐，40岁的徐某接到小学女同学吴某的电话。吴某说自己要去医院看病人，想让徐某开车送一下。平日里俩人关系还不错，这种举手之劳的事，徐某二话没说就答应了。</p>
 <p>看完病人后，徐某好人做到底还想把吴某送回家，但正遇中午下班高峰期，路上遭遇堵车，一路上走走停停。吴某感觉不适，说自己有点晕车，便脱了外套，闭上眼睛稍作休息。这吴某吧，虽已近四十的年纪，因保养不错，看着依旧很有风韵。</p>
 <p>徐某将车开到一僻静处，想等吴某身体好些了再走。结果，徐某看着看着，就发现吴某因呼吸起伏的胸脯若隐若现，一时按捺不住，突然将吴某副驾驶座的座椅放倒，并亲吴某的嘴、摸其乳房，将吴某的身子往下压，欲对其实施强奸，吴某极力反抗，又是咬又是挠，结果被派出所巡逻人员发现，巡警问其什么关系，徐某谎称是两口子，巡警阅人无数，能是被一脸淫邪之相的徐某轻骗的么？结果，两人被一起带到派出所审查。</p>
 <p>吴某就将自己的悲惨经过和盘托出了。然后，徐某就被法院宣布其以奸淫为目的，强行与妇女发生性关系，构成强奸罪。因徐某已经着手实施犯罪，由于其意志以外的原因而未能得逞，系犯罪未遂，遂判处徐某有期徒刑两年零五个月。</p>
-<p><a href="/images/needisme/2013/09/20130926050421922.jpg"><img class="alignnone size-full wp-image-1629" alt="20130926050421922" src="/images/needisme/2013/09/20130926050421922.jpg" width="500" height="498" /></a></p>
+<p><a href="/images/needisme/2013/09/20130926050421922.jpg"><img class="alignnone size-full wp-image-1629" alt="20130926050421922" src="/images/needisme/2013/09/20130926050421922.jpg" class="lazy" data-srcset="/images/needisme/2013/09/20130926050421922.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="500" height="498" /></a></p>
 <p>&ldquo;车震党&rdquo;违法么？<br />
 &ldquo;车震&rdquo;作为一种行为，是否违法，不可一概而论，这需要具体情况具体分析。若&ldquo;车震&rdquo;发生的地点偏僻无人，没有妨碍到他人，没有产生负面的社会影响，法律没有追究的必要。相反，若&ldquo;车震&rdquo;在社会公众认为的公共场合进行，甚至被人围观，必然产生负面的社会影响，是必须受法律制约的。情节严重、性质恶劣，属于破坏公共秩序的，要受《治安管理处罚法》，甚至《刑法》的约束。</p>
 <p>我国《宪法》第五十一条规定：中华人民共和国公民在行使自由和权利的时候，不得损害国家的、社会的、集体的利益和其它公民合法的自由和权利&rdquo;；《民法通则》第七条也规定：民事活动应当尊重社会公德，不得损害社会公共利益，&ldquo;车震党&rdquo;的行为显然是对公共利益的一种损害，是对其它公民合法的自由和权利的侵害，因为他们影响了其他人的观光兴致。如果当中涉及卖淫嫖娼，那就更是违反了《治安管理处罚条例》第十九条、第三十条规定的不能扰乱公共场所的秩序，严厉禁止卖淫、嫖宿暗娼的条例。</p>
-<p><a href="/images/needisme/2013/09/20130926050432568.jpg"><img class="alignnone size-full wp-image-1630" alt="20130926050432568" src="/images/needisme/2013/09/20130926050432568.jpg" width="406" height="500" /></a></p>
+<p><a href="/images/needisme/2013/09/20130926050432568.jpg"><img class="alignnone size-full wp-image-1630" alt="20130926050432568" src="/images/needisme/2013/09/20130926050432568.jpg" class="lazy" data-srcset="/images/needisme/2013/09/20130926050432568.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="406" height="500" /></a></p>
 <p>车震，国外法律肿么看？</p>
 <p>1.新加坡<br />
 出生率非常低的新加坡，为了奖励生育，提高生育率，鼓励年轻夫妻车震。由于新加坡是地狭人稠的环境，很多夫妇碍于担心妨碍邻居或是同住的公婆安宁不敢行房，被认为是影响生育率很重要的因素，因此平常抓很严的政府，多年前鼓励年轻夫妇车震合法化。</p>
@@ -206,10 +382,10 @@
 <p>如果趁着学校放学之后，在学校停车场车震，还有可能被限制以后接触青少年等。即使在自家车道上，警方也会考虑与邻居的距离，周围的环境怎样来处置。</p>
 <p>3.瑞士<br />
 今年8月24日，瑞士苏黎世的工业区内设立一个木制开放式、外形像车库的&ldquo;车震专区&rdquo;(sex box)。苏黎世的性工作者和顾客可以集中到这个小公园里进行交易，该公园于26日正式开园。每个专区都配有卫生间和淋浴。<br />
-<a href="/images/needisme/2013/09/20130926050449709.jpg"><img class="alignnone size-full wp-image-1631" alt="20130926050449709" src="/images/needisme/2013/09/20130926050449709.jpg" width="500" height="252" /></a><br />
+<a href="/images/needisme/2013/09/20130926050449709.jpg"><img class="alignnone size-full wp-image-1631" alt="20130926050449709" src="/images/needisme/2013/09/20130926050449709.jpg" class="lazy" data-srcset="/images/needisme/2013/09/20130926050449709.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="500" height="252" /></a><br />
 这些&ldquo;车震专区&rdquo;可容纳约30名妓女同时工作。届时，妓女们将采取先到先服务的原则，在停放的车辆上接客。据理解，想接客也不是那么容易，妓女们需要出示健康证明以及缴纳40欧元（约合人民币320元）购买工作牌照。</p>
 <p>除此之外，她们还被要求每天打卡上班，打卡时还需把5瑞士法郎（约合人民币33元）投到售票机中。苏黎世社会福利部的赫齐格表示：&ldquo;通过把街头拉客的妓女转移到旧工业区，既可以令政府更好地规范性交易，还能保证妓女们的人身安全，以及增加她们的生意额。&rdquo;<br />
-<a href="/images/needisme/2013/09/20130926050503704.jpg"><img class="alignnone size-full wp-image-1632" alt="20130926050503704" src="/images/needisme/2013/09/20130926050503704.jpg" width="500" height="380" /></a></p>
+<a href="/images/needisme/2013/09/20130926050503704.jpg"><img class="alignnone size-full wp-image-1632" alt="20130926050503704" src="/images/needisme/2013/09/20130926050503704.jpg" class="lazy" data-srcset="/images/needisme/2013/09/20130926050503704.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" width="500" height="380" /></a></p>
 <p>&nbsp;</p>
 <p><strong>PS：车震安全技术指导</strong></p>
 <p>车震一旦玩不好，就会出人命，大家都知道长沙有俩人车震的时候太投入，结果一氧化碳中毒挂了。为了大家的性福，小编特地整理了一些有着丰富操作经验的人贡献的指导意见，来，看看吧：<br />
@@ -242,7 +418,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-22</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -469,7 +645,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

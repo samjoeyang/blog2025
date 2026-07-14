@@ -806,6 +806,20 @@ overflows table td {
   display: none;
 }
 .post-tags__link,
+#btn-speech {
+  cursor: pointer;
+  user-select: none;
+}
+.post-tags__link:hover,
+#btn-speech:hover {
+  background-color: var(--theme-color) !important;
+  color: #fff !important;
+}
+.post-tags__link.speaking,
+#btn-speech.speaking {
+  background-color: #e74c3c !important;
+  color: #fff !important;
+}
 .post-cats__link {
   display: inline-block;
   margin: 0.35em;

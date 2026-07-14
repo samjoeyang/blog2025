@@ -30,7 +30,7 @@
 <title>wordpress 性能优化 | Need.UNO</title>
 
 
-    <meta name="keywords" content="HTML, PHP, WordPress, CSS, 互联网, SQL, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="HTML, PHP, WordPress, CSS, 互联网, SQL, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -50,7 +50,7 @@
 <meta property="og:image" content="http://wangyueblog.com/wp-content/uploads/42-500x244.jpg">
 <meta property="og:image" content="http://wangyueblog.com/wp-content/uploads/a-500x288.jpg">
 <meta property="article:published_time" content="2010-12-28T13:47:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.440Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.858Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="HTML">
 <meta property="article:tag" content="PHP">
@@ -78,8 +78,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "wordpress 性能优化",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-28",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-28-wordpress-e680a7e883bde4bc98e58c96/" },
+  "description": "wordpress 性能优化"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -94,6 +133,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -118,6 +159,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -145,6 +188,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -162,17 +209,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -180,12 +356,12 @@
         <p>原文地址：http://wangyueblog.com/2010/12/15/wordpress-performance-optimization/</p>
 <p>前段时间，主机供应商Hellohost提醒我的资源占用有点高了，同时也有几个朋友反映博客页面载入速度有点慢，我觉得是时候对博客进行一些优化了，可是这方便又不怎么在行。刚好bbayou同学投了一篇关于wordpress性能优化的文章，于是，放出来供自己和需要的朋友参考。以下是投稿内容，原文在<a title="wordpress性能优化" target="_blank" rel="noopener" href="http://www.auu.name/423/index.html">这里</a>。<br />
 wordpress 并不是那么智能，我们都知道插件太多的情况下，网站打开速度会越来越慢，而php绝对不会是性能的瓶颈，因此，一个原因可能是因为过多的mysql查询，增加了系统负载。这个问题，插件<a rel="nofollow noopener" target="_blank" href="http://wordpress.org/extend/plugins/wp-super-cache/">super cache</a> （全静态化缓存）可以轻松解决掉，那第二个原因呢，也许就出在网站的前端上了。比如，插件会有自己的JS/CSS/img文件读取方式，从而产生出了过多的HTTP请求。这些多余的请求以及加载方式，同样也有办法被轻易的解决掉。这里我以我的网站为例，加以说明。令人欣慰的是，优化后，我的网站速度有了明显提升（打开速度应该快30%以上），Yslow评级从 <strong>C</strong> 上升到 <strong>A</strong>。</p>
-<p><img src="http://lh5.ggpht.com/_6yYTDeH8b5M/SVXg2VS68TI/AAAAAAAABLU/FWyOwDrX9OA/s800/wordpress-5-year-olds.jpg" alt="" /></p>
+<p><img src="http://lh5.ggpht.com/_6yYTDeH8b5M/SVXg2VS68TI/AAAAAAAABLU/FWyOwDrX9OA/s800/wordpress-5-year-olds.jpg" class="lazy" data-srcset="http://lh5.ggpht.com/_6yYTDeH8b5M/SVXg2VS68TI/AAAAAAAABLU/FWyOwDrX9OA/s800/wordpress-5-year-olds.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" /></p>
 <h3>优化前</h3>
 <blockquote><p>1.这是Firefox的插件<a target="_blank" rel="noopener" href="https://addons.mozilla.org/zh-CN/firefox/addon/1843/"> Firebug </a>抓取的瀑布式HTTP请求.</p>
-<p><a target="_blank" rel="noopener" href="http://wangyueblog.com/wp-content/uploads/5.jpg"><img title="HTTP请求" src="http://wangyueblog.com/wp-content/uploads/5-500x288.jpg" alt="" width="500" height="288" /></a><a target="_blank" rel="noopener" href="http://wangyueblog.com/wp-content/uploads/6.jpg"><img title="timeline" src="http://wangyueblog.com/wp-content/uploads/6-500x287.jpg" alt="" width="500" height="287" /></a>可以看到，优化前，我的网站有15个HTTP请求。耗时1.09秒.</p>
+<p><a target="_blank" rel="noopener" href="http://wangyueblog.com/wp-content/uploads/5.jpg"><img title="HTTP请求" src="http://wangyueblog.com/wp-content/uploads/5-500x288.jpg" class="lazy" data-srcset="http://wangyueblog.com/wp-content/uploads/5-500x288.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" width="500" height="288" /></a><a target="_blank" rel="noopener" href="http://wangyueblog.com/wp-content/uploads/6.jpg"><img title="timeline" src="http://wangyueblog.com/wp-content/uploads/6-500x287.jpg" class="lazy" data-srcset="http://wangyueblog.com/wp-content/uploads/6-500x287.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" width="500" height="287" /></a>可以看到，优化前，我的网站有15个HTTP请求。耗时1.09秒.</p>
 <p>2.然后分别用Firefox插件 <a target="_blank" rel="noopener" href="http://code.google.com/intl/zh-CN/speed/page-speed/download.html#extension-rel">PageSpeed</a> 和 <a target="_blank" rel="noopener" href="http://developer.yahoo.com/yslow/">Yslow</a> 进行一些分析，优化前，我的Yslow评分为<strong>C</strong>，同时也智能的列出了一些优化方案，事实上，我们的要做的工作就在其中。</p>
-<p><a target="_blank" rel="noopener" href="http://wangyueblog.com/wp-content/uploads/42.jpg"><img title="wordpress优化" src="http://wangyueblog.com/wp-content/uploads/42-500x244.jpg" alt="" width="500" height="244" /></a></p></blockquote>
+<p><a target="_blank" rel="noopener" href="http://wangyueblog.com/wp-content/uploads/42.jpg"><img title="wordpress优化" src="http://wangyueblog.com/wp-content/uploads/42-500x244.jpg" class="lazy" data-srcset="http://wangyueblog.com/wp-content/uploads/42-500x244.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" width="500" height="244" /></a></p></blockquote>
 <h3>着手优化</h3>
 <blockquote><p><strong>1.减少HTTP请求</strong></p>
 <blockquote><p>可以看到共产生的15个HTTP中，有1个来自html文档，4个来自CSS，3个来自JS，2个来自blog图片，5个来自CSS中使用的背景图片。</p>
@@ -246,7 +422,7 @@ wordpress 并不是那么智能，我们都知道插件太多的情况下，网�
 <h3>优化后</h3>
 <blockquote><p>我的blog访问速度得到了很大的提升，首页的HTTP请求降为：8个，耗时0.62秒。性能提升在30%-40%左右</p>
 <p>Yslow评分为：A ,很荣幸跟 google,baidu 同级~哈哈。</p>
-<p><a target="_blank" rel="noopener" href="http://wangyueblog.com/wp-content/uploads/a.jpg"><img title="a" src="http://wangyueblog.com/wp-content/uploads/a-500x288.jpg" alt="" width="500" height="288" /></a></p></blockquote>
+<p><a target="_blank" rel="noopener" href="http://wangyueblog.com/wp-content/uploads/a.jpg"><img title="a" src="http://wangyueblog.com/wp-content/uploads/a-500x288.jpg" class="lazy" data-srcset="http://wangyueblog.com/wp-content/uploads/a-500x288.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="" width="500" height="288" /></a></p></blockquote>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -271,7 +447,7 @@ wordpress 并不是那么智能，我们都知道插件太多的情况下，网�
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/PHP/" class="post-tags__link button"># PHP</a><a href="/tags/WordPress/" class="post-tags__link button"># WordPress</a><a href="/tags/CSS/" class="post-tags__link button"># CSS</a><a href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" class="post-tags__link button"># 互联网</a><a href="/tags/SQL/" class="post-tags__link button"># SQL</a></div> 
     
 <div class="post-share">
@@ -498,7 +674,15 @@ wordpress 并不是那么智能，我们都知道插件太多的情况下，网�
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

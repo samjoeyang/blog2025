@@ -30,7 +30,7 @@
 <title>Linux短信平台的搭建 | Need.UNO</title>
 
 
-    <meta name="keywords" content="API, SSH, Linux, LINUX, SQL, VPN, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="API, SSH, Linux, LINUX, SQL, VPN, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -55,7 +55,7 @@
 <meta property="og:image" content="http://image.pipc.net/2010/07/11/9.gif">
 <meta property="og:image" content="http://image.pipc.net/2010/07/11/10.gif">
 <meta property="article:published_time" content="2010-12-06T05:49:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.058Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.823Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="API">
 <meta property="article:tag" content="SSH">
@@ -83,8 +83,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Linux短信平台的搭建",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-06",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-06-linuxe79fade4bfa1e5b9b3e58fb0e79a84e690ade5bbba/" },
+  "description": "Linux短信平台的搭建"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -99,6 +138,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -123,6 +164,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -150,6 +193,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -167,17 +214,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -197,21 +373,21 @@
 <p>首先要准备短信发送设备，为此测试过很多手机。&nbsp; MTK 台湾联发科技 芯片非常不稳定，经常发送几条短信以后就没有响应了，完全靠运气。</p>
 <p>越是老手机越稳定，比如西门子的3508 系列，我在2000年时候买的西门子3508i 手机连接线是COM口的，发送短信非常稳定。</p>
 <p>测试过的设备，来个合影。</p>
-<p><img src="http://image.pipc.net//2010/07/11/1.gif" border="0" alt="" width="880" height="541" /></p>
+<p><img src="http://image.pipc.net//2010/07/11/1.gif" class="lazy" data-srcset="http://image.pipc.net//2010/07/11/1.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="880" height="541" /></p>
 <p>西门子3508的机器稳定性非常好，来张特写。</p>
-<p><a href="http://image.pipc.net/2010/07/11/2.gif" target="_blank"><img src="http://image.pipc.net/2010/07/11/2.gif" border="0" alt="" width="259" height="522" /></a></p>
+<p><a href="http://image.pipc.net/2010/07/11/2.gif" target="_blank"><img src="http://image.pipc.net/2010/07/11/2.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/2.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="259" height="522" /></a></p>
 <p>后来因为3508的电池不行了，因为比较老买不到电池，充电器和数据线用的同一个接口不能同时使用， 以后可以改造一下，增加供电线路可以继续使用。</p>
 <p>图中第2和3都是NOKIA的了， 安装好PC套件，虚拟串口为COM5,驱动不稳定有时候连接不上。</p>
 <p>图中第4和5都是国产小品牌，一个是友利通 还有一个不清楚牌子，他们使用的都是MTK方案。&nbsp;USB转串口芯片是MT6227驱动，比较头痛的是   USB转换芯片不稳定经常发送成功几条短信以后就没有响应了，这个时候关闭串口，重新初始化串口连接也不行。   必须把USB数据线拔掉重新插才可以，一直没有好的解决方案。</p>
 <p>接下来就是本文的主角GSM MODEM ，采用的是法国WAVECOM公司的工业级芯片。 来张特写</p>
-<p><img src="http://image.pipc.net/2010/07/11/3.gif" border="0" alt="" width="635" height="337" /></p>
+<p><img src="http://image.pipc.net/2010/07/11/3.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/3.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="635" height="337" /></p>
 <p>这里使用的操作系统是CentOS 5.5 ,</p>
 <p>查看USB设备&nbsp; cat /proc/bus/usb/devices</p>
 <p>能够看到这样一项： USB-Serial Controller</p>
-<p><img src="http://image.pipc.net/2010/07/11/4.gif" border="0" alt="" width="666" height="413" /></p>
+<p><img src="http://image.pipc.net/2010/07/11/4.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/4.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="666" height="413" /></p>
 <p>中间是USB鼠标 USB Optical Mouse<br />
 下面是设备， USB转串口控制器</p>
-<p><img src="http://image.pipc.net/2010/07/11/5.gif" border="0" alt="" width="316" height="35" /></p>
+<p><img src="http://image.pipc.net/2010/07/11/5.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/5.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="316" height="35" /></p>
 <p>我们通过lsusb命令查看USB设备</p>
 <p>lspci工具可以显示所有PCI总线信息，并列出与它们相连的硬件设备。Lspci对于集成声卡和显卡的X86主板尤其有用，因为它可以识别使用在主板PCI电路中的确切芯片。</p>
 <p>lsusb工具可提供USB总线和连接设备的同类信息。</p>
@@ -227,14 +403,14 @@ Bus 005 Device 001: ID 0000:0000<br />
 <p>这里用的 是PL2303&nbsp; 转换芯片，非常稳定。</p>
 <p>我们在Windows里都是用超级终端访问COM接口， 在LINUX下怎么查看呢？</p>
 <p>我们可以直接查看&nbsp;/dev 里设备， 一般ttyUSB 开头的， 我们可以用命令 ls /dev/tty* 查看。</p>
-<p><img src="http://image.pipc.net/2010/07/11/6.gif" border="0" alt="" width="666" height="413" /></p>
+<p><img src="http://image.pipc.net/2010/07/11/6.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/6.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="666" height="413" /></p>
 <p>接下来就是测试连接到串口的连接是否正常， 输入minicom -s ，minicom 相当于windows里的超级终端， -s 参数是配置。</p>
-<p><img src="http://image.pipc.net/2010/07/11/7.gif" border="0" alt="" width="666" height="413" /></p>
+<p><img src="http://image.pipc.net/2010/07/11/7.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/7.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="666" height="413" /></p>
 <p>这里选择 Serial Port setup,配置串口</p>
-<p><img src="http://image.pipc.net/2010/07/11/8.gif" border="0" alt="" width="666" height="413" /></p>
+<p><img src="http://image.pipc.net/2010/07/11/8.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/8.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="666" height="413" /></p>
 <p>这里按A配置我们刚才查到的设备 ttyUSB0&nbsp; , 按E配置波特率为9600&nbsp;，波特率越小传输的信号越稳定。这里数据线很短就无所谓了。</p>
 <p>配置好以后 我们可以输入minicom连接设备， 下面是连接成功的图， 输入at 设备可以响应OK, 输入 AT+IPR?指令 查询设备的波特率。</p>
-<p><img src="http://image.pipc.net/2010/07/11/9.gif" border="0" alt="" width="666" height="413" /></p>
+<p><img src="http://image.pipc.net/2010/07/11/9.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/9.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="666" height="413" /></p>
 <p>端口配置好以后， 我们可以安装软件了。</p>
 <p>这里我们安装&nbsp;gnokii，&nbsp; 下载 gnokii-0.6.29.tar.bz2 程序，</p>
 <p>wget <a href="http://linuxfile.pipc.net/file/gnokii/gnokii-0.6.29.tar.bz2" target="_blank">http://linuxfile.pipc.net/file/gnokii/gnokii-0.6.29.tar.bz2</a></p>
@@ -258,7 +434,7 @@ use_locking = no&nbsp;&nbsp; ;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #发送短信有程
 <p>echo -n &ldquo;老婆老婆我爱你，就像老鼠爱大米&rdquo; |/usr/local/bin/gnokii &ndash;sendsms 130130*****</p>
 <p>一般 2-5秒发送一条短信比较合适，可以使用C语言的system函数可以调用gnokii的命令来实现短信收发删，C语言,PHP,JAVA&nbsp;进行二次开发比较容易。</p>
 <p>作者:方贤钟&nbsp; 网站: <a href="http://www.pipc.net/" target="_blank">http://www.pipc.net/</a> E-mail: <a href="mailto:fangxianzhong@163.com" target="_blank">fangxianzhong@163.com</a></p>
-<p><img src="http://image.pipc.net/2010/07/11/10.gif" border="0" alt="" width="889" height="667" /></p>
+<p><img src="http://image.pipc.net/2010/07/11/10.gif" class="lazy" data-srcset="http://image.pipc.net/2010/07/11/10.gif" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" width="889" height="667" /></p>
 <p>这里我们还有图形界面的程序， 因为服务器没有开远程桌面， 直接用相机照的。</p>
 
 <hr>
@@ -284,7 +460,7 @@ use_locking = no&nbsp;&nbsp; ;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #发送短信有程
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/API/" class="post-tags__link button"># API</a><a href="/tags/SSH/" class="post-tags__link button"># SSH</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/SQL/" class="post-tags__link button"># SQL</a><a href="/tags/VPN/" class="post-tags__link button"># VPN</a></div> 
     
 <div class="post-share">
@@ -511,7 +687,15 @@ use_locking = no&nbsp;&nbsp; ;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; #发送短信有程
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

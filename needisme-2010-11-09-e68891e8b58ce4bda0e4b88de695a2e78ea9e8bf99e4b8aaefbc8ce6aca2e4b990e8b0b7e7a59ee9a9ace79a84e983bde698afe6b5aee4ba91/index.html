@@ -30,7 +30,7 @@
 <title>我赌你不敢玩这个，欢乐谷神马的都是浮云 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -60,9 +60,9 @@
 <meta property="og:image" content="http://dulei.si/files/ea24e82b159d429d7f116acafc1ed99d.jpg">
 <meta property="og:image" content="https://need.uno/images/needisme/external/db09406445ac.jpg">
 <meta property="article:published_time" content="2010-11-09T14:36:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.537Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.780Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://dulei.si/files/e9da1b87dd278cf1a14ff44ab6a31a9c.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -83,8 +83,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "我赌你不敢玩这个，欢乐谷神马的都是浮云",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-09",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-09-e68891e8b58ce4bda0e4b88de695a2e78ea9e8bf99e4b8aaefbc8ce6aca2e4b990e8b0b7e7a59ee9a9ace79a84e983bde698afe6b5aee4ba91/" },
+  "description": "我赌你不敢玩这个，欢乐谷神马的都是浮云"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -99,6 +138,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -123,6 +164,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -150,6 +193,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -167,17 +214,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -185,29 +361,29 @@
         <p>据统计，每100人上楼后，有55人会下楼，41人只会在旁边观看，</p>
 <p>真正敢坐上去的只有4人。。。。。</p>
 <p>这是一个在拉斯维加斯的一个塔，  猜猜上面有什么?</p>
-<p><img src="http://dulei.si/files/e9da1b87dd278cf1a14ff44ab6a31a9c.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/e9da1b87dd278cf1a14ff44ab6a31a9c.jpg" class="lazy" data-srcset="http://dulei.si/files/e9da1b87dd278cf1a14ff44ab6a31a9c.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>很多灯。。。。</p>
-<p><img src="http://dulei.si/files/70c15e7b03ffe7cede8918af9a33c110.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/70c15e7b03ffe7cede8918af9a33c110.jpg" class="lazy" data-srcset="http://dulei.si/files/70c15e7b03ffe7cede8918af9a33c110.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>额。。。。。</p>
-<p><img src="http://dulei.si/files/b82725846248afb30def52ba0562f9d7.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/b82725846248afb30def52ba0562f9d7.jpg" class="lazy" data-srcset="http://dulei.si/files/b82725846248afb30def52ba0562f9d7.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>。。。。OMG</p>
-<p><img src="/images/needisme/external/b308983e4d2e.jpg" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/b308983e4d2e.jpg" class="lazy" data-srcset="/images/needisme/external/b308983e4d2e.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>这是海报示意图</p>
-<p><img src="http://dulei.si/files/5cdc77bf2412c1e76fe8b4bc254f6182.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/5cdc77bf2412c1e76fe8b4bc254f6182.jpg" class="lazy" data-srcset="http://dulei.si/files/5cdc77bf2412c1e76fe8b4bc254f6182.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>太刺激了吧。。。。。我恐高。。。。。</p>
-<p><img src="http://dulei.si/files/c07f31f8fd57c29b64a575f9bc8f944a.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/48b4a4fee40a1c2411640b5d624afc3f.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/c07f31f8fd57c29b64a575f9bc8f944a.jpg" class="lazy" data-srcset="http://dulei.si/files/c07f31f8fd57c29b64a575f9bc8f944a.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/48b4a4fee40a1c2411640b5d624afc3f.jpg" class="lazy" data-srcset="http://dulei.si/files/48b4a4fee40a1c2411640b5d624afc3f.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>不要冲下去啊。。。。。</p>
-<p><img src="http://dulei.si/files/e917a333131eca11f719ae2983d3b540.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/70a0d3d3a19aae930a26e2b30a90d5aa.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/5081221843c8ebb1ea719c8b93961c55.jpg" border="0" alt="" /></p>
-<p><img src="/images/needisme/external/46a401587ac8.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/949e239f6db395d2efe08be1abf74870.jpg" border="0" alt="" /></p>
-<p><img src="http://dulei.si/files/240ffca6b6cda3e8c55a5a43d040993a.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/e917a333131eca11f719ae2983d3b540.jpg" class="lazy" data-srcset="http://dulei.si/files/e917a333131eca11f719ae2983d3b540.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/70a0d3d3a19aae930a26e2b30a90d5aa.jpg" class="lazy" data-srcset="http://dulei.si/files/70a0d3d3a19aae930a26e2b30a90d5aa.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/5081221843c8ebb1ea719c8b93961c55.jpg" class="lazy" data-srcset="http://dulei.si/files/5081221843c8ebb1ea719c8b93961c55.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/46a401587ac8.jpg" class="lazy" data-srcset="/images/needisme/external/46a401587ac8.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/949e239f6db395d2efe08be1abf74870.jpg" class="lazy" data-srcset="http://dulei.si/files/949e239f6db395d2efe08be1abf74870.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/240ffca6b6cda3e8c55a5a43d040993a.jpg" class="lazy" data-srcset="http://dulei.si/files/240ffca6b6cda3e8c55a5a43d040993a.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>打开旋转。。。。。</p>
-<p><img src="http://dulei.si/files/ea24e82b159d429d7f116acafc1ed99d.jpg" border="0" alt="" /></p>
+<p><img src="http://dulei.si/files/ea24e82b159d429d7f116acafc1ed99d.jpg" class="lazy" data-srcset="http://dulei.si/files/ea24e82b159d429d7f116acafc1ed99d.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>你会闭上眼，还是欣赏美丽的夜景？</p>
-<p><img src="/images/needisme/external/db09406445ac.jpg" border="0" alt="" /></p>
+<p><img src="/images/needisme/external/db09406445ac.jpg" class="lazy" data-srcset="/images/needisme/external/db09406445ac.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" border="0" alt="" /></p>
 <p>借我一百个胆也不敢啊！！！</p>
 <p>原文链接: <a target="_blank" rel="noopener" href="http://luo.bo/2239/">http://luo.bo/2239/</a><a target="_blank" rel="noopener" href="http://luo.bo/"></a></p>
 
@@ -234,7 +410,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -461,7 +637,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

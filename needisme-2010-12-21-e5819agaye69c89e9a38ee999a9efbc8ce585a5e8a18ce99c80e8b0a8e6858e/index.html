@@ -30,7 +30,7 @@
 <title>做gay有风险，入行需谨慎 | Need.UNO</title>
 
 
-    <meta name="keywords" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -52,9 +52,9 @@
 <meta property="og:image" content="http://dulei.si/files/690bdfde248172d066e1c84db3634fd5.jpg">
 <meta property="og:image" content="http://dulei.si/files/f24cd144944d7a97851a7e2ec6b4282c.jpg">
 <meta property="article:published_time" content="2010-12-21T02:08:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.977Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.847Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="AI, 人工智能, 技术革命, 未来展望, 社会变革">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://dulei.si/files/8231d771222f68cefa124a2a223d03e2.jpg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -75,8 +75,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "做gay有风险，入行需谨慎",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-21",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-21-e5819agaye69c89e9a38ee999a9efbc8ce585a5e8a18ce99c80e8b0a8e6858e/" },
+  "description": "做gay有风险，入行需谨慎"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -91,6 +130,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -115,6 +156,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -142,6 +185,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -159,23 +206,152 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
         <p>在有些国家，做GAY是要被判死刑的，在不同的国家还会被判不同的死刑&hellip;&hellip;（这就是传说中的死GAY吗？）以下列了七种针对GAY的刑法。未某人觉得GAY不GAY是每个人的自由，实在无法理解这些国家啊。</p>
-<p><strong>1.绞死<br /></strong><br /><img alt="" border="0" src="http://dulei.si/files/8231d771222f68cefa124a2a223d03e2.jpg" /><br />在下列国家，你要是做个GAY就会被绞死：毛里塔尼亚，苏丹，沙特阿拉伯，也门，伊朗，索马里，阿拉伯联合酋长国，索马里，尼日利亚和马来西亚部分地区。<br /><strong>2.斩首</strong><br /><img alt="" border="0" src="/images/needisme/external/3d3b0e16e0e1.jpg" /><br />冈比亚总统曾发表声明他们会执行比伊朗更严厉的法律来制裁同性恋。冈比亚的同性恋要么离开自己的国家要么面临看头的命运。（图片是冈比亚总统正在对一个将死的病人施法术&hellip;&hellip;天朝表示这是封建迷信）<br /><strong>3.用石头砸死</strong><br /><img alt="" border="0" src="/images/needisme/external/e319157766cf.jpg" /><br />石刑会先把你脖子以下埋起来，但是不让你窒息致死，然后再用石头砸死。苏丹就从曾经用过这种刑罚，阿富汗也曾用过，并且还是对一位八十四的老人&hellip;&hellip;不过根据伊斯兰教的法律，如果你能在受刑后存活超过30分钟，那么你就可以继续活下去。<br /><strong>4.监禁</strong><br /><img alt="" border="0" src="http://dulei.si/files/cf3c19e69b1dddc8d334ef428cc6aae1.jpg" /><br />阿富汗的法律规定只有两个异性穆斯林结婚才是合法的婚姻，除此以外的任何形式要么死刑要么15年拘禁。穆斯林国家关于同性恋有着严格的规定，甚至连沙特阿拉伯王子成为同性恋都会背叛无期徒刑。<br /><strong>5.鞭刑</strong><br /><img alt="" border="0" src="http://dulei.si/files/0da9f7ce7733704066993c5d10fce2da.jpg" /><br />伊朗对于不同情况的同性恋有着不同的规定：未成年男性要鞭打74下，成年的100下。有很多在执行过程中死去了。<br /><strong>6.无法好好安葬</strong><br /><img alt="" border="0" src="http://dulei.si/files/690bdfde248172d066e1c84db3634fd5.jpg" /><br />同性恋不但活着要遭受歧视甚至惩罚，死了也不好过。塞里涅姆巴伊就是一个这样的例子。在他活着的时候，大家都说他是同性恋，所以他死了以后没有公墓愿意收留他的尸体，最后他的孩子只好把他安葬在路边，讽刺的是后来他的尸体露出了地面，于是他的孩子被逮捕了，罪名是没有好好安葬自己的父亲。<br /><strong>7.没有政治权利，没有人权</strong><br /><img alt="" border="0" src="http://dulei.si/files/f24cd144944d7a97851a7e2ec6b4282c.jpg" /><br />尼日尼亚的同性恋不允许聚会，不允许向政府请愿。事实上尼日尼亚，冈比亚等国不只是同性恋没有政治权利而已，几乎所有公民都没有。<br />源地址：<a target="_blank" rel="noopener" href="http://www.weimouren.com/2010/11/26/gay-in-danger/">http://www.weimouren.com/2010/11/26/gay-in-danger/</a></p>
+<p><strong>1.绞死<br /></strong><br /><img alt="" border="0" src="http://dulei.si/files/8231d771222f68cefa124a2a223d03e2.jpg" class="lazy" data-srcset="http://dulei.si/files/8231d771222f68cefa124a2a223d03e2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />在下列国家，你要是做个GAY就会被绞死：毛里塔尼亚，苏丹，沙特阿拉伯，也门，伊朗，索马里，阿拉伯联合酋长国，索马里，尼日利亚和马来西亚部分地区。<br /><strong>2.斩首</strong><br /><img alt="" border="0" src="/images/needisme/external/3d3b0e16e0e1.jpg" class="lazy" data-srcset="/images/needisme/external/3d3b0e16e0e1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />冈比亚总统曾发表声明他们会执行比伊朗更严厉的法律来制裁同性恋。冈比亚的同性恋要么离开自己的国家要么面临看头的命运。（图片是冈比亚总统正在对一个将死的病人施法术&hellip;&hellip;天朝表示这是封建迷信）<br /><strong>3.用石头砸死</strong><br /><img alt="" border="0" src="/images/needisme/external/e319157766cf.jpg" class="lazy" data-srcset="/images/needisme/external/e319157766cf.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />石刑会先把你脖子以下埋起来，但是不让你窒息致死，然后再用石头砸死。苏丹就从曾经用过这种刑罚，阿富汗也曾用过，并且还是对一位八十四的老人&hellip;&hellip;不过根据伊斯兰教的法律，如果你能在受刑后存活超过30分钟，那么你就可以继续活下去。<br /><strong>4.监禁</strong><br /><img alt="" border="0" src="http://dulei.si/files/cf3c19e69b1dddc8d334ef428cc6aae1.jpg" class="lazy" data-srcset="http://dulei.si/files/cf3c19e69b1dddc8d334ef428cc6aae1.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />阿富汗的法律规定只有两个异性穆斯林结婚才是合法的婚姻，除此以外的任何形式要么死刑要么15年拘禁。穆斯林国家关于同性恋有着严格的规定，甚至连沙特阿拉伯王子成为同性恋都会背叛无期徒刑。<br /><strong>5.鞭刑</strong><br /><img alt="" border="0" src="http://dulei.si/files/0da9f7ce7733704066993c5d10fce2da.jpg" class="lazy" data-srcset="http://dulei.si/files/0da9f7ce7733704066993c5d10fce2da.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />伊朗对于不同情况的同性恋有着不同的规定：未成年男性要鞭打74下，成年的100下。有很多在执行过程中死去了。<br /><strong>6.无法好好安葬</strong><br /><img alt="" border="0" src="http://dulei.si/files/690bdfde248172d066e1c84db3634fd5.jpg" class="lazy" data-srcset="http://dulei.si/files/690bdfde248172d066e1c84db3634fd5.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />同性恋不但活着要遭受歧视甚至惩罚，死了也不好过。塞里涅姆巴伊就是一个这样的例子。在他活着的时候，大家都说他是同性恋，所以他死了以后没有公墓愿意收留他的尸体，最后他的孩子只好把他安葬在路边，讽刺的是后来他的尸体露出了地面，于是他的孩子被逮捕了，罪名是没有好好安葬自己的父亲。<br /><strong>7.没有政治权利，没有人权</strong><br /><img alt="" border="0" src="http://dulei.si/files/f24cd144944d7a97851a7e2ec6b4282c.jpg" class="lazy" data-srcset="http://dulei.si/files/f24cd144944d7a97851a7e2ec6b4282c.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /><br />尼日尼亚的同性恋不允许聚会，不允许向政府请愿。事实上尼日尼亚，冈比亚等国不只是同性恋没有政治权利而已，几乎所有公民都没有。<br />源地址：<a target="_blank" rel="noopener" href="http://www.weimouren.com/2010/11/26/gay-in-danger/">http://www.weimouren.com/2010/11/26/gay-in-danger/</a></p>
 
 <hr>
 <p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
@@ -200,7 +376,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"></div> 
     
 <div class="post-share">
@@ -427,7 +603,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

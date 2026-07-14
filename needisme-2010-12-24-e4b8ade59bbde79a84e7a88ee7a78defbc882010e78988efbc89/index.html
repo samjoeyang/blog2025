@@ -30,7 +30,7 @@
 <title>中国的税种（2010版） | Need.UNO</title>
 
 
-    <meta name="keywords" content="HTML, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="HTML, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -58,7 +58,7 @@
 <meta property="og:image" content="http://image.beekka.com/blog/201012/bg2010122312.jpg">
 <meta property="og:image" content="http://image.beekka.com/blog/201012/bg2010122313.jpg">
 <meta property="article:published_time" content="2010-12-24T01:17:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:07.820Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.850Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="HTML">
 <meta name="twitter:card" content="summary_large_image">
@@ -81,8 +81,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "中国的税种（2010版）",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-24",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-24-e4b8ade59bbde79a84e7a88ee7a78defbc882010e78988efbc89/" },
+  "description": "中国的税种（2010版）"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -97,6 +136,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -121,6 +162,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -148,6 +191,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -165,17 +212,146 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
@@ -188,70 +364,70 @@
 <p>资料来源：<a target="_blank" rel="noopener" href="http://finance.sina.com.cn/leadership/20101217/13249124309.shtml">《谁动了Mr.A的税单》</a></p>
 <p>原载2010年12月17日的《南都周刊》</p>
 <p>1. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122301.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122301.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122301.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>税种总数</strong></p>
 <p>根据财政部网站，我国目前共有19个税种。</p>
 <p>它们分别是：增值税、消费税、营业税、企业所得税、个人所得税、资源税、城镇土地使用税、土地增值税、房产税、城市维护建设税、车辆购置税、车船税、印花税、契税、耕地占用税、烟叶税、关税、船舶吨税、固定资产投资方向调节税(从2000年起暂停征收)。</p>
 <p>2. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122302.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122302.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122302.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>个人所得税</strong></p>
 <p>针对个人收入的一种税。</p>
 <p>税前月薪18000元，对应的个人所得税为2337.64元。</p>
 <p>3. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122303.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122303.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122303.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>增值税</strong></p>
 <p>针对生产、经营过程中实现的增值额的一种税。</p>
 <p>购买500元的书籍和200元的CD唱片，价格中就包含了87元增值税（500/1.13 &times;13% + 200/1.17 &times; 17%，图书的增值税税率为13%，电子音像制品增值税税率为17%）。</p>
 <p>4. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122304.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122304.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122304.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>消费税</strong></p>
 <p>针对11种消费品的一种税。</p>
 <p>100ml的女士香水Chanel CoCo，市场售价为1480元。其中包含了17%的增值税215元，30%的消费税380元，以及城市维护建设税41.6元，总计636.6元，接近商品价格的一半。</p>
 <p>每一瓶进口葡萄酒身上都有三种税，关税14%、消费税10%、增值税17%。</p>
 <p>5. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122305.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122305.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122305.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>营业税</strong></p>
 <p>针对经营活动营业额的一种税。</p>
 <p>在餐馆吃顿200元的饭，其中包含5%的营业税10元。</p>
 <p>个人出售不动产也要征收营业税，税率为5%。150万的价格卖出一套原价为100万的房产，营业税为7.5万。另外，还要对50万的利润征收4.5万的个人所得税（税法规定的税率为利润的20%，但实际缴纳时通常按售价的1%-3%缴纳）。</p>
 <p>6. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122306.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122306.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122306.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>城市维护建设税</strong></p>
 <p>为筹集城镇建设维护资金而征收的一种税，金额为增值税、消费税和营业税税额之和的1%~7%。</p>
 <p>在市区的商店，购买一套100元的CD唱片，其中的增值税约为14.5元，对应的城市维护建设税为1.02元（14.5&times;7%）</p>
 <p>7. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122307.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122307.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122307.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>关税</strong></p>
 <p>针对进口商品的一种税。</p>
 <p>个人随身携带苹果公司的iPad入境，会被征收关税。根据海关规定，iPad属于笔记本电脑类产品，应该按照5000元的标准，征收20%（即1000元人民币）的关税。</p>
 <p>8. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122308.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122308.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122308.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>车辆购置税</strong></p>
 <p>针对新购车辆的一种税。</p>
 <p>日本生产的'斯巴鲁森林人'汽车，到岸价20万元，先征收25%的关税5万元，然后再征收消费税1万元和增值税4.42万元，此时该车价格已经超过30万元了。消费者购车时，还需另行支付10%的车辆购置税3万元。</p>
 <p>2009年，政府对1.6升以下排量乘用车减按5%（原比例为10%）征收车辆购置税。2010年，优惠幅度从5%又调整为7.5%。</p>
 <p>9. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122309.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122309.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122309.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>车船税</strong></p>
 <p>针对使用中的车辆和船只的一种税。</p>
 <p>根据2010年10月公布的《车船税法（草案）》，排量2.0升的小汽车，每年需缴纳车船税960元。</p>
 <p>10. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122310.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122310.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122310.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>房产税</strong></p>
 <p>针对房产的一种税。</p>
 <p>月租3000元的出租房，每年征收12%的房产税4320元（3000&times;12月&times;12%）。</p>
 <p>11. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122311.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122311.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122311.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>土地增值税</strong></p>
 <p>针对转让国有土地和房产所获增值的一种税。</p>
 <p>一套140万元的商品房，价格中包含5%的营业税7万元、城市建设维护税4900元、以及土地增值税约为20万元（与土地的增值额和房产面积有关）。</p>
 <p>12. </p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122312.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122312.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122312.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>契税</strong></p>
 <p>向房地产购买人征收的一种税。</p>
 <p>购买一套140万元的商品房，除了支付房价以外，购房者还需另行支付3%的契税4.2万元，再加上印花税700元。</p>
 <p>13.</p>
-<p><img src="http://image.beekka.com/blog/201012/bg2010122313.jpg" /></p>
+<p><img src="http://image.beekka.com/blog/201012/bg2010122313.jpg" class="lazy" data-srcset="http://image.beekka.com/blog/201012/bg2010122313.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" /></p>
 <p><strong>印花税</strong></p>
 <p>针对交易凭证的一种税。</p>
 <p>购买1万元股票，需缴纳1&permil;的印花税10元。</p>
@@ -280,7 +456,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a></div> 
     
 <div class="post-share">
@@ -507,7 +683,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>

@@ -30,7 +30,7 @@
 <title>『趣物』神技啊，真到爆的木雕作品 | Need.UNO</title>
 
 
-    <meta name="keywords" content="PHP, Google, 奇闻轶事, 趣闻, AI, 人工智能, 技术革命, 未来展望, 社会变革">
+    <meta name="keywords" content="PHP, Google, 奇闻轶事, 趣闻, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -56,7 +56,7 @@
 <meta property="og:image" content="http://naglly.com/wood_sculpture_09.jpg">
 <meta property="og:image" content="http://naglly.com/wood_sculpture_10.jpg">
 <meta property="article:published_time" content="2010-11-06T06:38:00.000Z">
-<meta property="article:modified_time" content="2026-05-21T05:37:08.230Z">
+<meta property="article:modified_time" content="2026-07-03T07:09:18.778Z">
 <meta property="article:author" content="Samjoe Yang">
 <meta property="article:tag" content="PHP">
 <meta property="article:tag" content="Google">
@@ -82,8 +82,47 @@
     <!-- custom head -->
 
 
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "『趣物』神技啊，真到爆的木雕作品",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-06",
+  "dateModified": "2026-07-03",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-06-e3808ee8b6a3e789a9e3808fe7a59ee68a80e5958aefbc8ce79c9fe588b0e78886e79a84e69ca8e99b95e4bd9ce59381/" },
+  "description": "『趣物』神技啊，真到爆的木雕作品"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
     <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
-<meta name="generator" content="Hexo 7.3.0"></head>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
 
     <body>
         <div id="app" tabindex="-1">
@@ -98,6 +137,8 @@
             <div class="navbar__menus">
                 
                     <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
                 
                     <a href="/tags/" class="navbar-menu button">标签</a>
                 
@@ -122,6 +163,8 @@
             <div class="dropdown-menus" id="dropdown-menus">
                 
                     <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
                 
                     <a href="/tags/" class="dropdown-menu button">标签</a>
                 
@@ -149,6 +192,10 @@
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
         
     
     
@@ -166,34 +213,163 @@
     <div class="post__header"></div>
 
 
-
-<button onclick="speakArticle()" style="position: fixed; bottom: 10px; right: 10px; z-index: 1000;">🔊 朗读本文</button>
-
 <script>
-    function speakArticle() {
-        //   const text = document.getElementById('post__content').innerText;
-        const text = document.getElementsByClassName('post__content')[0].innerText
-        const msg = new SpeechSynthesisUtterance(text);
-        msg.lang = 'zh-CN';
-        window.speechSynthesis.speak(msg);
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
     }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
 </script>
 
 
     <div class="post__content">
-        <p><img src="http://naglly.com/wood_sculpture_00.jpg" alt="wood_sculpture_00.jpg" width="500" height="329" /></p>
+        <p><img src="http://naglly.com/wood_sculpture_00.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_00.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_00.jpg" width="500" height="329" /></p>
 <p>上面这个装着棒球明星卡的纸盒，如果我说完全没用到一张纸，而是都是木头，你能相信吗？下面就是证据：</p>
-<p><img src="http://naglly.com/wood_sculpture_01.jpg" alt="wood_sculpture_01.jpg" width="400" height="1585" /></p>
+<p><img src="http://naglly.com/wood_sculpture_01.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_01.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_01.jpg" width="400" height="1585" /></p>
 <p>作者名叫Randall Rosenthal，<a target="_blank" rel="noopener" href="http://www.randallrosenthal.com/">官网在此</a>，有兴趣的同学可以去膜拜一下。如果上面这个超逼真木雕已经吓到你了，下面这两个我就更震惊了，即使看了过程图还是无法想象不是真物啊&hellip;&hellip;特别是美元，都可以拿去用了吧&hellip;&hellip;（跟这个艺术家很是异曲同工啊：<a target="_blank" rel="noopener" href="http://meirixiaochao.com/2010/07/28/superreal-painting/">『<em>艺术』不是照片，这些都是油画&hellip;&hellip;（8p</em>）</a>）</p>
-<p><img src="http://naglly.com/wood_sculpture_02.jpg" alt="wood_sculpture_02.jpg" width="400" height="1200" /></p>
-<p><img src="http://naglly.com/wood_sculpture_03.jpg" alt="wood_sculpture_03.jpg" width="500" height="440" /></p>
-<p><img src="http://naglly.com/wood_sculpture_04.jpg" alt="wood_sculpture_04.jpg" width="500" height="323" /></p>
-<p><img src="http://naglly.com/wood_sculpture_05.jpg" alt="wood_sculpture_05.jpg" width="500" height="394" /></p>
-<p><img src="http://naglly.com/wood_sculpture_06.jpg" alt="wood_sculpture_06.jpg" width="375" height="500" /></p>
-<p><img src="http://naglly.com/wood_sculpture_07.jpg" alt="wood_sculpture_07.jpg" width="500" height="375" /></p>
-<p><img src="http://naglly.com/wood_sculpture_08.jpg" alt="wood_sculpture_08.jpg" width="500" height="342" /></p>
-<p><img src="http://naglly.com/wood_sculpture_09.jpg" alt="wood_sculpture_09.jpg" width="500" height="361" /></p>
-<p><img src="http://naglly.com/wood_sculpture_10.jpg" alt="wood_sculpture_10.jpg" width="500" height="430" /></p>
+<p><img src="http://naglly.com/wood_sculpture_02.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_02.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_02.jpg" width="400" height="1200" /></p>
+<p><img src="http://naglly.com/wood_sculpture_03.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_03.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_03.jpg" width="500" height="440" /></p>
+<p><img src="http://naglly.com/wood_sculpture_04.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_04.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_04.jpg" width="500" height="323" /></p>
+<p><img src="http://naglly.com/wood_sculpture_05.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_05.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_05.jpg" width="500" height="394" /></p>
+<p><img src="http://naglly.com/wood_sculpture_06.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_06.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_06.jpg" width="375" height="500" /></p>
+<p><img src="http://naglly.com/wood_sculpture_07.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_07.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_07.jpg" width="500" height="375" /></p>
+<p><img src="http://naglly.com/wood_sculpture_08.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_08.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_08.jpg" width="500" height="342" /></p>
+<p><img src="http://naglly.com/wood_sculpture_09.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_09.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_09.jpg" width="500" height="361" /></p>
+<p><img src="http://naglly.com/wood_sculpture_10.jpg" class="lazy" data-srcset="http://naglly.com/wood_sculpture_10.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="wood_sculpture_10.jpg" width="500" height="430" /></p>
 <p>图片来源：<a target="_blank" rel="noopener" href="http://naglly.com/archives/2010/09/real-sculpture.php?utm_source=feedburner&amp;utm_medium=feed&amp;utm_campaign=Feed:+naglly+%28%E6%B6%99%E7%9B%AE%E3%81%A7%E4%BB%95%E4%BA%8B%E3%81%97%E3%81%AA%E3%81%84SE%29&amp;utm_content=Google+Reader">naglly</a></p>
 
 <hr>
@@ -219,7 +395,7 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-05-21</p></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
     <div class="post-entry__tags"><a href="/tags/PHP/" class="post-tags__link button"># PHP</a><a href="/tags/Google/" class="post-tags__link button"># Google</a><a href="/tags/%E5%A5%87%E9%97%BB%E8%BD%B6%E4%BA%8B/" class="post-tags__link button"># 奇闻轶事</a><a href="/tags/%E8%B6%A3%E9%97%BB/" class="post-tags__link button"># 趣闻</a></div> 
     
 <div class="post-share">
@@ -446,7 +622,15 @@
 </footer>
 
         </div>
-         
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
 
  
     <script>
