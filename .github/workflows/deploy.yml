@@ -43,7 +43,8 @@ jobs:
           git add -A
           git -c user.name="GitHub Actions" -c user.email="actions@github.com" commit -m "Site updated: $(date '+%Y-%m-%d %H:%M:%S')"
           git remote add origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git
-          git push -f origin pages
+          sleep 2
+          git push --force origin pages
 
       - name: Sync to Blogger
         env:
