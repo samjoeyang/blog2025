@@ -14,14 +14,5 @@ public/*
 !package.json
 !package-lock.json
 
-# 大媒体文件 - 用 Git LFS 管理
-source/assets/*.wav
-source/assets/*.mp3
-source/assets/*.png
-source/assets/*.jpg
-source/assets/*.jpeg
-source/assets/*.gif
-source/assets/*.svg
-
 # 导入工具文件 - 用完即弃
 blogger-import.xml
