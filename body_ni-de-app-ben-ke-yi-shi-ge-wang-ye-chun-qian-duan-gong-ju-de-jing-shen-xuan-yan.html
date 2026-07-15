@@ -1,0 +1,87 @@
+
+    <div class="post__header"></div>
+
+
+
+
+
+    <div class="post__content">
+        <blockquote>
+<p><em>Dan Q 最近做了一件很酷的事。孩子参加迪士尼乐园的演出，主办方让他装一个 App 才能查看行程、交通和住宿。他看了一眼那个 App——纯文本、图片、PDF 链接，没有任何原生功能——然后决定：我把它变成网页。</em></p>
+</blockquote>
+<p>这不是个技术炫技故事，这是对「为啥啥都要装个 App」这件事的一次漂亮反击。</p>
+<hr>
+<h2 id="一个-App-到底做了什么？"><a href="#一个-App-到底做了什么？" class="headerlink" title="一个 App 到底做了什么？"></a>一个 App 到底做了什么？</h2><p>Dan Q 下载的那个 App 叫 Travelbound，功能极其简单：显示演出学校旅行的行程表、交通信息、住宿安排。全部内容就是<strong>文字 + 图片 + PDF 文件链接</strong>。</p>
+<p>作为对比，网页能做到的：</p>
+<ul>
+<li>✅ 可复制粘贴</li>
+<li>✅ 可打印</li>
+<li>✅ 可保存为书签</li>
+<li>✅ 可搜索</li>
+<li>✅ 任何设备访问</li>
+<li>✅ 无障碍友好</li>
+</ul>
+<p>那么这个 App「多做了」什么？Dan Q 发现了两件事：</p>
+<ol>
+<li>把你的 Google 账户数据传回开发者做追踪</li>
+<li>展示「灵感推荐」——其实就是广告</li>
+</ol>
+<p>于是他用了一下午功夫：装 Android 模拟器 → root 设备 → 挂 HTTP Toolkit 抓包 → 发现 API 端点 → 用 Ruby 脚本定时拉 JSON → 生成静态 HTML 页面。</p>
+<p>一条原本藏在 App 里的行程信息，干干净净地出现在浏览器里。没有追踪、没有广告、没有安装流程。</p>
+<hr>
+<h2 id="问题的实质：App-的「准入门槛」太高了"><a href="#问题的实质：App-的「准入门槛」太高了" class="headerlink" title="问题的实质：App 的「准入门槛」太高了"></a>问题的实质：App 的「准入门槛」太高了</h2><p>不是技术门槛——装个 App 谁不会。是<strong>心理门槛</strong>：</p>
+<ul>
+<li>你得先下载几百 MB 的安装包</li>
+<li>授予一堆权限（存储、位置、通知…）</li>
+<li>注册一个账号</li>
+<li>学会它的操作逻辑</li>
+<li>接受它持续推送通知</li>
+<li>忍受它后台吃电吃流量</li>
+</ul>
+<p>所有这些，都只为了看一眼<strong>三行文字和一张图片</strong>。</p>
+<p>这就像你为了喝杯水，得先装修一个厨房。投入和产出的比例严重失调。</p>
+<hr>
+<h2 id="网页的优雅，不止于「能用」"><a href="#网页的优雅，不止于「能用」" class="headerlink" title="网页的优雅，不止于「能用」"></a>网页的优雅，不止于「能用」</h2><p>Dan Q 在文章中列了几个网上「做不到」App 能做的事，但他发现那两个功能（追踪、广告）其实是<strong>反功能（anti-features）</strong>。</p>
+<p>真正天然属于网页的，他列了一份清单：</p>
+<blockquote>
+<p><strong>可复制、可打印、可保存、可书签、可搜索、任何设备可用、无障碍友好</strong></p>
+</blockquote>
+<p>这七点里，有六点在原生 App 里都需要额外开发。但在网页上，它们是<strong>默认行为</strong>。</p>
+<p>网页是一份文档。文档就是给人阅读、保存和分享的。一份行程单天然就应该是一份文档，而不是一个 App 里的一个页面。</p>
+<hr>
+<h2 id="这和-unobox-有什么关系？"><a href="#这和-unobox-有什么关系？" class="headerlink" title="这和 unobox 有什么关系？"></a>这和 unobox 有什么关系？</h2><p>如果你已经猜到我在说什么了——对的，这正是 unobox 选择纯前端路线的原因。</p>
+<p>电子书阅读器的本质，也是一个「被做成了 App 的网页」：</p>
+<ul>
+<li>读一篇文章 → 本可以是一行 URL</li>
+<li>翻页、调整字号 → HTML + CSS 天然支持</li>
+<li>本地存储书签和笔记 → LocalStorage&#x2F;IndexedDB 就够了</li>
+<li>跨设备同步 → 一个服务端就能解决，不需要每个平台都装一个 App</li>
+</ul>
+<p><strong>把「阅读」这件事从 App 的牢笼里解放出来</strong>，让它回归到「打开即读」的原始体验——这是我们做 unobox 的核心理念。</p>
+<p>Dan Q 反编译了一个旅游 App，造了个更好的网页。我们做 unobox，不过是把这件事再往前推了一步：<strong>让每一本电子书都不需要你为此安装任何东西。</strong></p>
+<hr>
+<h2 id="最后的思考"><a href="#最后的思考" class="headerlink" title="最后的思考"></a>最后的思考</h2><p>Dan Q 在文章最后说了一句很幽默的话：「我把那个 App 修好了——帮那些不想装 App 的家长们。」</p>
+<p>其实每个开发者都可以问自己一个问题：<strong>你要做的这个东西，真的需要一个 App 吗？</strong></p>
+<p>如果你的答案不是「用户用到的原生功能（相机、传感器、离线计算…）」，而是「公司需要追踪用户」或「我们觉得 App 更高级」——那你可能也「需要被修一下」。</p>
+<p>一条网页就够了的东西，就不要让人家费工夫装修厨房了。</p>
+<hr>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><ul>
+<li><a target="_blank" rel="noopener" href="https://danq.me/2026/07/09/your-app-could-have-been-a-webpage/">Your ‘App’ Could Have Been a Webpage (so I fixed it for you…) – Dan Q</a></li>
+</ul>
+
+    </div>
+    
+    
+ 
+     
+     
+    
+
+</div>
+
+
+
+
+
+
+<p><br></p><p>📖 <a href="https://need.uno/ni-de-app-ben-ke-yi-shi-ge-wang-ye-chun-qian-duan-gong-ju-de-jing-shen-xuan-yan/">阅读原文</a></p>
