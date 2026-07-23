@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 200" width="900" height="200">
+  <style>
+    .label { font: 600 12px/1.3 ui-sans-serif,system-ui,sans-serif; fill: var(--fg, #172033); }
+    .node rect { stroke: var(--line, #64748b); stroke-width: 1; }
+    .process rect { fill: var(--process, #c7d2fe); }
+    .neutral rect { fill: var(--neutral, #e2e8f0); }
+    .input rect { fill: var(--input, #bfdbfe); }
+    .edge { stroke: var(--line, #64748b); stroke-width: 1.5; fill: none; }
+    .title { font: 700 16px/1.3 ui-sans-serif,system-ui,sans-serif; fill: var(--fg, #172033); }
+    .subtitle { font: 12px/1.3 ui-sans-serif,system-ui,sans-serif; fill: var(--muted, #5b6475); }
+  </style>
+  <text x="450" y="28" text-anchor="middle" class="title">第81问：震荡期的团队冲突怎么平稳度过？</text>
+  <text x="450" y="48" text-anchor="middle" class="subtitle">PMP职场实战108问 · 图解</text>
+  
+  <g class="node process" transform="translate(360,60)">
+    <rect width="180" height="40" rx="6" ry="6"/>
+    <text x="90" y="25" text-anchor="middle" class="label">项目管理核心能力</text>
+  </g>
+  <line class="edge" x1="450" y1="100" x2="135" y2="130"/>
+  <g class="node input" transform="translate(45,130)">
+    <rect width="180" height="40" rx="6" ry="6"/>
+    <text x="90" y="25" text-anchor="middle" class="label">硬技能</text>
+  </g>
+  <line class="edge" x1="450" y1="100" x2="345" y2="130"/>
+  <g class="node process" transform="translate(255,130)">
+    <rect width="180" height="40" rx="6" ry="6"/>
+    <text x="90" y="25" text-anchor="middle" class="label">软技能</text>
+  </g>
+  <line class="edge" x1="450" y1="100" x2="555" y2="130"/>
+  <g class="node neutral" transform="translate(465,130)">
+    <rect width="180" height="40" rx="6" ry="6"/>
+    <text x="90" y="25" text-anchor="middle" class="label">商业思维</text>
+  </g>
+  <line class="edge" x1="450" y1="100" x2="765" y2="130"/>
+  <g class="node storage" transform="translate(675,130)">
+    <rect width="180" height="40" rx="6" ry="6"/>
+    <text x="90" y="25" text-anchor="middle" class="label">领导力</text>
+  </g>
+</svg>
