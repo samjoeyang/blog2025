@@ -129,4 +129,4 @@ EPUB → JSZip → Epub.js → Rendition → iframe → 浏览器渲染
 
 这不挺好的。
 
-📚 **[上一篇：FreeInk 全解析 →](./FreeInk全解析-开源电子书阅读器的全栈革命/)** | **[下一篇：从裸机到浏览器 →](./从裸机到浏览器-开源阅读器的技术栈全景/)**
+📚 **[上一篇：FreeInk 全解析 →](./freeink-quan-jie-xi-kai-yuan-dian-zi-shu-yue-du-qi-de-quan-zhan-ge-ming/)** | **[下一篇：从裸机到浏览器 →](./cong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing/)**

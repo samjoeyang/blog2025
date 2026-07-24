@@ -157,4 +157,4 @@ FreeInk 能不能成长为电子墨水屏世界的 Linux，现在下结论太早
 
 下一篇文章我会聊聊开源阅读器世界的两个阵营——硬件路线的 FreeInk 和软件路线的 unobox——看看它们各自的逻辑、各自的局限、以及它们如何在不竞争的前提下互相成就。
 
-📚 **[下一篇：硬件开源 vs 软件开源 →](./硬件开源vs软件开源-阅读器的两条路线/)**
+📚 **[下一篇：硬件开源 vs 软件开源 →](./ying-jian-kai-yuan-vs-ruan-jian-kai-yuan-yue-du-qi-de-liang-tiao-lu-xian/)**
