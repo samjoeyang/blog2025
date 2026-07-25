@@ -7,7 +7,7 @@ tags: [AI, NVIDIA, 黄仁勋, Jensen Huang, Open Weights, OpenAI, 人工智能]
 
 > **本文是2026年7月24日由英伟达、微软、Meta、IBM等25家美国科技企业联合发布的联名公开信**，由黄仁勋（Jensen Huang）在其 X 账号上作为首条推文发布。核心诉求是反对国会一刀切限制开放权重开源AI模型，论证开放权重对美国AI产业竞争力、国家安全、经济发展的多重正向价值。
 
-{% asset_img jensen-huang-first-post-1.jpg 黄仁勋首条推文截图（1/3） %}
+![](/images/jensen-huang-first-post-1.jpg)
 
 ---
 
@@ -37,7 +37,7 @@ tags: [AI, NVIDIA, 黄仁勋, Jensen Huang, Open Weights, OpenAI, 人工智能]
 
 **关键术语释义
 
-{% asset_img jensen-huang-first-post-2.jpg 黄仁勋首条推文截图（2/3） %}
+![](/images/jensen-huang-first-post-2.jpg)
 
 **关键术语释义**
 - **Open Weights（开放权重模型）**：大模型底层参数文件完全公开，使用者可本地下载、二次微调、私有化部署，区别于仅提供API调用、底层代码完全保密的闭源模型（如早期GPT系列）。
@@ -75,7 +75,7 @@ The age of AI can be one of prosperity. With the right choices, open weight AI c
 
 American Innovators Network · Andreessen Horowitz · Arcee AI · Arena · Black Forest Labs · Box · CrowdStrike · Dell Technologies · Emergence Capital · Hugging Face · IBM · The Linux Foundation · Mariana Minerals · Meta · Microsoft · Mistral · Mozilla · NVIDIA · Palantir · Perplexity · Reflection · Replit · ServiceNow · Telnyx · Y Combinator
 
-{% asset_img jensen-huang-first-post-3.jpg 黄仁勋首条推文截图（3/3） %}
+![](/images/jensen-huang-first-post-3.jpg)
 
 ---
 
