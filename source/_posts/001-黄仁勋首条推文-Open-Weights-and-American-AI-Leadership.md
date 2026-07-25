@@ -7,6 +7,8 @@ tags: [AI, NVIDIA, 黄仁勋, Jensen Huang, Open Weights, OpenAI, 人工智能]
 
 > **本文是2026年7月24日由英伟达、微软、Meta、IBM等25家美国科技企业联合发布的联名公开信**，由黄仁勋（Jensen Huang）在其 X 账号上作为首条推文发布。核心诉求是反对国会一刀切限制开放权重开源AI模型，论证开放权重对美国AI产业竞争力、国家安全、经济发展的多重正向价值。
 
+{% asset_img jensen-huang-first-post-1.jpg 黄仁勋首条推文截图（1/3） %}
+
 ---
 
 # 开放权重与美国人工智能领导力
@@ -32,6 +34,10 @@ tags: [AI, NVIDIA, 黄仁勋, Jensen Huang, Open Weights, OpenAI, 人工智能]
 如果美国过早出台严苛禁令、限制本土开放权重模型流通，只会催生两种负面后果：第一，国内创新活力被压制，中小企业与科研机构失去低成本研发工具；第二，海外市场会转向其他国家的开放AI模型，美国将丧失全球AI标准制定权与技术输出优势。相关政策应当区分风险等级，针对超高危前沿模型实施精准管控，而非一刀切限制全部开放权重技术。
 
 开放与安全并非对立，二者可以并行兼顾。行业从业者支持针对性管控高危AI能力，同时呼吁政策制定者保留开放权重的发展空间。唯有依托开放、多元、充分竞争的AI生态，美国才能长期维持人工智能领域的全球领先地位，持续释放技术创新红利，保障本国经济、安全与科技长远利益。
+
+**关键术语释义
+
+{% asset_img jensen-huang-first-post-2.jpg 黄仁勋首条推文截图（2/3） %}
 
 **关键术语释义**
 - **Open Weights（开放权重模型）**：大模型底层参数文件完全公开，使用者可本地下载、二次微调、私有化部署，区别于仅提供API调用、底层代码完全保密的闭源模型（如早期GPT系列）。
@@ -68,6 +74,8 @@ The age of AI can be one of prosperity. With the right choices, open weight AI c
 **联署 / Co-Signed by:**
 
 American Innovators Network · Andreessen Horowitz · Arcee AI · Arena · Black Forest Labs · Box · CrowdStrike · Dell Technologies · Emergence Capital · Hugging Face · IBM · The Linux Foundation · Mariana Minerals · Meta · Microsoft · Mistral · Mozilla · NVIDIA · Palantir · Perplexity · Reflection · Replit · ServiceNow · Telnyx · Y Combinator
+
+{% asset_img jensen-huang-first-post-3.jpg 黄仁勋首条推文截图（3/3） %}
 
 ---
 
