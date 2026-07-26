@@ -7,6 +7,14 @@
   <% } %>
 <% } %>
 
+<% /* 对 NeedIsMe 分类的旧文章加 noindex */ %>
+<% if (is_post()) { %>
+  <% var categories = page.categories ? page.categories.map(function(c){ return c.name; }) : []; %>
+  <% if (categories.indexOf('NeedIsMe') !== -1) { %>
+    <meta name="robots" content="noindex, nofollow">
+  <% } %>
+<% } %>
+
 <% if (is_post()) { %>
 <% var cleanTitle = (page.title || '').replace(/"/g, '\\"'); %>
 <% var cleanDesc = ((page.description || page.title) || '').replace(/"/g, '\\"'); %>
