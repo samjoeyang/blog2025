@@ -1,31 +1,48 @@
 ---
-title: About
+title: 关于我
 ---
 
-# 关于本站
+# 关于我
 
-你好！我是 Samjoe Yang，这里是我的个人博客。
+你好，我是 **Samjoe Yang**，一个在技术和管理交叉点上工作了十几年的实践者。
 
-- 关注：AI、技术革命、未来展望、社会变革
-- 记录想法，交个AI辅助检查和润色
-- 记录与分享我的思考与成长
+---
 
+## 我在做什么
 
-> I'm a multi-domain builder of the future — part engineer, part philosopher, part digital architect.
-> 
-> From wrangling Flutter and GetX to crafting a multilingual, TTS-powered ebook reader，
-> 
-> 在技术细节上追求极致简洁；而在系统设计上，从ERP多规格换算到AI幻觉可视化协作，善于搭建多维知识框架，具备宏观视角与细腻执行力的罕见结合。
-> 
-> 关注的不仅是功能实现，还思考 AI 意识、语言与感知的深层关系，试图把幻觉变成工具，把混沌转为秩序。不满足于"能用"，追求"值得用"。
-> 
-> Whether it's Markdown knowledge bases, blog pipelines, or Synapse + Matrix + Caddy deployments，
-> 
-> 总在打磨自己的工具链，让创作更高效，协作更可靠，表达更自由。
-> 
-> 简而言之，我不是在写代码——是在塑造一个智能化的知识世界。
+目前同时运营两条线：
 
-> 随时提醒自己：
-> 有没有一个最终想构建的“主项目”或平台？像是你一切系统的汇聚之地？
+**🏪 连锁餐饮管理**
+从门店一线运营到总部管理体系，从工资核算到组织架构设计，过去几年把几个餐饮品牌从单店做到多店连锁。季季山、山奕奕、悦季捞——每个品牌背后都有大量的试错和踩坑。
 
-欢迎交流与联系！
+**⚖️ 知识产权批量维权**
+通过法律平台处理知识产权侵权案件的批量诉讼，探索技术手段在维权实务中的应用。这一块让我对「流程标准化」和「效率规模化」有了非常具体的理解。
+
+**💻 技术项目**
+业余时间折腾技术产品——比如 [unobox](https://unobox.zhenzhidaole.com)，一个纯前端的电子书阅览器，支持多格式、多语言 TTS。研究怎么把技术真正用出价值来。
+
+---
+
+## 博客的定位
+
+这个博客记录的是**真实的问题和真实的解法**。
+
+不写空洞的理论，只写自己亲手做过的、亲眼见过的、亲身体会过的。企业管理也好，项目管理也好，技术实践也好——每一篇背后都有一个真实的场景。
+
+> 知识不是记住的，是用过的。
+
+---
+
+## 联系方式
+
+- X / Twitter: [@samjoeyang](https://x.com/samjoeyang)
+- GitHub: [samjoeyang](https://github.com/samjoeyang)
+- Email: samjoeyang@agentmail.to
+
+---
+
+## 关于这个网站
+
+本站使用 [Hexo](https://hexo.io/) 构建，托管于 GitHub Pages，主题为 Cards。
+
+域名 [need.uno](https://need.uno) 的寓意：**有些东西不是想要，是需要。**
