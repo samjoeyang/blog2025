@@ -572,8 +572,7 @@ vendors:
   # 自定义 script
   custom_script: 
     - '<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script>'
-    - '<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">'
-    - '<script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>'
+    - '<script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>'
     - '<script>
       function isWeChatBrowser() {
         return /micromessenger/i.test(navigator.userAgent);
