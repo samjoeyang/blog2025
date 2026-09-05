@@ -1,0 +1,737 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>CSS自定义属性Expression | Need.UNO</title>
+
+
+    <meta name="keywords" content="前端, HTML, CSS, HTML/CSS, .NET, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="CSS自定义属性Expression  CSS的出现使网页制作者在对网页元素的控制方便许多，当然，有利必有弊，CSS只能对颜色、大小、距离等静态样式有效，对于要实现某些html元素的动态样式就显得有些力不从心。 有了CSS的自定义属性Expression，可以自己定义属性，自己在属性里写需要的代码，这样就可以结合CSS的特性与JS特效，实现对整体页面上相同元素的控制。是不是觉得有点不可思议？我">
+<meta property="og:type" content="website">
+<meta property="og:title" content="CSS自定义属性Expression">
+<meta property="og:url" content="https://need.uno/needisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="CSS自定义属性Expression  CSS的出现使网页制作者在对网页元素的控制方便许多，当然，有利必有弊，CSS只能对颜色、大小、距离等静态样式有效，对于要实现某些html元素的动态样式就显得有些力不从心。 有了CSS的自定义属性Expression，可以自己定义属性，自己在属性里写需要的代码，这样就可以结合CSS的特性与JS特效，实现对整体页面上相同元素的控制。是不是觉得有点不可思议？我">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2005-08-07T10:27:57.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.102Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="HTML&#x2F;CSS">
+<meta property="article:tag" content=".NET">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+    <meta name="robots" content="noindex, nofollow">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "CSS自定义属性Expression",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2005-08-07",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression/" },
+  "description": "CSS自定义属性Expression"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        CSS自定义属性Expression
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2005/08/" class="post-meta__date button">2005-08-07</a>
+        
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <div id="msgcns!A634C4CD7A14B666!223" class="bvMsg">
+<div>
+<p><a title="Permanent Link: CSS自定义属性Expression" rel="bookmark noopener" target="_blank" href="http://tech.21ds.net/2004/11/30/e2addbcfd77ccfdb5411ce4497386f20/">CSS自定义属性Expression</a></p>
+<div>
+<p>CSS的出现使网页制作者在对网页元素的控制方便许多，当然，有利必有弊，CSS只能对颜色、大小、距离等静态样式有效，对于要实现某些html元素的动态样式就显得有些力不从心。</p>
+<p>有了CSS的自定义属性Expression，可以自己定义属性，自己在属性里写需要的代码，这样就可以结合CSS的特性与JS特效，实现对整体页面上相同元素的控制。是不是觉得有点不可思议？我们先拿新手们经常问的怎么消除页面上的链接虚线框为例。</p>
+<p>通常的做法是：</p>
+<blockquote><p><a href="link1.htm">link1</a></p>
+<p><a href="link2.htm">link2</a></p>
+<p><a href="link3.htm">link3</a></p></blockquote>
+<p>粗看或许还体现不出采用expression的优势，但如果你的页面上有几十甚至上百个链接，这时的你难道还会机械式地Ctrl+C，Ctrl+V么，何况两者一比较，哪个产生的冗余代码更多呢？</p>
+<p>采用expression的做法如下：</p>
+<blockquote><p>
+<a href="link1.htm">link1</a></p>
+<p><a href="link2.htm">link2</a></p>
+<p><a href="link3.htm">link3</a></p></blockquote>
+<p>说明：里面的star就是自己任意定义的属性，你可以随自己喜好另外定义，接着包含在expression()里的语句就是JS脚本，在自定义属性与expression之间可别忘了还有一个引号，因为实质还是CSS，所以放在style标签内，而非script内。OK，这样就很容易地用一句话实现了页面中的链接虚线框的消除。不过你先别得意，如果触发的特效是CSS的属性变化，那么出来的结果会跟你的本意有差别。例如你想随鼠标的移进移出而改变页面中的文本框颜色更改，你可能想当然的会认为应该写为</p>
+<blockquote></blockquote>
+<p>可结果却是出现脚本出错，正确的写法应该把CSS样式的定义写进函数内，如下所示：</p>
+<blockquote></blockquote>
+<p>看了这么多，感觉怎么样，是不是有点概念了呢。使用CSS的自定义属性很简洁地用较少的代码实现了用JS产生的相同的效果，真正起到了事半功倍的作用，你还不赶快去试试？</p>
+</div>
+</div>
+</div>
+
+<hr>
+<p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/needisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression/">https://need.uno/needisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E5%89%8D%E7%AB%AF/" class="post-tags__link button"># 前端</a><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/CSS/" class="post-tags__link button"># CSS</a><a href="/tags/HTML-CSS/" class="post-tags__link button"># HTML/CSS</a><a href="/tags/NET/" class="post-tags__link button"># .NET</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fneedisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression%2F&amp;text=CSS%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7Expression&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fneedisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fneedisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression%2F&amp;title=CSS%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7Expression"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fneedisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression%2F&amp;text=CSS%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7Expression"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fneedisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression%2F&amp;title=CSS%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7Expression&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fneedisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression%2F&amp;title=CSS%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7Expression&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fneedisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression%2F&amp;title=CSS%E8%87%AA%E5%AE%9A%E4%B9%89%E5%B1%9E%E6%80%A7Expression&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/needisme-2005-08-07-csse68ea7e588b6e5ad97e4bd93e69588e69e9ce79a84e6809de88083/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            CSS控制字体效果的思考
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/needisme-2005-08-07-e7a681e6ada2e8838ce699afe59bbee59ca8e7bd91e9a1b5e4b8ade5b9b3e993ba/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            禁止背景图在网页中平铺
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="needisme-2005-08-07-csse887aae5ae9ae4b989e5b19ee680a7expression/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

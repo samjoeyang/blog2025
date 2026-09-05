@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？ | Need.UNO</title>
+
+
+    <meta name="keywords" content="PMP, 项目管理, 职场, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="PMP职场实战108问 · 第80问塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？ 你带一个新项目组，团队刚组建，大家客客气气但效率低下。你觉得“磨合一阵就好了”。结果一个月后，成员开始互相甩锅，你开个会都像在灭火。你开始怀疑：是不是人招错了？ 别急着换人。这不是人的问题，是群体发展的自然规律。Bruce Tuckman在1965年提出的塔克曼模型早已解释过：每一个团队都会经历形成→震荡→规范">
+<meta property="og:type" content="website">
+<meta property="og:title" content="塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？">
+<meta property="og:url" content="https://need.uno/080-ta-ke-man-mo-xing-si-jie-duan-ying-yong/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="PMP职场实战108问 · 第80问塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？ 你带一个新项目组，团队刚组建，大家客客气气但效率低下。你觉得“磨合一阵就好了”。结果一个月后，成员开始互相甩锅，你开个会都像在灭火。你开始怀疑：是不是人招错了？ 别急着换人。这不是人的问题，是群体发展的自然规律。Bruce Tuckman在1965年提出的塔克曼模型早已解释过：每一个团队都会经历形成→震荡→规范">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://need.uno/images/pmp/q080-%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B-%E5%BD%A2%E6%88%90-%E9%9C%87%E8%8D%A1-%E8%A7%84%E8%8C%83-%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8.svg">
+<meta property="article:published_time" content="2026-07-22T18:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.092Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="PMP">
+<meta property="article:tag" content="项目管理">
+<meta property="article:tag" content="职场">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://need.uno/images/pmp/q080-%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B-%E5%BD%A2%E6%88%90-%E9%9C%87%E8%8D%A1-%E8%A7%84%E8%8C%83-%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8.svg">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-07-23",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/080-ta-ke-man-mo-xing-si-jie-duan-ying-yong/" },
+  "description": "塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/07/" class="post-meta__date button">2026-07-23</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <h1 id="PMP职场实战108问-·-第80问"><a href="#PMP职场实战108问-·-第80问" class="headerlink" title="PMP职场实战108问 · 第80问"></a>PMP职场实战108问 · 第80问</h1><p><strong>塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？</strong></p>
+<p>你带一个新项目组，团队刚组建，大家客客气气但效率低下。你觉得“磨合一阵就好了”。结果一个月后，成员开始互相甩锅，你开个会都像在灭火。你开始怀疑：是不是人招错了？</p>
+<p>别急着换人。这不是人的问题，是群体发展的自然规律。Bruce Tuckman在1965年提出的塔克曼模型早已解释过：每一个团队都会经历<strong>形成→震荡→规范→成熟</strong>这四个阶段。你遇到的，大概率只是“震荡期”的正常表现。</p>
+<p>问题在于：<strong>大多数项目经理只知道这四个名词，却不知道在每个阶段该做什么、不该做什么。</strong></p>
+<hr>
+<h2 id="为什么你总是卡在震荡期出不来？"><a href="#为什么你总是卡在震荡期出不来？" class="headerlink" title="为什么你总是卡在震荡期出不来？"></a>为什么你总是卡在震荡期出不来？</h2><p>先看一张典型的团队发展路径图：</p>
+<table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>典型情绪</th>
+<th>成员行为特征</th>
+<th>项目经理最容易犯的错</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>形成期</td>
+<td>礼貌、期待、不安</td>
+<td>试探规则、依赖领导</td>
+<td>太早放权，让团队自己摸索</td>
+</tr>
+<tr>
+<td>震荡期</td>
+<td>冲突、挫败、竞争</td>
+<td>质疑目标、挑战权威、小团体形成</td>
+<td>回避冲突，或亲自下场“劝架”</td>
+</tr>
+<tr>
+<td>规范期</td>
+<td>理解、信任、共识</td>
+<td>接受角色、建立流程、自发协作</td>
+<td>放松管理，觉得“差不多了”</td>
+</tr>
+<tr>
+<td>成熟期</td>
+<td>高效、自主、默契</td>
+<td>主动解决问题、互相补位、高产出</td>
+<td>忽视持续激励，团队陷入惯性</td>
+</tr>
+</tbody></table>
+<p><strong>核心洞察</strong>：80%的项目团队崩在震荡期，不是因为冲突本身，而是PM既不敢直面冲突，又不懂用“规范”作为工具把冲突转化为共识。</p>
+<hr>
+<h2 id="四个阶段，四套打法"><a href="#四个阶段，四套打法" class="headerlink" title="四个阶段，四套打法"></a>四个阶段，四套打法</h2><h3 id="1️⃣-形成期：做“清晰”的代言人"><a href="#1️⃣-形成期：做“清晰”的代言人" class="headerlink" title="1️⃣ 形成期：做“清晰”的代言人"></a>1️⃣ 形成期：做“清晰”的代言人</h3><p>这个阶段，成员像第一次进幼儿园的孩子——看眼色、等指令。你的角色不是“民主推选”领袖，而是<strong>明确给出方向</strong>。</p>
+<ul>
+<li><p><strong>要做的</strong>：</p>
+<ul>
+<li>1小时内讲清楚：项目目标、为什么做、每个人的大致角色</li>
+<li>建立“沟通规则”：周会频率、信息同步渠道、决策机制（独断还是投票？）</li>
+<li>给一个“小胜利”：前两周安排一个容易达成的里程碑，建立团队的初步信心</li>
+</ul>
+</li>
+<li><p><strong>不要做的</strong>：</p>
+<ul>
+<li>问“大家觉得怎么做比较好？”（他们还没建立安全感，不敢说真话）</li>
+</ul>
+</li>
+</ul>
+<p><strong>真实案例</strong>：某互联网产品团队，成员来自四个不同部门。在形成期，PM直接拿出了一张“项目前30天日历”，每天早上的站会只做三件事：今天谁做什么、昨天遇到什么阻碍、是否需要帮助。成员不需要思考“该不该问”，只需要执行。</p>
+<hr>
+<h3 id="2️⃣-震荡期：做“冲突”的翻译官"><a href="#2️⃣-震荡期：做“冲突”的翻译官" class="headerlink" title="2️⃣ 震荡期：做“冲突”的翻译官"></a>2️⃣ 震荡期：做“冲突”的翻译官</h3><p>这个阶段是最痛苦的。你会发现有人挑战你的决策，有人质疑目标的可行性，有人开始站队。<strong>记住：冲突不是坏事，冲突是信息。</strong> 你的任务是让冲突从“人与人”变成“事与事”。</p>
+<ul>
+<li><p><strong>要做的</strong>：</p>
+<ul>
+<li>识别冲突类型：是目标不清？资源不均？还是性格不合？</li>
+<li><strong>用“复述”化解情绪</strong>：“我听到你说A，但小李说的是B，你们的核心分歧是不是在于C这个假设不成立？”</li>
+<li>设定“冲突公约”：可以争论方案，不能人身攻击；争议超过30分钟，由PM做最终决策</li>
+</ul>
+</li>
+<li><p><strong>不要做的</strong>：</p>
+<ul>
+<li>私下分别沟通、安抚情绪（这只会让团队更分裂）</li>
+<li>用投票解决问题（多数暴政会让少数派彻底躺平）</li>
+</ul>
+</li>
+</ul>
+<p><strong>真实场景</strong>：某研发团队，前端和后端因为接口格式问题在周会吵了45分钟。PM没有叫停，而是在白板上写下双方的核心诉求和边界条件，然后说：“我听到了，问题是你们在高并发下的数据格式不一致。今天的会先停在这儿，下午3点，我拉上架构师，我们一起拿一套标准方案出来，走不通就用降级方案。” 这个动作让双方从“你对我不对”变成了“我们一起找最优解”。</p>
+<hr>
+<h3 id="3️⃣-规范期：做“流程”的固化者"><a href="#3️⃣-规范期：做“流程”的固化者" class="headerlink" title="3️⃣ 规范期：做“流程”的固化者"></a>3️⃣ 规范期：做“流程”的固化者</h3><p>团队开始能自己协调了，这是好事。但如果不及时把“有效做法”固化下来，下一轮震荡会随时反扑。</p>
+<ul>
+<li><p><strong>要做的</strong>：</p>
+<ul>
+<li>把成功经验文档化：这次版本测试为什么快？→ 建立标准Checklist</li>
+<li>明确决策权限：哪些事团队可以自主决定，哪些事必须知会你</li>
+<li>开始放权：让技术负责人主持每日站会，让业务负责人暂代你开跨部门沟通会</li>
+<li>定期做“微复盘”：不是搞大活动，而是每周五下午花15分钟，“快速回顾：这周我们做对了什么，可以做得更好的是什么？”——<strong>注意，先说对的，再说改善点</strong></li>
+</ul>
+</li>
+<li><p><strong>不要做的</strong>：</p>
+<ul>
+<li>觉得“团队成熟了”就回到自己办公室当甩手掌柜（规范期是脆弱平衡，你一撤，可能倒回震荡期）</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h3 id="4️⃣-成熟期：做“舞台”的搭建者"><a href="#4️⃣-成熟期：做“舞台”的搭建者" class="headerlink" title="4️⃣ 成熟期：做“舞台”的搭建者"></a>4️⃣ 成熟期：做“舞台”的搭建者</h3><p>这个阶段的团队，像一个运转丝滑的引擎。成员之间有默契，有人主动补位，有人自发优化流程。你的角色从“管理者”变成了“资源获取者和环境维护者”。</p>
+<ul>
+<li><strong>要做的</strong>：<ul>
+<li>不断输入新挑战：给团队一个“看起来有点难但跳一跳够得到”的新目标</li>
+<li>把最好的成员推到前台：让他去做技术分享、带新人、代表团队向高层汇报</li>
+<li>警惕“疲劳”：成熟期的团队很容易进入舒适区，用“外部视角”打破惯性，比如引入一次用户访谈或竞争对手分析</li>
+</ul>
+</li>
+</ul>
+<hr>
+<blockquote>
+<p><strong>📌 今日动作</strong>：打开你当前最头疼的团队，评估一下它处在哪个阶段。如果是<strong>震荡期</strong>，明天一次全体会议上，做两件事：① 用“复述”认同双方的价值诉求；② 设立一个“明天之前必须出结果”的决策deadline。别等冲突自动消失，它不会。</p>
+</blockquote>
+<hr>
+<p>记住：塔克曼模型不是用来“预测”的，是用来“应对”的。每个阶段的PM动作不同——形成期做清晰、震荡期做翻译、规范期做固化、成熟期做舞台。你只有改变了，团队才会改变。</p>
+<hr>
+<p><img src="/images/pmp/q080-%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B-%E5%BD%A2%E6%88%90-%E9%9C%87%E8%8D%A1-%E8%A7%84%E8%8C%83-%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8.svg" class="lazy" data-srcset="/images/pmp/q080-%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B-%E5%BD%A2%E6%88%90-%E9%9C%87%E8%8D%A1-%E8%A7%84%E8%8C%83-%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="第80问：塔克曼模型：形成、震荡、规范、成熟四阶段如何应用？"></p>
+<p>📚 <strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/080-ta-ke-man-mo-xing-si-jie-duan-ying-yong/">https://need.uno/080-ta-ke-man-mo-xing-si-jie-duan-ying-yong/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2F080-ta-ke-man-mo-xing-si-jie-duan-ying-yong%2F&amp;text=%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%BD%A2%E6%88%90%E3%80%81%E9%9C%87%E8%8D%A1%E3%80%81%E8%A7%84%E8%8C%83%E3%80%81%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%EF%BC%9F&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2F080-ta-ke-man-mo-xing-si-jie-duan-ying-yong%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2F080-ta-ke-man-mo-xing-si-jie-duan-ying-yong%2F&amp;title=%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%BD%A2%E6%88%90%E3%80%81%E9%9C%87%E8%8D%A1%E3%80%81%E8%A7%84%E8%8C%83%E3%80%81%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%EF%BC%9F"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2F080-ta-ke-man-mo-xing-si-jie-duan-ying-yong%2F&amp;text=%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%BD%A2%E6%88%90%E3%80%81%E9%9C%87%E8%8D%A1%E3%80%81%E8%A7%84%E8%8C%83%E3%80%81%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%EF%BC%9F"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2F080-ta-ke-man-mo-xing-si-jie-duan-ying-yong%2F&amp;title=%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%BD%A2%E6%88%90%E3%80%81%E9%9C%87%E8%8D%A1%E3%80%81%E8%A7%84%E8%8C%83%E3%80%81%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%EF%BC%9F&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2F080-ta-ke-man-mo-xing-si-jie-duan-ying-yong%2F&amp;title=%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%BD%A2%E6%88%90%E3%80%81%E9%9C%87%E8%8D%A1%E3%80%81%E8%A7%84%E8%8C%83%E3%80%81%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%EF%BC%9F&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2F080-ta-ke-man-mo-xing-si-jie-duan-ying-yong%2F&amp;title=%E5%A1%94%E5%85%8B%E6%9B%BC%E6%A8%A1%E5%9E%8B%EF%BC%9A%E5%BD%A2%E6%88%90%E3%80%81%E9%9C%87%E8%8D%A1%E3%80%81%E8%A7%84%E8%8C%83%E3%80%81%E6%88%90%E7%86%9F%E5%9B%9B%E9%98%B6%E6%AE%B5%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%EF%BC%9F&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/079-xin-ren-shou-shou-he-xin-cheng-yuan-chai-yi-hua-guan-li/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            新人、熟手、核心成员的差异化管理办法
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/081-zhen-dang-qi-tuan-dui-chong-tu-ping-wen-du-guo/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            震荡期的团队冲突怎么平稳度过？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="080-ta-ke-man-mo-xing-si-jie-duan-ying-yong/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

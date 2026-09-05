@@ -1,0 +1,2152 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>unobox TTS 多引擎集成评估报告 | Need.UNO</title>
+
+
+    <meta name="keywords" content="unobox, TTS, Electron, 架构设计, 语音合成, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="评估日期：2026-06-05 | 评估对象：unobox 桌面端 (Electron)评估范围：本地引擎 4 种 + 国内云 5 种 + 国际云 5 种，共 14 种方案   一、现状分析有利条件（已有基础设施）   基础设施 状态 说明    音频播放引擎 (useAudioEngine) ✅ 完整 隐藏 HTMLAudioElement，支持 blob URL、进度保存   媒体播放器 S">
+<meta property="og:type" content="website">
+<meta property="og:title" content="unobox TTS 多引擎集成评估报告">
+<meta property="og:url" content="https://need.uno/unobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="评估日期：2026-06-05 | 评估对象：unobox 桌面端 (Electron)评估范围：本地引擎 4 种 + 国内云 5 种 + 国际云 5 种，共 14 种方案   一、现状分析有利条件（已有基础设施）   基础设施 状态 说明    音频播放引擎 (useAudioEngine) ✅ 完整 隐藏 HTMLAudioElement，支持 blob URL、进度保存   媒体播放器 S">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-14T15:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.134Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="unobox">
+<meta property="article:tag" content="TTS">
+<meta property="article:tag" content="Electron">
+<meta property="article:tag" content="架构设计">
+<meta property="article:tag" content="语音合成">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "unobox TTS 多引擎集成评估报告",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-06-14",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/unobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao/" },
+  "description": "unobox TTS 多引擎集成评估报告"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        unobox TTS 多引擎集成评估报告
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/06/" class="post-meta__date button">2026-06-14</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E6%8A%80%E6%9C%AF/" class="button">技术</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <blockquote>
+<p>评估日期：2026-06-05 | 评估对象：unobox 桌面端 (Electron)<br>评估范围：本地引擎 4 种 + 国内云 5 种 + 国际云 5 种，共 14 种方案</p>
+</blockquote>
+<hr>
+<h2 id="一、现状分析"><a href="#一、现状分析" class="headerlink" title="一、现状分析"></a>一、现状分析</h2><h3 id="有利条件（已有基础设施）"><a href="#有利条件（已有基础设施）" class="headerlink" title="有利条件（已有基础设施）"></a>有利条件（已有基础设施）</h3><table>
+<thead>
+<tr>
+<th>基础设施</th>
+<th>状态</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>音频播放引擎 (<code>useAudioEngine</code>)</td>
+<td>✅ 完整</td>
+<td>隐藏 <code>HTMLAudioElement</code>，支持 blob URL、进度保存</td>
+</tr>
+<tr>
+<td>媒体播放器 Store (<code>useMediaPlayerStore</code>)</td>
+<td>✅ 完整</td>
+<td>队列管理、倍速、循环模式、Mini&#x2F;Full 两种 UI</td>
+</tr>
+<tr>
+<td>播放器 UI (<code>MiniPlayer</code> &#x2F; <code>FullPlayer</code>)</td>
+<td>✅ 完整</td>
+<td>迷你播放栏 + 全屏播放器，开箱即用</td>
+</tr>
+<tr>
+<td>自定义协议 (<code>unbox-file://</code>)</td>
+<td>✅ 完整</td>
+<td>支持 Range 请求、流式传输大文件</td>
+</tr>
+<tr>
+<td>IPC 桥接模式</td>
+<td>✅ 完整</td>
+<td><code>namespace:action</code> 约定，流式&#x2F;非流式两种模式</td>
+</tr>
+<tr>
+<td><code>IServerProvider</code> 多 Provider 架构</td>
+<td>✅ 完整</td>
+<td>TTS 引擎切换可直接复用 ProviderManager 热插拔模式</td>
+</tr>
+<tr>
+<td><code>MediaSource</code> 类型</td>
+<td>✅ 已预留 <code>&#39;ai&#39;</code></td>
+<td>在 <code>audioPlayer.ts</code> 第 8 行，直接可用</td>
+</tr>
+</tbody></table>
+<h3 id="缺失部分"><a href="#缺失部分" class="headerlink" title="缺失部分"></a>缺失部分</h3><p>零 TTS 代码。无语音合成引擎、无语音下载管理、无 TTS 设置界面。</p>
+<hr>
+<h2 id="二、TTS-引擎全景对比"><a href="#二、TTS-引擎全景对比" class="headerlink" title="二、TTS 引擎全景对比"></a>二、TTS 引擎全景对比</h2><h3 id="2-1-引擎分类"><a href="#2-1-引擎分类" class="headerlink" title="2.1 引擎分类"></a>2.1 引擎分类</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">TTS 引擎全集（14 种）</span><br><span class="line">├── 🏠 本地离线引擎（4 种）</span><br><span class="line">│ ├── Sherpa-ONNX + Kokoro ← 主力：中英文双语高质</span><br><span class="line">│ ├── Supertonic TTS ← 极速：英文/韩文</span><br><span class="line">│ ├── Piper TTS ← 兜底：40+ 语言覆盖</span><br><span class="line">│ ├── PaddleSpeech ← 开源：中文离线（Python子进程）</span><br><span class="line">│ └── Pico TTS (SVOX) ← 不推荐：无中文</span><br><span class="line">│</span><br><span class="line">├── 🇨🇳 国内云 TTS（4 种）—— 中文质量最优</span><br><span class="line">│ ├── 阿里云 TTS (Qwen3-TTS) ← 综合最佳</span><br><span class="line">│ ├── 火山引擎 TTS (豆包语音) ← 长文本最低价</span><br><span class="line">│ ├── 腾讯云 TTS ← 预付费最便宜</span><br><span class="line">│ └── 百度智能云 TTS ← 免费额度最大方</span><br><span class="line">│</span><br><span class="line">└── 🌍 国际云 TTS（5 种）—— 多语言/高质量</span><br><span class="line"> ├── OpenAI TTS ← AI 原生，gpt-4o-mini-tts</span><br><span class="line"> ├── Google Cloud TTS ← 语言最多（75+）</span><br><span class="line"> ├── Amazon Polly ← AWS 生态</span><br><span class="line"> ├── Azure Speech ← 国内版便宜</span><br><span class="line"> └── ElevenLabs ← 质量天花板 + 语音克隆</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-本地引擎核心指标对比"><a href="#2-2-本地引擎核心指标对比" class="headerlink" title="2.2 本地引擎核心指标对比"></a>2.2 本地引擎核心指标对比</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th align="center">Sherpa-ONNX + Kokoro</th>
+<th align="center">Supertonic TTS</th>
+<th align="center">Piper TTS</th>
+<th align="center">PaddleSpeech</th>
+<th align="center">Pico TTS</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>语音质量</strong></td>
+<td align="center">⭐⭐⭐⭐⭐ TTS Arena #1</td>
+<td align="center">⭐⭐⭐⭐ 自然稳定</td>
+<td align="center">⭐⭐⭐⭐ 自然流畅</td>
+<td align="center">⭐⭐⭐⭐ 中文良好</td>
+<td align="center">⭐⭐ 机械感强</td>
+</tr>
+<tr>
+<td><strong>中文支持</strong></td>
+<td align="center">✅ 8 种中文语音</td>
+<td align="center"><strong>❌ 不支持</strong></td>
+<td align="center">✅ 约 5-6 种</td>
+<td align="center">✅ 中文原生</td>
+<td align="center"><strong>❌ 不支持</strong></td>
+</tr>
+<tr>
+<td><strong>语言总数</strong></td>
+<td align="center">~10 种</td>
+<td align="center">31 种（无中文）</td>
+<td align="center">40+ 种</td>
+<td align="center">~10 种</td>
+<td align="center">仅 6 种</td>
+</tr>
+<tr>
+<td><strong>模型体积</strong></td>
+<td align="center">~160MB</td>
+<td align="center">~99MB</td>
+<td align="center">30-80MB&#x2F;语音</td>
+<td align="center">~300MB（完整）</td>
+<td align="center">~2MB</td>
+</tr>
+<tr>
+<td><strong>CPU 推理</strong></td>
+<td align="center">~1-3x 实时</td>
+<td align="center"><strong>167x 实时</strong></td>
+<td align="center">&gt;1x 实时</td>
+<td align="center">~1-3x 实时</td>
+<td align="center">极快</td>
+</tr>
+<tr>
+<td><strong>GPU 推理</strong></td>
+<td align="center">CUDA 可选</td>
+<td align="center"><strong>1000x 实时</strong></td>
+<td align="center">不支持</td>
+<td align="center">不支持</td>
+<td align="center">不支持</td>
+</tr>
+<tr>
+<td><strong>流式合成</strong></td>
+<td align="center">✅</td>
+<td align="center">❌（分块模式）</td>
+<td align="center">✅</td>
+<td align="center">✅（服务模式）</td>
+<td align="center">❌</td>
+</tr>
+<tr>
+<td><strong>集成方式</strong></td>
+<td align="center">npm 原生插件 &#x2F; WASM</td>
+<td align="center">npm 原生插件</td>
+<td align="center">CLI 子进程</td>
+<td align="center">Python CLI 子进程</td>
+<td align="center">CLI 子进程</td>
+</tr>
+<tr>
+<td><strong>许可协议</strong></td>
+<td align="center">Apache 2.0</td>
+<td align="center">MIT &#x2F; OpenRAIL-M</td>
+<td align="center">MIT</td>
+<td align="center">Apache 2.0</td>
+<td align="center">Apache 2.0</td>
+</tr>
+<tr>
+<td><strong>活跃维护</strong></td>
+<td align="center">✅ 非常活跃</td>
+<td align="center">✅ 极其活跃</td>
+<td align="center">✅ 活跃</td>
+<td align="center">✅ 活跃</td>
+<td align="center">❌ 近乎停止</td>
+</tr>
+<tr>
+<td><strong>在 unobox 中的定位</strong></td>
+<td align="center"><strong>主力引擎</strong></td>
+<td align="center">英文极速引擎</td>
+<td align="center">编译失败兜底</td>
+<td align="center">中文离线备选</td>
+<td align="center"><strong>不推荐</strong></td>
+</tr>
+</tbody></table>
+<h3 id="2-3-国内云-TTS-核心指标对比"><a href="#2-3-国内云-TTS-核心指标对比" class="headerlink" title="2.3 国内云 TTS 核心指标对比"></a>2.3 国内云 TTS 核心指标对比</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th align="center">阿里云 (Qwen3-TTS)</th>
+<th align="center">火山引擎 (豆包语音)</th>
+<th align="center">腾讯云</th>
+<th align="center">百度智能云</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>中文质量</strong></td>
+<td align="center">⭐⭐⭐⭐⭐ WER 1.9%</td>
+<td align="center">⭐⭐⭐⭐</td>
+<td align="center">⭐⭐⭐⭐</td>
+<td align="center">⭐⭐⭐⭐</td>
+</tr>
+<tr>
+<td><strong>语音数量</strong></td>
+<td align="center">49 种音色</td>
+<td align="center">多款基础+精品</td>
+<td align="center">标准+精品+大模型</td>
+<td align="center">基础+精品+臻品+大模型</td>
+</tr>
+<tr>
+<td><strong>方言支持</strong></td>
+<td align="center">✅ 9 种方言</td>
+<td align="center">部分支持</td>
+<td align="center">部分支持</td>
+<td align="center">✅ 粤语等</td>
+</tr>
+<tr>
+<td><strong>免费额度</strong></td>
+<td align="center">100 万字符&#x2F;月</td>
+<td align="center">基础音色免费</td>
+<td align="center">精品 800 万字符（3 月）</td>
+<td align="center">个人 5 万次（180 天）</td>
+</tr>
+<tr>
+<td><strong>长文本单价</strong></td>
+<td align="center">¥0.8&#x2F;万字符</td>
+<td align="center"><strong>¥1.0&#x2F;万字符</strong></td>
+<td align="center">¥0.75&#x2F;万字符（预付费）</td>
+<td align="center">¥1.7&#x2F;万字符</td>
+</tr>
+<tr>
+<td><strong>短文本单价</strong></td>
+<td align="center">¥1.0&#x2F;千次（预付费）</td>
+<td align="center">¥4&#x2F;千次</td>
+<td align="center">—</td>
+<td align="center">¥12&#x2F;万次（预付费）</td>
+</tr>
+<tr>
+<td><strong>流式合成</strong></td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅（WebSocket）</td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td align="center">✅ DashScope SDK</td>
+<td align="center">✅ <code>@volcengine/openapi</code></td>
+<td align="center">✅ <code>tencentcloud-sdk-nodejs-tts</code></td>
+<td align="center">❌ 需手动 HTTP</td>
+</tr>
+<tr>
+<td><strong>自定义语音</strong></td>
+<td align="center">✅ 10 个免费音色</td>
+<td align="center">✅ 声音复刻</td>
+<td align="center">❌</td>
+<td align="center">✅ 个性化定制</td>
+</tr>
+<tr>
+<td><strong>SSML 支持</strong></td>
+<td align="center">✅ 完整</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><strong>在 unobox 中的定位</strong></td>
+<td align="center"><strong>国内首选远程</strong></td>
+<td align="center">长文本性价比王</td>
+<td align="center">预付费最省钱</td>
+<td align="center">免费额度最慷慨</td>
+</tr>
+</tbody></table>
+<h3 id="2-4-国际云-TTS-核心指标对比"><a href="#2-4-国际云-TTS-核心指标对比" class="headerlink" title="2.4 国际云 TTS 核心指标对比"></a>2.4 国际云 TTS 核心指标对比</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th align="center">OpenAI TTS</th>
+<th align="center">Google Cloud TTS</th>
+<th align="center">Amazon Polly</th>
+<th align="center">Azure Speech</th>
+<th align="center">ElevenLabs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>语音质量</strong></td>
+<td align="center">⭐⭐⭐⭐⭐ AI 原生</td>
+<td align="center">⭐⭐⭐⭐⭐ Chirp 3 HD</td>
+<td align="center">⭐⭐⭐⭐ 可接受</td>
+<td align="center">⭐⭐⭐⭐⭐</td>
+<td align="center">⭐⭐⭐⭐⭐ 行业最佳</td>
+</tr>
+<tr>
+<td><strong>免费额度</strong></td>
+<td align="center">$5 新用户赠送</td>
+<td align="center">标准 400 万字符&#x2F;月</td>
+<td align="center">标准 500 万字符&#x2F;月（首年）</td>
+<td align="center">神经 50 万字符&#x2F;月</td>
+<td align="center">1 万字符&#x2F;月</td>
+</tr>
+<tr>
+<td><strong>神经语音价</strong></td>
+<td align="center">$15&#x2F;百万字符</td>
+<td align="center">$16&#x2F;百万字符</td>
+<td align="center">$16&#x2F;百万字符</td>
+<td align="center">$15&#x2F;百万字符</td>
+<td align="center">$5&#x2F;月起（订阅制）</td>
+</tr>
+<tr>
+<td><strong>中文支持</strong></td>
+<td align="center">✅ 但偏僵硬</td>
+<td align="center">✅ 普通话&#x2F;粤语</td>
+<td align="center">✅ 普通话&#x2F;粤语</td>
+<td align="center">✅ 普通话&#x2F;粤语</td>
+<td align="center">✅ 多语言 v2</td>
+</tr>
+<tr>
+<td><strong>语言总数</strong></td>
+<td align="center">~20 种</td>
+<td align="center">75+ 种</td>
+<td align="center">40+ 种</td>
+<td align="center">50+ 种</td>
+<td align="center">30+ 种</td>
+</tr>
+<tr>
+<td><strong>语音数量</strong></td>
+<td align="center">13 种（含 gpt-4o-mini-tts）</td>
+<td align="center">380+</td>
+<td align="center">100+</td>
+<td align="center">300+</td>
+<td align="center">按需克隆</td>
+</tr>
+<tr>
+<td><strong>流式合成</strong></td>
+<td align="center">✅ 实时流式</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅</td>
+<td align="center">✅ 极低延迟</td>
+</tr>
+<tr>
+<td><strong>语音克隆</strong></td>
+<td align="center">❌</td>
+<td align="center">✅ Instant Custom Voice</td>
+<td align="center">✅ Brand Voice</td>
+<td align="center">✅ Custom Neural Voice</td>
+<td align="center">✅ <strong>从 1 分钟音频</strong></td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td align="center">✅ <code>openai</code></td>
+<td align="center">✅ <code>@google-cloud/text-to-speech</code></td>
+<td align="center">✅ <code>@aws-sdk/client-polly</code></td>
+<td align="center">✅ <code>microsoft-cognitiveservices-speech-sdk</code></td>
+<td align="center">✅ REST API</td>
+</tr>
+<tr>
+<td><strong>输出格式</strong></td>
+<td align="center">MP3&#x2F;Opus&#x2F;AAC&#x2F;FLAC&#x2F;WAV</td>
+<td align="center">MP3&#x2F;WAV&#x2F;OGG&#x2F;PCM</td>
+<td align="center">MP3&#x2F;OGG&#x2F;PCM</td>
+<td align="center">MP3&#x2F;WAV&#x2F;OGG&#x2F;PCM</td>
+<td align="center">MP3&#x2F;WAV&#x2F;OGG&#x2F;PCM</td>
+</tr>
+<tr>
+<td><strong>速度控制</strong></td>
+<td align="center">✅ 0.25-4.0x</td>
+<td align="center">✅ SSML</td>
+<td align="center">✅ SSML</td>
+<td align="center">✅ SSML</td>
+<td align="center">✅</td>
+</tr>
+<tr>
+<td><strong>在 unobox 中的定位</strong></td>
+<td align="center">AI 对话最佳</td>
+<td align="center">语言覆盖最广</td>
+<td align="center">成本最低国际</td>
+<td align="center">国内节点便宜</td>
+<td align="center">高端付费首选</td>
+</tr>
+</tbody></table>
+<h3 id="2-5-PaddleSpeech-详细分析"><a href="#2-5-PaddleSpeech-详细分析" class="headerlink" title="2.5 PaddleSpeech 详细分析"></a>2.5 PaddleSpeech 详细分析</h3><p><strong>PaddleSpeech</strong> 是百度飞桨开源的端到端语音工具包，不同于百度智能云的商业 API，它是完全本地运行的。</p>
+<table>
+<thead>
+<tr>
+<th>特性</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>定位</strong></td>
+<td>开源离线语音工具包（Apache 2.0）</td>
+</tr>
+<tr>
+<td><strong>中文模型</strong></td>
+<td><code>fastspeech2_csmsc</code> &#x2F; <code>tacotron2_csmsc</code> + <code>hifigan_csmsc</code> 声码器</td>
+</tr>
+<tr>
+<td><strong>中英混合</strong></td>
+<td><code>fastspeech2_mix</code> 模型支持中英混合合成</td>
+</tr>
+<tr>
+<td><strong>多音色</strong></td>
+<td>174 个多说话人模型（CSMSC 数据集，仅限非商业用途）</td>
+</tr>
+<tr>
+<td><strong>流式合成</strong></td>
+<td>✅ 支持 HTTP 流式服务模式</td>
+</tr>
+<tr>
+<td><strong>ONNX 加速</strong></td>
+<td>✅ <code>use_onnx=True</code> 启用 ONNX Runtime 推理加速</td>
+</tr>
+<tr>
+<td><strong>安装</strong></td>
+<td><code>pip install paddlepaddle paddlespeech</code></td>
+</tr>
+<tr>
+<td><strong>首次使用</strong></td>
+<td>自动下载预训练模型（数百 MB），之后可离线</td>
+</tr>
+<tr>
+<td><strong>集成方式</strong></td>
+<td>Python CLI 子进程（<code>paddlespeech tts --input &quot;...&quot; --output out.wav</code>）</td>
+</tr>
+<tr>
+<td><strong>自定义语音</strong></td>
+<td>✅ 语音克隆模型 AISHELL3-VC + 声音转换</td>
+</tr>
+<tr>
+<td><strong>关键限制</strong></td>
+<td>CSMSC 数据集非商业许可；需 Python + PaddlePaddle 环境（额外 ~2GB）</td>
+</tr>
+<tr>
+<td><strong>在 unobox 中的定位</strong></td>
+<td><strong>开源可定制中文备选</strong>；Python 依赖是最大门槛，适合开发者&#x2F;极客</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、集成方案推荐"><a href="#三、集成方案推荐" class="headerlink" title="三、集成方案推荐"></a>三、集成方案推荐</h2><h3 id="3-1-架构设计：统一的-ITTSProvider-接口"><a href="#3-1-架构设计：统一的-ITTSProvider-接口" class="headerlink" title="3.1 架构设计：统一的 ITTSProvider 接口"></a>3.1 架构设计：统一的 ITTSProvider 接口</h3><p>项目已有 <code>IServerProvider</code> 多服务商架构（<code>ProviderManager</code> 管理多个 Provider 热插拔），TTS 引擎切换可直接复用此模式。<code>ITTSProvider</code> 接口对调用方来说，本地 Kokoro 和远程 OpenAI TTS 没有任何区别：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// packages/core/src/providers/ITTSProvider.ts（新增）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">ITTSProvider</span> &#123;</span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">id</span>: <span class="built_in">string</span> <span class="comment">// &#x27;sherpa-onnx&#x27; | &#x27;supertonic&#x27; | &#x27;piper-cli&#x27; | &#x27;paddlespeech&#x27; |</span></span><br><span class="line">                      <span class="comment">// &#x27;aliyun-qwen3&#x27; | &#x27;volcengine&#x27; | &#x27;tencent-cloud&#x27; | &#x27;baidu-cloud&#x27; |</span></span><br><span class="line">                      <span class="comment">// &#x27;openai&#x27; | &#x27;google-cloud&#x27; | &#x27;amazon-polly&#x27; | &#x27;azure-speech&#x27;</span></span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">name</span>: <span class="built_in">string</span>      <span class="comment">// 展示名称</span></span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">type</span>: <span class="string">&#x27;local&#x27;</span> | <span class="string">&#x27;remote&#x27;</span></span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">priority</span>: <span class="built_in">number</span>  <span class="comment">// 推荐排序</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 当前环境是否可用 */</span></span><br><span class="line">  <span class="title function_">isAvailable</span>(): <span class="title class_">Promise</span>&lt;<span class="built_in">boolean</span>&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 已安装/已配置的语音列表 */</span></span><br><span class="line">  <span class="title function_">getVoices</span>(): <span class="title class_">Promise</span>&lt;<span class="title class_">TTSVoice</span>[]&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 合成语音 → 返回 PCM/WAV buffer */</span></span><br><span class="line">  <span class="title function_">synthesize</span>(<span class="attr">text</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span>, <span class="attr">opts</span>: <span class="title class_">TTSOptions</span>): <span class="title class_">Promise</span>&lt;<span class="title class_">AudioResult</span>&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 流式合成（长文本逐句输出） */</span></span><br><span class="line">  synthesizeStream?(<span class="attr">text</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span>, <span class="attr">opts</span>: <span class="title class_">TTSOptions</span>): <span class="title class_">AsyncIterable</span>&lt;<span class="title class_">AudioChunk</span>&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 远程引擎特有：是否需要 API Key */</span></span><br><span class="line">  <span class="keyword">readonly</span> <span class="attr">requiresAuth</span>: <span class="built_in">boolean</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 远程引擎特有：设置认证凭据 */</span></span><br><span class="line">  setCredentials?(<span class="attr">credentials</span>: <span class="title class_">TTSApiCredentials</span>): <span class="title class_">Promise</span>&lt;&#123; <span class="attr">valid</span>: <span class="built_in">boolean</span>; <span class="attr">error</span>?: <span class="built_in">string</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 安装/更新引擎 */</span></span><br><span class="line">  install?(): <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span>; <span class="attr">error</span>?: <span class="built_in">string</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 下载语音模型 */</span></span><br><span class="line">  downloadVoice?(<span class="attr">voiceId</span>: <span class="built_in">string</span>, <span class="attr">onProgress</span>?: <span class="function">(<span class="params"><span class="attr">pct</span>: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span>): <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 释放资源 */</span></span><br><span class="line">  <span class="title function_">dispose</span>(): <span class="built_in">void</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-系统架构图"><a href="#3-2-系统架构图" class="headerlink" title="3.2 系统架构图"></a>3.2 系统架构图</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">渲染进程（Renderer）                   主进程（Main Process）</span><br><span class="line">══════════════════════                 ════════════════════════════</span><br><span class="line"></span><br><span class="line">TTSStore (Zustand)                    TTSManager（类似 ProviderManager）</span><br><span class="line">├─ currentEngine: ITTSProvider         ├─ engines: ITTSProvider[]</span><br><span class="line">├─ voices: TTSVoice[]                  │   │</span><br><span class="line">├─ preferences:                        │   ├─ 🏠 本地引擎（4 种）</span><br><span class="line">│  ├─ enginePriority: &#x27;local-first&#x27;    │   │  ├─ SherpaOnnxProvider（主力）</span><br><span class="line">│  └─ fallbackChain: [...]             │   │  ├─ SupertonicProvider（极速英文）</span><br><span class="line">│                                       │   │  ├─ PiperCliProvider（兜底）</span><br><span class="line"> IPC bridge                             │   │  └─ PaddleSpeechProvider（中文开源）</span><br><span class="line">┌──────────────────────────┐            │   │</span><br><span class="line">│ api.tts.*                 │            │   ├─ 🇨🇳 国内云（4 种）</span><br><span class="line">│ - getEngines()            │            │   │  ├─ AliyunQwen3Provider</span><br><span class="line">│ - setEngine()             │            │   │  ├─ VolcengineProvider</span><br><span class="line">│ - getVoices()             │            │   │  ├─ TencentCloudProvider</span><br><span class="line">│ - speak()                 │            │   │  └─ BaiduCloudProvider</span><br><span class="line">│ - speakStream()           │            │   │</span><br><span class="line">│ - setCredentials()        │            │   └─ 🌍 国际云（5 种）</span><br><span class="line">│ - downloadVoice()         │            │     ├─ OpenAIProvider</span><br><span class="line">│ - previewVoice()          │            │     ├─ GoogleCloudProvider</span><br><span class="line">└──────────────────────────┘            │     ├─ AmazonPollyProvider</span><br><span class="line">                                         │     ├─ AzureProvider</span><br><span class="line">useMediaPlayerStore                      │     └─ ElevenLabsProvider</span><br><span class="line">└─ playOrEnqueue(&#123; source: &#x27;ai&#x27; &#125;)       │</span><br><span class="line">                                         ├─ VoiceManager（统一模型/语音管理）</span><br><span class="line">MiniPlayer / FullPlayer                  │  ├─ 模型下载（Hugging Face / 各云存储）</span><br><span class="line">└─ 零改动，完全复用                      │  ├─ 缓存管理（&#123;userData&#125;/tts-models/）</span><br><span class="line">                                          │  └─ 格式校验</span><br><span class="line">                                          │</span><br><span class="line">                                          └─ IPC Handlers</span><br><span class="line">                                            ├─ tts:get-engines / tts:set-engine</span><br><span class="line">                                            ├─ tts:get-voices / tts:download-voice</span><br><span class="line">                                            ├─ tts:speak / tts:speak-stream</span><br><span class="line">                                            └─ tts:set-credentials</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-各引擎集成方式总结"><a href="#3-3-各引擎集成方式总结" class="headerlink" title="3.3 各引擎集成方式总结"></a>3.3 各引擎集成方式总结</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>引擎</th>
+<th>集成方式</th>
+<th>技术栈</th>
+<th align="center">复杂度</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🏠 本地</td>
+<td>Sherpa-ONNX + Kokoro</td>
+<td>npm 预编译平台包 + WASM 兜底</td>
+<td>onnxruntime-node</td>
+<td align="center">⭐⭐ 中</td>
+</tr>
+<tr>
+<td>🏠 本地</td>
+<td>Supertonic TTS</td>
+<td>官方 nodejs&#x2F; 移植，4 个 ONNX session</td>
+<td>onnxruntime-node</td>
+<td align="center">⭐⭐ 中</td>
+</tr>
+<tr>
+<td>🏠 本地</td>
+<td>Piper TTS</td>
+<td>CLI 子进程 stdin→stdout</td>
+<td>child_process</td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🏠 本地</td>
+<td>PaddleSpeech</td>
+<td>Python CLI 子进程</td>
+<td>child_process (Python)</td>
+<td align="center">⭐⭐ 中</td>
+</tr>
+<tr>
+<td>🇨🇳 国内云</td>
+<td>阿里云 Qwen3-TTS</td>
+<td>DashScope SDK &#x2F; REST API</td>
+<td><code>dashscope</code> npm</td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🇨🇳 国内云</td>
+<td>火山引擎</td>
+<td>OpenAPI SDK</td>
+<td><code>@volcengine/openapi</code> npm</td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🇨🇳 国内云</td>
+<td>腾讯云</td>
+<td>专用 SDK</td>
+<td><code>tencentcloud-sdk-nodejs-tts</code></td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🇨🇳 国内云</td>
+<td>百度智能云</td>
+<td>HTTP REST（无 SDK）</td>
+<td>axios + Bearer Token</td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🌍 国际云</td>
+<td>OpenAI</td>
+<td>OpenAI Node.js SDK</td>
+<td><code>openai</code> npm</td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🌍 国际云</td>
+<td>Google Cloud</td>
+<td>官方 gax 客户端</td>
+<td><code>@google-cloud/text-to-speech</code></td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🌍 国际云</td>
+<td>Amazon Polly</td>
+<td>AWS JS SDK v3</td>
+<td><code>@aws-sdk/client-polly</code></td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🌍 国际云</td>
+<td>Azure Speech</td>
+<td>Speech SDK</td>
+<td><code>microsoft-cognitiveservices-speech-sdk</code></td>
+<td align="center">⭐ 低</td>
+</tr>
+<tr>
+<td>🌍 国际云</td>
+<td>ElevenLabs</td>
+<td>REST API</td>
+<td>axios + API Key</td>
+<td align="center">⭐ 低</td>
+</tr>
+</tbody></table>
+<p><strong>关键观察：远程引擎的集成复杂度普遍为 ⭐ 低。</strong> 本质都是 HTTP API 调用 → JSON&#x2F;base64 音频响应，比本地 ONNX 推理简单得多。第一个远程引擎约需 1 天（搭认证框架），后续每个仅需 0.5 天。</p>
+<hr>
+<h2 id="四、各引擎差异化定位与推荐策略"><a href="#四、各引擎差异化定位与推荐策略" class="headerlink" title="四、各引擎差异化定位与推荐策略"></a>四、各引擎差异化定位与推荐策略</h2><h3 id="核心原则：本地免费默认，云端增值可选"><a href="#核心原则：本地免费默认，云端增值可选" class="headerlink" title="核心原则：本地免费默认，云端增值可选"></a>核心原则：本地免费默认，云端增值可选</h3><p>unobox 是一款<strong>私有 IM 应用</strong>，本地离线是核心竞争力。TTS 引擎的分层策略如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">所有用户 ──→ 🏠 本地引擎（默认、免费、零配置）</span><br><span class="line"> ├─ 开箱即用，无需 API Key，无需网络</span><br><span class="line"> ├─ 预打包 1 个保底语音（&lt;15MB），其余按需二次下载</span><br><span class="line"> └─ 覆盖 90% 日常场景</span><br><span class="line"></span><br><span class="line">高价值用户 ──→ ☁️ 远程云端引擎（可选、高质量、需自备 API Key）</span><br><span class="line"> ├─ 用户自行注册云服务商账号，自行管理配额和费用</span><br><span class="line"> ├─ unobox 仅提供设置页面的 API Key 配置入口</span><br><span class="line"> └─ 不做代理、不做中转、不计费</span><br></pre></td></tr></table></figure>
+
+<p><strong>产品设计上的体现：</strong></p>
+<ul>
+<li>TTS 设置页默认展示本地引擎，远程引擎折叠在”☁️ 云端引擎（高级）”分区</li>
+<li>远程引擎分区标注”需自行申请 API Key，可能产生费用”</li>
+<li>本地引擎始终作为降级链的最终兜底</li>
+</ul>
+<h3 id="4-1-用户场景-→-引擎映射（本地默认版）"><a href="#4-1-用户场景-→-引擎映射（本地默认版）" class="headerlink" title="4.1 用户场景 → 引擎映射（本地默认版）"></a>4.1 用户场景 → 引擎映射（本地默认版）</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────┬──────────────────────┬───────────────────────────┬─────────────────────┐</span><br><span class="line">│ 场景                        │ 默认引擎（本地免费）    │ 升级引擎（云端增值）        │ 不推荐              │</span><br><span class="line">├────────────────────────────┼──────────────────────┼───────────────────────────┼─────────────────────┤</span><br><span class="line">│ AI 对话语音回复（中英双语） │ Sherpa-ONNX + Kokoro │ 阿里云 Qwen3-TTS          │ Pico（无中文）      │</span><br><span class="line">│ AI 对话语音回复（纯英文）   │ Supertonic           │ OpenAI / ElevenLabs       │ PaddleSpeech        │</span><br><span class="line">│ 消息朗读（中文）            │ Kokoro               │ 阿里云 Qwen3-TTS          │ Pico / Supertonic   │</span><br><span class="line">│ 消息朗读（英文）            │ Supertonic           │ OpenAI TTS                │ Pico                │</span><br><span class="line">│ 消息朗读（日/韩/德等）      │ Piper TTS            │ Google Cloud TTS          │ Supertonic（无中文） │</span><br><span class="line">│ 极低配设备兜底              │ MATCHA-TTS (&lt;10MB)   │ Piper low 质量            │ PaddleSpeech        │</span><br><span class="line">│ 高质量中文配音（专业需求）   │ —                    │ 阿里云 / 火山引擎          │ —                   │</span><br><span class="line">│ 语音克隆需求（专业需求）     │ —                    │ ElevenLabs / Azure Custom  │ 本地引擎             │</span><br><span class="line">│ 开源可定制中文 TTS          │ PaddleSpeech         │ Kokoro                    │ —                   │</span><br><span class="line">│ 数据隐私优先                │ 本地引擎（全部）       │ —                         │ 全部远程引擎         │</span><br><span class="line">│ 断网环境                    │ 本地引擎（全部）       │ —                         │ 全部远程引擎         │</span><br><span class="line">└────────────────────────────┴──────────────────────┴───────────────────────────┴─────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<p><strong>核心变化：默认列全部是本地免费引擎。</strong> 远程云端引擎仅在用户主动配置 API Key 后才出现在可选列表中。</p>
+<h3 id="4-2-推荐优先级"><a href="#4-2-推荐优先级" class="headerlink" title="4.2 推荐优先级"></a>4.2 推荐优先级</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">🏠 Phase 1：本地引擎（免费默认，首批交付，12-18 天）</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line"> 目标：覆盖 90% 用户的日常 TTS 场景，零成本、零配置、零网络依赖</span><br><span class="line"> ├─ Sherpa-ONNX + Kokoro-multi-lang（中英文双语主力）</span><br><span class="line"> ├─ Supertonic（极速英文加速引擎）</span><br><span class="line"> ├─ Piper CLI（编译失败兜底 + 多语言扩展）</span><br><span class="line"> ├─ MATCHA-TTS / Piper low 质量（极低配保底语音，&lt;15MB 预打包）</span><br><span class="line"> └─ 设置 UI：</span><br><span class="line">    ├─ 引擎状态（已就绪/未安装）</span><br><span class="line">    ├─ 语音浏览 + 下载管理 + 试听预览</span><br><span class="line">    ├─ 语速/音调调节</span><br><span class="line">    └─ 语音包二次下载（首次启动后台静默下载主力语音）</span><br><span class="line"></span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">☁️ Phase 2：远程云端引擎（增值升级，+4-6 天）</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line"> 目标：为高价值用户提供更高质量的云端 TTS 选项</span><br><span class="line"> 前提：用户自行申请云服务商 API Key，自行承担费用</span><br><span class="line"> ├─ 🇨🇳 国内云：阿里云 Qwen3-TTS / 火山引擎 / 腾讯云 / 百度智能云</span><br><span class="line"> ├─ 🌍 国际云：OpenAI / Google Cloud / Azure / Amazon Polly</span><br><span class="line"> ├─ 设置 UI 新增：</span><br><span class="line"> │   ├─ &quot;☁️ 云端引擎（高级）&quot;折叠分区</span><br><span class="line"> │   ├─ API Key 配置 + 验证 + 本地加密存储</span><br><span class="line"> │   ├─ 隐私声明弹窗（强制确认）</span><br><span class="line"> │   └─ 可用额度查询（远程引擎带有用量估算）</span><br><span class="line"> └─ 降级链：远程超时/失败 → 自动切回本地引擎</span><br><span class="line"></span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">💎 Phase 3：专业增强（+2-3 天）</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line"> ├─ ElevenLabs（语音克隆 + 顶级质量，订阅制）</span><br><span class="line"> ├─ PaddleSpeech（开源可定制中文 TTS，Python 依赖）</span><br><span class="line"> └─ Amazon Polly（AWS 生态用户备选）</span><br><span class="line"></span><br><span class="line">不推荐:</span><br><span class="line"> └─ 🏠 Pico TTS（无中文，MATCHA-TTS 替代）</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-3-引擎自动选择逻辑（本地默认，云端需主动启用）"><a href="#4-3-引擎自动选择逻辑（本地默认，云端需主动启用）" class="headerlink" title="4.3 引擎自动选择逻辑（本地默认，云端需主动启用）"></a>4.3 引擎自动选择逻辑（本地默认，云端需主动启用）</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">function</span> <span class="title function_">selectEngine</span>(<span class="params"></span></span><br><span class="line"><span class="params">  <span class="attr">userLang</span>: <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">  <span class="attr">hardwareTier</span>: <span class="string">&#x27;high&#x27;</span> | <span class="string">&#x27;mid&#x27;</span> | <span class="string">&#x27;low&#x27;</span>,</span></span><br><span class="line"><span class="params">  <span class="attr">hasRemoteConfigured</span>: <span class="built_in">boolean</span> <span class="comment">// 用户是否主动配置了远程引擎</span></span></span><br><span class="line"><span class="params"></span>): <span class="title class_">ITTSProvider</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 默认路径：纯本地引擎（所有用户都走这里）──</span></span><br><span class="line">  <span class="comment">// 中文用户</span></span><br><span class="line">  <span class="keyword">if</span> (userLang.<span class="title function_">startsWith</span>(<span class="string">&#x27;zh&#x27;</span>)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (sherpaOnnx.<span class="title function_">isAvailable</span>()) <span class="keyword">return</span> sherpaKokoroProvider <span class="comment">// Kokoro 中文</span></span><br><span class="line">    <span class="keyword">if</span> (paddleSpeech.<span class="title function_">isAvailable</span>()) <span class="keyword">return</span> paddleSpeechProvider <span class="comment">// 开源备选</span></span><br><span class="line">    <span class="keyword">return</span> piperCliProvider <span class="comment">// Piper 最终兜底</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 英文/韩文用户</span></span><br><span class="line">  <span class="keyword">if</span> ([<span class="string">&#x27;en&#x27;</span>, <span class="string">&#x27;ko&#x27;</span>].<span class="title function_">includes</span>(userLang)) &#123;</span><br><span class="line">    <span class="keyword">if</span> (supertonic.<span class="title function_">isAvailable</span>()) <span class="keyword">return</span> supertonicProvider <span class="comment">// 极速首选</span></span><br><span class="line">    <span class="keyword">if</span> (sherpaOnnx.<span class="title function_">isAvailable</span>()) <span class="keyword">return</span> sherpaKokoroProvider <span class="comment">// Kokoro 备选</span></span><br><span class="line">    <span class="keyword">return</span> piperCliProvider</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 其他语言用户</span></span><br><span class="line">  <span class="keyword">if</span> (sherpaOnnx.<span class="title function_">isAvailable</span>()) <span class="keyword">return</span> sherpaOnnxProvider <span class="comment">// Sherpa 多语</span></span><br><span class="line">  <span class="keyword">return</span> piperCliProvider <span class="comment">// Piper 40+ 语言兜底</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 注意：远程引擎不会出现在自动选择逻辑中 ──</span></span><br><span class="line">  <span class="comment">// 远程引擎仅在用户同时满足以下条件时才可选：</span></span><br><span class="line">  <span class="comment">// 1. 已在设置页主动配置 API Key</span></span><br><span class="line">  <span class="comment">// 2. 已通过隐私声明确认</span></span><br><span class="line">  <span class="comment">// 3. 在引擎切换器中手动选择了某个远程引擎</span></span><br><span class="line">  <span class="comment">// 远程引擎失败时 → 自动降级回上述本地引擎（用户无感知）</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、国内云-TTS-详细说明"><a href="#五、国内云-TTS-详细说明" class="headerlink" title="五、国内云 TTS 详细说明"></a>五、国内云 TTS 详细说明</h2><h3 id="5-1-阿里云-Qwen3-TTS（推荐首选）"><a href="#5-1-阿里云-Qwen3-TTS（推荐首选）" class="headerlink" title="5.1 阿里云 Qwen3-TTS（推荐首选）"></a>5.1 阿里云 Qwen3-TTS（推荐首选）</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>模型</strong></td>
+<td>Qwen3-TTS，49 种音色，10 种语言 + 9 种方言，48kHz</td>
+</tr>
+<tr>
+<td><strong>WER</strong></td>
+<td>中文 1.9%，英文 2.8%（优于 Azure TTS）</td>
+</tr>
+<tr>
+<td><strong>免费额度</strong></td>
+<td><strong>100 万字符&#x2F;月</strong>（49 种音色全免费）</td>
+</tr>
+<tr>
+<td><strong>付费价格</strong></td>
+<td><strong>¥0.8&#x2F;万字符</strong></td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td><code>npm install dashscope</code></td>
+</tr>
+<tr>
+<td><strong>调用方式</strong></td>
+<td><code>dashscope.audio.speech(&#123; model: &#39;qwen-tts&#39;, input: &#123; text &#125;, voice: &#39;longxiaoxia_v2&#39;, response_format: &#39;mp3&#39; &#125;)</code></td>
+</tr>
+<tr>
+<td><strong>特色</strong></td>
+<td>支持粤语&#x2F;四川话&#x2F;东北话；语音合成+识别双功能；流式实时合成</td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐⭐⭐ 国内远程首选</td>
+</tr>
+</tbody></table>
+<h3 id="5-2-火山引擎（豆包语音TTS）"><a href="#5-2-火山引擎（豆包语音TTS）" class="headerlink" title="5.2 火山引擎（豆包语音TTS）"></a>5.2 火山引擎（豆包语音TTS）</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>价格</strong></td>
+<td>长文本普通版 <strong>¥1.0&#x2F;万字符</strong>，情感预测版 ¥2.0&#x2F;万字符</td>
+</tr>
+<tr>
+<td><strong>免费额度</strong></td>
+<td>基础音色完全免费；非基础音色年授权费 ¥1 万&#x2F;个</td>
+</tr>
+<tr>
+<td><strong>短文本</strong></td>
+<td>≤300 字符&#x2F;次，后付费 ¥4&#x2F;千次（1 万次以上）</td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td><code>npm install @volcengine/openapi</code></td>
+</tr>
+<tr>
+<td><strong>特色</strong></td>
+<td>情感预测版溢价 100%；可与豆包大模型联动（同生态）；多场景音色定制</td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐⭐ 长文本性价比王者</td>
+</tr>
+</tbody></table>
+<h3 id="5-3-腾讯云-TTS"><a href="#5-3-腾讯云-TTS" class="headerlink" title="5.3 腾讯云 TTS"></a>5.3 腾讯云 TTS</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>免费额度</strong></td>
+<td>精品音色 <strong>800 万字符</strong>（领取后 3 个月有效）</td>
+</tr>
+<tr>
+<td><strong>价格</strong></td>
+<td>标准音色后付费 ¥1.9&#x2F;万字符起，预付费最低 <strong>¥0.75&#x2F;万字符</strong></td>
+</tr>
+<tr>
+<td><strong>精品音色</strong></td>
+<td>¥2.8&#x2F;万字符（后付费小体量比火山高 180%）</td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td><code>npm install tencentcloud-sdk-nodejs-tts</code></td>
+</tr>
+<tr>
+<td><strong>特色</strong></td>
+<td>预付费资源包可退款（7 天内）；大模型音色 + 超自然大模型音色</td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐⭐ 预付费最省钱</td>
+</tr>
+</tbody></table>
+<h3 id="5-4-百度智能云-TTS"><a href="#5-4-百度智能云-TTS" class="headerlink" title="5.4 百度智能云 TTS"></a>5.4 百度智能云 TTS</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>免费额度</strong></td>
+<td>个人认证：基础音库 <strong>5 万次&#x2F;180 天</strong>；企业认证：<strong>1 亿次&#x2F;180 天</strong></td>
+</tr>
+<tr>
+<td><strong>价格</strong></td>
+<td>短文本基础音库 ¥12&#x2F;万次（预付费）；长文本 ¥1.7&#x2F;万字符</td>
+</tr>
+<tr>
+<td><strong>大模型音色</strong></td>
+<td>度涵竹&#x2F;度嫣然&#x2F;度泽言&#x2F;度怀安&#x2F;度小粤等，与精品音库同价</td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td>无专用 SDK，HTTP REST 调用（axios + Bearer Token）</td>
+</tr>
+<tr>
+<td><strong>接口特点</strong></td>
+<td>短文本最长 500 汉字；长文本最长 <strong>10 万字</strong>（异步）；流式 WebSocket 协议</td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐ 免费额度最慷慨（适合企业认证）</td>
+</tr>
+</tbody></table>
+<h3 id="5-5-国内云-TTS-价格速查"><a href="#5-5-国内云-TTS-价格速查" class="headerlink" title="5.5 国内云 TTS 价格速查"></a>5.5 国内云 TTS 价格速查</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>最便宜方案</th>
+<th>单价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🆓 量少免费</td>
+<td>百度智能云（个人）+ 阿里云 Qwen3</td>
+<td>¥0</td>
+</tr>
+<tr>
+<td>🀄 中文长文本</td>
+<td>腾讯云标准预付费</td>
+<td><strong>¥0.75&#x2F;万字符</strong></td>
+</tr>
+<tr>
+<td>🀄 中文后付费小体量</td>
+<td>火山引擎普通版</td>
+<td><strong>¥1.0&#x2F;万字符</strong></td>
+</tr>
+<tr>
+<td>🀄 中文短文本高频</td>
+<td>阿里云 30 万千次包</td>
+<td><strong>¥1.0&#x2F;千次</strong></td>
+</tr>
+<tr>
+<td>📞 中文质量优先</td>
+<td>阿里云 Qwen3-TTS</td>
+<td>¥0.8&#x2F;万字符</td>
+</tr>
+<tr>
+<td>🤖 对标 AI 通话</td>
+<td>火山引擎情感预测版</td>
+<td>¥2.0&#x2F;万字符</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="六、国际云-TTS-详细说明"><a href="#六、国际云-TTS-详细说明" class="headerlink" title="六、国际云 TTS 详细说明"></a>六、国际云 TTS 详细说明</h2><h3 id="6-1-OpenAI-TTS"><a href="#6-1-OpenAI-TTS" class="headerlink" title="6.1 OpenAI TTS"></a>6.1 OpenAI TTS</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>模型</strong></td>
+<td><code>tts-1</code> &#x2F; <code>tts-1-hd</code> &#x2F; <code>gpt-4o-mini-tts</code></td>
+</tr>
+<tr>
+<td><strong>价格</strong></td>
+<td><code>tts-1</code>: $15&#x2F;M 字符；<code>tts-1-hd</code>: $30&#x2F;M 字符；<code>gpt-4o-mini-tts</code>: $0.60&#x2F;M 输入 token + $12&#x2F;M 音频输出 token</td>
+</tr>
+<tr>
+<td><strong>实际成本</strong></td>
+<td>~$0.86&#x2F;小时音频（tts-1）</td>
+</tr>
+<tr>
+<td><strong>语音数量</strong></td>
+<td>13 种（Alloy&#x2F;Echo&#x2F;Fable&#x2F;Nova&#x2F;Onyx&#x2F;Shimmer&#x2F;Ash&#x2F;Ballad&#x2F;Coral&#x2F;Sage&#x2F;Verse&#x2F;Marin&#x2F;Cedar）</td>
+</tr>
+<tr>
+<td><strong>gpt-4o-mini-tts 特色</strong></td>
+<td>语音指令定制（如”热情的意大利厨师”），Marin&#x2F;Cedar 独占</td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td><code>npm install openai</code> → <code>openai.audio.speech.create()</code></td>
+</tr>
+<tr>
+<td><strong>中文</strong></td>
+<td>✅ 但偏僵硬，不如国内云</td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐⭐⭐ AI 对话原生场景首选</td>
+</tr>
+</tbody></table>
+<h3 id="6-2-Google-Cloud-TTS"><a href="#6-2-Google-Cloud-TTS" class="headerlink" title="6.2 Google Cloud TTS"></a>6.2 Google Cloud TTS</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>价格</strong></td>
+<td>标准 $4&#x2F;M 字符；神经 $16&#x2F;M 字符；Chirp 3 HD $30&#x2F;M 字符；Gemini TTS token 制</td>
+</tr>
+<tr>
+<td><strong>免费额度</strong></td>
+<td>标准 400 万字符&#x2F;月 + 神经 100 万字符&#x2F;月；新用户 $300 赠送</td>
+</tr>
+<tr>
+<td><strong>语言</strong></td>
+<td><strong>75+ 种</strong>，380+ 语音（所有引擎中最广）</td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td><code>npm install @google-cloud/text-to-speech</code></td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐⭐ 语言覆盖最广</td>
+</tr>
+</tbody></table>
+<h3 id="6-3-Azure-Speech"><a href="#6-3-Azure-Speech" class="headerlink" title="6.3 Azure Speech"></a>6.3 Azure Speech</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>价格</strong></td>
+<td>神经 TTS $15&#x2F;M 字符；国内版 ¥0.95&#x2F;万字（非常便宜）</td>
+</tr>
+<tr>
+<td><strong>免费额度</strong></td>
+<td>神经 50 万字符&#x2F;月</td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td><code>npm install microsoft-cognitiveservices-speech-sdk</code></td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐⭐ 国内版极便宜</td>
+</tr>
+</tbody></table>
+<h3 id="6-4-Amazon-Polly"><a href="#6-4-Amazon-Polly" class="headerlink" title="6.4 Amazon Polly"></a>6.4 Amazon Polly</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>价格</strong></td>
+<td>标准 $4&#x2F;M 字符；神经 $16&#x2F;M 字符；生成式 $30&#x2F;M 字符</td>
+</tr>
+<tr>
+<td><strong>免费额度</strong></td>
+<td>标准 500 万字符&#x2F;月 + 神经 100 万字符&#x2F;月（首年）；新用户 $200 赠送</td>
+</tr>
+<tr>
+<td><strong>语言</strong></td>
+<td>40+ 种，100+ 语音</td>
+</tr>
+<tr>
+<td><strong>Node.js SDK</strong></td>
+<td><code>npm install @aws-sdk/client-polly</code></td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐ AWS 用户首选</td>
+</tr>
+</tbody></table>
+<h3 id="6-5-ElevenLabs"><a href="#6-5-ElevenLabs" class="headerlink" title="6.5 ElevenLabs"></a>6.5 ElevenLabs</h3><table>
+<thead>
+<tr>
+<th>项目</th>
+<th>详情</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>价格</strong></td>
+<td>$5&#x2F;月起（3 万字符）→ $99&#x2F;月（50 万字符），<strong>订阅制非按量付费</strong></td>
+</tr>
+<tr>
+<td><strong>免费额度</strong></td>
+<td>1 万字符&#x2F;月</td>
+</tr>
+<tr>
+<td><strong>特色</strong></td>
+<td>从 <strong>1 分钟音频</strong>即可克隆语音；公认质量天花板</td>
+</tr>
+<tr>
+<td><strong>Node.js</strong></td>
+<td>REST API（axios + API Key）</td>
+</tr>
+<tr>
+<td><strong>推荐指数</strong></td>
+<td>⭐⭐⭐ 高端付费用户（语音克隆需求）</td>
+</tr>
+</tbody></table>
+<h3 id="6-6-国际云-TTS-价格速查"><a href="#6-6-国际云-TTS-价格速查" class="headerlink" title="6.6 国际云 TTS 价格速查"></a>6.6 国际云 TTS 价格速查</h3><table>
+<thead>
+<tr>
+<th>场景</th>
+<th>最便宜方案</th>
+<th>单价</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🆓 英文少量</td>
+<td>Google 标准 + Amazon 标准（免费层内）</td>
+<td>$0</td>
+</tr>
+<tr>
+<td>🇺🇸 英文神经质量</td>
+<td>Azure 国内版 &#x2F; Google Neural</td>
+<td>$15-16&#x2F;M 字符</td>
+</tr>
+<tr>
+<td>🏆 英文最佳质量</td>
+<td>OpenAI tts-1 &#x2F; ElevenLabs</td>
+<td>$15&#x2F;M 字符 &#x2F; $5&#x2F;月起</td>
+</tr>
+<tr>
+<td>🌐 多语言覆盖</td>
+<td>Google Cloud TTS（75+ 语言）</td>
+<td>$4&#x2F;M 字符起步</td>
+</tr>
+<tr>
+<td>🇨🇳 中文</td>
+<td><strong>不推荐国际云</strong>（国内云质量更好且更便宜）</td>
+<td>—</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="七、隐私与安全设计（远程引擎专项）"><a href="#七、隐私与安全设计（远程引擎专项）" class="headerlink" title="七、隐私与安全设计（远程引擎专项）"></a>七、隐私与安全设计（远程引擎专项）</h2><p>远程 TTS 引擎涉及<strong>文本内容离开用户设备</strong>，需要严格防护：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">第一层：用户知情同意（强制）</span><br><span class="line"> ┌─────────────────────────────────────────┐</span><br><span class="line"> │ ⚠️ 启用远程 TTS 服务                     │</span><br><span class="line"> │                                         │</span><br><span class="line"> │ 您将朗读的消息文本将发送到第三方服务器     │</span><br><span class="line"> │ 进行处理。请确认您已阅读并同意。          │</span><br><span class="line"> │                                         │</span><br><span class="line"> │ ☐ 我理解消息文本将离开本地设备            │</span><br><span class="line"> │ ☐ 我同意服务商的数据处理条款             │</span><br><span class="line"> │                                         │</span><br><span class="line"> │ [取消]               [同意并配置 API Key] │</span><br><span class="line"> └─────────────────────────────────────────┘</span><br><span class="line"></span><br><span class="line">第二层：API Key 本地加密存储</span><br><span class="line"> - 所有 API Key 使用设备相关密钥 AES 加密后存储到 app_kv_store</span><br><span class="line"> - 不传输、不同步、不备份到任何远程位置</span><br><span class="line"> - 参考 device.getMachineId() 作为加密盐</span><br><span class="line"></span><br><span class="line">第三层：引擎级降级保护</span><br><span class="line"> - 远程请求超时（5s）→ 自动回退到本地引擎</span><br><span class="line"> - 余额不足 / 配额超限 → 提示用户，同时切回本地</span><br><span class="line"> - 网络断开 → 静默切换，用户无感知</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="八、引擎降级策略"><a href="#八、引擎降级策略" class="headerlink" title="八、引擎降级策略"></a>八、引擎降级策略</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line">用户点击&quot;朗读&quot;消息时的引擎选择流程：</span><br><span class="line"></span><br><span class="line">1. 检查用户偏好设置</span><br><span class="line"> ├─ &quot;🔒 仅本地&quot; → 跳过远程，直接用本地引擎</span><br><span class="line"> ├─ &quot;☁️ 远程优先&quot; → 先尝试远程，失败则降级</span><br><span class="line"> └─ &quot;🏠 本地优先&quot;（默认）→ 本地可用即用本地</span><br><span class="line"></span><br><span class="line">2. 🏠 &quot;本地优先&quot; 降级链（推荐默认）：</span><br><span class="line"> Sherpa-ONNX Kokoro (&lt;2s 生成)</span><br><span class="line"> → Supertonic（英文）</span><br><span class="line"> → Piper CLI</span><br><span class="line"> → PaddleSpeech（中文备选）</span><br><span class="line"> → 用户已配的远程引擎</span><br><span class="line"> → 全部失败 → 提示用户</span><br><span class="line"></span><br><span class="line">3. ☁️ &quot;远程优先&quot; 降级链：</span><br><span class="line"> 阿里云 Qwen3-TTS (3s 超时，中文)</span><br><span class="line"> → 火山引擎 (3s 超时)</span><br><span class="line"> → 腾讯云 / 百度智能云 (3s 超时)</span><br><span class="line"> → OpenAI / Google / Azure (3s 超时)</span><br><span class="line"> → 本地 Kokoro（最终兜底）</span><br><span class="line"></span><br><span class="line">4. 自动降级时的 UI 反馈：</span><br><span class="line"> ┌─────────────────────────────────────┐</span><br><span class="line"> │ TTS 合成中...                        │</span><br><span class="line"> │ 🟡 远程引擎无响应，正在切换本地引擎... │</span><br><span class="line"> │ [取消朗读]                           │</span><br><span class="line"> └─────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="九、各引擎集成难点与风险"><a href="#九、各引擎集成难点与风险" class="headerlink" title="九、各引擎集成难点与风险"></a>九、各引擎集成难点与风险</h2><h3 id="9-1-共性难点"><a href="#9-1-共性难点" class="headerlink" title="9.1 共性难点"></a>9.1 共性难点</h3><table>
+<thead>
+<tr>
+<th>难点</th>
+<th align="center">风险等级</th>
+<th>说明</th>
+<th>缓解措施</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>原生 Node.js 插件跨平台分发</strong></td>
+<td align="center">🟡 中</td>
+<td><code>onnxruntime-node</code> 和 <code>sherpa-onnx-node</code> 是原生插件</td>
+<td>预编译平台包 + WASM 兜底</td>
+</tr>
+<tr>
+<td><strong>大文本合成延迟</strong></td>
+<td align="center">🟡 中</td>
+<td>长文本需数秒</td>
+<td>按句切分流式分段合成</td>
+</tr>
+<tr>
+<td><strong>语音模型管理</strong></td>
+<td align="center">🟡 中</td>
+<td>格式不统一</td>
+<td>VoiceManager 统一管理</td>
+</tr>
+<tr>
+<td><strong>API Key 安全存储</strong></td>
+<td align="center">🟡 中</td>
+<td>敏感凭据存储</td>
+<td>AES 加密 + 设备指纹盐</td>
+</tr>
+<tr>
+<td><strong>Electron 打包体积</strong></td>
+<td align="center">🟡 中</td>
+<td>本地模型 100-250MB</td>
+<td>模型按需下载，内置仅 1 个保底语音</td>
+</tr>
+</tbody></table>
+<h3 id="9-2-各引擎特有风险"><a href="#9-2-各引擎特有风险" class="headerlink" title="9.2 各引擎特有风险"></a>9.2 各引擎特有风险</h3><table>
+<thead>
+<tr>
+<th>引擎</th>
+<th>风险</th>
+<th align="center">等级</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Sherpa-ONNX</td>
+<td>npm 插件编译失败</td>
+<td align="center">🟡</td>
+<td>预编译包 + WASM 兜底</td>
+</tr>
+<tr>
+<td>Supertonic</td>
+<td><strong>无中文</strong></td>
+<td align="center">🔴</td>
+<td>仅英文&#x2F;韩文场景使用</td>
+</tr>
+<tr>
+<td>PaddleSpeech</td>
+<td>Python 环境依赖</td>
+<td align="center">🟡</td>
+<td>需预装 Python + PaddlePaddle（~2GB）</td>
+</tr>
+<tr>
+<td>阿里云</td>
+<td>依赖 DashScope 平台</td>
+<td align="center">🟢</td>
+<td>API 稳定，SDK 成熟</td>
+</tr>
+<tr>
+<td>火山引擎</td>
+<td>非基础音色年费</td>
+<td align="center">🟡</td>
+<td>默认用基础音色免费</td>
+</tr>
+<tr>
+<td>腾讯云</td>
+<td>免费额度有时限</td>
+<td align="center">🟢</td>
+<td>3 个月后转预付费</td>
+</tr>
+<tr>
+<td>百度智能云</td>
+<td>无 Node.js SDK</td>
+<td align="center">🟢</td>
+<td>HTTP 调用简单，无额外依赖</td>
+</tr>
+<tr>
+<td>OpenAI</td>
+<td>中文发音僵硬</td>
+<td align="center">🟡</td>
+<td>中文场景推荐国内云</td>
+</tr>
+<tr>
+<td>Google Cloud</td>
+<td>国内访问不便</td>
+<td align="center">🟡</td>
+<td>国内用户建议用国内云</td>
+</tr>
+<tr>
+<td>ElevenLabs</td>
+<td>订阅制非按量</td>
+<td align="center">🟡</td>
+<td>仅适应重度用户</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十、需要新增的模块"><a href="#十、需要新增的模块" class="headerlink" title="十、需要新增的模块"></a>十、需要新增的模块</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><span class="line">新增文件清单（约 18 个文件）</span><br><span class="line">═══════════════════════════════════════</span><br><span class="line"></span><br><span class="line">核心接口（1 个文件）:</span><br><span class="line">├── packages/core/src/providers/ITTSProvider.ts # 统一 TTS Provider 接口 + 类型定义</span><br><span class="line"></span><br><span class="line">主进程 - 本地引擎实现（4 个文件）:</span><br><span class="line">├── apps/desktop/src/main/tts/</span><br><span class="line">│   ├── TTSManager.ts                # 多引擎管理器（类似 ProviderManager）</span><br><span class="line">│   ├── providers/</span><br><span class="line">│   │   ├── SherpaOnnxProvider.ts     # Sherpa-ONNX 引擎（Kokoro + Piper/VITS）</span><br><span class="line">│   │   ├── SupertonicProvider.ts     # Supertonic 引擎</span><br><span class="line">│   │   ├── PiperCliProvider.ts       # Piper CLI 子进程兜底</span><br><span class="line">│   │   └── PaddleSpeechProvider.ts   # PaddleSpeech Python CLI</span><br><span class="line"></span><br><span class="line">主进程 - 远程引擎实现（9 个文件）:</span><br><span class="line">│   ├── providers/</span><br><span class="line">│   │   ├── AliyunQwen3Provider.ts    # 阿里云 Qwen3-TTS</span><br><span class="line">│   │   ├── VolcengineProvider.ts     # 火山引擎</span><br><span class="line">│   │   ├── TencentCloudProvider.ts   # 腾讯云</span><br><span class="line">│   │   ├── BaiduCloudProvider.ts     # 百度智能云</span><br><span class="line">│   │   ├── OpenAIProvider.ts         # OpenAI TTS</span><br><span class="line">│   │   ├── GoogleCloudProvider.ts    # Google Cloud TTS</span><br><span class="line">│   │   ├── AmazonPollyProvider.ts    # Amazon Polly</span><br><span class="line">│   │   ├── AzureProvider.ts          # Azure Speech</span><br><span class="line">│   │   └── ElevenLabsProvider.ts     # ElevenLabs</span><br><span class="line"></span><br><span class="line">主进程 - 辅助模块（2 个文件）:</span><br><span class="line">├── apps/desktop/src/main/tts/</span><br><span class="line">│   ├── VoiceManager.ts               # 统一语音模型下载/缓存/校验</span><br><span class="line">│   ├── CredentialStore.ts             # API Key 加密存储</span><br><span class="line">│   └── audio-utils.ts                 # PCM/WAV 格式转换 + 采样率适配</span><br><span class="line"></span><br><span class="line">预加载 + 类型（2 个文件修改）:</span><br><span class="line">├── apps/desktop/src/renderer/src/env.d.ts  # 新增 api.tts 类型声明</span><br><span class="line">├── apps/desktop/src/preload/index.ts       # 新增 api.tts 桥接</span><br><span class="line"></span><br><span class="line">渲染进程（4 个文件）:</span><br><span class="line">├── apps/desktop/src/renderer/src/store/useTTSStore.ts      # TTS 状态管理</span><br><span class="line">├── apps/desktop/src/renderer/src/components/TTSSettings.tsx # TTS 设置页</span><br><span class="line">├── apps/desktop/src/renderer/src/components/RemoteTTSSetup.tsx # API Key 配置向导</span><br><span class="line">├── apps/desktop/src/renderer/src/components/TTSPrivacyNotice.tsx # 隐私声明弹窗</span><br><span class="line">├── apps/desktop/src/renderer/src/hooks/useTTSPlayer.ts     # TTS 播放 Hook</span><br><span class="line"></span><br><span class="line">主进程入口（1 个文件修改）:</span><br><span class="line">└── apps/desktop/src/main/index.ts           # 新增 tts:* IPC 处理器</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十一、IPC-接口设计（最终版，覆盖本地-远程）"><a href="#十一、IPC-接口设计（最终版，覆盖本地-远程）" class="headerlink" title="十一、IPC 接口设计（最终版，覆盖本地+远程）"></a>十一、IPC 接口设计（最终版，覆盖本地+远程）</h2><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br></pre></td><td class="code"><pre><span class="line">api.<span class="property">tts</span> = &#123;</span><br><span class="line">  <span class="comment">// ── 引擎管理 ──</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 获取所有可用引擎列表 */</span></span><br><span class="line">  <span class="attr">getEngines</span>: <span class="function">() =&gt;</span> <span class="title class_">Promise</span>&lt;&#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">name</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">type</span>: <span class="string">&#x27;local&#x27;</span> | <span class="string">&#x27;remote&#x27;</span></span><br><span class="line">    <span class="attr">available</span>: <span class="built_in">boolean</span></span><br><span class="line">    <span class="attr">version</span>?: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">recommended</span>: <span class="built_in">boolean</span></span><br><span class="line">    <span class="attr">requiresAuth</span>: <span class="built_in">boolean</span></span><br><span class="line">    <span class="attr">supportedLangs</span>: <span class="built_in">string</span>[]</span><br><span class="line">    <span class="attr">pricing</span>?: <span class="built_in">string</span> <span class="comment">// 价格简写（如 &quot;¥0.8/万字符&quot; | &quot;$15/M字符&quot; | &quot;免费&quot;）</span></span><br><span class="line">  &#125;[]&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 设置当前使用的引擎 */</span></span><br><span class="line">  <span class="attr">setEngine</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span></span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span>; <span class="attr">error</span>?: <span class="built_in">string</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 设置降级链 */</span></span><br><span class="line">  <span class="attr">setFallbackChain</span>: <span class="function">(<span class="params"><span class="attr">chain</span>: <span class="built_in">string</span>[]</span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 下载/安装指定引擎 */</span></span><br><span class="line">  <span class="attr">installEngine</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">onProgress</span>?: (pct: <span class="built_in">number</span>) =&gt; <span class="built_in">void</span></span>)</span></span><br><span class="line"><span class="function">    =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span>; <span class="attr">error</span>?: <span class="built_in">string</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 凭据管理（远程引擎） ──</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 设置远程引擎凭据 */</span></span><br><span class="line">  <span class="attr">setCredentials</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">credentials</span>: <span class="title class_">Record</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt;</span>)</span></span><br><span class="line"><span class="function">    =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">valid</span>: <span class="built_in">boolean</span>; <span class="attr">error</span>?: <span class="built_in">string</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 验证凭据有效性 */</span></span><br><span class="line">  <span class="attr">validateCredentials</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span></span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">valid</span>: <span class="built_in">boolean</span>; <span class="attr">quota</span>?: <span class="built_in">number</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 移除凭据 */</span></span><br><span class="line">  <span class="attr">removeCredentials</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span></span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 语音管理 ──</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 获取可用语音列表 */</span></span><br><span class="line">  <span class="attr">getVoices</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>?: <span class="built_in">string</span></span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123;</span><br><span class="line">    <span class="attr">id</span>: <span class="built_in">string</span>; <span class="attr">name</span>: <span class="built_in">string</span>; <span class="attr">lang</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">quality</span>: <span class="string">&#x27;low&#x27;</span> | <span class="string">&#x27;medium&#x27;</span> | <span class="string">&#x27;high&#x27;</span></span><br><span class="line">    <span class="attr">sizeBytes</span>?: <span class="built_in">number</span></span><br><span class="line">    <span class="attr">downloaded</span>?: <span class="built_in">boolean</span>  <span class="comment">// 仅本地引擎</span></span><br><span class="line">    <span class="attr">price</span>?: <span class="built_in">string</span>        <span class="comment">// 仅远程引擎的特殊语音</span></span><br><span class="line">  &#125;[]&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 下载语音模型（仅本地引擎） */</span></span><br><span class="line">  <span class="attr">downloadVoice</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span>, <span class="attr">onProgress</span>?: (pct: <span class="built_in">number</span>) =&gt; <span class="built_in">void</span></span>)</span></span><br><span class="line"><span class="function">    =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span>; <span class="attr">error</span>?: <span class="built_in">string</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 删除语音模型 */</span></span><br><span class="line">  <span class="attr">deleteVoice</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span></span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 合成 ──</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 合成语音（非流式） */</span></span><br><span class="line">  <span class="attr">speak</span>: <span class="function">(<span class="params"><span class="attr">text</span>: <span class="built_in">string</span>, <span class="attr">opts</span>?: &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">    engineId?: <span class="built_in">string</span></span></span></span><br><span class="line"><span class="params"><span class="function">    voiceId?: <span class="built_in">string</span></span></span></span><br><span class="line"><span class="params"><span class="function">    speed?: <span class="built_in">number</span></span></span></span><br><span class="line"><span class="params"><span class="function">    pitch?: <span class="built_in">number</span></span></span></span><br><span class="line"><span class="params"><span class="function">    format?: <span class="string">&#x27;wav&#x27;</span> | <span class="string">&#x27;mp3&#x27;</span> | <span class="string">&#x27;ogg&#x27;</span></span></span></span><br><span class="line"><span class="params"><span class="function">  &#125;</span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span>; <span class="attr">filePath</span>?: <span class="built_in">string</span>; <span class="attr">duration</span>?: <span class="built_in">number</span>; <span class="attr">error</span>?: <span class="built_in">string</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 流式合成（长文本分段，边生成边播放） */</span></span><br><span class="line">  <span class="attr">speakStream</span>: <span class="function">(<span class="params"><span class="attr">text</span>: <span class="built_in">string</span>, <span class="attr">opts</span>?: &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">    engineId?: <span class="built_in">string</span></span></span></span><br><span class="line"><span class="params"><span class="function">    voiceId?: <span class="built_in">string</span></span></span></span><br><span class="line"><span class="params"><span class="function">    speed?: <span class="built_in">number</span></span></span></span><br><span class="line"><span class="params"><span class="function">  &#125;</span>) =&gt;</span> &#123; <span class="attr">cancel</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 用指定语音合成测试文本并播放 */</span></span><br><span class="line">  <span class="attr">previewVoice</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span></span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span>; <span class="attr">error</span>?: <span class="built_in">string</span> &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 偏好设置 ──</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 获取 TTS 偏好 */</span></span><br><span class="line">  <span class="attr">getPreferences</span>: <span class="function">() =&gt;</span> <span class="title class_">Promise</span>&lt;&#123;</span><br><span class="line">    <span class="attr">engineId</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">voiceId</span>: <span class="built_in">string</span></span><br><span class="line">    <span class="attr">speed</span>: <span class="built_in">number</span></span><br><span class="line">    <span class="attr">pitch</span>: <span class="built_in">number</span></span><br><span class="line">    <span class="attr">privacyMode</span>: <span class="string">&#x27;local-only&#x27;</span> | <span class="string">&#x27;remote-ok&#x27;</span> | <span class="string">&#x27;remote-preferred&#x27;</span></span><br><span class="line">    <span class="attr">fallbackChain</span>: <span class="built_in">string</span>[]</span><br><span class="line">  &#125;&gt;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 更新 TTS 偏好 */</span></span><br><span class="line">  <span class="attr">setPreferences</span>: <span class="function">(<span class="params"><span class="attr">prefs</span>: <span class="title class_">Partial</span>&lt;<span class="title class_">TTSPreferences</span>&gt;</span>) =&gt;</span> <span class="title class_">Promise</span>&lt;&#123; <span class="attr">success</span>: <span class="built_in">boolean</span> &#125;&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十二、与现有系统集成"><a href="#十二、与现有系统集成" class="headerlink" title="十二、与现有系统集成"></a>十二、与现有系统集成</h2><table>
+<thead>
+<tr>
+<th>现有系统</th>
+<th>复用方式</th>
+<th align="center">改动量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>IServerProvider</code> 多 Provider 模式</td>
+<td>TTS 完全复用，TTSManager ≈ ProviderManager</td>
+<td align="center">微小</td>
+</tr>
+<tr>
+<td><code>useMediaPlayerStore</code> + <code>useAudioEngine</code></td>
+<td>合成后的音频直接 <code>playOrEnqueue(&#123; source: &#39;ai&#39; &#125;)</code></td>
+<td align="center">零改动</td>
+</tr>
+<tr>
+<td>IPC 桥接 (<code>api.*</code> 命名空间)</td>
+<td>新增 <code>api.tts</code>，遵循现有约定</td>
+<td align="center">约 100 行新增</td>
+</tr>
+<tr>
+<td>设置页面 UI 模式</td>
+<td>参考”数据与存储”三层递进布局</td>
+<td align="center">复用样式</td>
+</tr>
+<tr>
+<td><code>net.streamRequest</code> cancel 模式</td>
+<td>TTS 流式合成的取消机制直接复用</td>
+<td align="center">参考即可</td>
+</tr>
+<tr>
+<td><code>@ffmpeg-installer</code> 二进制管理</td>
+<td>本地引擎的二进制下载管理参照此模式</td>
+<td align="center">参考即可</td>
+</tr>
+<tr>
+<td><code>api.file.readBuffer</code> (unbox-file:&#x2F;&#x2F; → blob URL)</td>
+<td>合成后的 WAV 文件通过此协议访问和播放</td>
+<td align="center">零改动</td>
+</tr>
+<tr>
+<td><code>app_kv_store</code> SQLite 表</td>
+<td>API Key 加密存储 + TTS 偏好持久化</td>
+<td align="center">新增 1 个表</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十三、成本对比（以日均朗读-20-条消息、每条-200-字符为例）"><a href="#十三、成本对比（以日均朗读-20-条消息、每条-200-字符为例）" class="headerlink" title="十三、成本对比（以日均朗读 20 条消息、每条 200 字符为例）"></a>十三、成本对比（以日均朗读 20 条消息、每条 200 字符为例）</h2><blockquote>
+<p>月均 &#x3D; 20 × 200 × 30 &#x3D; <strong>12 万字符&#x2F;月</strong></p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>引擎</th>
+<th align="center">月度成本</th>
+<th align="center">年度成本</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🏠 本地引擎（全部）</td>
+<td align="center"><strong>¥0</strong></td>
+<td align="center"><strong>¥0</strong></td>
+<td>磁盘 ~160MB</td>
+</tr>
+<tr>
+<td>🇨🇳 阿里云 Qwen3</td>
+<td align="center"><strong>¥0</strong></td>
+<td align="center"><strong>¥0</strong></td>
+<td>免费层内（100 万&#x2F;月）</td>
+</tr>
+<tr>
+<td>🇨🇳 火山引擎</td>
+<td align="center"><strong>¥0</strong></td>
+<td align="center"><strong>¥0</strong></td>
+<td>基础音色免费</td>
+</tr>
+<tr>
+<td>🇨🇳 腾讯云</td>
+<td align="center"><strong>¥0（首 3 月）</strong></td>
+<td align="center">~¥9</td>
+<td>首 3 月 800 万字符免费</td>
+</tr>
+<tr>
+<td>🇨🇳 百度智能云</td>
+<td align="center"><strong>¥0</strong></td>
+<td align="center"><strong>¥0</strong></td>
+<td>免费层内（个人 5 万次&#x2F;180 天）</td>
+</tr>
+<tr>
+<td>🌍 OpenAI tts-1</td>
+<td align="center">~$1.80</td>
+<td align="center">~$21.60</td>
+<td>$15&#x2F;M 字符</td>
+</tr>
+<tr>
+<td>🌍 Google 标准</td>
+<td align="center"><strong>$0</strong></td>
+<td align="center"><strong>$0</strong></td>
+<td>免费层内（400 万&#x2F;月）</td>
+</tr>
+<tr>
+<td>🌍 Google 神经</td>
+<td align="center">~$1.92</td>
+<td align="center">~$23.04</td>
+<td>$16&#x2F;M 字符</td>
+</tr>
+<tr>
+<td>🌍 Amazon Polly 神经</td>
+<td align="center"><strong>$0（首年）</strong></td>
+<td align="center">~$23</td>
+<td>首年 100 万&#x2F;月免费</td>
+</tr>
+<tr>
+<td>🌍 Azure 神经</td>
+<td align="center">~$1.80</td>
+<td align="center">~$21.60</td>
+<td>$15&#x2F;M 字符</td>
+</tr>
+<tr>
+<td>🌍 ElevenLabs</td>
+<td align="center"><strong>$5&#x2F;月</strong></td>
+<td align="center"><strong>$60</strong></td>
+<td>订阅制起步</td>
+</tr>
+</tbody></table>
+<p><strong>结论：对个人用户正常使用量，无论是国内云还是国际云，基本都在免费层内，远程 TTS 实际成本为 ¥0。</strong></p>
+<hr>
+<h2 id="十四、工作量估算（本地优先，云端增值）"><a href="#十四、工作量估算（本地优先，云端增值）" class="headerlink" title="十四、工作量估算（本地优先，云端增值）"></a>十四、工作量估算（本地优先，云端增值）</h2><h3 id="核心策略"><a href="#核心策略" class="headerlink" title="核心策略"></a>核心策略</h3><p><strong>Phase 1 交付后即可发版，本地 TTS 功能完整可用。</strong> Phase 2&#x2F;3 的远程云端引擎按需叠加，不影响已上线功能。</p>
+<h3 id="14-1-分阶段估算"><a href="#14-1-分阶段估算" class="headerlink" title="14.1 分阶段估算"></a>14.1 分阶段估算</h3><table>
+<thead>
+<tr>
+<th>阶段</th>
+<th>内容</th>
+<th align="center">工时</th>
+<th>备注</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>Phase 0：接口设计</strong></td>
+<td><code>ITTSProvider</code> + <code>TTSManager</code> + <code>VoiceManager</code> + <code>CredentialStore</code></td>
+<td align="center">1-2 天</td>
+<td>覆盖本地+远程，但 Phase 1 只实现本地</td>
+</tr>
+<tr>
+<td><strong>Phase 1a：主力本地引擎</strong></td>
+<td>Sherpa-ONNX (Kokoro&#x2F;Piper) + Supertonic + 语音模型下载管理</td>
+<td align="center">5-6 天</td>
+<td>首个引擎最耗时</td>
+</tr>
+<tr>
+<td><strong>Phase 1b：本地兜底</strong></td>
+<td>Piper CLI 子进程 + MATCHA-TTS 预打包保底语音</td>
+<td align="center">1-2 天</td>
+<td>编译失败 + 极低配设备</td>
+</tr>
+<tr>
+<td><strong>Phase 2a：统一 Store</strong></td>
+<td><code>useTTSStore</code>（引擎切换&#x2F;语音列表&#x2F;合成队列&#x2F;偏好持久化）</td>
+<td align="center">1-2 天</td>
+<td>本地引擎阶段即可完成</td>
+</tr>
+<tr>
+<td><strong>Phase 2b：消息集成</strong></td>
+<td>右键”朗读”按钮 + TTS 播放指示器 + AI 对话自动朗读</td>
+<td align="center">1-2 天</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Phase 3a：设置 UI</strong></td>
+<td>引擎状态展示 + 语音浏览&#x2F;下载&#x2F;试听 + 语速&#x2F;音调调节</td>
+<td align="center">2-3 天</td>
+<td>不含远程引擎分区</td>
+</tr>
+<tr>
+<td><strong>Phase 3b：测试打磨</strong></td>
+<td>跨平台测试 + 引擎降级测试 + 语音模型下载异常处理</td>
+<td align="center">2-3 天</td>
+<td></td>
+</tr>
+<tr>
+<td><strong>🏠 本地引擎合计</strong></td>
+<td></td>
+<td align="center"><strong>14-20 天</strong></td>
+<td><strong>此阶段完成即可发版</strong></td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>Phase 4：远程云端引擎</strong></td>
+<td>8 个远程 Provider + API Key 配置 UI + 隐私声明 + 降级链</td>
+<td align="center">4-6 天</td>
+<td>本地引擎发版后开始</td>
+</tr>
+<tr>
+<td><strong>Phase 5：高端增强</strong></td>
+<td>ElevenLabs + PaddleSpeech</td>
+<td align="center">2-3 天</td>
+<td>语音克隆 + 开源中文</td>
+</tr>
+<tr>
+<td><strong>☁️ 远程引擎增量合计</strong></td>
+<td></td>
+<td align="center"><strong>+6-9 天</strong></td>
+<td>叠加到本地引擎之上</td>
+</tr>
+<tr>
+<td></td>
+<td></td>
+<td align="center"></td>
+<td></td>
+</tr>
+<tr>
+<td><strong>🏆 全部合计</strong></td>
+<td></td>
+<td align="center"><strong>20-29 天</strong></td>
+<td>本地 14-20 + 远程 6-9</td>
+</tr>
+</tbody></table>
+<h3 id="14-2-推荐交付节奏"><a href="#14-2-推荐交付节奏" class="headerlink" title="14.2 推荐交付节奏"></a>14.2 推荐交付节奏</h3><table>
+<thead>
+<tr>
+<th>里程碑</th>
+<th>包含内容</th>
+<th align="center">工时</th>
+<th align="center">用户可感知</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>🚀 v1.0 本地免费版</strong></td>
+<td>Sherpa-ONNX (Kokoro) + Supertonic + Piper CLI + MATCHA-TTS + 设置 UI + 消息朗读</td>
+<td align="center"><strong>14-20 天</strong></td>
+<td align="center">✅ TTS 功能完整可用</td>
+</tr>
+<tr>
+<td><strong>☁️ v1.1 云端增值版</strong></td>
+<td>阿里云 + 火山引擎 + 腾讯云 + 百度智能云 + OpenAI + Google + Azure</td>
+<td align="center"><strong>+4-6 天</strong></td>
+<td align="center">✅ 高级用户可配 API Key</td>
+</tr>
+<tr>
+<td><strong>💎 v1.2 专业增强版</strong></td>
+<td>ElevenLabs + PaddleSpeech + Amazon Polly</td>
+<td align="center"><strong>+2-3 天</strong></td>
+<td align="center">✅ 语音克隆等专业场景</td>
+</tr>
+</tbody></table>
+<h3 id="14-3-与有声书的叠加"><a href="#14-3-与有声书的叠加" class="headerlink" title="14.3 与有声书的叠加"></a>14.3 与有声书的叠加</h3><p>有声书功能严重依赖 TTS 引擎。日程安排：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">v1.0 本地 TTS（14-20 天）</span><br><span class="line"> │</span><br><span class="line"> └─→ v1.0 + 有声书（+11-18 天） = 总计 25-38 天</span><br><span class="line"> │   └── 可从 v1.0 发版后立即开始</span><br><span class="line"> │</span><br><span class="line"> └─→ v1.0 + v1.1 云端 TTS + 有声书 = 总计 29-44 天</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十五、总体评估"><a href="#十五、总体评估" class="headerlink" title="十五、总体评估"></a>十五、总体评估</h2><h3 id="15-1-分类推荐度"><a href="#15-1-分类推荐度" class="headerlink" title="15.1 分类推荐度"></a>15.1 分类推荐度</h3><table>
+<thead>
+<tr>
+<th>类别</th>
+<th>推荐引擎</th>
+<th align="center">推荐度</th>
+<th>理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>🏠 本地主力</td>
+<td><strong>Sherpa-ONNX + Kokoro</strong></td>
+<td align="center">⭐⭐⭐⭐⭐</td>
+<td>中英文双语覆盖，一个框架承载多种模型</td>
+</tr>
+<tr>
+<td>🏠 极速英文</td>
+<td><strong>Supertonic</strong></td>
+<td align="center">⭐⭐⭐⭐</td>
+<td>CPU 167x 实时，长文稳定性最佳</td>
+</tr>
+<tr>
+<td>🏠 中文开源</td>
+<td><strong>PaddleSpeech</strong></td>
+<td align="center">⭐⭐⭐</td>
+<td>可定制但 Python 环境是门槛</td>
+</tr>
+<tr>
+<td>🏠 本地兜底</td>
+<td><strong>Piper CLI</strong></td>
+<td align="center">⭐⭐⭐</td>
+<td>编译失败时的安全网</td>
+</tr>
+<tr>
+<td>🇨🇳 国内首选</td>
+<td><strong>阿里云 Qwen3-TTS</strong></td>
+<td align="center">⭐⭐⭐⭐⭐</td>
+<td>WER 中文最低，100 万字符&#x2F;月免费</td>
+</tr>
+<tr>
+<td>🇨🇳 国内性价比</td>
+<td><strong>火山引擎</strong></td>
+<td align="center">⭐⭐⭐⭐</td>
+<td>基础音色免费，长文本 ¥1.0&#x2F;万字</td>
+</tr>
+<tr>
+<td>🇨🇳 国内省钱</td>
+<td><strong>腾讯云</strong></td>
+<td align="center">⭐⭐⭐⭐</td>
+<td>预付费 ¥0.75&#x2F;万字最低</td>
+</tr>
+<tr>
+<td>🇨🇳 国内免费</td>
+<td><strong>百度智能云</strong></td>
+<td align="center">⭐⭐⭐</td>
+<td>企业认证 1 亿次免费（无 SDK）</td>
+</tr>
+<tr>
+<td>🌍 国际首选</td>
+<td><strong>OpenAI TTS</strong></td>
+<td align="center">⭐⭐⭐⭐⭐</td>
+<td>AI 对话原生场景，gpt-4o-mini-tts</td>
+</tr>
+<tr>
+<td>🌍 多语言首选</td>
+<td><strong>Google Cloud TTS</strong></td>
+<td align="center">⭐⭐⭐⭐</td>
+<td>75+ 语言 380+ 语音</td>
+</tr>
+<tr>
+<td>🌍 极致质量</td>
+<td><strong>ElevenLabs</strong></td>
+<td align="center">⭐⭐⭐</td>
+<td>语音克隆 + 天花板质量（订阅制）</td>
+</tr>
+<tr>
+<td>🌍 微软生态</td>
+<td><strong>Azure Speech</strong></td>
+<td align="center">⭐⭐⭐</td>
+<td>国内版 ¥0.95&#x2F;万字极便宜</td>
+</tr>
+<tr>
+<td>🌍 AWS 生态</td>
+<td><strong>Amazon Polly</strong></td>
+<td align="center">⭐⭐⭐</td>
+<td>首年免费额度最慷慨</td>
+</tr>
+<tr>
+<td>❌ 不推荐</td>
+<td><strong>Pico TTS</strong></td>
+<td align="center">⭐</td>
+<td>无中文，MATCHA-TTS 替代</td>
+</tr>
+</tbody></table>
+<h3 id="15-2-综合评分"><a href="#15-2-综合评分" class="headerlink" title="15.2 综合评分"></a>15.2 综合评分</h3><table>
+<thead>
+<tr>
+<th>维度</th>
+<th align="center">评分</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>技术可行性</td>
+<td align="center">⭐⭐⭐⭐⭐</td>
+<td>所有引擎均可集成，成熟 SDK 或 HTTP API</td>
+</tr>
+<tr>
+<td>多引擎架构契合度</td>
+<td align="center">⭐⭐⭐⭐⭐</td>
+<td>项目 <code>IServerProvider</code> 多 Provider 模式直接复用</td>
+</tr>
+<tr>
+<td>中文场景覆盖</td>
+<td align="center">⭐⭐⭐⭐⭐</td>
+<td>国内 4 云质量顶尖 + Kokoro 离线可定制 + PaddleSpeech 开源</td>
+</tr>
+<tr>
+<td>实现复杂度</td>
+<td align="center">⭐⭐⭐</td>
+<td>主要是胶水代码，但引擎数量使 UI 和测试复杂度显著</td>
+</tr>
+<tr>
+<td>跨平台风险</td>
+<td align="center">⭐⭐⭐</td>
+<td>本地引擎需预编译包；远程引擎仅需 HTTP，无此风险</td>
+</tr>
+<tr>
+<td>隐私合规</td>
+<td align="center">⭐⭐⭐⭐</td>
+<td>远程引擎需用户知情同意 + 本地加密存储凭据 + 降级保护</td>
+</tr>
+<tr>
+<td>用户体验增益</td>
+<td align="center">⭐⭐⭐⭐⭐</td>
+<td>10+ 引擎覆盖全部场景，用户按需自由选择</td>
+</tr>
+</tbody></table>
+<h3 id="15-3-最终结论"><a href="#15-3-最终结论" class="headerlink" title="15.3 最终结论"></a>15.3 最终结论</h3><p><strong>本地免费默认，云端增值可选。建议分三个里程碑交付。</strong></p>
+<p>核心设计原则：</p>
+<ol>
+<li><p><strong>本地引擎是默认选项，面向所有用户免费可用。</strong> 开箱即用，零配置，零网络依赖。预打包 1 个保底语音（&lt;15MB），主力语音首次启动后台静默下载。</p>
+</li>
+<li><p><strong>远程云端引擎是增值选项，面向高价值用户。</strong> 用户自行注册云服务商账号、自行管理 API Key、自行承担费用。unobox 仅提供设置页面的 Key 配置入口和引擎切换器，不做代理、不做中转、不计费。</p>
+</li>
+<li><p><strong>统一接口承载一切。</strong> <code>ITTSProvider</code> 对本地引擎和远程 API 完全透明——调用方不感知引擎类别差异。远程引擎实现上反而更简单（HTTP API ≈ 0.5 天&#x2F;个）。</p>
+</li>
+<li><p><strong><code>useMediaPlayerStore</code> 零改动。</strong> 合成后的 WAV 文件直接送入现有音频播放器队列（<code>source: &#39;ai&#39;</code>），MiniPlayer&#x2F;FullPlayer 完全复用。</p>
+</li>
+<li><p><strong>推荐首个交付版本（v1.0 本地免费版，14-20 天）：</strong></p>
+</li>
+</ol>
+<ul>
+<li>🏠 Sherpa-ONNX + Kokoro-multi-lang（中英文双语主力）</li>
+<li>🏠 Supertonic（极速英文加速引擎）</li>
+<li>🏠 Piper CLI + MATCHA-TTS（编译失败 + 极低配兜底）</li>
+<li>设置 UI（语音浏览&#x2F;下载&#x2F;试听&#x2F;语速调节）</li>
+<li>消息集成（右键”朗读”按钮 + AI 对话自动朗读）</li>
+</ul>
+<ol start="6">
+<li><p><strong>v1.1 云端增值版（+4-6 天）：</strong> 阿里云&#x2F;火山引擎&#x2F;腾讯云&#x2F;百度智能云 + OpenAI&#x2F;Google&#x2F;Azure + API Key 配置 + 隐私声明</p>
+</li>
+<li><p><strong>不推荐集成的引擎：Pico TTS</strong>（无中文，MATCHA-TTS 替代）。</p>
+</li>
+<li><p><strong>语音包完全二次下载。</strong> 预打包仅保留一个 ≤15MB 的保底中文语音，其余全部按需下载。</p>
+</li>
+<li><p><strong>远程引擎的隐私合规是强制要求。</strong> 文本离开设备前必须获得用户明确知情同意，API Key 本地加密存储，任何远程失败均自动降级到本地引擎。</p>
+</li>
+<li><p><strong>有声书功能基于 Phase 1 本地 TTS 即可独立开发（+11-18 天），无需等待远程引擎。</strong></p>
+</li>
+</ol>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/unobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao/">https://need.uno/unobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/unobox/" class="post-tags__link button"># unobox</a><a href="/tags/TTS/" class="post-tags__link button"># TTS</a><a href="/tags/Electron/" class="post-tags__link button"># Electron</a><a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" class="post-tags__link button"># 架构设计</a><a href="/tags/%E8%AF%AD%E9%9F%B3%E5%90%88%E6%88%90/" class="post-tags__link button"># 语音合成</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Funobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao%2F&amp;text=unobox%20TTS%20%E5%A4%9A%E5%BC%95%E6%93%8E%E9%9B%86%E6%88%90%E8%AF%84%E4%BC%B0%E6%8A%A5%E5%91%8A&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Funobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Funobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao%2F&amp;title=unobox%20TTS%20%E5%A4%9A%E5%BC%95%E6%93%8E%E9%9B%86%E6%88%90%E8%AF%84%E4%BC%B0%E6%8A%A5%E5%91%8A"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Funobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao%2F&amp;text=unobox%20TTS%20%E5%A4%9A%E5%BC%95%E6%93%8E%E9%9B%86%E6%88%90%E8%AF%84%E4%BC%B0%E6%8A%A5%E5%91%8A"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Funobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao%2F&amp;title=unobox%20TTS%20%E5%A4%9A%E5%BC%95%E6%93%8E%E9%9B%86%E6%88%90%E8%AF%84%E4%BC%B0%E6%8A%A5%E5%91%8A&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Funobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao%2F&amp;title=unobox%20TTS%20%E5%A4%9A%E5%BC%95%E6%93%8E%E9%9B%86%E6%88%90%E8%AF%84%E4%BC%B0%E6%8A%A5%E5%91%8A&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Funobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao%2F&amp;title=unobox%20TTS%20%E5%A4%9A%E5%BC%95%E6%93%8E%E9%9B%86%E6%88%90%E8%AF%84%E4%BC%B0%E6%8A%A5%E5%91%8A&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/056-qi-ye-shen-me-shi-hou-ying-gai-yin-ru-wai-bu-cai-wu-gu-wen/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            企业什么时候应该引入外部财务顾问？
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/epub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            EPUB 电子书转有声书方案设计
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="unobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

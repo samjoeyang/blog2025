@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>ubuntu菜鸟命令收集 | Need.UNO</title>
+
+
+    <meta name="keywords" content="Linux, LINUX, 系统管理, Shell, Ubuntu, Vim, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="[本菜鸟仅仅收录了菜鸟常用的命令,旨在方便新手入门,HX类生物就不用看了,以免被雷到 lol ] 所有命令按字母顺序排列,只介绍最常用参数,相信等你看完之后,就有能力man更详细的用法了 此前own也曾发表过几篇文章,详细的介绍了几个命令比如ls,sudo,chmod等等,看不懂man的,请自行查找:) 直到前天群里有人问cd命令怎么用..暴寒~~想想也是,一定有很多在win下也没接触过命令的吧?">
+<meta property="og:type" content="website">
+<meta property="og:title" content="ubuntu菜鸟命令收集">
+<meta property="og:url" content="https://need.uno/needisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="[本菜鸟仅仅收录了菜鸟常用的命令,旨在方便新手入门,HX类生物就不用看了,以免被雷到 lol ] 所有命令按字母顺序排列,只介绍最常用参数,相信等你看完之后,就有能力man更详细的用法了 此前own也曾发表过几篇文章,详细的介绍了几个命令比如ls,sudo,chmod等等,看不懂man的,请自行查找:) 直到前天群里有人问cd命令怎么用..暴寒~~想想也是,一定有很多在win下也没接触过命令的吧?">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2010-12-08T08:25:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.116Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="LINUX">
+<meta property="article:tag" content="系统管理">
+<meta property="article:tag" content="Shell">
+<meta property="article:tag" content="Ubuntu">
+<meta property="article:tag" content="Vim">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+    <meta name="robots" content="noindex, nofollow">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "ubuntu菜鸟命令收集",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-08",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86/" },
+  "description": "ubuntu菜鸟命令收集"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        ubuntu菜鸟命令收集
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2010/12/" class="post-meta__date button">2010-12-08</a>
+        
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <p>[本菜鸟仅仅收录了菜鸟常用的命令,旨在方便新手入门,HX类生物就不用看了,以免被雷到 lol ]<br />
+所有命令按字母顺序排列,只介绍最常用参数,相信等你看完之后,就有能力man更详细的用法了</p>
+<p>此前own也曾发表过几篇文章,详细的介绍了几个命令比如ls,sudo,chmod等等,看不懂man的,请自行查找:)</p>
+<p>直到前天群里有人问cd命令怎么用..暴寒~~想想也是,一定有很多在win下也没接触过命令的吧?于是决定写点东东</p>
+<p><strong>apt-get:</strong></p>
+<p>debian系系统的软件包管理程序(其图形化前端就是大名鼎鼎的新立得了),会自动帮你搞定依赖关系</p>
+<p>最常用参数:</p>
+<p>update        &mdash;-与你的软件源(在/etc/apt/sources.list中列出)更新软件包列表,换源后需要执行</p>
+<p>upgrade        &mdash;-根据update得到的源软件库与本地已经安装的对比,(如果需要升级就)全部升级</p>
+<p>install        &mdash;-安装软件包(可以使用tab补全软件包的名字,比较方便)</p>
+<p>remove        &mdash;-卸载软件包</p>
+<p>purge        &mdash;-卸载软件包,同时删除该软件的配置文件</p>
+<p>source        &mdash;-从源里下载软件包的源码到当前目录(执行此命令的目录)并解压(除非指定&ndash;download-only参数)</p>
+<p>该地址由/etc/apt/sources.list中的 deb-src 行指定</p>
+<p>check        &mdash;-用来(自动)修复(已装)软件包之间的依赖关系</p>
+<p>clean        &mdash;-清除/var/cache/apt/archives/包括其子目录partial/下的所有软件包缓存</p>
+<p>autoclean    &mdash;-比clean常用,我的理解是删除低版本的缓存而保留高版本的(或者包括非当前源里的软件包?)</p>
+<p><strong>aptitude:</strong></p>
+<p>此为PT同学补充,他的说法是aptitude比apt-get少个横线,tab补全比较容易(=.=)~大概神牛都比较懒吧</p>
+<p>不得不提下蛋蛋童鞋以前说过的ubuntu彩蛋:) <仅限于UBUNTU 8.04></p>
+<p>man apt        &mdash;-最后会看到 &ldquo;本apt有着超级牛力&rdquo; or &ldquo;this APT has a super-cow power&rdquo;</p>
+<p>man aptitude    &mdash;-会看到 &ldquo;这个aptitude没有超级牛力&rdquo;</p>
+<p>看看aptitude的参数,你就会明白为什么aptitude会标称&rdquo;高级软件包管理程序&rdquo;了</p>
+<p>最常用参数:</p>
+<p>search        &mdash;-在(你的源的)所有软件包列表中搜索该软件,search的表达式可以很复杂,具体看man</p>
+<p>其余常用参数同apt-get</p>
+<p><strong>cat:</strong></p>
+<p>把(一个或多个)文件内容(连接)显示到标准输出</p>
+<p>当文本文件很小,而且你只是想看下,并不打算用gedit或者vim之类编辑器编辑的时候,可以cat一下,我是用来配合grep使用</p>
+<p><strong>cd:</strong></p>
+<p>切换当前工作目录</p>
+<p>不同于其他命令,这是一个shell内置命令,所以没有手册页可看&hellip;够基础,所以才会出现在本篇文章中(=.=)郁闷</p>
+<p>最常用参数:</p>
+<p>.        &mdash;-切换到当前目录(貌似没有什么意义)(.这个目录可以通过ls -a看到)</p>
+<p>..        &mdash;-切换到上层目录</p>
+<p>~        &mdash;-回到家目录(/home/你的登录名/)</p>
+<p><strong>chmod</strong>:</p>
+<p>改变文件的权限位</p>
+<p>linux文件系统的权限位有两种表示方法,要是详细说下,非得累死老鼠不可=.=,所以只说8进制数表示:)</p>
+<p>简要介绍下:ls -l可以显示出文件的权限,比如(-rwxr-xr&ndash;),代表了三种用户的权限</p>
+<p>第一个rwx,代表文件所有者的权限,即(读,写,执行),用二进制表示为111,代表八进制中的4+2+1=7</p>
+<p>第二个r-x,代表文件所有者同一用户组其他用户的权限,即(读, ,执行),用二进制表示为101,代表八进制中的5=4+0+1</p>
+<p>第三个r&ndash;,代表其他用户的权限,即(读, , ),二进制表示为100,代表八进制的4=4+0+0</p>
+<p>所以这个文件的权限位为754</p>
+<p>这也就是chmod的用法,例如chmod 751 myfile #将该文件权限设定为rwxr-x&ndash;x</p>
+<p>最常用参数:</p>
+<p>-v        &mdash;-列出当前正在执行的步骤</p>
+<p>-R        &mdash;-递归式,即改变非空目录下的一切为指定权限</p>
+<p><strong>cp</strong>:</p>
+<p>拷贝文件和目录</p>
+<p>最常用参数:</p>
+<p>-b        &mdash;-为每个已经存在的目的文件作个备份</p>
+<p>-d        &mdash;-遇到软链接时不拷贝软链接所指向的文件;拷贝时保留links属性(链接数)</p>
+<p>-p        &mdash;-保留文件的访问权限,所有者,和时间戳</p>
+<p>-R和-r    &mdash;-递归式拷贝(cp过程遇到非空目录才有效),即拷贝目录,子目录,子目录的子目录&hellip;..</p>
+<p>-a        &mdash;-作用同-dpR</p>
+<p>-s        &mdash;-并不真的做拷贝,而只是为每个文件作软链接(符号链接)</p>
+<p>-u        &mdash;-同下面 mv 的-u参数</p>
+<p><strong>head, tail</strong></p>
+<p>就像这两个名字,一个显示文件头部,一个显示尾部</p>
+<p>最常用参数:</p>
+<p>-n        &mdash;-指定输出的(头部或尾部)行数, 当没有此参数时,默认显示10行</p>
+<p><strong>ifconfig</strong>:</p>
+<p>配置网卡</p>
+<p>最常用参数:</p>
+<p>没有参数        &mdash;-列出当前活动网卡的状态</p>
+<p>-a            &mdash;-列出所有网卡的状态</p>
+<p>interface    &mdash;-指定网卡名称比如eth0</p>
+<p>up            &mdash;-唤醒该网卡</p>
+<p>down        &mdash;-关闭该网卡</p>
+<p>arp,mtu,netmask addr,&hellip;等等很多参数 =.=</p>
+<p><strong>ln</strong>:</p>
+<p>为文件建立链接</p>
+<p>linux的链接分为两种:硬链接和软链接,ln默认建立硬链接(hard link),两种的区别请自己搜索:)</p>
+<p>最常用参数:</p>
+<p>-s        &mdash;-建立软链接(符号链接,可以理解为win下的快捷方式)</p>
+<p>-f        &mdash;-如果要建立的链接名已经存在,则删除之</p>
+<p><strong>ls</strong>:</p>
+<p>显示目录内容</p>
+<p>最常用参数:</p>
+<p>-a        &mdash;-显示指定目录所有文件,包括文件名以 . 开头的文件</p>
+<p>-l        &mdash;-显示文件详细信息(包括文件类型,权限,修改时间,访问时间,大小,文件名&hellip;)</p>
+<p>-h        &mdash;-将文件大小以方便阅读的形式表示出来,配合 -l 参数使用,常有奇效</p>
+<p><strong>man</strong>:</p>
+<p>阅读参考手册of~</p>
+<p>题外话:HX说这是linux最最难学的命令,因为man你学好了,就没有什么命令能难倒你了,=.=无敌了</p>
+<p>man可以查的不仅仅是命令额(当然,因为man是无敌的嘛/ch)</p>
+<p>最常用参数:</p>
+<p>man 阿拉伯数字</p>
+<p>阿拉伯数字1: 可执行程序(一般为用户安装的程序,如果提供了manpages的话)和shell命令</p>
+<p>阿拉伯数字2: 系统调用(例如 open调用,socket调用,chmod调用 等等等等),先装manpages-dev先</p>
+<p>阿拉伯数字3: 库函数调用(例如 man 3 printf),先装manpages-dev先</p>
+<p>&hellip;&hellip;.</p>
+<p>当你执行man ls 时, 和 man 1 ls结果是一样的,因为ls在man手册中只有一个入口</p>
+<p>当你想看chmod调用的手册页时,就要特别指定 man 2 chmod了~~因为chmod不止有一个入口</p>
+<p>在man的时候,可以通过j,k上下移动(和vi中类似),可以通过/查询,通过n,N查找下个,上个匹配(和vi类似)</p>
+<p>q退出(也和vi类似&hellip;.)</p>
+<p>比较有意思的一点:</p>
+<p>由于man 本身是个命令,所以,连man都是可以man的 =.=</p>
+<p><strong>mkdir</strong>:</p>
+<p>创建一个目录</p>
+<p>最常用参数:</p>
+<p>-p        &mdash;-如果给出的路径中父目录不存在,则同时创建父目录</p>
+<p><strong>mount</strong>:</p>
+<p>挂载文件系统(可理解为挂载一个分区)</p>
+<p>最常用参数:</p>
+<p>-t        &mdash;-指定文件系统类型,比如iso9660(挂载iso镜像为光盘,相当于虚拟光驱),ntfs,ext3,rfs等等</p>
+<p>-l        &mdash;-列出所有已经挂载的文件系统,支持卷标</p>
+<p>-a        &mdash;-挂载fstab中记录的所有分区<strong><br />
+r /><br />
+-n        &mdash;-挂载的时候不写入/etc/mtab</strong></p>
+<p><strong>-o        &mdash;-相当常用的一个参数,指定挂载文件系统的&rdquo;选项&rdquo;,比如noatime,用来挂载BT专用分区很合适</strong></p>
+<p><strong></strong><strong>mv</strong>:</p>
+<p><strong>移动或者更名文件,取决于目的目录是否为当前目录</strong></p>
+<p><strong>最常用参数:</strong></p>
+<p><strong>-b        &mdash;-为每个已经存在的目的文件做个备份(防止覆盖)</strong></p>
+<p><strong>-f        &mdash;-不提示是否覆盖已经存在的目的文件</strong></p>
+<p><strong>-i        &mdash;-与-f参数相反</strong></p>
+<p><strong>-u        &mdash;-仅当源文件比目的文件更新或者目的文件不存在时候才移动</strong></p>
+<p><strong>-v        &mdash;-显示移动文件的进度(个人总是推荐使用此参数,明白你在做什么)</strong></p>
+<p><strong></strong><strong>ps,top:</strong></p>
+<p><strong>列出当前命令的执行状态,ps为静态,top为动态(top时&rsquo;q&rsquo;退出)</strong></p>
+<p><strong>ps:这个命令本人更常用些,推荐给你看看=.=</strong></p>
+<p><strong>最常用参数(ps多用参数集合,而不是单个参数,并且配合grep使用)</strong></p>
+<p><strong>-ef        &mdash;-以标准语法列出当前所有进程状态,例如ps -ef | grep eva #列出eva的进程状态</strong></p>
+<p><strong>aux        &mdash;-以BSD语法列出&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;&hellip;..</strong></p>
+<p><strong>-ejH    &mdash;-列出进程树</strong></p>
+<p><strong>-eLf    &mdash;-同时列出线程状态</strong></p>
+<p><strong></strong><strong>rm, rmdir:</strong></p>
+<p><strong>rm:删除文件或目录,rmdir:删除一个空目录(此命令个人认为没啥用,可以用rm -r替代)</strong></p>
+<p><strong>rm最常用参数:</strong></p>
+<p><strong>-f        &mdash;-不提示不存在的文件,直接跳过</strong></p>
+<p><strong>-i        &mdash;-每个删除动作都提示 (=.= 删除多的话岂不是烦死)</strong></p>
+<p><strong>-I        &mdash;-删除多个文件(多于3个时)或者递归式删除(对于非空目录)提示一次</strong></p>
+<p><strong>-r和-R    &mdash;-递归式删除该目录下的一切东东</strong></p>
+<p><strong>-v        &mdash;-显示每个文件的删除动作(个人总是推荐使用此参数,明白你在做什么)</strong></p>
+<p><strong></strong><strong>sudo,su:</strong></p>
+<p><strong>这大概是装好系统之后第一个要用的命令吧?</strong></p>
+<p><strong>sudo我们主要用来临时提升权限,主要用以管理员(超级用户)的权限来运行命令,当需要修改当前登录用户力所不能及的文件/目录</strong></p>
+<p><strong>时需要用sudo,或者su -c,当然sudo和su的作用范围不仅仅如此</strong></p>
+<p><strong>可以使用visudo来编辑/etc/sudoers文件来修改sudo更详细的动作(比如记住密码的时间戳长度),请谨慎修改!</strong></p>
+<p><strong></strong><strong>sh:</strong></p>
+<p><strong>在终端解释执行</strong></p>
+<p><strong>类似于&rsquo;./&rsquo;的形式,但PT给了不同点: &lsquo;./&rsquo;仅仅对当前目录下有执行权限的程序才有效,&rsquo;sh&rsquo;则不管这套</strong></p>
+<p><strong>想想也是哈, &lsquo;./&rsquo;仅仅是给出了一个文件的路径(在当前目录下)而已, 但这个文件能不能执行就不好说了</strong></p>
+<p><strong>所以用sh总是正确的</strong></p>
+<p><strong></strong><strong>shutdown:</strong></p>
+<p><strong>关闭系统,如果停留在TTY,请改用halt, poweroff等命令</strong></p>
+<p><strong>常用参数:</strong></p>
+<p><strong>+m        &mdash;-指定关机延迟的分钟</strong></p>
+<p><strong>-c        &mdash;-取消一个等待关机的请求(关掉运行此命令的终端也可:))</strong></p>
+<p><strong>now        &mdash;-立即关机</strong></p>
+<p><strong>hh:mm    &mdash;-手动指定时间(以24小时计)</strong></p>
+<p><strong></strong><strong>tar:</strong></p>
+<p><strong>打包/解包</strong></p>
+<p><strong>这个tar不多说了吧..到处都是tar.gz,tar.bz2的东东</strong></p>
+<p><strong>和ps命令一样,tar一般不用单个参数,而是多个参数的组合,记住参数x是解压(extract),c是创建包(creat)即可</strong></p>
+<p><strong>最常用参数:</strong></p>
+<p><strong>-xvf    &mdash;-详细列出解包的步骤</strong></p>
+<p><strong>-cvf    &mdash;-详细列出打包的步骤</strong></p>
+<p><strong>-j        &mdash;-用来说明这是个tar.bz2包,例如tar -xjvf myfile.tar.bz2</strong></p>
+<p><strong>-t        &mdash;-列出包中的文件列表</strong></p>
+<p><strong>&mdash;&ndash;打包时常追加的参数:</strong></p>
+<p><strong>-r        &mdash;-追加到压缩包中</strong></p>
+<p><strong>-u        &mdash;-只把比包中更新的文件追加进去</strong></p>
+<p><strong>-h        &mdash;-不把符号链接添加到包中,而是添加此符号链接指向的文件</strong></p>
+<p><strong>附加说明:tar是个太强大的东东,常用的操作也就是打包解包,高级功能还是参阅man =.=</strong></p>
+<p><strong></strong><strong>touch:</strong></p>
+<p><strong>改变文件时间戳,默认包括修改时间和创建时间,默认修改为当前时间,默认如果文件不存在就新建(=.=是不是很罗嗦)</strong></p>
+<p><strong>额&ldquo;差不多就收集了这么多,感谢Ubuntu Linux群(46603737),分群(514034120)众菜的帮助</strong></p>
+<p><strong>本文的目的很明确,只方便菜鸟,不收录高级命令</strong></p>
+<p><strong>如果还有类似命令没有提及的,在评论中补充即可:)</strong></p>
+<blockquote>
+<div><strong>文章所处位置：<a target="_blank" rel="noopener" href="http://www.linuxhobby.com/">Linux爱好者</a> &raquo; <a title="ubuntu菜鸟命令收集" rel="bookmark noopener" target="_blank" href="http://www.linuxhobby.com/ubuntu-useful-commands/">《ubuntu菜鸟命令收集》</a></strong></div>
+<div><strong>本文地址：<a title="ubuntu菜鸟命令收集" rel="bookmark noopener" target="_blank" href="http://www.linuxhobby.com/ubuntu-useful-commands/">http://www.linuxhobby.com/ubuntu-useful-commands/</a></strong></div>
+<div><strong>订阅博客地址：<a title="Linux爱好者" target="_blank" rel="noopener" href="http://feed.feedsky.com/linuxhobby/">http://feed.feedsky.com/linuxhobby/</a></strong></div>
+</blockquote>
+
+<hr>
+<p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/needisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86/">https://need.uno/needisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a><a href="/tags/Shell/" class="post-tags__link button"># Shell</a><a href="/tags/Ubuntu/" class="post-tags__link button"># Ubuntu</a><a href="/tags/Vim/" class="post-tags__link button"># Vim</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86%2F&amp;text=ubuntu%E8%8F%9C%E9%B8%9F%E5%91%BD%E4%BB%A4%E6%94%B6%E9%9B%86&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86%2F&amp;title=ubuntu%E8%8F%9C%E9%B8%9F%E5%91%BD%E4%BB%A4%E6%94%B6%E9%9B%86"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86%2F&amp;text=ubuntu%E8%8F%9C%E9%B8%9F%E5%91%BD%E4%BB%A4%E6%94%B6%E9%9B%86"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86%2F&amp;title=ubuntu%E8%8F%9C%E9%B8%9F%E5%91%BD%E4%BB%A4%E6%94%B6%E9%9B%86&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86%2F&amp;title=ubuntu%E8%8F%9C%E9%B8%9F%E5%91%BD%E4%BB%A4%E6%94%B6%E9%9B%86&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86%2F&amp;title=ubuntu%E8%8F%9C%E9%B8%9F%E5%91%BD%E4%BB%A4%E6%94%B6%E9%9B%86&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/needisme-2010-12-08-e78eb0e59ca8e58fafe4bba5e5819ae79a8415e4bbb6e69c89e58aa9e4ba8ee4bda0e4ba8be4b89ae79a84e4ba8b/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            现在可以做的15件有助于你事业的事
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/needisme-2010-12-08-deditor-python-e4b893e794a8e7bc96e8be91e599a8/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            Deditor: Python 专用编辑器
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="needisme-2010-12-08-ubuntue88f9ce9b89fe591bde4bba4e694b6e99b86/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

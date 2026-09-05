@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Need.UNO</title>
+
+
+    <meta name="keywords" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="一个技术人的知行笔记 —— 分享技术、管理、编程与商业思考的原创博客">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Need.UNO">
+<meta property="og:url" content="https://need.uno/page/14/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="一个技术人的知行笔记 —— 分享技术、管理、编程与商业思考的原创博客">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+    <div class="cover">
+        <div class="cover__logo">
+            
+                <h1>Need.UNO</h1>
+            
+        </div>
+        
+        
+            <div class="cover__intro">
+                <p>一个技术人的知行笔记</p>
+ 
+            </div>
+        
+    </div>
+
+            <main class="main">
+    
+    <div class="post-list">
+        
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        如何甄别理论的&#34;纸上差异&#34;避免生搬硬套？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第10问"><a href="#PMP职场实战108问-·-第10问" class="headerlink" title="PMP职场实战108问 · 第10问"></a>PMP职场实战108问 · 第10问</h1><h2 id="为什么学了那么多理论，做项目时还是频频踩坑？"><a href="#为什么学了那么多理论，做项目时还是频频踩坑？" class="headerlink" title="为什么学了那么多理论，做项目时还是频频踩坑？"></a>为什么学了那么多理论，做项目时还是频频踩坑？</h2><p>上周，一位做了6年项目经理的朋友跟我吐槽：“我花两万块考了PMP，又报了好几个敏捷培训班，可上周做项目复盘时，老板当着全团队的面问我——‘你说的冲刺、看板、价值驱动，跟咱们实际交付有什么毛关系？’”</p>
+<p>他苦笑着说：“我当时真想找个地缝钻进去。理论我都懂，可一到项目现场，就感觉自己像个拿着四书五经去修战车的书生——经典是经典，但就是拧不动螺丝。”</p>
+<p>这个问题，我太熟悉了。<strong>很多项目经理不是学得少，而是“贴”得太死。</strong></p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-13</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/010-ru-he-zhen-bie-li-lun-de-zhi-shang-chai-yi-bi-mian-sheng-ban-ying-tao/" class="post-entry__link">如何甄别理论的&#34;纸上差异&#34;避免生搬硬套？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        如何建立个人《PMP对标手册》？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第9问"><a href="#PMP职场实战108问-·-第9问" class="headerlink" title="PMP职场实战108问 · 第9问"></a>PMP职场实战108问 · 第9问</h1><h2 id="为什么你学了PMP，干起活来还是“两张皮”？"><a href="#为什么你学了PMP，干起活来还是“两张皮”？" class="headerlink" title="为什么你学了PMP，干起活来还是“两张皮”？"></a>为什么你学了PMP，干起活来还是“两张皮”？</h2><p>这是我被问到最多的问题之一：“考过PMP了，但回到项目里，那些输入输出、工具技术，感觉根本用不上。是不是PMP不接地气？”</p>
+<p>真相是：<strong>不是PMP没用，是你没给自己建一座桥。</strong></p>
+<p>PMP是一套通用框架，而你的公司、行业、项目，是具体环境。直接拿PMP往项目上套，就像拿西装革履去工地搬砖——不是衣服的问题，是场合问题。</p>
+<p>我见过太多项目经理，考完PMP就把书一扔，三年后连WBS和风险管理计划是啥都忘了。也见过另一种人：他们拿到PMP后，花两周时间，给自己建了一本 <strong>《PMP对标手册》</strong> ，把自己做的每一个项目、遇到的每一个坑，都和PMP的知识体系对应起来。三年后，这家伙成了公司项目总监。</p>
+<p>区别在哪？<strong>有没有把理论“翻译”成自己的语言。</strong></p>
+<hr>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-12</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/009-ru-he-jian-li-ge-ren-pmp-dui-biao-shou-ce/" class="post-entry__link">如何建立个人《PMP对标手册》？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        书本中的完美变更流程 vs 职场的紧急口头变更
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-12</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/008-shu-ben-wan-mei-bian-geng-liu-cheng-yu-zhi-chang-jin-ji-kou-tou-bian-geng/" class="post-entry__link">书本中的完美变更流程 vs 职场的紧急口头变更</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        商业环境域：项目价值、收益、合规、战略对齐是什么？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第7问"><a href="#PMP职场实战108问-·-第7问" class="headerlink" title="PMP职场实战108问 · 第7问"></a>PMP职场实战108问 · 第7问</h1><p><strong>商业环境域：项目价值、收益、合规、战略对齐到底是什么？</strong></p>
+<p>你有没有遇到过这种情况：</p>
+<ul>
+<li>项目做完了，验收也过了，老板却问了句：“这项目到底给公司带来了什么价值？”</li>
+<li>项目做到一半，合规部门突然叫停，说你们踩了红线。</li>
+<li>团队忙了三个月，结果发现业务方向已经变了，这项目已经跟公司战略脱节了。</li>
+</ul>
+<p>如果你对这些场景不陌生，说明你正在处理一个真实的问题：<strong>项目管理不只是管进度、管成本、管质量，还有四个更大的词压在头顶——价值、收益、合规、战略对齐。</strong></p>
+<p>这就是PMP新版考纲里“商业环境域”反复强调的东西。但说实话，很多项目经理一听到“商业环境”就头大，觉得这是老板的事，是PMO的事。错了，<strong>这是你能不能从“执行型PM”跳到“价值型PM”的关键一跃。</strong></p>
+<hr>
+<h2 id="先拆开这四个概念"><a href="#先拆开这四个概念" class="headerlink" title="先拆开这四个概念"></a>先拆开这四个概念</h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-12</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/007-shang-ye-huan-jing-yu-xiang-mu-jie-zhi-shou-yi-he-gui-zhan-lue-dui-qi/" class="post-entry__link">商业环境域：项目价值、收益、合规、战略对齐是什么？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        过程域的七大管控模块是哪些？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第6问"><a href="#PMP职场实战108问-·-第6问" class="headerlink" title="PMP职场实战108问 · 第6问"></a>PMP职场实战108问 · 第6问</h1><h2 id="过程域的七大管控模块是哪些？"><a href="#过程域的七大管控模块是哪些？" class="headerlink" title="过程域的七大管控模块是哪些？"></a>过程域的七大管控模块是哪些？</h2><p>上周跟一位刚考过PMP的项目经理老张吃饭，他皱着眉头问我：</p>
+<p>“书上五大过程组、十大知识领域背得滚瓜烂熟，可项目一启动，还是乱成一锅粥。需求改来改去，进度一拖再拖，成本超了才后知后觉。到底什么才是真正能管住项目的抓手？”</p>
+<p>我问了他一个问题：<strong>你每天打开项目管理工具，会关注哪些地方？</strong></p>
+<p>他愣了：“看任务完成进度啊……还能看啥？”</p>
+<p>问题就在这。大多数项目经理不是不努力，而是<strong>缺乏一套结构化的管控框架</strong>。就像医生看病，你得知道要量体温、测血压、查血常规，否则全凭感觉，早晚出事。</p>
+<p>在PMP实战中，我把它总结成<strong>过程域的七大管控模块</strong>。这七个模块，就是你每天、每周、每月盯着项目的“仪表盘”，一个都不能少。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-11</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/006-guo-cheng-yu-qi-da-guan-kong-mo-kuai/" class="post-entry__link">过程域的七大管控模块是哪些？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        人员域的三大核心：沟通、冲突、激励怎么落地？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第5问"><a href="#PMP职场实战108问-·-第5问" class="headerlink" title="PMP职场实战108问 · 第5问"></a>PMP职场实战108问 · 第5问</h1><h2 id="管人比管事难3倍？人员域的三大核心：沟通、冲突、激励怎么落地？"><a href="#管人比管事难3倍？人员域的三大核心：沟通、冲突、激励怎么落地？" class="headerlink" title="管人比管事难3倍？人员域的三大核心：沟通、冲突、激励怎么落地？"></a>管人比管事难3倍？人员域的三大核心：沟通、冲突、激励怎么落地？</h2><p>做过几个项目后，你会发现一个扎心的真相：<strong>技术问题总有解决方案，但人的问题会让你彻夜难眠。</strong></p>
+<p>你可以把WBS画得漂亮，甘特图排得精准，风险登记册写满十页纸——但只要团队里有人“不配合”“不说话”“不想干”，所有计划都会变成废纸。</p>
+<p>PMP把“人员域”单独拎出来，不是因为它好考，而是因为它<strong>直接决定项目生死</strong>。沟通、冲突、激励，这三个词谁都知道，但99%的项目经理栽就栽在“知道但做不到”。</p>
+<p>今天咱们不背概念，直接说怎么落地。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-11</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/005-ren-yuan-yu-san-da-he-xin-gou-tong-chong-tu-ji-li-luo-di/" class="post-entry__link">人员域的三大核心：沟通、冲突、激励怎么落地？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        「范围蔓延」在你工作中长什么样？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第4问"><a href="#PMP职场实战108问-·-第4问" class="headerlink" title="PMP职场实战108问 · 第4问"></a>PMP职场实战108问 · 第4问</h1><h2 id="范围蔓延：你以为是“顺手帮忙”，其实是“慢性自杀”"><a href="#范围蔓延：你以为是“顺手帮忙”，其实是“慢性自杀”" class="headerlink" title="范围蔓延：你以为是“顺手帮忙”，其实是“慢性自杀”"></a>范围蔓延：你以为是“顺手帮忙”，其实是“慢性自杀”</h2><p>你有没有经历过这种场景？项目做到一半，业务部门领导笑眯眯地说：“小王啊，这个功能很简单的，就加个筛选条件，你们顺手做一下呗。”你一想，确实就加个按钮，半天能搞定，答应了。结果第三天，对方又说：“既然筛选能做，那顺便把导出功能也加上吧。”一星期后，项目工期延了两周，团队加班到崩溃，原本的核心功能反而延期交付了。</p>
+<p><strong>这就是范围蔓延——项目管理中最常见、也最容易被低估的“杀手”。</strong></p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-11</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/004-fan-wei-man-yan-zai-ni-gong-zuo-zhong-chang-shi-me-yang/" class="post-entry__link">「范围蔓延」在你工作中长什么样？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        每天15分钟的PMP复盘怎么做才有效？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第3问"><a href="#PMP职场实战108问-·-第3问" class="headerlink" title="PMP职场实战108问 · 第3问"></a>PMP职场实战108问 · 第3问</h1><p>前两问我们建立了「知识点→场景」映射的方法，但还有一个关键问题：<strong>学了记不住怎么办？</strong></p>
+<p>答案藏在最朴实的一个习惯里——每日复盘。但不是那种「今天做了啥、明天做啥」的流水账，而是<strong>用PMP框架审视当天工作</strong>的结构化复盘。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-10</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E5%9F%BA%E7%A1%80%E9%93%BA%E5%9E%AB/" class="post-tags__link button"># 基础铺垫</a><a href="/tags/%E5%A4%8D%E7%9B%98/" class="post-tags__link button"># 复盘</a></div> 
+<a href="/003-mei-tian-15-fen-zhong-de-pmp-fu-pan-zen-me-zuo-cai-you-xiao/" class="post-entry__link">每天15分钟的PMP复盘怎么做才有效？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        如何建立&#34;知识点→工作场景&#34;的一对一映射？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第2问"><a href="#PMP职场实战108问-·-第2问" class="headerlink" title="PMP职场实战108问 · 第2问"></a>PMP职场实战108问 · 第2问</h1><p>上一问我们聊了PMP证书和实操能力之间的鸿沟，这一问直接给解决方案：<strong>如何把每一个PMP知识点，翻译成你明天上班就能用的工作动作。</strong></p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-10</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E5%9F%BA%E7%A1%80%E9%93%BA%E5%9E%AB/" class="post-tags__link button"># 基础铺垫</a><a href="/tags/%E5%AE%9E%E6%93%8D%E6%96%B9%E6%B3%95/" class="post-tags__link button"># 实操方法</a></div> 
+<a href="/002-ru-he-jian-li-zhi-shi-dian-dao-gong-zuo-chang-jing-de-yi-dui-yi-ying-she/" class="post-entry__link">如何建立&#34;知识点→工作场景&#34;的一对一映射？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        PMP证书和实操能力为什么差了十万八千里？
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第1问"><a href="#PMP职场实战108问-·-第1问" class="headerlink" title="PMP职场实战108问 · 第1问"></a>PMP职场实战108问 · 第1问</h1><p>考过PMP的人很多，真正能把项目管理这套东西用到工作中的，少得可怜。</p>
+<p>这种现象背后有深层原因，而不只是「理论脱离实际」这六个字能概括的。</p>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-10</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E5%9F%BA%E7%A1%80%E9%93%BA%E5%9E%AB/" class="post-tags__link button"># 基础铺垫</a></div> 
+<a href="/001-pmp-zheng-shu-he-shi-cao-neng-li-wei-shi-me-chai-liao-shi-wan-ba-qian-li/" class="post-entry__link">PMP证书和实操能力为什么差了十万八千里？</a>
+                </div>
+            
+        
+    </div>
+    
+        <div class="nav">
+            <div class="nav__prev">
+                
+                    <a href="/page/13/" class="nav__link">
+                        <div>
+                            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                        </div>
+                        <div>
+                            <div class="nav__label">
+                                上一页
+                            </div>
+                            <div class="nav__title">
+                                第 13 页
+                            </div>
+                        </div>
+                    </a>
+                
+            </div>
+            <div class="nav__next">
+                
+                    <a href="/page/15/" class="nav__link">
+                        <div>
+                            <div class="nav__label">
+                                下一页
+                            </div>
+                            <div class="nav__title">
+                                第 15 页
+                            </div>
+                        </div>
+                        <div>
+                            <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                        </div>
+                    </a>
+                
+            </div>
+        </div>
+    
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

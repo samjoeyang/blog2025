@@ -1,0 +1,790 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API | Need.UNO</title>
+
+
+    <meta name="keywords" content="Django REST Framework, DRF, RESTful API, 序列化, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="description: 转自：大江狗 https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;7HI97hMZST4cBAgh0qGAJwDjango REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API小编曾经承诺的Django REST Framework原创系列教程终于赶上了2020年那年夏天的尾巴，姗姗而来。我们将用不少于10篇的原创文章系">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API">
+<meta property="og:url" content="https://need.uno/django-course-django-rest-framework1-drf-restfulapi/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="description: 转自：大江狗 https:&#x2F;&#x2F;mp.weixin.qq.com&#x2F;s&#x2F;7HI97hMZST4cBAgh0qGAJwDjango REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API小编曾经承诺的Django REST Framework原创系列教程终于赶上了2020年那年夏天的尾巴，姗姗而来。我们将用不少于10篇的原创文章系">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://need.uno/images/django/1-1.png">
+<meta property="og:image" content="https://need.uno/images/django/1-2.jpg">
+<meta property="article:published_time" content="2022-01-20T02:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.099Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="Django REST Framework">
+<meta property="article:tag" content="DRF">
+<meta property="article:tag" content="RESTful API">
+<meta property="article:tag" content="序列化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://need.uno/images/django/1-1.png">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2022-01-20",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/django-course-django-rest-framework1-drf-restfulapi/" },
+  "description": "Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2022/01/" class="post-meta__date button">2022-01-20</a>
+        
+    <span class="separate-dot"></span><a href="/categories/Django%E5%AE%9E%E6%88%98%E6%95%99%E7%A8%8B/" class="button">Django实战教程</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <hr>
+<h2 id="description-转自：大江狗-https-mp-weixin-qq-com-s-7HI97hMZST4cBAgh0qGAJw"><a href="#description-转自：大江狗-https-mp-weixin-qq-com-s-7HI97hMZST4cBAgh0qGAJw" class="headerlink" title="description: 转自：大江狗 https://mp.weixin.qq.com/s/7HI97hMZST4cBAgh0qGAJw"></a>description: 转自：大江狗 <a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/7HI97hMZST4cBAgh0qGAJw">https://mp.weixin.qq.com/s/7HI97hMZST4cBAgh0qGAJw</a></h2><h1 id="Django-REST-Framework教程-1-为什么要学习DRF-什么是序列化和RESTful的API"><a href="#Django-REST-Framework教程-1-为什么要学习DRF-什么是序列化和RESTful的API" class="headerlink" title="Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API"></a>Django REST Framework教程(1): 为什么要学习DRF, 什么是序列化和RESTful的API</h1><p>小编曾经承诺的Django REST Framework原创系列教程终于赶上了2020年那年夏天的尾巴，姗姗而来。我们将用不少于10篇的原创文章系统性地介绍如何使用这个框架开发符合RESTful规范的API，并详细介绍API开发和管理中的核心知识比如关联模型的序列化、分页、过滤、认证、权限和限流。如果你已有一定Django基础知识并希望在API开发和前后端分离开发技术上更近一步, 请欢迎关注我们的微信公众号【Python Web与Django开发】并加星标哦。</p>
+<p><img src="/images/django/1-1.png" class="lazy" data-srcset="/images/django/1-1.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg=="></p>
+<p><strong>为什么要学习Django REST  Framework?</strong></p>
+<p>Django的未来与Web开发未来发展趋势紧密相关。Django这种基于MVC开发模式的传统框架，非常适合开发基于PC的传统网站，因为它同时包括了后端的开发(逻辑层，数据库层) 和前端的开发(如模板语言，样式)。</p>
+<p>然而最近几年及未来几年更流行的开发模式肯定是前后端分离, Django也需要做出自己的改变来适应这种开发模式。现代网络应用Web APP或大型网站一般是一个后台，然后对应各种客户端(iOS, android, 浏览器)。由于客户端的开发语言与后台的开发语言经常不一样，这时需要后台能够提供可以跨平台跨语言的一种标准的资源或数据(如json格式)供前后端沟通，这就是Web API(网络应用程序接口)的作用了。</p>
+<p>Django本身并不是为了开发符合REST规范的Web API而设计, 不过借助Django REST Framework (DRF)我们可以快速开发出优秀规范的Web API来。所以我们这里要感谢DRF，因为它，Django的应用前景更广了，减少了被淘汰的风险。</p>
+<p><img src="/images/django/1-2.jpg" class="lazy" data-srcset="/images/django/1-2.jpg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg=="></p>
+<h3 id="Django-REST-Framework的介绍及安装"><a href="#Django-REST-Framework的介绍及安装" class="headerlink" title="Django REST Framework的介绍及安装"></a><strong>Django REST Framework的介绍及安装</strong></h3><p>Django REST framework (DRF)是基于Django实现的一个RESTful风格API框架，能够帮助我们快速开发RESTful风格的API，文档地址如下所示:</p>
+<ul>
+<li>官网：<a target="_blank" rel="noopener" href="https://www.django-rest-framework.org/">https://www.django-rest-framework.org/</a></li>
+<li>中文文档：<a target="_blank" rel="noopener" href="https://q1mi.github.io/Django-REST-framework-documentation/">https://q1mi.github.io/Django-REST-framework-documentation/</a></li>
+</ul>
+<p>DRF可以使用pip安装，安装前请确保你已经安装了Django。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">pip install djangorestframework</span><br></pre></td></tr></table></figure>
+
+<h4 id="如果想要获取一个图形化的页面来操作API，需要将-rest-framework-注册到项目的INSTALL-APPS中，如下所示："><a href="#如果想要获取一个图形化的页面来操作API，需要将-rest-framework-注册到项目的INSTALL-APPS中，如下所示：" class="headerlink" title="如果想要获取一个图形化的页面来操作API，需要将 rest_framework 注册到项目的INSTALL_APPS中，如下所示："></a>如果想要获取一个图形化的页面来操作API，需要将 rest_framework 注册到项目的INSTALL_APPS中，如下所示：</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">INSTALLED_APPS = [</span><br><span class="line">    &#x27;django.contrib.admin&#x27;,</span><br><span class="line">    &#x27;django.contrib.auth&#x27;,    </span><br><span class="line">    &#x27;django.contrib.contenttypes&#x27;,    </span><br><span class="line">    &#x27;django.contrib.sessions&#x27;,    </span><br><span class="line">    &#x27;django.contrib.messages&#x27;,    </span><br><span class="line">    &#x27;django.contrib.staticfiles&#x27;,    </span><br><span class="line">    &#x27;rest_framework&#x27;,    </span><br><span class="line">    &#x27;your_app&#x27;, # 你自己的app</span><br><span class="line">]</span><br></pre></td></tr></table></figure>
+
+<p>现在我们已经安装好DRF了，但在正式使用它开发API前我们还需要了解两件事情。什么是数据的序列化(Serialization)以及什么是RESTful规范的API, 这对于理解DRF中的serializers类和每个API端点对应的url设计至关重要。</p>
+<p><strong>Python类型数据序列化(serialization)</strong></p>
+<p><strong>每种编程语言都有各自的数据类型, 将属于自己语言的数据类型或对象转换为可通过网络传输或可以存储到本地磁盘的数据格式（如：XML、JSON或特定格式的字节串）的过程称为序列化(seralization)；反之则称为反序列化</strong>。API开发的本质就是各种后端语言的自己的数据类型序列化为通用的可读可传输的数据格式，比如常见的JSON类型数据。</p>
+<p>举个简单例子。Python自带json模块的dumps方法可以将python常用数据格式（比如列表或字典)转化为json格式,如下所示。你注意到了吗? 生成的json格式数据外面都加了单引号，这说明dict类型数据已经转化成了json字符串。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&gt;&gt;&gt; import json</span><br><span class="line">&gt;&gt;&gt; json.dumps(&#123;&quot;name&quot;:&quot;John&quot;, &quot;score&quot;: 112&#125;)</span><br><span class="line">&#x27;&#123;&quot;name&quot;: &quot;John&quot;, &quot;score&quot;: 112&#125;&#x27;</span><br></pre></td></tr></table></figure>
+
+<p>Django编程就是是python编程，以上所介绍的序列化方法对django也是适用的。不同的是Django还有自己专属的数据类型比如查询集QuerySet和ValueQuerySet类型数据，还提供了更便捷的serializers类。使用Django自带的serializers类也可以轻易将QuerySet格式的数据转化为json格式。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"># Django Queryset数据 to Json</span><br><span class="line">from django.core import serializers</span><br><span class="line">data = serializers.serialize(&quot;json&quot;, SomeModel.objects.all())</span><br><span class="line">data1 = serializers.serialize(&quot;json&quot;, SomeModel.objects.all(), fields=(&#x27;name&#x27;,&#x27;id&#x27;))</span><br><span class="line">data2 = serializers.serialize(&quot;json&quot;, SomeModel.objects.filter(field = some_value))</span><br></pre></td></tr></table></figure>
+
+<p>有时候我们只需要查询结果集的部分字段，可以使用values(‘字段名’,’字段名2’)来要求返回的是哪些列的数据.但是返回来的是ValueQuerySet对象而不是QuerySet对象。ValuesQuerySet对象不能用 serializers.serialize() 方法序列化成json, 需要先转换成list再用 json.dumps()方法序列化成json格式。示例代码如下所示</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">import json</span><br><span class="line">from django.core.serializers.json import DjangoJSONEncoder</span><br><span class="line"></span><br><span class="line">queryset = myModel.objects.filter(foo_icontains=bar).values(&#x27;f1&#x27;, &#x27;f2&#x27;, &#x27;f3&#x27;)</span><br><span class="line">data4 = json.dumps(list(queryset), cls=DjangoJSONEncoder)</span><br></pre></td></tr></table></figure>
+
+<p>尽管Django自带的serializer类也能将Django的查询集QuerySet序列化成json格式数据，Django REST Framework才是你真正需要的序列化工具。与django自带的serializers类相比，rest framework支持token认证、过滤和限流等多种强大功能，我们后面会陆续详细介绍。</p>
+<p><strong>什么是符合RESTful规范的API?</strong></p>
+<p>REST是REpresentational State Transfer三个单词的缩写，由Roy Fielding于2000年论文中提出。简单来说，就是用URI表示资源，用HTTP方法(GET, POST, PUT, DELETE)表征对这些资源进行操作。而如果想你的api被称为restful api，只要遵循其规定的约束。网上有很多文章对RESTful API规范做了详细介绍, 比如阮一峰的博客和简书, 我们这里只摘取总结部分精华内容，因为我们后面会用到。</p>
+<p><br>协议、域名和版本</p>
+<p>尽量使用https协议，使用专属域名来提供API服务，并在URL里标注api版本，如下所示</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1">https://api.example.com/v1</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.example.com/api/v1&#x20">https://www.example.com/api/v1&amp;#x20</a>;</p>
+<p><br>uri(统一资源标识符)\</p>
+<p>在RESTful架构中，每个网址代表一种资源（resource），这个网络地址就是uri (uniform resource identifier), 有时也被称为URL(uniform resource locator)。 因为URI对应一种资源，所以里面不能有动词，只能有名词。一般来说，数据库中的表都是同种记录的”集合”（collection），所以API中的名词也应该使用复数。</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1/users">https://api.example.com/v1/users</a> # 用户列表资源地址</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1/users/%7Bid%7D">https://api.example.com/v1/users/{id}</a>  # 用户id&#x3D;5资源。注意：这里是users&#x2F;5，而不是user&#x2F;5</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1/users/%7Bid%7D/articles">https://api.example.com/v1/users/{id}/articles</a>  # 用户id&#x3D;5发表的文章列表</p>
+<p>如果需要对一个用户信息进行编辑或删除，一个传统Django开发者可能将URL写成如下所示\</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1/users/%7Bid%7D/edit/">https://api.example.com/v1/users/{id}/edit/</a> # 编辑用户</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1/users/%7Bid%7D/delete/">https://api.example.com/v1/users/{id}/delete/</a>  # 删除用户</p>
+<p>上面URL设计其实是不符合RESTful规范的。一个 URI就应该是一个资源，本身不能包含任何动作。REST的规范是资源的URI地址是固定不变的，对同一资源应使用不同的HTTP请求方法进行不同的操作，比如常见的增删查改。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[POST]    https://api.example.com/v1/users   // 新增</span><br><span class="line">[GET]     https://api.example.com/v1/users/1 // 查询</span><br><span class="line">[PATCH]   https://api.example.com/v1/users/1 // 更新</span><br><span class="line">[PUT]     https://api.example.com/v1/users/1 // 覆盖，全部更新</span><br><span class="line">[DELETE]  https://api.example.com/v1/users/1 // 删除</span><br></pre></td></tr></table></figure>
+
+<p>有时候URL比较长，可能由多个单词组成，建议使用中划线”-“分割，而不是下划线”_“作为分隔符，另外每个url的结尾不能加斜线”&#x2F;“。\</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1/user-management/users/%7Bid%7D">https://api.example.com/v1/user-management/users/{id}</a> # 好</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1/user/_management/users/%7Bid%7D">https://api.example.com/v1/user\_management/users/{id}</a>  # 不好</p>
+<p><a target="_blank" rel="noopener" href="https://api.example.com/v1/user-management/users/%7Bid%7D/">https://api.example.com/v1/user-management/users/{id}/</a>  # 不好</p>
+<p>HTTP请求方法</p>
+<p>常用的HTTP请求方法有下面五个（括号里是对应的SQL命令)，每个方法对应一个操作。客户端在消费服务器提供的API服务时不仅要指定请求地址，还需指定请求方法。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">GET（SELECT）：从服务器取出资源（一项或多项）。</span><br><span class="line">POST（CREATE）：在服务器新建一个资源。</span><br><span class="line">PUT（UPDATE）：在服务器更新资源（客户端提供改变后的完整资源）。</span><br><span class="line">PATCH（UPDATE）：在服务器更新资源（客户端提供改变的属性）。</span><br><span class="line">DELETE（DELETE）：从服务器删除资源。</span><br></pre></td></tr></table></figure>
+
+<p>另外还有两个不常用方法<code>HEAD</code>和<code>OPTIONS</code>，<code>HEAD</code>请求的是资源的元数据，比如一张照片，的元数据则可能包含了，照片拍摄的设备，地点，时间等。服务器一般将对应资源的元数据置于响应的报头集合返回给客户端，这样的响应一般不具有主体部分。<code>OPTIONS</code>则是发送一种“探测”请求以确定针对某个目标地址的请求必须具有怎样的约束（比如应该采用怎样的HTTP方法以及自定义的请求报头），然后根据其约束发送真正的请求。</p>
+<p>小编注：不像Django，DRF支持所有以上请求方法。</p>
+<p>过滤信息（Filtering）</p>
+<p>如果记录数量很多，服务器不可能都将它们返回给用户。符合RESTful规范的API应该支持过滤。下面是一些常见的过滤参数。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">?limit=10：指定返回记录的数量</span><br><span class="line">?offset=10：指定返回记录的开始位置。</span><br><span class="line">?page=2&amp;per_page=100：指定第几页，以及每页的记录数。</span><br><span class="line">?sortby=name&amp;order=asc：指定返回结果按照哪个姓名排序，以及排序顺序。</span><br><span class="line">?user_type_id=1：指定筛选条件，比如用户类型</span><br></pre></td></tr></table></figure>
+
+<p>小编注：DRF与django-filter联用可以轻松实现过滤。</p>
+<p>状态码（Status Codes）</p>
+<p>服务器在处理客户端请求后还应向用户返回响应的状态码和提示信息，常见的有以下一些状态码。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">200 OK - [GET]：服务器成功返回用户请求的数据，该操作是幂等的（Idempotent）。</span><br><span class="line">201 CREATED - [POST/PUT/PATCH]：用户新建或修改数据成功。</span><br><span class="line">202 Accepted - [*]：表示一个请求已经进入后台排队（异步任务）</span><br><span class="line">204 NO CONTENT - [DELETE]：用户删除数据成功。</span><br><span class="line">400 INVALID REQUEST - [POST/PUT/PATCH]：用户发出的请求有错误，服务器没有进行新建或修改数据的操作，该操作是幂等的。</span><br><span class="line">401 Unauthorized - [*]：表示用户没有权限（令牌、用户名、密码错误）。</span><br><span class="line">403 Forbidden - [*] 表示用户得到授权（与401错误相对），但是访问是被禁止的。</span><br><span class="line">404 NOT FOUND - [*]：用户发出的请求针对的是不存在的记录，服务器没有进行操作，该操作是幂等的。</span><br><span class="line">406 Not Acceptable - [GET]：用户请求的格式不可得（比如用户请求JSON格式，但是只有XML格式）。</span><br><span class="line">410 Gone -[GET]：用户请求的资源被永久删除，且不会再得到的。</span><br><span class="line">422 Unprocesable entity - [POST/PUT/PATCH] 当创建一个对象时，发生一个验证错误。</span><br><span class="line">500 INTERNAL SERVER ERROR - [*]：服务器发生错误</span><br></pre></td></tr></table></figure>
+
+<p><code>小编注：DRF给出Respone时可以指定各种各样状态码，很容易使用。</code></p>
+<p>Hypermedia API</p>
+<p>RESTful API最好做到Hypermedia，即返回结果中提供链接，连向其他API方法，使得用户不查文档，也知道下一步应该做什么。比如，当用户向api.example.com的根目录发出请求，会得到这样一个文档。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;&quot;link&quot;: &#123;</span><br><span class="line">  &quot;rel&quot;:   &quot;collection https://www.example.com/zoos&quot;,  </span><br><span class="line">  &quot;href&quot;:  &quot;https://api.example.com/zoos&quot;,  </span><br><span class="line">  &quot;title&quot;: &quot;List of zoos&quot;,  </span><br><span class="line">  &quot;type&quot;:  &quot;application/vnd.yourformat+json&quot;</span><br><span class="line">&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>小编注：DRF支持HyperLinkedModel，很容易实现这点。</p>
+<p>参考：<a target="_blank" rel="noopener" href="http://www.ruanyifeng.com/blog/2014/05/restful/_api.html/">http://www.ruanyifeng.com/blog/2014/05/restful\_api.html\</a></p>
+<p><strong>小结</strong>\</p>
+<p>本文总结了为什么要学习Django REST Framework, 什么是序列化和符合RESTful规范的API。下文中我们将以一个简单的博客的实例来详细介绍DRF的使用，开发最基础的API，并测试API的使用，欢迎关注。</p>
+<p>大江狗</p>
+<p>2020.08</p>
+<hr>
+<p><a href="/django-course-mu-lu/">📚 返回目录</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/django-course-django-rest-framework1-drf-restfulapi/">https://need.uno/django-course-django-rest-framework1-drf-restfulapi/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Django-REST-Framework/" class="post-tags__link button"># Django REST Framework</a><a href="/tags/DRF/" class="post-tags__link button"># DRF</a><a href="/tags/RESTful-API/" class="post-tags__link button"># RESTful API</a><a href="/tags/%E5%BA%8F%E5%88%97%E5%8C%96/" class="post-tags__link button"># 序列化</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fdjango-course-django-rest-framework1-drf-restfulapi%2F&amp;text=Django%20REST%20Framework%E6%95%99%E7%A8%8B(1)%3A%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0DRF%2C%20%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8CRESTful%E7%9A%84API&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fdjango-course-django-rest-framework1-drf-restfulapi%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fdjango-course-django-rest-framework1-drf-restfulapi%2F&amp;title=Django%20REST%20Framework%E6%95%99%E7%A8%8B(1)%3A%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0DRF%2C%20%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8CRESTful%E7%9A%84API"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fdjango-course-django-rest-framework1-drf-restfulapi%2F&amp;text=Django%20REST%20Framework%E6%95%99%E7%A8%8B(1)%3A%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0DRF%2C%20%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8CRESTful%E7%9A%84API"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fdjango-course-django-rest-framework1-drf-restfulapi%2F&amp;title=Django%20REST%20Framework%E6%95%99%E7%A8%8B(1)%3A%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0DRF%2C%20%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8CRESTful%E7%9A%84API&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fdjango-course-django-rest-framework1-drf-restfulapi%2F&amp;title=Django%20REST%20Framework%E6%95%99%E7%A8%8B(1)%3A%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0DRF%2C%20%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8CRESTful%E7%9A%84API&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fdjango-course-django-rest-framework1-drf-restfulapi%2F&amp;title=Django%20REST%20Framework%E6%95%99%E7%A8%8B(1)%3A%20%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%AD%A6%E4%B9%A0DRF%2C%20%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8CRESTful%E7%9A%84API&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/django-course-django-rest-framework2-api/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            Django REST Framework教程(2): 序列化器介绍及以博客为例开发基于函数视图的API
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/django-course-django-1/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            Django的国际化
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="django-course-django-rest-framework1-drf-restfulapi/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

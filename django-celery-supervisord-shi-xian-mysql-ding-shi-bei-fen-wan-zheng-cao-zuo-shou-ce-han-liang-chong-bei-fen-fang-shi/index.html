@@ -1,0 +1,827 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式） | Need.UNO</title>
+
+
+    <meta name="keywords" content="Django, Celery, Supervisord, MySQL, 定时, 备份, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式）本文档详细介绍如何通过 Django + Celery + Supervisord 实现 MySQL 数据库的定时备份、压缩、邮件发送全流程自动化，提供 mysqldump 原生备份 和 Django dumpdata 备份 两种方案，适配不同场景需求，并通过 Supervisord">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式）">
+<meta property="og:url" content="https://need.uno/django-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式）本文档详细介绍如何通过 Django + Celery + Supervisord 实现 MySQL 数据库的定时备份、压缩、邮件发送全流程自动化，提供 mysqldump 原生备份 和 Django dumpdata 备份 两种方案，适配不同场景需求，并通过 Supervisord">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-10-29T07:48:15.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.097Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="Django">
+<meta property="article:tag" content="Celery">
+<meta property="article:tag" content="Supervisord">
+<meta property="article:tag" content="MySQL">
+<meta property="article:tag" content="定时">
+<meta property="article:tag" content="备份">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式）",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2025-10-29",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/django-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi/" },
+  "description": "Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式）"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式）
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2025/10/" class="post-meta__date button">2025-10-29</a>
+        
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <h1 id="Django-Celery-Supervisord-实现-MySQL-定时备份完整操作手册（含两种备份方式）"><a href="#Django-Celery-Supervisord-实现-MySQL-定时备份完整操作手册（含两种备份方式）" class="headerlink" title="Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式）"></a>Django + Celery + Supervisord 实现 MySQL 定时备份完整操作手册（含两种备份方式）</h1><p>本文档详细介绍如何通过 Django + Celery + Supervisord 实现 MySQL 数据库的定时备份、压缩、邮件发送全流程自动化，提供 <strong>mysqldump 原生备份</strong> 和 <strong>Django dumpdata 备份</strong> 两种方案，适配不同场景需求，并通过 Supervisord 实现服务后台稳定运行。</p>
+<h1 id="一、环境准备"><a href="#一、环境准备" class="headerlink" title="一、环境准备"></a>一、环境准备</h1><h2 id="1-1-系统基础依赖安装"><a href="#1-1-系统基础依赖安装" class="headerlink" title="1.1 系统基础依赖安装"></a>1.1 系统基础依赖安装</h2><p>适用于 Ubuntu&#x2F;Debian 系统，其他系统（如 CentOS）可对应调整包管理命令。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 更新系统包</span></span><br><span class="line"><span class="built_in">sudo</span> apt update &amp;&amp; <span class="built_in">sudo</span> apt upgrade -y</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Python 及工具</span></span><br><span class="line"><span class="built_in">sudo</span> apt install -y python3 python3-pip python3-venv</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Redis（作为 Celery 消息代理）</span></span><br><span class="line"><span class="built_in">sudo</span> apt install -y redis-server</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> redis-server  <span class="comment"># 开机自启</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl start redis-server   <span class="comment"># 启动服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl status redis-server  <span class="comment"># 验证启动状态</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 MySQL 客户端（仅 mysqldump 方案需要）</span></span><br><span class="line"><span class="built_in">sudo</span> apt install -y mysql-client</span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装 Supervisord（进程管理）</span></span><br><span class="line"><span class="built_in">sudo</span> apt install -y supervisor</span><br><span class="line"><span class="built_in">sudo</span> systemctl <span class="built_in">enable</span> supervisor    <span class="comment"># 开机自启</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl start supervisor     <span class="comment"># 启动服务</span></span><br><span class="line"><span class="built_in">sudo</span> systemctl status supervisor    <span class="comment"># 验证启动状态</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2-项目虚拟环境与依赖安装"><a href="#1-2-项目虚拟环境与依赖安装" class="headerlink" title="1.2 项目虚拟环境与依赖安装"></a>1.2 项目虚拟环境与依赖安装</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 进入 Django 项目根目录（示例路径，需替换为实际路径）</span></span><br><span class="line"><span class="built_in">cd</span> /path/to/your/django/project</span><br><span class="line"></span><br><span class="line"><span class="comment"># 创建并激活虚拟环境</span></span><br><span class="line">python3 -m venv venv</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate  <span class="comment"># 激活虚拟环境（Windows 为：venv\Scripts\activate）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 安装核心依赖</span></span><br><span class="line">pip install django celery django-celery-beat redis</span><br><span class="line">pip list  <span class="comment"># 验证依赖安装成功</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="二、核心配置"><a href="#二、核心配置" class="headerlink" title="二、核心配置"></a>二、核心配置</h1><h2 id="2-1-Django-项目基础配置（settings-py）"><a href="#2-1-Django-项目基础配置（settings-py）" class="headerlink" title="2.1 Django 项目基础配置（settings.py）"></a>2.1 Django 项目基础配置（settings.py）</h2><p>需配置数据库、Celery 核心参数、邮件服务（用于发送备份附件）。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 1. 数据库配置（MySQL）</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line">DATABASES = &#123;</span><br><span class="line">    <span class="string">&#x27;default&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;ENGINE&#x27;</span>: <span class="string">&#x27;django.db.backends.mysql&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;NAME&#x27;</span>: <span class="string">&#x27;your_db_name&#x27;</span>,          <span class="comment"># 数据库名</span></span><br><span class="line">        <span class="string">&#x27;USER&#x27;</span>: <span class="string">&#x27;your_db_user&#x27;</span>,          <span class="comment"># 数据库用户名</span></span><br><span class="line">        <span class="string">&#x27;PASSWORD&#x27;</span>: <span class="string">&#x27;your_db_password&#x27;</span>,  <span class="comment"># 数据库密码</span></span><br><span class="line">        <span class="string">&#x27;HOST&#x27;</span>: <span class="string">&#x27;localhost&#x27;</span>,             <span class="comment"># 数据库地址（本地为 localhost）</span></span><br><span class="line">        <span class="string">&#x27;PORT&#x27;</span>: <span class="string">&#x27;3306&#x27;</span>,                  <span class="comment"># 数据库端口（默认 3306）</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 2. Celery 配置（优化版）</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># Broker 配置（Redis，支持密码认证）</span></span><br><span class="line">CELERY_BROKER_URL = (</span><br><span class="line">    <span class="string">f&quot;redis://:<span class="subst">&#123;os.environ.get(<span class="string">&#x27;REDIS_PASSWORD&#x27;</span>, <span class="string">&#x27;&#x27;</span>)&#125;</span>@&quot;</span></span><br><span class="line">    <span class="string">f&quot;<span class="subst">&#123;os.environ.get(<span class="string">&#x27;REDIS_HOST&#x27;</span>, <span class="string">&#x27;localhost&#x27;</span>)&#125;</span>:&quot;</span></span><br><span class="line">    <span class="string">f&quot;<span class="subst">&#123;os.environ.get(<span class="string">&#x27;REDIS_PORT&#x27;</span>, <span class="string">&#x27;6379&#x27;</span>)&#125;</span>/0&quot;</span></span><br><span class="line">)</span><br><span class="line"><span class="comment"># 结果存储（Django ORM，避免额外依赖）</span></span><br><span class="line">CELERY_RESULT_BACKEND = <span class="string">&#x27;django-db&#x27;</span></span><br><span class="line"><span class="comment"># 后端缓存（复用 Django 缓存配置）</span></span><br><span class="line">CELERY_CACHE_BACKEND = <span class="string">&#x27;django-cache&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># Worker 配置</span></span><br><span class="line">CELERY_WORKER_CONCURRENCY = <span class="number">5</span>                <span class="comment"># 并发数（默认 CPU 核心数，可调整）</span></span><br><span class="line">CELERY_WORKER_MAX_TASKS_PER_CHILD = <span class="number">200</span>      <span class="comment"># 每个 Worker 最大任务数（防止内存泄漏）</span></span><br><span class="line">CELERY_WORKER_PREFETCH_MULTIPLIER = <span class="number">1</span>        <span class="comment"># 预取倍数（I/O 密集型设为 1）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 任务配置</span></span><br><span class="line">CELERY_TASK_RESULT_EXPIRES = <span class="number">60</span> * <span class="number">60</span> * <span class="number">24</span> * <span class="number">7</span> <span class="comment"># 结果保留 7 天</span></span><br><span class="line">CELERY_TASK_TIME_LIMIT = <span class="number">300</span>                 <span class="comment"># 任务硬超时（5 分钟，适配备份场景）</span></span><br><span class="line">CELERY_TASK_SOFT_TIME_LIMIT = <span class="number">240</span>            <span class="comment"># 任务软超时（4 分钟，提前清理）</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 序列化配置（统一 JSON，安全跨平台）</span></span><br><span class="line">CELERY_ACCEPT_CONTENT = [<span class="string">&#x27;application/json&#x27;</span>]</span><br><span class="line">CELERY_TASK_SERIALIZER = <span class="string">&#x27;json&#x27;</span></span><br><span class="line">CELERY_RESULT_SERIALIZER = <span class="string">&#x27;json&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 3. Celery Beat 定时任务配置</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line">CELERY_TIMEZONE = <span class="string">&#x27;Asia/Shanghai&#x27;</span>                        <span class="comment"># 时区（与 Django 一致）</span></span><br><span class="line">DJANGO_CELERY_BEAT_TZ_AWARE = <span class="literal">True</span>                       <span class="comment"># 启用时区感知</span></span><br><span class="line">CELERY_BEAT_SCHEDULER = <span class="string">&#x27;django_celery_beat.schedulers:DatabaseScheduler&#x27;</span> <span class="comment"># 数据库调度</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 4. 邮件服务配置（用于发送备份附件）</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line">EMAIL_BACKEND = <span class="string">&#x27;django.core.mail.backends.smtp.EmailBackend&#x27;</span></span><br><span class="line">EMAIL_HOST = <span class="string">&#x27;smtp.qq.com&#x27;</span>               <span class="comment"># SMTP 服务器（QQ 邮箱示例，其他邮箱需调整）</span></span><br><span class="line">EMAIL_PORT = <span class="number">587</span>                         <span class="comment"># SMTP 端口（QQ 邮箱 587，阿里云 465 等）</span></span><br><span class="line">EMAIL_USE_TLS = <span class="literal">True</span>                     <span class="comment"># 启用 TLS 加密（对应 587 端口）</span></span><br><span class="line"><span class="comment"># EMAIL_USE_SSL = True                   # 启用 SSL 加密（对应 465 端口，二选一）</span></span><br><span class="line">EMAIL_HOST_USER = <span class="string">&#x27;your_email@qq.com&#x27;</span>    <span class="comment"># 发件人邮箱</span></span><br><span class="line">EMAIL_HOST_PASSWORD = <span class="string">&#x27;your_app_password&#x27;</span><span class="comment"># 邮箱授权码（非登录密码，需在邮箱设置中获取）</span></span><br><span class="line">DEFAULT_FROM_EMAIL = EMAIL_HOST_USER     <span class="comment"># 默认发件人</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 备份邮件接收者（可配置多个）</span></span><br><span class="line">BACKUP_EMAIL_RECIPIENTS = [<span class="string">&#x27;recipient1@example.com&#x27;</span>, <span class="string">&#x27;recipient2@example.com&#x27;</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 5. 备份目录配置（可选，统一管理）</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line">BACKUP_DIR = <span class="string">&#x27;/path/to/your/backups&#x27;</span>      <span class="comment"># 备份文件存储目录（需手动创建并授权）</span></span><br></pre></td></tr></table></figure>
+
+<p>邮箱授权码获取：以 QQ 邮箱为例，登录后进入「设置 → 账户 → 开启 SMTP 服务」，按提示获取授权码；阿里云邮箱需在「工作台 → 安全设置」中开启 SMTP 并获取授权码。</p>
+<h2 id="2-2-Celery-实例初始化（celery-py）"><a href="#2-2-Celery-实例初始化（celery-py）" class="headerlink" title="2.2 Celery 实例初始化（celery.py）"></a>2.2 Celery 实例初始化（celery.py）</h2><p>在项目根目录（与 manage.py 同级）创建 celery.py，实现 Celery 初始化和任务调度。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment">#!/usr/bin/env python3</span></span><br><span class="line"><span class="comment"># -*- coding:utf-8 -*-</span></span><br><span class="line"><span class="keyword">from</span> __future__ <span class="keyword">import</span> absolute_import, unicode_literals</span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> Celery</span><br><span class="line"><span class="keyword">from</span> celery.schedules <span class="keyword">import</span> crontab</span><br><span class="line"><span class="keyword">from</span> django.utils <span class="keyword">import</span> timezone</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 可靠的项目路径定位</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line">current_file_path = os.path.abspath(__file__)</span><br><span class="line">project_root = os.path.dirname(current_file_path)</span><br><span class="line">sys.path.append(project_root)</span><br><span class="line">project_name = os.path.basename(project_root)</span><br><span class="line">project_settings = <span class="string">f&quot;<span class="subst">&#123;project_name&#125;</span>.settings&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 环境变量设置</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line">os.environ.setdefault(</span><br><span class="line">    <span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>,</span><br><span class="line">    os.environ.get(<span class="string">&#x27;DJANGO_SETTINGS_MODULE&#x27;</span>, project_settings)</span><br><span class="line">)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># Celery 实例初始化</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line">app = Celery(project_name)</span><br><span class="line">app.now = timezone.now</span><br><span class="line"><span class="comment"># 从 Django 配置加载 Celery 参数（前缀 CELERY_）</span></span><br><span class="line">app.config_from_object(<span class="string">&#x27;django.conf:settings&#x27;</span>, namespace=<span class="string">&#x27;CELERY&#x27;</span>)</span><br><span class="line"><span class="comment"># 自动发现所有应用中的 tasks.py</span></span><br><span class="line">app.autodiscover_tasks()</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 定时任务配置（二选一，或按需配置）</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 方案一：mysqldump 原生备份（每天凌晨 3 点执行）</span></span><br><span class="line">app.conf.beat_schedule = &#123;</span><br><span class="line">    <span class="string">&#x27;daily-mysql-backup-mysqldump&#x27;</span>: &#123;</span><br><span class="line">        <span class="string">&#x27;task&#x27;</span>: <span class="string">&#x27;myapp.tasks.backup_mysql_mysqldump&#x27;</span>,</span><br><span class="line">        <span class="string">&#x27;schedule&#x27;</span>: crontab(hour=<span class="number">3</span>, minute=<span class="number">0</span>),</span><br><span class="line">        <span class="string">&#x27;args&#x27;</span>: (os.environ.get(<span class="string">&#x27;BACKUP_DIR&#x27;</span>, <span class="string">&#x27;/path/to/backups&#x27;</span>),),</span><br><span class="line">    &#125;,</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment"># # 方案二：Django dumpdata 备份（每天凌晨 3 点 10 分执行）</span></span><br><span class="line"><span class="comment"># app.conf.beat_schedule = &#123;</span></span><br><span class="line"><span class="comment">#     &#x27;daily-mysql-backup-dumpdata&#x27;: &#123;</span></span><br><span class="line"><span class="comment">#         &#x27;task&#x27;: &#x27;myapp.tasks.backup_mysql_dumpdata&#x27;,</span></span><br><span class="line"><span class="comment">#         &#x27;schedule&#x27;: crontab(hour=3, minute=10),</span></span><br><span class="line"><span class="comment">#         &#x27;args&#x27;: (os.environ.get(&#x27;BACKUP_DIR&#x27;, &#x27;/path/to/backups&#x27;),),</span></span><br><span class="line"><span class="comment">#     &#125;,</span></span><br><span class="line"><span class="comment"># &#125;</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 调试任务（可选）</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="meta">@app.task(<span class="params">bind=<span class="literal">True</span>, ignore_result=<span class="literal">True</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">debug_task</span>(<span class="params">self</span>):</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Task ID: <span class="subst">&#123;self.request.<span class="built_in">id</span>&#125;</span>&quot;</span>)</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">f&quot;Task Args: <span class="subst">&#123;self.request.args&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="comment"># 启动帮助信息</span></span><br><span class="line"><span class="comment"># --------------------------</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">print_help</span>():</span><br><span class="line">    help_text = <span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    Celery 服务启动命令参考:</span></span><br><span class="line"><span class="string">    1. 启动 Worker（开发环境）:  celery -A <span class="subst">&#123;project_name&#125;</span> worker -l info</span></span><br><span class="line"><span class="string">    2. 启动 Beat（定时任务调度器）:  celery -A <span class="subst">&#123;project_name&#125;</span> beat -l info</span></span><br><span class="line"><span class="string">    3. 同时启动 Worker 和 Beat（开发环境）:  celery -A <span class="subst">&#123;project_name&#125;</span> worker -B -l info</span></span><br><span class="line"><span class="string">    4. 守护进程启动（生产环境）:  celery multi start w1 -A <span class="subst">&#123;project_name&#125;</span> -l info</span></span><br><span class="line"><span class="string">    5. 停止守护进程:  celery multi stop w1 -A <span class="subst">&#123;project_name&#125;</span></span></span><br><span class="line"><span class="string">    6. 重启守护进程:  celery multi restart w1 -A <span class="subst">&#123;project_name&#125;</span> -l info</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="built_in">print</span>(help_text)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">    print_help()</span><br></pre></td></tr></table></figure>
+
+<h1 id="三、备份任务实现（tasks-py）"><a href="#三、备份任务实现（tasks-py）" class="headerlink" title="三、备份任务实现（tasks.py）"></a>三、备份任务实现（tasks.py）</h1><p>在 Django 应用（如 myapp）中创建 tasks.py，实现两种备份方案的核心逻辑，包含备份、压缩、邮件发送、旧文件清理。</p>
+<h2 id="3-1-方案一：mysqldump-原生备份（推荐生产环境）"><a href="#3-1-方案一：mysqldump-原生备份（推荐生产环境）" class="headerlink" title="3.1 方案一：mysqldump 原生备份（推荐生产环境）"></a>3.1 方案一：mysqldump 原生备份（推荐生产环境）</h2><p>基于 MySQL 原生工具 mysqldump，备份完整的数据库结构和数据，体积小、恢复效率高，适用于生产环境。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> gzip</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> shared_task</span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.core.mail <span class="keyword">import</span> EmailMessage</span><br><span class="line"></span><br><span class="line"><span class="meta">@shared_task(<span class="params">bind=<span class="literal">True</span>, max_retries=<span class="number">3</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backup_mysql_mysqldump</span>(<span class="params">self, backup_dir</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    MySQL 备份流程：mysqldump 备份 → gzip 压缩 → 邮件发送 → 旧文件清理</span></span><br><span class="line"><span class="string">    :param backup_dir: 备份文件存储目录</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 1. 初始化参数</span></span><br><span class="line">    os.makedirs(backup_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line">    db = settings.DATABASES[<span class="string">&#x27;default&#x27;</span>]</span><br><span class="line">    db_name = db[<span class="string">&#x27;NAME&#x27;</span>]</span><br><span class="line">    timestamp = datetime.now().strftime(<span class="string">&#x27;%Y%m%d_%H%M%S&#x27;</span>)</span><br><span class="line">    sql_file = <span class="string">f&quot;<span class="subst">&#123;backup_dir&#125;</span>/<span class="subst">&#123;db_name&#125;</span>_<span class="subst">&#123;timestamp&#125;</span>.sql&quot;</span></span><br><span class="line">    gz_file = <span class="string">f&quot;<span class="subst">&#123;sql_file&#125;</span>.gz&quot;</span>  <span class="comment"># 压缩后文件名</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 2. mysqldump 备份数据库（环境变量传密码，避免明文暴露）</span></span><br><span class="line">        env = os.environ.copy()</span><br><span class="line">        env[<span class="string">&#x27;MYSQL_PWD&#x27;</span>] = db[<span class="string">&#x27;PASSWORD&#x27;</span>]</span><br><span class="line">        cmd = (</span><br><span class="line">            <span class="string">f&quot;mysqldump --host=<span class="subst">&#123;db.get(<span class="string">&#x27;HOST&#x27;</span>, <span class="string">&#x27;localhost&#x27;</span>)&#125;</span> &quot;</span></span><br><span class="line">            <span class="string">f&quot;--port=<span class="subst">&#123;db.get(<span class="string">&#x27;PORT&#x27;</span>, <span class="string">&#x27;3306&#x27;</span>)&#125;</span> --user=<span class="subst">&#123;db[<span class="string">&#x27;USER&#x27;</span>]&#125;</span> <span class="subst">&#123;db_name&#125;</span> &quot;</span></span><br><span class="line">            <span class="string">f&quot;&gt; <span class="subst">&#123;sql_file&#125;</span>&quot;</span></span><br><span class="line">        )</span><br><span class="line">        subprocess.check_call(cmd, shell=<span class="literal">True</span>, env=env)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;mysqldump 备份完成：<span class="subst">&#123;sql_file&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 3. gzip 压缩备份文件</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(sql_file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f_in, gzip.<span class="built_in">open</span>(gz_file, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f_out:</span><br><span class="line">            f_out.writelines(f_in)</span><br><span class="line">        os.remove(sql_file)  <span class="comment"># 删除原始 SQL 文件，节省空间</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;文件压缩完成：<span class="subst">&#123;gz_file&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 4. 发送邮件（带压缩附件）</span></span><br><span class="line">        subject = <span class="string">f&quot;【MySQL 备份通知】<span class="subst">&#123;db_name&#125;</span>_<span class="subst">&#123;timestamp&#125;</span>&quot;</span></span><br><span class="line">        file_size = os.path.getsize(gz_file) / <span class="number">1024</span> / <span class="number">1024</span>  <span class="comment"># 转换为 MB</span></span><br><span class="line">        body = <span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        数据库备份已完成，详情如下：</span></span><br><span class="line"><span class="string">        - 数据库名：<span class="subst">&#123;db_name&#125;</span></span></span><br><span class="line"><span class="string">        - 备份方式：mysqldump 原生备份</span></span><br><span class="line"><span class="string">        - 备份时间：<span class="subst">&#123;datetime.now().strftime(<span class="string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)&#125;</span></span></span><br><span class="line"><span class="string">        - 附件大小：<span class="subst">&#123;file_size:<span class="number">.2</span>f&#125;</span> MB</span></span><br><span class="line"><span class="string">        - 恢复命令：gunzip <span class="subst">&#123;os.path.basename(gz_file)&#125;</span> &amp;&amp; mysql -u <span class="subst">&#123;db[<span class="string">&#x27;USER&#x27;</span>]&#125;</span> -p <span class="subst">&#123;db_name&#125;</span> &lt; <span class="subst">&#123;os.path.basename(sql_file)&#125;</span></span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        email = EmailMessage(</span><br><span class="line">            subject=subject,</span><br><span class="line">            body=body,</span><br><span class="line">            from_email=settings.DEFAULT_FROM_EMAIL,</span><br><span class="line">            to=settings.BACKUP_EMAIL_RECIPIENTS</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(gz_file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            email.attach(os.path.basename(gz_file), f.read(), <span class="string">&#x27;application/gzip&#x27;</span>)</span><br><span class="line">        email.send()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;备份邮件已发送至：<span class="subst">&#123;settings.BACKUP_EMAIL_RECIPIENTS&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 5. 清理旧备份（保留最近 30 天，可调整）</span></span><br><span class="line">        <span class="keyword">for</span> old_file <span class="keyword">in</span> glob.glob(<span class="string">f&quot;<span class="subst">&#123;backup_dir&#125;</span>/*.sql.gz&quot;</span>):</span><br><span class="line">            <span class="keyword">if</span> os.path.getmtime(old_file) &lt; time.time() - <span class="number">30</span> * <span class="number">24</span> * <span class="number">3600</span>:</span><br><span class="line">                os.remove(old_file)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;已删除旧备份：<span class="subst">&#123;old_file&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;mysqldump 备份成功：<span class="subst">&#123;gz_file&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="variable language_">self</span>.retry(exc=e, countdown=<span class="number">60</span>)  <span class="comment"># 命令执行失败，1 分钟后重试</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="variable language_">self</span>.retry(exc=e, countdown=<span class="number">60</span>)  <span class="comment"># 其他错误，1 分钟后重试</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="3-2-方案二：Django-dumpdata-备份（推荐跨库迁移场景）"><a href="#3-2-方案二：Django-dumpdata-备份（推荐跨库迁移场景）" class="headerlink" title="3.2 方案二：Django dumpdata 备份（推荐跨库迁移场景）"></a>3.2 方案二：Django dumpdata 备份（推荐跨库迁移场景）</h2><p>基于 Django 内置命令 dumpdata，备份 ORM 管理的模型数据（JSON 格式），跨数据库兼容，适用于开发测试环境或跨库迁移场景。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">import</span> os</span><br><span class="line"><span class="keyword">import</span> subprocess</span><br><span class="line"><span class="keyword">import</span> gzip</span><br><span class="line"><span class="keyword">import</span> time</span><br><span class="line"><span class="keyword">import</span> glob</span><br><span class="line"><span class="keyword">from</span> datetime <span class="keyword">import</span> datetime</span><br><span class="line"><span class="keyword">from</span> celery <span class="keyword">import</span> shared_task</span><br><span class="line"><span class="keyword">from</span> django.conf <span class="keyword">import</span> settings</span><br><span class="line"><span class="keyword">from</span> django.core.mail <span class="keyword">import</span> EmailMessage</span><br><span class="line"></span><br><span class="line"><span class="meta">@shared_task(<span class="params">bind=<span class="literal">True</span>, max_retries=<span class="number">3</span></span>)</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">backup_mysql_dumpdata</span>(<span class="params">self, backup_dir</span>):</span><br><span class="line">    <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">    MySQL 备份流程：dumpdata 备份 → gzip 压缩 → 邮件发送 → 旧文件清理</span></span><br><span class="line"><span class="string">    :param backup_dir: 备份文件存储目录</span></span><br><span class="line"><span class="string">    &quot;&quot;&quot;</span></span><br><span class="line">    <span class="comment"># 1. 初始化参数</span></span><br><span class="line">    os.makedirs(backup_dir, exist_ok=<span class="literal">True</span>)</span><br><span class="line">    db_name = settings.DATABASES[<span class="string">&#x27;default&#x27;</span>][<span class="string">&#x27;NAME&#x27;</span>]</span><br><span class="line">    timestamp = datetime.now().strftime(<span class="string">&#x27;%Y%m%d_%H%M%S&#x27;</span>)</span><br><span class="line">    json_file = <span class="string">f&quot;<span class="subst">&#123;backup_dir&#125;</span>/dump_<span class="subst">&#123;db_name&#125;</span>_<span class="subst">&#123;timestamp&#125;</span>.json&quot;</span></span><br><span class="line">    gz_file = <span class="string">f&quot;<span class="subst">&#123;json_file&#125;</span>.gz&quot;</span>  <span class="comment"># 压缩后文件名</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">try</span>:</span><br><span class="line">        <span class="comment"># 2. dumpdata 备份数据（排除系统模型，避免恢复冲突）</span></span><br><span class="line">        exclude_models = [</span><br><span class="line">            <span class="string">&#x27;contenttypes.contenttype&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;auth.permission&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;sessions.session&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;admin.logentry&#x27;</span>,</span><br><span class="line">            <span class="string">&#x27;django_celery_beat.periodictask&#x27;</span>  <span class="comment"># 排除定时任务配置</span></span><br><span class="line">        ]</span><br><span class="line">        exclude_args = <span class="string">&#x27; &#x27;</span>.join([<span class="string">f&quot;--exclude <span class="subst">&#123;model&#125;</span>&quot;</span> <span class="keyword">for</span> model <span class="keyword">in</span> exclude_models])</span><br><span class="line">        cmd = (</span><br><span class="line">            <span class="string">f&quot;python manage.py dumpdata <span class="subst">&#123;exclude_args&#125;</span> --indent 2 &quot;</span></span><br><span class="line">            <span class="string">f&quot;&gt; <span class="subst">&#123;json_file&#125;</span>&quot;</span></span><br><span class="line">        )</span><br><span class="line">        subprocess.check_call(cmd, shell=<span class="literal">True</span>, cwd=settings.BASE_DIR)</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;dumpdata 备份完成：<span class="subst">&#123;json_file&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 3. gzip 压缩备份文件</span></span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(json_file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f_in, gzip.<span class="built_in">open</span>(gz_file, <span class="string">&#x27;wb&#x27;</span>) <span class="keyword">as</span> f_out:</span><br><span class="line">            f_out.writelines(f_in)</span><br><span class="line">        os.remove(json_file)  <span class="comment"># 删除原始 JSON 文件</span></span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;文件压缩完成：<span class="subst">&#123;gz_file&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 4. 发送邮件（带压缩附件）</span></span><br><span class="line">        subject = <span class="string">f&quot;【Django 数据备份通知】<span class="subst">&#123;db_name&#125;</span>_<span class="subst">&#123;timestamp&#125;</span>&quot;</span></span><br><span class="line">        file_size = os.path.getsize(gz_file) / <span class="number">1024</span> / <span class="number">1024</span>  <span class="comment"># 转换为 MB</span></span><br><span class="line">        body = <span class="string">f&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        数据备份已完成，详情如下：</span></span><br><span class="line"><span class="string">        - 数据库名：<span class="subst">&#123;db_name&#125;</span></span></span><br><span class="line"><span class="string">        - 备份方式：Django dumpdata 备份</span></span><br><span class="line"><span class="string">        - 备份时间：<span class="subst">&#123;datetime.now().strftime(<span class="string">&#x27;%Y-%m-%d %H:%M:%S&#x27;</span>)&#125;</span></span></span><br><span class="line"><span class="string">        - 附件大小：<span class="subst">&#123;file_size:<span class="number">.2</span>f&#125;</span> MB</span></span><br><span class="line"><span class="string">        - 恢复命令：gunzip <span class="subst">&#123;os.path.basename(gz_file)&#125;</span> &amp;&amp; python manage.py loaddata <span class="subst">&#123;os.path.basename(json_file)&#125;</span></span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        email = EmailMessage(</span><br><span class="line">            subject=subject,</span><br><span class="line">            body=body,</span><br><span class="line">            from_email=settings.DEFAULT_FROM_EMAIL,</span><br><span class="line">            to=settings.BACKUP_EMAIL_RECIPIENTS</span><br><span class="line">        )</span><br><span class="line">        <span class="keyword">with</span> <span class="built_in">open</span>(gz_file, <span class="string">&#x27;rb&#x27;</span>) <span class="keyword">as</span> f:</span><br><span class="line">            email.attach(os.path.basename(gz_file), f.read(), <span class="string">&#x27;application/gzip&#x27;</span>)</span><br><span class="line">        email.send()</span><br><span class="line">        <span class="built_in">print</span>(<span class="string">f&quot;备份邮件已发送至：<span class="subst">&#123;settings.BACKUP_EMAIL_RECIPIENTS&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="comment"># 5. 清理旧备份（保留最近 30 天，可调整）</span></span><br><span class="line">        <span class="keyword">for</span> old_file <span class="keyword">in</span> glob.glob(<span class="string">f&quot;<span class="subst">&#123;backup_dir&#125;</span>/*.json.gz&quot;</span>):</span><br><span class="line">            <span class="keyword">if</span> os.path.getmtime(old_file) &lt; time.time() - <span class="number">30</span> * <span class="number">24</span> * <span class="number">3600</span>:</span><br><span class="line">                os.remove(old_file)</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">f&quot;已删除旧备份：<span class="subst">&#123;old_file&#125;</span>&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> <span class="string">f&quot;dumpdata 备份成功：<span class="subst">&#123;gz_file&#125;</span>&quot;</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">except</span> subprocess.CalledProcessError <span class="keyword">as</span> e:</span><br><span class="line">        <span class="variable language_">self</span>.retry(exc=e, countdown=<span class="number">60</span>)  <span class="comment"># 命令执行失败，1 分钟后重试</span></span><br><span class="line">    <span class="keyword">except</span> Exception <span class="keyword">as</span> e:</span><br><span class="line">        <span class="variable language_">self</span>.retry(exc=e, countdown=<span class="number">60</span>)  <span class="comment"># 其他错误，1 分钟后重试</span></span><br></pre></td></tr></table></figure>
+
+<h1 id="四、Supervisord-配置（后台运行）"><a href="#四、Supervisord-配置（后台运行）" class="headerlink" title="四、Supervisord 配置（后台运行）"></a>四、Supervisord 配置（后台运行）</h1><p>通过 Supervisord 托管 Celery Worker 和 Beat 进程，实现自动启动、崩溃重启、日志管理，确保服务稳定运行。</p>
+<h2 id="4-1-准备目录与权限"><a href="#4-1-准备目录与权限" class="headerlink" title="4.1 准备目录与权限"></a>4.1 准备目录与权限</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 1. 创建 Celery 日志目录（存储 Worker 和 Beat 日志）</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /var/log/celery</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> -R <span class="variable">$USER</span>:<span class="variable">$USER</span> /var/log/celery  <span class="comment"># 授权当前用户</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 创建备份目录（与 settings.py 中 BACKUP_DIR 一致）</span></span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">mkdir</span> -p /path/to/your/backups</span><br><span class="line"><span class="built_in">sudo</span> <span class="built_in">chown</span> -R <span class="variable">$USER</span>:<span class="variable">$USER</span> /path/to/your/backups</span><br></pre></td></tr></table></figure>
+
+<h2 id="4-2-编写-Supervisord-配置文件"><a href="#4-2-编写-Supervisord-配置文件" class="headerlink" title="4.2 编写 Supervisord 配置文件"></a>4.2 编写 Supervisord 配置文件</h2><p>在 <code>/etc/supervisor/conf.d/</code> 目录下创建 <code>celery_django.conf</code>，内容如下：</p>
+<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="section">[program:celery_worker]</span></span><br><span class="line"><span class="comment"># 环境变量（需替换为实际项目路径和虚拟环境路径）</span></span><br><span class="line"><span class="attr">environment</span>=</span><br><span class="line">    <span class="attr">PATH</span>=<span class="string">&quot;/path/to/your/django/project/venv/bin&quot;</span>,</span><br><span class="line">    <span class="attr">DJANGO_SETTINGS_MODULE</span>=<span class="string">&quot;your_project.settings&quot;</span>,</span><br><span class="line">    <span class="attr">PYTHONPATH</span>=<span class="string">&quot;/path/to/your/django/project&quot;</span>,</span><br><span class="line">    <span class="attr">BACKUP_DIR</span>=<span class="string">&quot;/path/to/your/backups&quot;</span>,</span><br><span class="line">    <span class="attr">REDIS_HOST</span>=<span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">    <span class="attr">REDIS_PORT</span>=<span class="string">&quot;6379&quot;</span></span><br><span class="line"><span class="comment"># 启动命令（虚拟环境路径需替换）</span></span><br><span class="line"><span class="attr">command</span>=/path/to/your/django/project/venv/bin/celery -A your_project worker --loglevel=info</span><br><span class="line"><span class="comment"># 项目根目录</span></span><br><span class="line"><span class="attr">directory</span>=/path/to/your/django/project</span><br><span class="line"><span class="comment"># 运行用户（建议非 root 用户，如 ubuntu）</span></span><br><span class="line"><span class="attr">user</span>=your_username</span><br><span class="line"><span class="comment"># 进程管理配置</span></span><br><span class="line"><span class="attr">autostart</span>=<span class="literal">true</span>          <span class="comment"># 随 Supervisord 启动</span></span><br><span class="line"><span class="attr">autorestart</span>=<span class="literal">true</span>        <span class="comment"># 进程崩溃后自动重启</span></span><br><span class="line"><span class="attr">startretries</span>=<span class="number">3</span>          <span class="comment"># 启动失败重试 3 次</span></span><br><span class="line"><span class="attr">redirect_stderr</span>=<span class="literal">true</span>    <span class="comment"># 错误日志重定向到 stdout</span></span><br><span class="line"><span class="attr">stdout_logfile</span>=/var/log/celery/worker.log  <span class="comment"># Worker 日志路径</span></span><br><span class="line"><span class="attr">stdout_logfile_maxbytes</span>=<span class="number">10</span>MB  <span class="comment"># 单个日志文件大小限制</span></span><br><span class="line"><span class="attr">stdout_logfile_backups</span>=<span class="number">10</span>     <span class="comment"># 日志备份数量</span></span><br><span class="line"></span><br><span class="line"><span class="section">[program:celery_beat]</span></span><br><span class="line"><span class="comment"># 环境变量（与 Worker 一致）</span></span><br><span class="line"><span class="attr">environment</span>=</span><br><span class="line">    <span class="attr">PATH</span>=<span class="string">&quot;/path/to/your/django/project/venv/bin&quot;</span>,</span><br><span class="line">    <span class="attr">DJANGO_SETTINGS_MODULE</span>=<span class="string">&quot;your_project.settings&quot;</span>,</span><br><span class="line">    <span class="attr">PYTHONPATH</span>=<span class="string">&quot;/path/to/your/django/project&quot;</span>,</span><br><span class="line">    <span class="attr">BACKUP_DIR</span>=<span class="string">&quot;/path/to/your/backups&quot;</span>,</span><br><span class="line">    <span class="attr">REDIS_HOST</span>=<span class="string">&quot;localhost&quot;</span>,</span><br><span class="line">    <span class="attr">REDIS_PORT</span>=<span class="string">&quot;6379&quot;</span></span><br><span class="line"><span class="comment"># 启动命令（虚拟环境路径需替换）</span></span><br><span class="line"><span class="attr">command</span>=/path/to/your/django/project/venv/bin/celery -A your_project beat --loglevel=info</span><br><span class="line"><span class="comment"># 项目根目录</span></span><br><span class="line"><span class="attr">directory</span>=/path/to/your/django/project</span><br><span class="line"><span class="comment"># 运行用户</span></span><br><span class="line"><span class="attr">user</span>=your_username</span><br><span class="line"><span class="comment"># 进程管理配置</span></span><br><span class="line"><span class="attr">autostart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">autorestart</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">startretries</span>=<span class="number">3</span></span><br><span class="line"><span class="attr">redirect_stderr</span>=<span class="literal">true</span></span><br><span class="line"><span class="attr">stdout_logfile</span>=/var/log/celery/beat.log   <span class="comment"># Beat 日志路径</span></span><br><span class="line"><span class="attr">stdout_logfile_maxbytes</span>=<span class="number">10</span>MB</span><br><span class="line"><span class="attr">stdout_logfile_backups</span>=<span class="number">10</span></span><br></pre></td></tr></table></figure>
+
+<p>替换说明：将配置中的 <code>your_project</code> 替换为实际项目名，<code>/path/to/your/django/project</code> 替换为项目根目录路径，<code>your_username</code> 替换为实际运行用户（如 ubuntu）。</p>
+<h2 id="4-3-启动与管理-Supervisord-服务"><a href="#4-3-启动与管理-Supervisord-服务" class="headerlink" title="4.3 启动与管理 Supervisord 服务"></a>4.3 启动与管理 Supervisord 服务</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 1. 重新加载 Supervisord 配置（新增/修改配置后必须执行）</span></span><br><span class="line"><span class="built_in">sudo</span> supervisorctl reread</span><br><span class="line"><span class="built_in">sudo</span> supervisorctl update</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 查看进程状态（验证是否启动成功）</span></span><br><span class="line"><span class="built_in">sudo</span> supervisorctl status</span><br><span class="line"><span class="comment"># 成功状态示例：</span></span><br><span class="line"><span class="comment"># celery_worker                   RUNNING   pid 12345, uptime 0:01:23</span></span><br><span class="line"><span class="comment"># celery_beat                     RUNNING   pid 12346, uptime 0:01:23</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 3. 手动控制进程（启动/停止/重启）</span></span><br><span class="line"><span class="built_in">sudo</span> supervisorctl start celery_worker  <span class="comment"># 启动 Worker</span></span><br><span class="line"><span class="built_in">sudo</span> supervisorctl stop celery_beat    <span class="comment"># 停止 Beat</span></span><br><span class="line"><span class="built_in">sudo</span> supervisorctl restart celery_worker celery_beat  <span class="comment"># 重启两者</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 4. 查看日志（排查问题时使用）</span></span><br><span class="line"><span class="built_in">tail</span> -f /var/log/celery/worker.log  <span class="comment"># 实时查看 Worker 日志</span></span><br><span class="line"><span class="built_in">tail</span> -f /var/log/celery/beat.log   <span class="comment"># 实时查看 Beat 日志</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 5. 重载 Supervisord 服务（配置文件修改后也可执行）</span></span><br><span class="line"><span class="built_in">sudo</span> supervisorctl reload</span><br></pre></td></tr></table></figure>
+
+<h1 id="五、验证与测试"><a href="#五、验证与测试" class="headerlink" title="五、验证与测试"></a>五、验证与测试</h1><h2 id="5-1-手动触发任务测试"><a href="#5-1-手动触发任务测试" class="headerlink" title="5.1 手动触发任务测试"></a>5.1 手动触发任务测试</h2><p>在项目虚拟环境中通过 Django Shell 手动触发备份任务，验证流程是否正常。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 进入项目根目录并激活虚拟环境</span></span><br><span class="line"><span class="built_in">cd</span> /path/to/your/django/project</span><br><span class="line"><span class="built_in">source</span> venv/bin/activate</span><br><span class="line"></span><br><span class="line"><span class="comment"># 进入 Django Shell</span></span><br><span class="line">python manage.py shell</span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试方案一：mysqldump 备份</span></span><br><span class="line">&gt;&gt;&gt; from myapp.tasks import backup_mysql_mysqldump</span><br><span class="line">&gt;&gt;&gt; result = backup_mysql_mysqldump.delay(<span class="string">&#x27;/path/to/your/backups&#x27;</span>)</span><br><span class="line">&gt;&gt;&gt; result.status  <span class="comment"># 查看任务状态，成功为 &#x27;SUCCESS&#x27;</span></span><br><span class="line">&gt;&gt;&gt; result.result  <span class="comment"># 查看任务结果</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># 测试方案二：dumpdata 备份</span></span><br><span class="line">&gt;&gt;&gt; from myapp.tasks import backup_mysql_dumpdata</span><br><span class="line">&gt;&gt;&gt; result = backup_mysql_dumpdata.delay(<span class="string">&#x27;/path/to/your/backups&#x27;</span>)</span><br><span class="line">&gt;&gt;&gt; result.status</span><br></pre></td></tr></table></figure>
+
+<h2 id="5-2-结果验证"><a href="#5-2-结果验证" class="headerlink" title="5.2 结果验证"></a>5.2 结果验证</h2><ol>
+<li><p><strong>备份文件验证</strong>：进入备份目录，查看是否生成 <code>.sql.gz</code>（mysqldump）或 <code>.json.gz</code>（dumpdata）文件。</p>
+</li>
+<li><p><strong>邮件验证</strong>：查看收件邮箱，确认收到带附件的备份通知邮件，附件可正常解压。</p>
+</li>
+<li><p><strong>日志验证</strong>：查看 Celery 日志，确认无错误信息。</p>
+</li>
+</ol>
+<h2 id="5-3-恢复测试（重要）"><a href="#5-3-恢复测试（重要）" class="headerlink" title="5.3 恢复测试（重要）"></a>5.3 恢复测试（重要）</h2><p>定期进行恢复测试，确保备份文件可用。</p>
+<h3 id="5-3-1-mysqldump-备份恢复"><a href="#5-3-1-mysqldump-备份恢复" class="headerlink" title="5.3.1 mysqldump 备份恢复"></a>5.3.1 mysqldump 备份恢复</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 1. 解压备份文件</span></span><br><span class="line">gunzip your_db_name_20251029_030000.sql.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 导入数据库（需输入密码）</span></span><br><span class="line">mysql -u your_db_user -p your_db_name &lt; your_db_name_20251029_030000.sql</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-2-dumpdata-备份恢复"><a href="#5-3-2-dumpdata-备份恢复" class="headerlink" title="5.3.2 dumpdata 备份恢复"></a>5.3.2 dumpdata 备份恢复</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="comment"># 1. 解压备份文件</span></span><br><span class="line">gunzip dump_your_db_name_20251029_031000.json.gz</span><br><span class="line"></span><br><span class="line"><span class="comment"># 2. 导入数据（Django 命令）</span></span><br><span class="line">python manage.py loaddata dump_your_db_name_20251029_031000.json</span><br></pre></td></tr></table></figure>
+
+<h1 id="六、两种备份方案对比与选型"><a href="#六、两种备份方案对比与选型" class="headerlink" title="六、两种备份方案对比与选型"></a>六、两种备份方案对比与选型</h1><table>
+<thead>
+<tr>
+<th>对比维度</th>
+<th>mysqldump 原生备份</th>
+<th>Django dumpdata 备份</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>备份内容</td>
+<td>完整数据库（表结构、索引、数据、约束）</td>
+<td>仅 ORM 模型数据（JSON 格式，无表结构）</td>
+</tr>
+<tr>
+<td>兼容性</td>
+<td>仅适用于 MySQL&#x2F;MariaDB</td>
+<td>跨数据库（支持 MySQL→PostgreSQL→SQLite 等）</td>
+</tr>
+<tr>
+<td>文件体积</td>
+<td>较小（原生 SQL 压缩率高）</td>
+<td>较大（JSON 格式冗余）</td>
+</tr>
+<tr>
+<td>恢复效率</td>
+<td>高（原生 MySQL 导入）</td>
+<td>中（Django ORM 逐行插入）</td>
+</tr>
+<tr>
+<td>依赖</td>
+<td>需安装 mysql-client</td>
+<td>仅依赖 Django 环境</td>
+</tr>
+<tr>
+<td>适用场景</td>
+<td>生产环境完整备份、灾难恢复</td>
+<td>开发&#x2F;测试环境数据迁移、轻量备份</td>
+</tr>
+<tr>
+<td>选型建议：生产环境优先使用 <strong>mysqldump 方案</strong>，确保备份完整性和恢复效率；开发测试环境或需要跨数据库迁移时，使用 <strong>dumpdata 方案</strong>。</td>
+<td></td>
+<td></td>
+</tr>
+</tbody></table>
+<h1 id="七、常见问题与排查"><a href="#七、常见问题与排查" class="headerlink" title="七、常见问题与排查"></a>七、常见问题与排查</h1><h2 id="7-1-Celery-进程启动失败"><a href="#7-1-Celery-进程启动失败" class="headerlink" title="7.1 Celery 进程启动失败"></a>7.1 Celery 进程启动失败</h2><ul>
+<li><p><strong>问题现象</strong>：<code>sudo supervisorctl status</code> 显示进程为 <code>FATAL</code> 或 <code>STOPPED</code>。</p>
+</li>
+<li><p><strong>排查步骤</strong>：<br>      查看日志：<code>tail -f /var/log/celery/worker.log</code>，定位错误信息。</p>
+</li>
+<li><p>检查虚拟环境路径：确保配置文件中 <code>command</code> 中的 Celery 路径正确。</p>
+</li>
+<li><p>检查 Redis 状态：确保 Redis 正常运行，可通过 <code>redis-cli ping</code> 验证。</p>
+</li>
+<li><p>检查权限：确保日志目录和备份目录有读写权限。</p>
+</li>
+</ul>
+<h2 id="7-2-备份文件为空或大小异常"><a href="#7-2-备份文件为空或大小异常" class="headerlink" title="7.2 备份文件为空或大小异常"></a>7.2 备份文件为空或大小异常</h2><ul>
+<li><p><strong>问题现象</strong>：备份目录生成空文件，或文件大小远小于实际数据库大小。</p>
+</li>
+<li><p><strong>排查步骤</strong>：<br>      检查数据库账号权限：确保配置的数据库用户有 <code>SELECT</code> 和 <code>LOCK TABLES</code> 权限。</p>
+</li>
+<li><p>手动执行备份命令：在终端执行 tasks.py 中的备份命令，查看是否报错。</p>
+</li>
+<li><p>检查 mysqldump 路径：确保 <code>mysqldump</code> 命令可正常执行（<code>which mysqldump</code> 查看路径）。</p>
+</li>
+</ul>
+<h2 id="7-3-邮件发送失败"><a href="#7-3-邮件发送失败" class="headerlink" title="7.3 邮件发送失败"></a>7.3 邮件发送失败</h2><ul>
+<li><p><strong>问题现象</strong>：备份文件生成成功，但未收到邮件。</p>
+</li>
+<li><p><strong>排查步骤</strong>：<br>      查看 Celery 日志：确认是否有邮件发送相关错误（如 SMTP 认证失败）。</p>
+</li>
+</ul>
+<blockquote>
+<p>（注：文档部分内容可能由 AI 生成）</p>
+</blockquote>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/django-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi/">https://need.uno/django-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Django/" class="post-tags__link button"># Django</a><a href="/tags/Celery/" class="post-tags__link button"># Celery</a><a href="/tags/Supervisord/" class="post-tags__link button"># Supervisord</a><a href="/tags/MySQL/" class="post-tags__link button"># MySQL</a><a href="/tags/%E5%AE%9A%E6%97%B6/" class="post-tags__link button"># 定时</a><a href="/tags/%E5%A4%87%E4%BB%BD/" class="post-tags__link button"># 备份</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fdjango-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi%2F&amp;text=Django%20%2B%20Celery%20%2B%20Supervisord%20%E5%AE%9E%E7%8E%B0%20MySQL%20%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C%EF%BC%88%E5%90%AB%E4%B8%A4%E7%A7%8D%E5%A4%87%E4%BB%BD%E6%96%B9%E5%BC%8F%EF%BC%89&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fdjango-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fdjango-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi%2F&amp;title=Django%20%2B%20Celery%20%2B%20Supervisord%20%E5%AE%9E%E7%8E%B0%20MySQL%20%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C%EF%BC%88%E5%90%AB%E4%B8%A4%E7%A7%8D%E5%A4%87%E4%BB%BD%E6%96%B9%E5%BC%8F%EF%BC%89"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fdjango-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi%2F&amp;text=Django%20%2B%20Celery%20%2B%20Supervisord%20%E5%AE%9E%E7%8E%B0%20MySQL%20%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C%EF%BC%88%E5%90%AB%E4%B8%A4%E7%A7%8D%E5%A4%87%E4%BB%BD%E6%96%B9%E5%BC%8F%EF%BC%89"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fdjango-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi%2F&amp;title=Django%20%2B%20Celery%20%2B%20Supervisord%20%E5%AE%9E%E7%8E%B0%20MySQL%20%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C%EF%BC%88%E5%90%AB%E4%B8%A4%E7%A7%8D%E5%A4%87%E4%BB%BD%E6%96%B9%E5%BC%8F%EF%BC%89&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fdjango-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi%2F&amp;title=Django%20%2B%20Celery%20%2B%20Supervisord%20%E5%AE%9E%E7%8E%B0%20MySQL%20%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C%EF%BC%88%E5%90%AB%E4%B8%A4%E7%A7%8D%E5%A4%87%E4%BB%BD%E6%96%B9%E5%BC%8F%EF%BC%89&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fdjango-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi%2F&amp;title=Django%20%2B%20Celery%20%2B%20Supervisord%20%E5%AE%9E%E7%8E%B0%20MySQL%20%E5%AE%9A%E6%97%B6%E5%A4%87%E4%BB%BD%E5%AE%8C%E6%95%B4%E6%93%8D%E4%BD%9C%E6%89%8B%E5%86%8C%EF%BC%88%E5%90%AB%E4%B8%A4%E7%A7%8D%E5%A4%87%E4%BB%BD%E6%96%B9%E5%BC%8F%EF%BC%89&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/ai-jiao-lu-dang-dai-she-hui-de-xin-li-tiao-zhan-yu-shen-ceng-si-kao/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            AI焦虑：当代社会的心理挑战与深层思考
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/wu-fei-huo-de-prompt-engineering-zhi-nan/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            无废活的Prompt Engineering指南
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="django-celery-supervisord-shi-xian-mysql-ding-shi-bei-fen-wan-zheng-cao-zuo-shou-ce-han-liang-chong-bei-fen-fang-shi/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

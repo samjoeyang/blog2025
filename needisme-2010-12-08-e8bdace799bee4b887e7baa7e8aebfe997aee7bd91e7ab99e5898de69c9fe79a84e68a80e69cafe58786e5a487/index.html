@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>[转]百万级访问网站前期的技术准备 | Need.UNO</title>
+
+
+    <meta name="keywords" content="HTML, CSS, Java, Linux, LINUX, 系统管理, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="文章转自： http:&#x2F;&#x2F;zhiyi.us&#x2F;internet&#x2F;thinking-twice-before-building-your-site-one.html http:&#x2F;&#x2F;zhiyi.us&#x2F;internet&#x2F;thinking-twice-before-building-your-site-two.html http:&#x2F;&#x2F;zhiyi.us&#x2F;internet&#x2F;thinking-twice-befo">
+<meta property="og:type" content="website">
+<meta property="og:title" content="[转]百万级访问网站前期的技术准备">
+<meta property="og:url" content="https://need.uno/needisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="文章转自： http:&#x2F;&#x2F;zhiyi.us&#x2F;internet&#x2F;thinking-twice-before-building-your-site-one.html http:&#x2F;&#x2F;zhiyi.us&#x2F;internet&#x2F;thinking-twice-before-building-your-site-two.html http:&#x2F;&#x2F;zhiyi.us&#x2F;internet&#x2F;thinking-twice-befo">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2010-12-08T06:14:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.116Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="CSS">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="LINUX">
+<meta property="article:tag" content="系统管理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+    <meta name="robots" content="noindex, nofollow">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "[转]百万级访问网站前期的技术准备",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-12-08",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487/" },
+  "description": "[转]百万级访问网站前期的技术准备"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        [转]百万级访问网站前期的技术准备
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2010/12/" class="post-meta__date button">2010-12-08</a>
+        
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <p>文章转自：<br />
+<a target="_blank" rel="noopener" href="http://zhiyi.us/internet/thinking-twice-before-building-your-site-one.html">http://zhiyi.us/internet/thinking-twice-before-building-your-site-one.html</a></p>
+<p><a target="_blank" rel="noopener" href="http://zhiyi.us/internet/thinking-twice-before-building-your-site-two.html">http://zhiyi.us/internet/thinking-twice-before-building-your-site-two.html</a><br />
+<a target="_blank" rel="noopener" href="http://zhiyi.us/internet/thinking-twice-before-building-your-site-final.html">http://zhiyi.us/internet/thinking-twice-before-building-your-site-final.html</a></p>
+<p><strong>文章所在博客：《<a target="_blank" rel="noopener" href="http://zhiyi.us/">一路凯歌</a>》</strong></p>
+<p><strong>【正文开始】</strong></p>
+<p>开了自己域名的博客，第一篇就得来个重磅一点的才对得起这4美金的域名。作为一个技术从业者十年，逛了十年发现有些知识东一榔头西一棒槌的得满世界  看个遍才整理出个头绪，那咱就系统点的从头一步一步的说，一个从日几千访问的小小网站，到日访问一两百万的小网站，怎么才能让它平滑的度过这个阶段，别在  技术上出现先天不足，写给一些技术人员，也写给不懂技术的创业者。</p>
+<p>转载请注明出自 <a target="_blank" rel="noopener" href="http://zhiyi.us/">http://zhiyi.us</a> ，假如您还想从这转到好文章的话。</p>
+<p>对互联网有了解的人都有自己的想法，有人就把想法付诸实现，做个网站然后开始运营。其实从纯网站技术上来说，因为开源模式的发展，现在建一个小网站  已经很简单也很便宜。当访问量到达一定数量级的时候成本就开始飙升了，问题也开始显现了。因为带宽的增加、硬件的扩展、人员的扩张所带来的成本提高是显而  易见的，而还有相当大的一部分成本是因为代码重构、架构重构，甚至底层开发语言更换引起的，最惨的就是数据丢失，辛辛苦苦好几年，一夜回到创业前。</p>
+<p>减少成本就是增加利润。很多事情，我们在一开始就可以避免，先打好基础，往后可以省很多精力，少操很多心。</p>
+<p>假设你是一个参与创业的技术人员，当前一穷二白，什么都要自己做，自己出钱，初期几十万的资金，做一个应用不是特别复杂的网站，那么就要注意以下几点：</p>
+<h3>一、开发语言</h3>
+<p>一般来说，技术人员（程序员）创业都是根据自己技术背景选择自己最熟悉的语言，不过考虑到不可能永远是您一个人写程序，这点还得仔细想想。无论用什么语言，最终代码质量是看管理，所以我们还是从纯语言层面来说实际一点。现在流行的<a target="_blank" rel="noopener" href="http://www.java.com/zh_CN/">java</a>、<a target="_blank" rel="noopener" href="http://www.php.net/">php</a>、<a target="_blank" rel="noopener" href="http://www.microsoft.com/net/">.net</a>、<a target="_blank" rel="noopener" href="http://www.python.org/">python</a>、<a target="_blank" rel="noopener" href="http://www.ruby-lang.org/en/">ruby</a>都  有自己的优劣，python和ruby，现在人员还是相对难招一些，性能优化也会费些力气，.net平台买不起windows   server。java、php用的还是最多。对于初期，应用几乎都是靠前端支撑的网站来说，php的优势稍大一些，入门简单、设计模式简单、写起来快、   性能足够等，不过不注重设计模式也是它的劣势，容易变得松散，隐藏bug稍多、难以维护。java的优势在于整套管理流程已经有很多成熟工具来辅助，强类   型也能避免一些弱智BUG，大多数JAVA程序员比较注重设计模式，别管实不实际，代码格式看起来还是不错的。这也是个劣势，初学者可能太注重模式而很难  解决实际需求。</p>
+<p>前端不只是html、css这类。整个负责跟用户交互的部分都是前端，包括处理程序。这类程序还是建议用php，主要原因就是开发迅速、从业人员广泛。至于后端例如行为分析、银行接口、异步消息处理等，随便用什么程序，那个只能是根据不同业务需求来选择不同语言了。</p>
+<h3>二、代码版本管理</h3>
+<p>如果开发人员之间的网络速度差不多，就<a target="_blank" rel="noopener" href="http://subversion.apache.org/">SVN</a>；比较分散例如跨国，就<a title="Mercurial SCM(hg)" target="_blank" rel="noopener" href="http://mercurial.selenic.com/">hg</a>。大多数人还是svn的.</p>
+<p>假设选了svn，那么有几点考虑。一是采用什么树结构。初期可能只有一条主干，往后就需要建立分支，例如一条开发分支，一条上线分支，再往后，可能  要每个小组一个分支。建议一开始人少时选择两条分支，开发和线上，每个功能本地测试无误后提交到开发分支，最后统一测试，可以上线时合并到上线分支。如果   喜欢把svn当做移动硬盘用，写一点就commit一次也无所谓，就是合并的时候头大一些，这些人可以自己建个分支甚至建立个本地代码仓库，随便往自己的  分支提交，测试完毕后再提交到开发分支上。</p>
+<p>部署，可以手工部署也可以自动部署。手工部署相对简单，一般是直接在服务器上svn update，或者找个新目录svn   checkout，再把web root给ln   -s过去。应用越复杂，部署越复杂，没有什么统一标准，只要别再用ftp上传那种形式就好，一是上传时文件引用不一致错误率增加，二是很容易出现开发人员   的版本跟线上版本不一致，导致本来想改个错字结果变成回滚的杯具。如果有多台服务器还是建议自动部署，更换代码的机器从当前服务池中临时撤出，更新完毕后  再重新加入。</p>
+<p>不管项目多小，养成使用版本管理的好习惯，最起码还可以当做你的备份，我的 <a target="_blank" rel="noopener" href="http://zhiyi.us/">http://zhiyi.us</a> 虽然就是一个wordpress，可还是svn了，只改动一两句css那也是劳动成果。</p>
+<h3>三、服务器硬件</h3>
+<p>别羡慕大客户和有钱人，看看机房散户区，一台服务器孤独的支撑的网站数不清。如果资金稍微充足，建议至少三台的标准配置，分别用作web处理、数据  库、备份。web服务器至少要8G内存，双sata raid1，如果经济稍微宽松，或静态文件或图片多，则15k sas   raid1+0。数据库至少16G内存，15k sas raid   1+0。备份服务器最好跟数据库服务器同等配置。硬件可以自己买品牌的底板，也就是机箱配主板和硬盘盒，CPU内存硬盘都自己配，也可以上整套品牌，也可  以兼容机。三台机器，市场行情6、7万也就配齐了。</p>
+<p>web服务器可以既跑程序又当内存缓存，数据库服务器则只跑主数据库（假如是<a title="MySQL Standard Edition" target="_blank" rel="noopener" href="http://www.mysql.com/products/standard/">MySQL</a>的话），备份服务器干的活就相对多一些，web配置、缓存配置、数据库配置都要跟前两台一致，这样WEB和数据库任意一台出问题，把备份服务器换个ip就切换上去了。备份策略，可以<a title="DRBD" target="_blank" rel="noopener" href="http://www.drbd.org/">drbd</a>，可以<a title="rsync" target="_blank" rel="noopener" href="http://samba.anu.edu.au/rsync/">rsync</a>，或者其他的很多很多的开源备份方案可选择。rsync最简单，放cron里自己跑就行。备份和切换，建议多做测试，选最安全最适合业务的，并且尽可能异地备份。</p>
+<h3>四、机房</h3>
+<p>三种机房尽量不要选：联通访问特别慢的电信机房、电信访问特别慢的联通机房、电信联通访问特别慢的移动或铁通机房。那网通机房呢？亲，网通联通N久  以前合并改叫联通了。多多寻找，实地参观，多多测试，多方打探，北京、上海、广州等各个主节点城市，还是有很多优质机房的，找个网络质量好，管理严格的机   房，特别是管理要严格，千万别网站无法访问了，打个电话过去才知道别人维护时把你网线碰掉了，这比DOS都头疼。自己扯了几根光纤就称为机房的，看您抗风   险程度和心理素质了。机房可以说是非常重要，直接关系到网站访问速度，网站访问速度直接关系到用户体验，我可以翻墙看风景，但买个网游vpn才能打开你这  个还不怎么知名的网站就有难度了。或许您网站的ajax很出色，可是document怎么也不ready，一些代码永远绝缘于用户。</p>
+<h3>五、架构</h3>
+<p>初期架构一般比较简单，web负载均衡+数据库主从+缓存+分布式存储+队列。大方向上也确实就这几样东西，细节上也无数文章都重复过了，按照将来  会有N多WEB，N多主从关系，N多缓存，N多xxx设计就行，基本方案都是现成的，只是您比其他人厉害之处就在于设计上考虑到缓存失效时的雪崩效应、主   从同步的数据一致性和时间差、队列的稳定性和失败后的重试策略、文件存储的效率和备份方式等等意外情况。缓存总有一天会失效，数据库复制总有一天会断掉，  队列总有一天会写不进去，电源总有一天会烧坏。根据墨菲定律，如果不考虑这些，网站早晚会成为茶几。</p>
+<h3>六、服务器软件</h3>
+<p>Linux、<a title="nginx" target="_blank" rel="noopener" href="http://nginx.org/">nginx</a>、php、mysql，几乎是标配，我们除了看名字，还得选版本。Linux发行版众多，只要没特殊要求，就选个用的人最多的，社区最活跃的，配置最方便的，软件包最全最新的，例如<a title="Debian" target="_blank" rel="noopener" href="http://www.debian.org/">debian</a>、<a title="Ubuntu" target="_blank" rel="noopener" href="http://www.ubuntu.com/">ubuntu</a>。   至于RHEL之类的嘛，你用只能在RHEL上才能运行的软件么？剩下的nginx、php、mysql、activemq、其他的等等，除非你改过这些软   件或你的程序真的不兼容新版本，否则尽量版本越新越好，版本新，意味着新特性增多、BUG减少、性能增加。总有些道听途说的人跟你说老的版本稳定。所谓稳   定，是相对于特殊业务来说的，而就一个php写的网站，大多数人都没改过任何服务器软件源代码，绝大多数情况是能平稳的升级到新版本的。类似于jdk5到   jdk6，python2到python3这类变动比较大的升级还是比较少见的。看看ChangeLog，看看升级说明，结合自己情况评估一下，越早升级  越好，别人家都用php6写程序了这边还php4的逛游呢。优秀的开源程序升级还是很负责任的，看好文档，别怕。</p>
+<h3>七、数据库</h3>
+<p>几乎所有操作最后都要落到数据库身上，它又最难扩展（存储也挺难）。对于mysql，什么样的表用myisam，什么样的表用innodb，在开发  之前要确定。复制策略、分片策略，也要确定。表引擎方面，一般，更新不多、不需要事务的表可以用myisam，需要行锁定、事务支持的，用innodb。   myisam的锁表不一定是性能低下的根源，innodb也不一定全是行锁，具体细节要多看相关的文档，熟悉了引擎特性才能用的更好。现代WEB应用越来   越复杂了，我们设计表结构时常常设计很多冗余，虽然不符合传统范式，但为了速度考虑还是值得的，要求高的情况下甚至要杜绝联合查询。编程时得多注意数据一  致性。</p>
+<p>复制策略方面，多主多从结构也最好一开始就设计好，代码直接按照多主多从来编写，用一些小技巧来避免复制延时问题，并且还要解决多数据库数据是否一致，可以自己写或者找现成的运维工具。</p>
+<p>分片策略。总会有那么几个表数据量超大，这时分片必不可免。分片有很多策略，从简单的分区到根据热度自动调整，依照具体业务选择一个适合自己的。避免自增ID作为主键，不利于分片。</p>
+<p>用存储过程是比较难扩展的，这种情形多发生于传统C/S，特别是OA系统转换过来的开发人员。低成本网站不是一两台小型机跑一个数据库处理所有业务的模式，是机海作战。方便水平扩展比那点预分析时间和网络传输流量要重要的多的多。</p>
+<p>NoSQL。这只是一个概念。实际应用中，网站有着越来越多的密集写操作、上亿的简单关系数据读取、热备等，这都不是传统关系数据库所擅长的，于是  就产生了很多非关系型数据库，比如Redis/TC&amp;TT/MongoDB/Memcachedb等，在测试中，这些几乎都达到了每秒至少一万次   的写操作，内存型的甚至5万以上。例如MongoDB，几句配置就可以组建一个复制+自动分片+failover的环境，文档化的存储也简化了传统设计库  结构再开发的模式。很多业务是可以用这类数据库来替代mysql的。</p>
+<h3>八、缓存。</h3>
+<p>数据库很脆弱，一定要有缓存在前面挡着，其实我们优化速度，几乎就是优化缓存，能用缓存的地方，就不要再跑到后端数据库那折腾。缓存有持久化缓存、  内存缓存，生成静态页面是最容易理解的持久化缓存了，还有很多比如varnish的分块缓存、前面提到的memcachedb等，内存缓  存，memcached首当其冲。缓存更新可用被动更新和主动更新。被动更新的好处是设计简单，缓存空了就自动去数据库取数据再把缓存填上，但容易引发雪   崩效应，一旦缓存大面积失效，数据库的压力直线上升很可能挂掉。主动缓存可避免这点但是可能引发程序取不到数据的问题。这两者之间如何配合，程序设计要多  动脑筋。</p>
+<h3>九、队列。</h3>
+<p>用户一个操作很可能引发一系列资源和功能的调动，这些调动如果同时发生，压力无法控制，用户体验也不好，可以把这样一些操作放入队列，由另几个模块  去异步执行，例如发送邮件，发送手机短信。开源队列服务器很多，性能要求不高用数据库当做队列也可以，只要保证程序读写队列的接口不变，底层队列服务可随  时更换就可以，类似Zend Framework里的Zend_Queue类，java.util.Queue接口等。</p>
+<h3>十、文件存储。</h3>
+<p>除了结构化数据，我们经常要存放其他的数据，像图片之类的。这类数据数量繁多、访问量大。典型的就是图片，从用户头像到用户上传的照片，还要生成不  同的缩略图尺寸。存储的分布几乎跟数据库扩展一样艰难。不使用专业存储的情况下，基本都是靠自己的NAS。这就涉及到结构。拿图片存储举例，图片是非常容  易产生热点的，有些图片上传后就不再有人看，有些可能每天被访问数十万次，而且大量小文件的异步备份也很耗费时间。</p>
+<p>为了将来图片走cdn做准备，一开始最好就将图片的域名分开，且不用主域名。很多网站都将cookie设置到了.domain.ltd，如果图片也在这个域名下，很可能因为cookie而造成缓存失效，并且占多余流量，还可能因为浏览器并发线程限制造成访问缓慢。</p>
+<p>如果用普通的文件系统存储图片，有一个简单的方法。计算文件的hash值，比如md5，以结果第一位作为第一级目录，这样第一级有16个目录。从0  到F，可以把这个字母作为域名，0.yourimg.com到f.yourimg.com（客户端dns压力会增大），还可以扩展到最多16个NAS集群  上。第二级可用年月例如，201011，第三级用日，第四级可选，根据上传量，比如am/pm，甚至小时。最终的目录结构可能会是   e/201008/25/am/e43ae391c839d82801920cf.jpg。rsync备份时可以用脚本只同步某年某日某时的文件，避免计  算大量文件带来的开销。当然最好是能用专门的分布式文件系统或更专业点的存储解决方案。</p>
+<p>开始设计代码结构之前，先回顾一下之前准备过的事情：我们有负载均衡的WEB服务器，有主从DB服务器并可能分片，有缓存，有可扩展的存储。在组织代码的各个方面，跟这些准备息息相关，我一二三的列出来分别说，并且每一条都以&ldquo;前面讲到&rdquo;这个经典句式开头，为了方便对照。</p>
+<p>别着急看经典句式，我思维跳跃了，插一段。实际开发中，我们总会在性能和代码优雅性上作折中。对于当今的计算机和语言解释器，多几层少几层对象调  用、声明变量为Map还是HashMap这种问题是最后才需要考虑的问题，永远要考虑系统最慢的部分，从最慢的部分解决。例如看看你用的ORM是不是做了   很多你用不到的事情，是不是有重复的数据调用。我们做的是web应用开发，不是底层框架API，代码易读易懂是保证质量很重要的一方面，你的程序是为了什  么而设计，有不同的方法&hellip;&hellip;算了，这个话题另起一篇文章来说，扯远了，想交流可关注我的微博 <a target="_blank" rel="noopener" href="http://t.sina.com.cn/liuzhiyi">http://t.sina.com.cn/liuzhiyi</a>，咱继续&hellip;&hellip;</p>
+<p><a target="_blank" rel="noopener" href="http://zhiyi.us/internet/thinking-twice-before-building-your-site-one.html">前面讲到</a>，WEB   服务器是要做负载均衡的，图片服务器是要分开的。对于这点，代码在处理客户端状态时，不要把状态放到单机上，举例，不要用文件session，嗯，常识。   如果有可能，最好在一开始就做好用户单点认证的统一接口，包括跨域如何判断状态、静态页面如何判断状态，需要登录时的跳转和返回参数定义，底层给好接口，  应用层直接就用（可参考<a target="_blank" rel="noopener" href="http://code.google.com/intl/zh-CN/appengine/">GAE</a>的   user服务）。登录方面的设计要考虑移动设备的特性，比如电脑可以用浮动层窗口，但NOKIA自带的浏览器或UCWEB就无法处理这种表现形式，程序一   定既能处理AJAX请求又能直接通过URL来处理请求。图片服务器分开，资源文件最好也布局到图片服务器，也就是WEB服务器只服务动态程序。虽然开发测   试时稍微复杂（因为需要绝对URI才能访问），但将来页面前端优化上会轻松许多，并且你的WEB服务器IO优化也轻松许多。程序引用资源文件时，要有一个   统一的处理方法，在方法内部可以自动完成很多事情，例如将css/js根据组合，拼成一个文件，或者自动在生成的URI后面加上QUERYSTRING，  如果将来前端用了缓存服务，那生成QUERYSTRING是最简单的刷新服务端缓存和客户端缓存的办法。</p>
+<p><a target="_blank" rel="noopener" href="http://zhiyi.us/internet/thinking-twice-before-building-your-site-two.html">前面讲到</a>，   数据库会有复制，可能会多主多从，可能会分片。我们程序在处理数据的过程中，最好能抽象出来单独放做一层。拿现在流行的MVC模式来说，就是在M层下方再   放一个数据层，这个数据层不是通常所说的JDBC/PDO/ActiveRecord等，而是你自己的存取数据层，仅对外暴露方法，隐藏数据存取细节。这  个数据层内部不要怕写的难看，但一定要提供所有的数据存储功能，其他任何层次不要看到跟数据库打交道的字眼。之所以这样做，是因为在单关系数据库的情况   下，可能会SELECT&hellip;JOIN&hellip;或直接INSERT&hellip;INTO&hellip;，可你可能会将一些表放到key-value数据库里存储，或者分片，这么做之后原来   的语句和方式要全部改变，如果过于分散，则移植时会耗费很大精力，或得到一个很大的Model。在数据层面的设计上，尽量避免JOIN查询，我们可以多做   冗余，多做缓存，每种数据尽量只需要一次查询，然后在你的程序里面进行组合。对于比较复杂的数据组合，在实时性要求不高的情况下，可采用异步处理，用户访   问时只取处理后的结果。在对于主键的处理上，避免使用自增ID，可以用一定规则生成的唯一值当做主键，这种主键是最简单的分片分布策略。即使用自增ID，  也最好用一个自增ID发生器，否则从数据库不小心被写了一下，那主键很容易冲突。</p>
+<p>前面讲到，咱数据库前面还有某些缓存挡着。别把mysql的query cache当缓存，应用稍复杂的时候QUERY   CACHE反而会成为累赘。缓存跟数据库和业务结合的很紧密，正因为跟业务关系紧密，所以这点没有放之四海而皆准的方法。但我们还是有一些规则可参照。规   则一：越接近前端，缓存的颗粒度越大。例如在WEB最前端缓存整个页面，再往后一层缓存部分页面区域，再往后缓存区域内的单条记录。因为越靠近后端，我们   的可操作性越灵活，并且变化最多的前端代码也比较方便编写。在实践中，因为产品需求变化速度非常快，迭代周期越来越短，有时很难将Controller和   Model分的那么清楚，Controller层面处理部分缓存必不可免，但要保证如果出现这种情况，Controller所操作的缓存一定不要影响其他   数据需求方，也就是要保证这个缓存数据只有这一个Controller在用。规则二：没有缓存时程序不能出错。在不考虑缓存失效引发的雪崩效应时，你的程   序要有缓存跟没缓存一个样，不能像新浪微博一样，缓存一失效，粉丝微博全空，整个应用都乱套了。在缓存必不可少的情况下，给用户出错信息都比给一个让人误   解的信息强。规则三，缓存更新要保证原子性或称作线程安全，特别是采用被动缓存的方式时，很可能两个用户访问时导致同一个缓存被更新，通常情况这不是大问   题，可缓存失效后重建时很可能是引发连锁反应的原因之一。规则四：缓存也是有成本的。不只是技术成本，还有人工时间成本。如果一个功能使用缓存和不使用，  在可预见的访问量情况下区别微小，但使用缓存会使复杂度增加，那就不用，我们可以加个TODO标注，在下次迭代的时候加上缓存处理。</p>
+<p>前面讲到，文件存储是独立的，那么所有的文件操作就都是远程调用。可以在文件服务器上提供一个很简单的RESTful接口，也可以提供xmlrpc  或json   serveice，WEB服务器端所生成和处理的文件，全部通过接口通知文件服务器去处理，WEB服务器本身不要提供任何文件存储。你会发现很多大网站的  上传图片跟保存文章是分两步完成的，就是基于这个原因。</p>
+<p>以上几条&ldquo;前面讲到&rdquo;，其实无数人都讲过，我也只是结合前几篇文章用自己的话重复了一遍，真正分析起来精髓很简单&mdash;&mdash;除了良好的功能逻辑分层，我们  还要为数据库存储、缓存、队列、文件服务等程序外层资源调用单独设计接口，你可以把你的程序想象成是运行在 Amazon EC2 上并用他的所有web   service服务，你的数据库就是它的<a target="_blank" rel="noopener" href="http://aws.amazon.com/simpledb/">SimpleDB</a>，你的队列就是他的<a target="_blank" rel="noopener" href="http://aws.amazon.com/sqs/">SQS</a>，你的存储就是他的<a target="_blank" rel="noopener" href="http://aws.amazon.com/s3/">S3</a>，唯一不同是amazon的接口是远程调用，你的是内部调用。</p>
+<p>将支撑服务接口化，意味着将MySQL更换到<a target="_blank" rel="noopener" href="http://www.postgresql.org/">PostgreSQL</a>不需要更改业务处理程序，移植团队甚至不需要跟业务开发团队过多沟通；意味着业务开发团队是对接口编程而不是对数据库编程；意味着不会因为某个业务开发人员的失误而拖垮性能。</p>
+<p><strong>对程序扫盲不感兴趣的直接看这里&mdash;&mdash;</strong></p>
+<p>产品设计完了，程序框架搭完了，可能有矛盾在这个节骨眼儿产生了。不断有产品设计抱怨说他的创意没实现到预期效果，有程序员抱怨说产品设计不切实  际。这种抱怨多缘于产品人员不懂技术，技术人员不理解产品。从广义上来讲，产品包含市场策略、营销手段、功能设计，产品和技术在争论时往往把焦点放在功能   上，而实际重点是，实现这个功能所消耗的成本跟能这个功能带来的利益能否换算，能否取其轻重。若可以，争议解决。若不能，则抛硬币看运气。因为一个功能的   加强而引发指标井喷，或因项目拖延而导致贻误战机的例子比比皆是。激进的决策者注重利益，保守的决策者注重损失，聪明的决策者会考虑这个问题是否真的那么  严重。</p>
+<p>关系到未来的事情谁都说不准，要不怎么说创业一半靠运气呢。不过总有能说的准的事情，那就得靠数据说话。</p>
+<p>没有100%也有99.9%的网站安装了访问统计代码，连我的 <a target="_blank" rel="noopener" href="http://zhiyi.us/">http://zhiyi.us</a> 也不例外，新闻联播也总说科学决策科学发展的。有了统计，能确定的事情就很多了。例如，可以根据来源-目标转化率来分析哪类渠道的人均获取成本低，根据来   源-内容访问猜测用户跳出率原因，根据用户点击行为判断链接位置是否合理等。将数据以不同方式组合起来，找到内在联系，分析内因外因，制定对应策略，减少  拍脑门决策。靠数据支撑运营是个非常专业的事情，虽然不懂深奥的数学模型不会复杂的公式计算，渐渐学会因为A所以B，因为A和B所以C还是相对简单的。</p>
+<p>over~</p>
+
+<hr>
+<p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/needisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487/">https://need.uno/needisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/CSS/" class="post-tags__link button"># CSS</a><a href="/tags/Java/" class="post-tags__link button"># Java</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487%2F&amp;text=%5B%E8%BD%AC%5D%E7%99%BE%E4%B8%87%E7%BA%A7%E8%AE%BF%E9%97%AE%E7%BD%91%E7%AB%99%E5%89%8D%E6%9C%9F%E7%9A%84%E6%8A%80%E6%9C%AF%E5%87%86%E5%A4%87&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487%2F&amp;title=%5B%E8%BD%AC%5D%E7%99%BE%E4%B8%87%E7%BA%A7%E8%AE%BF%E9%97%AE%E7%BD%91%E7%AB%99%E5%89%8D%E6%9C%9F%E7%9A%84%E6%8A%80%E6%9C%AF%E5%87%86%E5%A4%87"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487%2F&amp;text=%5B%E8%BD%AC%5D%E7%99%BE%E4%B8%87%E7%BA%A7%E8%AE%BF%E9%97%AE%E7%BD%91%E7%AB%99%E5%89%8D%E6%9C%9F%E7%9A%84%E6%8A%80%E6%9C%AF%E5%87%86%E5%A4%87"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487%2F&amp;title=%5B%E8%BD%AC%5D%E7%99%BE%E4%B8%87%E7%BA%A7%E8%AE%BF%E9%97%AE%E7%BD%91%E7%AB%99%E5%89%8D%E6%9C%9F%E7%9A%84%E6%8A%80%E6%9C%AF%E5%87%86%E5%A4%87&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487%2F&amp;title=%5B%E8%BD%AC%5D%E7%99%BE%E4%B8%87%E7%BA%A7%E8%AE%BF%E9%97%AE%E7%BD%91%E7%AB%99%E5%89%8D%E6%9C%9F%E7%9A%84%E6%8A%80%E6%9C%AF%E5%87%86%E5%A4%87&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487%2F&amp;title=%5B%E8%BD%AC%5D%E7%99%BE%E4%B8%87%E7%BA%A7%E8%AE%BF%E9%97%AE%E7%BD%91%E7%AB%99%E5%89%8D%E6%9C%9F%E7%9A%84%E6%8A%80%E6%9C%AF%E5%87%86%E5%A4%87&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/needisme-2010-12-08-e38090e4bb8ae5a4a9e68891e4b8bbe7bc96e38091e5b08fe9ad94e5a5b3e5b9bde5b9bdefbc9ae5a49ae794a8e68a98e58fa0e5ae89e585a8e68f92e5a4b4/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            【今天我主编】小魔女幽幽：多用折叠安全插头
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/needisme-2010-12-08-e58e86e58fb2e4b88ae89197e5908de79a84e68296e8aeba/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            历史上著名的悖论
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="needisme-2010-12-08-e8bdace799bee4b887e7baa7e8aebfe997aee7bd91e7ab99e5898de69c9fe79a84e68a80e69cafe58786e5a487/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

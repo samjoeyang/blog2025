@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>揭开Wayland的面纱（二）：Wayland应运而生 | Need.UNO</title>
+
+
+    <meta name="keywords" content="HTML, Linux, LINUX, 系统管理, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="话说在上篇（揭开Wayland的面纱（一）：X Window的前生今世）中我介绍了一些X Window的历史及发展，还没有提到Wayland本身，不少人已经等不及了。不过，介绍这些是有必要的，毕竟要知道X Window的一些知识，才能明白为什么会有Wayland这个东西。 在本篇正式开始介绍Wayland之前，让我们先回到2008年11月4日，也就是整整两年前，我当时在中文领域第一时间报道了&amp;ld">
+<meta property="og:type" content="website">
+<meta property="og:title" content="揭开Wayland的面纱（二）：Wayland应运而生">
+<meta property="og:url" content="https://need.uno/needisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="话说在上篇（揭开Wayland的面纱（一）：X Window的前生今世）中我介绍了一些X Window的历史及发展，还没有提到Wayland本身，不少人已经等不及了。不过，介绍这些是有必要的，毕竟要知道X Window的一些知识，才能明白为什么会有Wayland这个东西。 在本篇正式开始介绍Wayland之前，让我们先回到2008年11月4日，也就是整整两年前，我当时在中文领域第一时间报道了&amp;ld">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://imtx.me/static/uploads/2010/11/wayland-architecture.png">
+<meta property="og:image" content="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg">
+<meta property="og:image" content="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png">
+<meta property="og:image" content="http://imtx.me/static/pictures/2010/11/wayland-clutter.png">
+<meta property="article:published_time" content="2010-11-08T03:46:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.110Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="LINUX">
+<meta property="article:tag" content="系统管理">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://imtx.me/static/uploads/2010/11/wayland-architecture.png">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+    <meta name="robots" content="noindex, nofollow">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "揭开Wayland的面纱（二）：Wayland应运而生",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-11-08",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f/" },
+  "description": "揭开Wayland的面纱（二）：Wayland应运而生"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        揭开Wayland的面纱（二）：Wayland应运而生
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2010/11/" class="post-meta__date button">2010-11-08</a>
+        
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <p>话说在上篇（<a target="_blank" rel="noopener" href="http://imtx.me/archives/1573.html">揭开Wayland的面纱（一）：X Window的前生今世</a>）中我介绍了一些X Window的历史及发展，还没有提到Wayland本身，不少人已经等不及了。不过，介绍这些是有必要的，毕竟要知道X Window的一些知识，才能明白为什么会有Wayland这个东西。</p>
+<p>在本篇正式开始介绍Wayland之前，让我们先回到2008年11月4日，也就是整整两年前，我当时在中文领域第一时间报道了&ldquo;Wayland&rdquo;的新闻：<a target="_blank" rel="noopener" href="http://www.ibentu.org/2008/11/04/linux-new-x-server-waylan.html">Wayland：Linux的新X Server</a>，在其后的一个月，又写了：<a target="_blank" rel="noopener" href="http://www.ibentu.org/2008/12/09/wayland-news.html">Wayland最新动态</a>。</p>
+<p>当时这两篇文章主要是翻译Phoronix的新闻，自己也没有亲自把玩过Wayland，再加上Wayland项目还处于比较初期的阶段，对其的理解有限。如今经过整整两年的开发，包括Linux内核在图形方面的不断的改进、GTK+图形库的不断进化，Wayland已经渐渐成熟，接近可用状态。</p>
+<p>那么，回到上篇开头最初的那个问题：</p>
+<p><strong>Wayland究竟是什么？</strong></p>
+<p>如果在两年前，按照那篇《<a target="_blank" rel="noopener" href="http://www.ibentu.org/2008/11/04/linux-new-x-server-waylan.html">Wayland：Linux的新X Server</a>》的理解，它是一个新的&ldquo;X Server&rdquo;，在于改善当前X Server的不足，从而取代它。现在，我们已经可以用更标准的语言来定义Wayland了，那就是：A Simple Display Server。</p>
+<p>没错，Wayland是一个简单的&ldquo;显示服务器&rdquo;（Display Server），与X Window属于同一级的事物，而不是仅仅作为X Window下X Server的替代（注：X Window下分X Server和X Client）。也就是说，Wayland不仅仅是要完全取代X Window，而且它将颠覆Linux桌面上X Client/X Server的概念，以后将没有所谓的&ldquo;X Client&rdquo;了，而是&ldquo;Wayland Client&rdquo;。</p>
+<p>更确切的说，Wayland只是一个协议（Protocol），就像X Window当前的协议&mdash;&mdash;X11一样，它只定义了如何与内核通讯、如何与Client通讯，具体的策略，依然是交给开发者自己。所以Wayland依然是贯彻&ldquo;提供机制，而非策略&rdquo;的Unix程序。</p>
+<p>&ldquo;什么？Wayland还是Server/Client模式？&rdquo;可以这么理解，但实际上与X Window的Server/Client有着本质的区别。</p>
+<p>让我们用一张类似前文所示的图表来重新演示一下，在Wayland的框架下，窗口事件的响应是如何进行的。</p>
+<p>在Wayland的架构图中，最显著的一些特点是：</p>
+<ul>
+<li>它复用了所有Linux内核的图形、输入输出技术：KMS、evdev，因此已支持的驱动可以直接拿来用；</li>
+<li>Wayland没有传统的Server/Client的模式，取而代之的是：Compositor/Client，这不仅仅是换一个名称而已，后面会讲到具体区别；</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://imtx.me/static/uploads/2010/11/wayland-architecture.png"><img src="http://imtx.me/static/uploads/2010/11/wayland-architecture.png" class="lazy" data-srcset="http://imtx.me/static/uploads/2010/11/wayland-architecture.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Wayland Architecture" /></a></p>
+<p>还记得前文中&ldquo;点击Firefox的刷新按钮&rdquo;这个应用场景吧？在Wayland里，所有的流程是这样的：</p>
+<ol>
+<li>内核收到了鼠标发出的信息，经过处理后转发到了Wayland Compositor，就像之前发往X Server一样。</li>
+<li>Compositor收到消息后，立马能知道哪个窗口该收到这个消息，因为它就是总控制中心，它掌握窗口的层级关系、动画效果，因此它知道该坐标产生的鼠标点击信息应该发送给谁，就这样，Compositor将鼠标的点击信息发送给了Firefox。</li>
+<li>Firefox收到了消息，这时如果是在X Window下的话，Firefox会向X Server请求绘制按钮被按下的效果。然而在Wayland里，Firefox可以自行进行绘制而不需要再请求Compositor的许可！这就是传说中的：直接渲染机制（Direct Render）！Wayland不管Client的绘制工作，整个过程变得十分简单而且高效！当Firefox自行完成了按钮状态的绘制后，它只需要通知Compositor，某块区域已经被更新了。</li>
+<li>Compositor收到Firefox发来的信息的，再重新合成那块更新的那块区域，将最终桌面效果呈现给用户。这个过程主要是跟内核、显卡驱动打交道了。</li>
+</ol>
+<p>整个流程是不是很自然、很简单？</p>
+<p>所以结论出来了：</p>
+<ol>
+<li>Wayland的&ldquo;直接渲染架构&rdquo;彻底结束了传统X Window在渲染图形时需要不停的向Server请求、确认再绘制这个繁琐的过程，理论上响应速度有了&ldquo;爆发式&rdquo;增长；</li>
+<li>Wayland从根本上消除了&ldquo;Server+Compositor&rdquo;的重复劳动，仅有且只需要有一个&ldquo;Compositor&rdquo;合成器而已。</li>
+</ol>
+<p>Compostior，就是Wayland上的&ldquo;X Server&rdquo;，但是它更纯粹，它不像X Server一样，像个大家长，什么都要管。Compositor只做该做的事情，把上面的过程简化成任务便是：</p>
+<ol>
+<li>基于Wayland协议，处理evdev的信息；</li>
+<li>通知Client（即应用程序）对相关事件做出反应（至于应用程序想怎么反应，Compositor不需要过问）；</li>
+<li>收到Client的状态更新，重新合成图形或管理新的图形布局。</li>
+</ol>
+<p>你意识到了，Wayland Compositor的角色，就像是&ldquo;X Server&rdquo;＋&ldquo;Window Manager&rdquo;，但它只做份内的事情而已。我想你已经可以想像Wayland构架是如何简单而且高效了，它一举解决了&ldquo;X Window&rdquo;发展这么多年来积累的、通过&ldquo;扩展&rdquo;去解决的那些问题。</p>
+<p>看似很美好，那么Wayland现在的可用性如何？大家都知道，GTK+、Qt，现在都是基于X的，它们能顺利地移植至基于Wayland吗？当然可以！</p>
+<p><strong>逐渐成熟的Wayland周边应用</strong></p>
+<p>还记得前面那篇文章中，我说过的这句话吧：&ldquo;尽管在Linux平台下，Cairo、Pango的发挥依然是基于X Window的，但X  Window充其量仅仅是一个&ldquo;backend&rdquo;而已，并不是少它不行。同理，跨平台的GTK+、Ｑt也只是视X为其中所支持的后端之一，假如哪天X真的 不在了，更换一个新后端，当前的GNOME、KDE也能完整的跑起来。&rdquo;</p>
+<p>你已经想到了，GTK＋、Qt，只需要简单的处理一下后端，便可以跑在Wayland上了。比如：</p>
+<p>在当前的GTK+3.0开发分支中，有一个开发分支是&ldquo;<a target="_blank" rel="noopener" href="http://git.gnome.org/browse/gtk+/log/?h=rendering-cleanup">rendering-cleanup</a>&rdquo;。&ldquo;清理渲染&rdquo;？这是做什么的？联想一下那个连Client&ldquo;怎么渲染&rdquo;都要管的X Server吧。</p>
+<p>对了！GTK+3.0已经彻底移除了所有图形渲染、绘图方面跟X相关的部分了，现在它是一个100％基于Cairo绘制的图形工具库了（之前GTK+2.x时在2.8开始逐渐转向用Cairo绘制，但一直不彻底）。</p>
+<p>这意味着两点：</p>
+<ul>
+<li>GTK+的一直以来评价不怎么样的跨平台性，在3.0将有显著的突破；</li>
+<li>GTK+的Wayland后端，已经在路上了！</li>
+</ul>
+<p>见GTK+跑在Wayland上，截图引自：<a target="_blank" rel="noopener" href="http://www.phoronix.com/scan.php?page=news_item&amp;px=ODQ1MQ">Kristian Shows Off GTK+ 3.0 On Wayland</a></p>
+<p><a target="_blank" rel="noopener" href="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg"><img src="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg" class="lazy" data-srcset="http://imtx.me/static/uploads/2010/11/gtk-and-wayland.jpeg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Wayland and GTK+" /></a></p>
+<p>当然，Qt也有了，限于篇福，这里就不介绍了。</p>
+<p>另外一个已经在主开发分支便支持Wayland的东西便是：<a target="_blank" rel="noopener" href="http://www.ibentu.org/tag/clutter">Clutter<br />
+</a>。这是一个基于OpenGL的动画框架，我以前介绍过很多次的<a target="_blank" rel="noopener" href="http://imtx.me/tag/gnome-shell/">GNOME Shell</a>、<a target="_blank" rel="noopener" href="http://www.ibentu.org/2009/07/10/moblin-2-0-beta-media.html">Moblin</a>，都是基于Clutter的。在Clutter当前1.5.x的开发分支，Wayland作为其中一个&ldquo;backend&rdquo;，已经得到了&ldquo;experimental&rdquo;的支持。所以说，GNOME 3.0、MeeGo Netbook很可能会成为第一个应用Wayland的桌面环境。</p>
+<p>那么，看来Wayland真的触手可及了啰？可以这么说，但是还差一点。</p>
+<p><strong>Wayland技术实现及工作重点</strong></p>
+<p>Wayland的核心协议已经实现的差不多了，它充分利用了Linux内核的KMS、GEM、DRM等技术，另外，它默认是支持3D加速的，也就是通过OpenGL ES进行图形的合成&mdash;&mdash;光是这一点，X Window又要泪奔了。</p>
+<p>使用OpenGL ES这个子集而非OpenGL，这意味着什么？想想有多少项目是用OpenGL ES的：Android、iOS、WebOS、WebGL&hellip;&hellip;几乎所有主流的的移动操作系统、浏览器3D的实现，都选用了精简、高效的OpenGL ES。</p>
+<p>我不知道当前Android的Display Server、Input/Output是如何实现的，总之跟iOS相比，在触控的响应上是有差距的。未来，对OpenGL ES有着良好支持的Wayland，不知道会不会给这些基于Linux内核的移动操作系统发力呢？我想是非常有可能的！</p>
+<p>这时问题就来了，因为Wayland所使用的，都是当前Linux下最新潮的图形技术。所以理所当然的，在驱动这一层面会有一些厂商跟不上。</p>
+<p>拿nVIDIA开刷吧，KMS技术都出来一年多了，Intel的全部显卡和AMD部分显卡已经获得支持了，可nVIDIA压根就没有兴趣搞这个，以致于开源社区利用反向工程，通过&ldquo;Nouveau&rdquo;项目让nVIDIA支持了KMS，当然比较遗憾的是，性能跟官方闭源的驱动是差了相当的距离。</p>
+<p>所以说，基于Wayland的Linux桌面/移动要真正得到应用，驱动这一关是一定要解决的。不过正所谓潮流不可挡，nVIDIA迟早会支持这项技术的。</p>
+<p>等到驱动完全不成问题了，Wayland还需要一个全功能的&ldquo;Compositor&rdquo;，这个角色，就由Clutter/Mutter、Compiz、KWin等当前主流的窗口管理器来扮演的，相信只要通过简单的修改，这些合成窗口管理器很快地就能转变成一个全能的&ldquo;Wayland Compositor&rdquo;！</p>
+<p><strong>把玩Wayland及展望未来</strong></p>
+<p>讲了这么多技术、历史和业界，大家肯定枯燥了，究竟现在有没有可以跑的&ldquo;Wayland Compositor&rdquo;可以玩玩呢？当然！</p>
+<p>现在，只要你从<a target="_blank" rel="noopener" href="http://cgit.freedesktop.org/wayland">官方</a>取得源码，然后根据<a target="_blank" rel="noopener" href="http://wayland.freedesktop.org/building.html">教程</a>进行编译，就能跑起一个简单实现的&ldquo;Wayland Compositor&rdquo;。由于Wayland协议的灵活性，Wayland Compositor也可以拥有自己的后端：比如直接在DRM上跑Wayland（不需要X），或者在X Window上跑起一个Wayland Compositor（相当于在X Window上用Xephyr再跑一个X Window）。</p>
+<p>当前我在Ubuntu 10.10的图形环境下，就跑起了默认的这个简易的Wayland Compositor，几点说明：</p>
+<ul>
+<li>支持透明、阴影和简单的窗口管理；</li>
+<li>所有的图形绘制，都是通过Cairo-gl（Cairo的OpenGL后端）进行；</li>
+</ul>
+<p><a target="_blank" rel="noopener" href="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png"><img src="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png" class="lazy" data-srcset="http://imtx.me/static/pictures/2010/11/wayland-picture-and-drag-drop.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Wayland Terminal" width="550" /></a></p>
+<p>这是又一个例子，我编译了Clutter的Wayland后端，成功地跑起了一个Clutter的Demo：即同中Ubuntu Tweak的3D Logo。</p>
+<p><a target="_blank" rel="noopener" href="http://imtx.me/static/pictures/2010/11/wayland-clutter.png"><img src="http://imtx.me/static/pictures/2010/11/wayland-clutter.png" class="lazy" data-srcset="http://imtx.me/static/pictures/2010/11/wayland-clutter.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="Wayland and Clutter" width="550" /></a></p>
+<p>除了这个Wayland Compositor本身是跑在X Window之上，其本身合成效果、处理窗口布局等等，都完全没有用到X，而且整个代码非常简洁。未来的Linux图形，就会像是这样一个结构简单又高效的样子。</p>
+<p>相信看完我这些介绍，大家对Wayland是个什么角色，已经比较清楚了吧？</p>
+<p>简单的说，它就是一个去除X Window中不必要的设计、充分利用现代Linux内核图形技术的一个显示机制，它的出现是自然而然的，它的使命不是为了消灭X Window，而是将Linux的图形技术发挥至更高的一个境界。传统的X Window（即经典X应用、Gtk 1.x/2.x等旧应用），也会在相当长一段时间内得到继续支持，通过Wayland Client的形式跑在Wayland Compositor上，直到最终升级、取代或被淘汰。</p>
+<p>2011年后期或2012年，我们将能看到Wayland正式着陆，期待吧！</p>
+
+<hr>
+<p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/needisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f/">https://need.uno/needisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f%2F&amp;text=%E6%8F%AD%E5%BC%80Wayland%E7%9A%84%E9%9D%A2%E7%BA%B1%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AWayland%E5%BA%94%E8%BF%90%E8%80%8C%E7%94%9F&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fneedisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f%2F&amp;title=%E6%8F%AD%E5%BC%80Wayland%E7%9A%84%E9%9D%A2%E7%BA%B1%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AWayland%E5%BA%94%E8%BF%90%E8%80%8C%E7%94%9F"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f%2F&amp;text=%E6%8F%AD%E5%BC%80Wayland%E7%9A%84%E9%9D%A2%E7%BA%B1%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AWayland%E5%BA%94%E8%BF%90%E8%80%8C%E7%94%9F"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f%2F&amp;title=%E6%8F%AD%E5%BC%80Wayland%E7%9A%84%E9%9D%A2%E7%BA%B1%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AWayland%E5%BA%94%E8%BF%90%E8%80%8C%E7%94%9F&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f%2F&amp;title=%E6%8F%AD%E5%BC%80Wayland%E7%9A%84%E9%9D%A2%E7%BA%B1%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AWayland%E5%BA%94%E8%BF%90%E8%80%8C%E7%94%9F&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f%2F&amp;title=%E6%8F%AD%E5%BC%80Wayland%E7%9A%84%E9%9D%A2%E7%BA%B1%EF%BC%88%E4%BA%8C%EF%BC%89%EF%BC%9AWayland%E5%BA%94%E8%BF%90%E8%80%8C%E7%94%9F&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/needisme-2010-11-09-e69dafe585b7efbc81e4bb8ee6ada4e99995e8a5bfe5b888e5a4a7e5a5b3e7949fe983bde5be97e7ab99e79d80e5b08fe4bebf/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            杯具！从此陕西师大女生都得站着小便
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/needisme-2010-11-06-e3808ee8b6a3e789a9e3808fe7a59ee68a80e5958aefbc8ce79c9fe588b0e78886e79a84e69ca8e99b95e4bd9ce59381/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            『趣物』神技啊，真到爆的木雕作品
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="needisme-2010-11-08-e68fade5bc80waylande79a84e99da2e7bab1efbc88e4ba8cefbc89efbc9awaylande5ba94e8bf90e8808ce7949f/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

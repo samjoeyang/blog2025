@@ -1,0 +1,743 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车 | Need.UNO</title>
+
+
+    <meta name="keywords" content="AI, 内存, DRAM, DDR5, 芯片, 硬件, 硬件史, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车2026 年 7 月 31 日，苹果 CEO 库克在财报会上说了一句话，直接把全网装机党整破防了。他说内存价格的状态，如同”百年一遇的洪水”，呈指数级增长。话音刚落，MacBook Pro 起售价上调 2500 元，iPad Pro 跟着涨，分析师还预测 iPhone 18 要涨 250~300 美元。 作为一个装过十几年电脑的老玩家，我第">
+<meta property="og:type" content="website">
+<meta property="og:title" content="内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车">
+<meta property="og:url" content="https://need.uno/nei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车2026 年 7 月 31 日，苹果 CEO 库克在财报会上说了一句话，直接把全网装机党整破防了。他说内存价格的状态，如同”百年一遇的洪水”，呈指数级增长。话音刚落，MacBook Pro 起售价上调 2500 元，iPad Pro 跟着涨，分析师还预测 iPhone 18 要涨 250~300 美元。 作为一个装过十几年电脑的老玩家，我第">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-08-01T01:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.135Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="内存">
+<meta property="article:tag" content="DRAM">
+<meta property="article:tag" content="DDR5">
+<meta property="article:tag" content="芯片">
+<meta property="article:tag" content="硬件">
+<meta property="article:tag" content="硬件史">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-08-01",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/nei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi/" },
+  "description": "内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/08/" class="post-meta__date button">2026-08-01</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E6%8A%80%E6%9C%AF/" class="button">技术</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <h1 id="内存的前世今生：从磁芯到-DDR5，一场七十年的价格过山车"><a href="#内存的前世今生：从磁芯到-DDR5，一场七十年的价格过山车" class="headerlink" title="内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车"></a>内存的前世今生：从磁芯到 DDR5，一场七十年的价格过山车</h1><p>2026 年 7 月 31 日，苹果 CEO 库克在财报会上说了一句话，直接把全网装机党整破防了。他说内存价格的状态，如同”百年一遇的洪水”，呈指数级增长。话音刚落，MacBook Pro 起售价上调 2500 元，iPad Pro 跟着涨，分析师还预测 iPhone 18 要涨 250~300 美元。</p>
+<p>作为一个装过十几年电脑的老玩家，我第一反应不是骂娘，而是一个更深的疑问：<strong>这个小方块，凭什么这么贵？</strong></p>
+<p>你知道吗，内存这玩意儿，从诞生那天起就是个”过山车”——暴涨、崩盘、再暴涨，七十年没消停过。今天咱们就顺着这条过山车的轨道，把内存的前世今生捋一遍。</p>
+<h2 id="一、远古时代：一面墙的内存"><a href="#一、远古时代：一面墙的内存" class="headerlink" title="一、远古时代：一面墙的内存"></a>一、远古时代：一面墙的内存</h2><p>1940 年代末的计算机，内存是啥样？说出来你可能不信——水银延迟线、阴极射线管，存储靠物理介质，又慢又贵又娇气。</p>
+<p>直到 1951 年，MIT 的杰伊·福雷斯特搞出了<strong>磁芯存储器</strong>：把一枚枚指甲盖大小的铁氧体磁环穿在导线上，用电流方向记 0 和 1。这是人类第一种真正靠谱的随机存取存储器。</p>
+<p>我查资料时看到个细节，至今觉得离谱：阿波罗登月飞船的导航计算机用的就是磁芯，<strong>一兆字节的内存要装满一整面墙的线圈</strong>，造价够买一套房。对，你没看错，1MB，一面墙，一套房。</p>
+<p>磁芯时代的内存有个宿命般的特质：<strong>贵</strong>。贵到计算机只能按”位”计价。这个特质，日后像幽灵一样反复回来敲门。</p>
+<h2 id="二、革命之夜：一颗晶体管干翻一面墙"><a href="#二、革命之夜：一颗晶体管干翻一面墙" class="headerlink" title="二、革命之夜：一颗晶体管干翻一面墙"></a>二、革命之夜：一颗晶体管干翻一面墙</h2><p>1966 年，IBM 工程师罗伯特·丹纳德在实验室写下了一段改变世界的逻辑：一个晶体管加一个电容，就能存一个比特。这就是 <strong>DRAM（动态随机存取存储器）</strong>。</p>
+<p>为啥叫”动态”？因为电容会漏电，必须不停刷新。但它便宜啊，成本只有磁芯的零头。</p>
+<p>1970 年，英特尔把 DRAM 做成第一颗商用芯片 <strong>Intel 1103</strong>——1Kbit，128 字节，售价约 10 美元。第二年，它就取代磁芯成了全球最畅销的半导体。从按位计价到按 GB 计价，DRAM 用五十年把内存价格压低了数亿倍。</p>
+<p>但丹纳德恐怕没想到：他发明的这种存储，从出生那天起就注定要经历周期性的狂欢与饥荒。<strong>技术越进步，市场越疯狂</strong>——这话放在内存身上，再贴切不过。</p>
+<h2 id="三、太平洋战争：日本人的份额，韩国人的赌局"><a href="#三、太平洋战争：日本人的份额，韩国人的赌局" class="headerlink" title="三、太平洋战争：日本人的份额，韩国人的赌局"></a>三、太平洋战争：日本人的份额，韩国人的赌局</h2><p>1970 年代末，内存战场烧到了太平洋对岸。</p>
+<p>日本企业（NEC、日立、东芝）靠政府扶持和变态级的质量管理，在 64Kbit、256Kbit 时代一路攻城略地，到 1980 年代中后期，日本 DRAM 全球份额一度超过 80%。英特尔被打得直接放弃内存业务——回头看，这反倒逼它孤注一掷做 CPU，算是因祸得福。</p>
+<p>1986 年，美国拉着日本签了《美日半导体协议》，强行给日本内存设最低价、逼它开放市场。可真正的转折不是协议，而是<strong>韩国人的逆周期豪赌</strong>：1980 年代末内存崩盘、全行业巨亏的时候，三星、现代（今 SK 海力士）顶着亏损疯狂扩产，硬是熬死了对手，等来了复苏。</p>
+<p>从那时起，DRAM 的牌桌上就只剩三巨头：<strong>三星、SK 海力士、美光</strong>，三家合计拿走全球约 95% 的产能。</p>
+<p>95% 是什么概念？<strong>定价权几乎等于被这三家锁死了。</strong> 后来的所有”内存暴涨”，根子都埋在这张牌桌上。</p>
+<h2 id="四、DDR-进化论：二十年爬一条带宽的坡"><a href="#四、DDR-进化论：二十年爬一条带宽的坡" class="headerlink" title="四、DDR 进化论：二十年爬一条带宽的坡"></a>四、DDR 进化论：二十年爬一条带宽的坡</h2><p>1990 年代末，SDRAM 统一江湖，DDR（双倍数据率）随后登场。从 2000 年的 DDR1 到 2021 年的 DDR5，这条进化路爬了整整二十年：DDR1 把数据在时钟上下沿都传一遍，带宽直接翻倍；DDR2 靠预取技术把频率冲到 800MHz；DDR3 统治桌面十年，二手市场至今还能看到它；DDR4 从 2133MHz 起步，是装机党最熟悉的一代；到了 DDR5，4800MHz 起跳，现在高频条已经摸到 7200MT&#x2F;s。</p>
+<p>每一代都是”频率×位宽”的军备竞赛。但真正的质变在架构：DDR5 把传统单通道拆成两个独立的 32-bit 子通道——<strong>一根条子自带”伪双通道”体质</strong>。</p>
+<p>这解释了今年一个反常识的现象：单根 DDR5 打游戏，性能折损远比想象中小。Tom’s Hardware 实测，AMD 9800X3D 配单根内存，平均帧率只掉 2.8%。放在往年，这数据你敢信？</p>
+<h2 id="五、AI-时代：内存成了”新石油”"><a href="#五、AI-时代：内存成了”新石油”" class="headerlink" title="五、AI 时代：内存成了”新石油”"></a>五、AI 时代：内存成了”新石油”</h2><p>如果说 2017 年的内存超级周期是手机换机潮推的，那 2026 年这波，导演是 AI。</p>
+<p>大模型是吞内存的怪兽：参数要装显存，KV Cache 要占内存，推理时疯狂读写。英伟达 H100 上用的 <strong>HBM（高带宽内存）</strong>，一颗就要几千美元，还得排队抢。三大原厂把最先进的产能全倾斜给 HBM 和服务器内存，消费级 DDR4&#x2F;DDR5 的供给被抽干——需求爆发、供给收缩、寡头默契，三股力量一叠加，价格直接指数级起飞。</p>
+<p>库克说”百年一遇”，夸张吗？我翻了下 7 月的行情：雷克沙国产颗粒 DDR5 7200MT&#x2F;s 16GB×2 套条，到手价 3999 元。服务器那边更吓人，美光已经上线 96GB 的 DDR5 MRDIMM，速率冲到 14400MT&#x2F;s——<strong>为了内存，数据中心愿意付出几乎任何代价。</strong></p>
+<p>不过，危机里也藏着转机。雷克沙这条 3999 元的条子，用的是<strong>国产颗粒</strong>——以长鑫为代表的国产 DRAM 厂这两年从无到有，DDR5 颗粒开始进主流市场了。这在过去二十年的内存战争里，是从未出现过的新变量。</p>
+<h2 id="六、普通人怎么办？我的四条建议"><a href="#六、普通人怎么办？我的四条建议" class="headerlink" title="六、普通人怎么办？我的四条建议"></a>六、普通人怎么办？我的四条建议</h2><p>面对”百年一遇”的洪水，装机党别慌，我这几年的血泪教训拿出来说说：</p>
+<p>如果你是 X3D 平台用户，那恭喜，涨价基本跟你没关系——AMD 的 3D V-Cache 把 L3 缓存堆到 96MB，对内存带宽依赖大降，实测 9800X3D 单根内存玩游戏只损失 2.8%，先单根顶着，等价格回落再补一条，真香。</p>
+<p>至于买什么频率，我的建议是别追高频。7200MT&#x2F;s 以上的条子溢价严重，6000MT&#x2F;s 才是甜点频率，钱要花在刀刃上。</p>
+<p>再一个，非必要不升级。内存是周期品，2018 年暴涨后第二年就腰斩，刚需就买，等等党终将胜利。</p>
+<p>最后一点私心：多关注国产。国产颗粒入局是长期利好，等产能爬坡，价格回归只是时间问题——我赌它五年内改变牌桌。</p>
+<h2 id="结语"><a href="#结语" class="headerlink" title="结语"></a>结语</h2><p>从磁芯到 DDR5，内存用七十年把”存储”从一面墙缩小到一根手指。它便宜过、昂贵过、崩溃过、狂欢过。但每一次周期都指向同一个真相：<strong>内存是硅基世界的石油，谁掌握产能，谁掌握定价权。</strong></p>
+<p>而这一轮 AI 引发的”洪灾”，可能正在见证一个新时代的开端——当算力不再是瓶颈，<strong>内存</strong>将成为下一个十年最稀缺的资源。</p>
+<p>话说回来，你今年装机了吗？有没有被内存价格背刺？评论区聊聊，让我看看有多少难兄难弟 😄</p>
+<hr>
+<p><em>参考来源：IT之家（苹果库克财报会报道、Tom’s Hardware 单根 DDR5 测试、雷克沙国产颗粒内存条、美光 MRDIMM）、阮一峰科技爱好者周刊（第 404 期：你需要知道的 AI 内存知识）</em></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/nei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi/">https://need.uno/nei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/%E5%86%85%E5%AD%98/" class="post-tags__link button"># 内存</a><a href="/tags/DRAM/" class="post-tags__link button"># DRAM</a><a href="/tags/DDR5/" class="post-tags__link button"># DDR5</a><a href="/tags/%E8%8A%AF%E7%89%87/" class="post-tags__link button"># 芯片</a><a href="/tags/%E7%A1%AC%E4%BB%B6/" class="post-tags__link button"># 硬件</a><a href="/tags/%E7%A1%AC%E4%BB%B6%E5%8F%B2/" class="post-tags__link button"># 硬件史</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fnei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi%2F&amp;text=%E5%86%85%E5%AD%98%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%EF%BC%9A%E4%BB%8E%E7%A3%81%E8%8A%AF%E5%88%B0%20DDR5%EF%BC%8C%E4%B8%80%E5%9C%BA%E4%B8%83%E5%8D%81%E5%B9%B4%E7%9A%84%E4%BB%B7%E6%A0%BC%E8%BF%87%E5%B1%B1%E8%BD%A6&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fnei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fnei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi%2F&amp;title=%E5%86%85%E5%AD%98%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%EF%BC%9A%E4%BB%8E%E7%A3%81%E8%8A%AF%E5%88%B0%20DDR5%EF%BC%8C%E4%B8%80%E5%9C%BA%E4%B8%83%E5%8D%81%E5%B9%B4%E7%9A%84%E4%BB%B7%E6%A0%BC%E8%BF%87%E5%B1%B1%E8%BD%A6"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fnei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi%2F&amp;text=%E5%86%85%E5%AD%98%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%EF%BC%9A%E4%BB%8E%E7%A3%81%E8%8A%AF%E5%88%B0%20DDR5%EF%BC%8C%E4%B8%80%E5%9C%BA%E4%B8%83%E5%8D%81%E5%B9%B4%E7%9A%84%E4%BB%B7%E6%A0%BC%E8%BF%87%E5%B1%B1%E8%BD%A6"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fnei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi%2F&amp;title=%E5%86%85%E5%AD%98%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%EF%BC%9A%E4%BB%8E%E7%A3%81%E8%8A%AF%E5%88%B0%20DDR5%EF%BC%8C%E4%B8%80%E5%9C%BA%E4%B8%83%E5%8D%81%E5%B9%B4%E7%9A%84%E4%BB%B7%E6%A0%BC%E8%BF%87%E5%B1%B1%E8%BD%A6&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fnei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi%2F&amp;title=%E5%86%85%E5%AD%98%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%EF%BC%9A%E4%BB%8E%E7%A3%81%E8%8A%AF%E5%88%B0%20DDR5%EF%BC%8C%E4%B8%80%E5%9C%BA%E4%B8%83%E5%8D%81%E5%B9%B4%E7%9A%84%E4%BB%B7%E6%A0%BC%E8%BF%87%E5%B1%B1%E8%BD%A6&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fnei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi%2F&amp;title=%E5%86%85%E5%AD%98%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F%EF%BC%9A%E4%BB%8E%E7%A3%81%E8%8A%AF%E5%88%B0%20DDR5%EF%BC%8C%E4%B8%80%E5%9C%BA%E4%B8%83%E5%8D%81%E5%B9%B4%E7%9A%84%E4%BB%B7%E6%A0%BC%E8%BF%87%E5%B1%B1%E8%BD%A6&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/zhi-chan-zheng-ce-shuang-luo-di-shi-wu-wu-gui-hua-yu-min-ying-jing-ji-ban-fa/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            知产政策双落地：十五五规划与民营经济办法，维权环境要变天？
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/106-pmp-cong-xue-xi-dao-nei-hua-xu-yao-duo-chang-shi-jian/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            PMP从学习到内化需要多长时间？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="nei-cun-de-qian-shi-jin-sheng-cong-ci-xin-dao-ddr5-de-bai-nian-zhang-jie-shi/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

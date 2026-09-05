@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>TF 卡 swap 分区的一些基本观点及其利弊 | Need.UNO</title>
+
+
+    <meta name="keywords" content="Linux, Android, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="作者:SenSen  推荐者:BenAngel 上传日期:1&#x2F;16&#x2F;2010 3:39:05  AM 来源：机 锋网  最近 hero for G1 的 rom 为了解决频繁出现的 load... 现象引入了 swap  机制，主要采用了两种方式： 1，用程序 swaper 在 TF卡上建立一个 swap 文件，然后将该文件挂载为系统的一个 swap 分区  2，直接在 TF 上加载第三分区：L">
+<meta property="og:type" content="website">
+<meta property="og:title" content="TF 卡 swap 分区的一些基本观点及其利弊">
+<meta property="og:url" content="https://need.uno/needisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="作者:SenSen  推荐者:BenAngel 上传日期:1&#x2F;16&#x2F;2010 3:39:05  AM 来源：机 锋网  最近 hero for G1 的 rom 为了解决频繁出现的 load... 现象引入了 swap  机制，主要采用了两种方式： 1，用程序 swaper 在 TF卡上建立一个 swap 文件，然后将该文件挂载为系统的一个 swap 分区  2，直接在 TF 上加载第三分区：L">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2010-01-21T01:52:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.106Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Android">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+    <meta name="robots" content="noindex, nofollow">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "TF 卡 swap 分区的一些基本观点及其利弊",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2010-01-21",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a/" },
+  "description": "TF 卡 swap 分区的一些基本观点及其利弊"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        TF 卡 swap 分区的一些基本观点及其利弊
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2010/01/" class="post-meta__date button">2010-01-21</a>
+        
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <ul id="ROM_UL" class="movie_titile_list">
+<li id="ROM" class="movie_title_list_right">作者:<a title="SenSen" target="_blank" rel="noopener" href="http://angtalk.com/ShowAuthor.asp?ChannelID=1002&amp;AuthorName=SenSen">SenSen</a></li>
+<li id="ROM" class="movie_title_list_right"> 推荐者:BenAngel</li>
+<li id="ROM" class="movie_title_list_right">上传日期:1/16/2010 3:39:05  AM</li>
+<li id="ROM" class="movie_title_list_right">来源：<a target="_blank" rel="noopener" href="http://angtalk.com/ShowCopyFrom.asp?ChannelID=1002&amp;SourceName=%E6%9C%BA%E9%94%8B%E7%BD%91">机 锋网</a></li>
+</ul>
+<p>最近 hero for G1 的 rom 为了解决频繁出现的 load... 现象引入了 swap  机制，主要采用了两种方式： 1，用程序 swaper 在 TF卡上建立一个 swap 文件，然后将该文件挂载为系统的一个 swap 分区  2，直接在 TF 上加载第三分区：Linux-Swap 分区 这两种方式本质上是一致的，对系统而言，都是挂载了一个 swap  分区。本文基于几个概念的解释来解决以下问题： 1、swap 分区是什么？ 2、会提升系统速度吗？ 3、有什么缺点？ 4、能否避免上述缺点？</p>
+<p>概念一：【swap分区】 Linux 的  Swap分区的作用可简单描述为：当系统的物理内存不够用的时候，就需要将物理内存中的一部分空间释放出来，以供当前运行的程序使用。那些被释放的空间可 能来自一些很长时间没有什么操作的程序，这些被释放的空间被临时保存到Swap空间中，等到那些程序要运行时，再从Swap中恢复保存的数据到内存中。这 样，系统总是在物理内存不够时，才进行Swap交换。关键词&mdash;&mdash;就是虚拟内存。目前 G1 的系统内存明显不够使用，所以建立了 Swap  分区后，可以有效的缓解这个问题。具体在 hero 上表现为 load.. 现象少了。其实在 G1 的 1.5 系统中，也一样有 Load..  现象。例如浏览器里面同时打开6个页面后，回到桌面；桌面上的图标需要过一会儿才会出现，这就是 Load... 现象，只是没有显示那几个字而已。 *</p>
+<p>概念二：【TF 卡】 Micro SD卡也就是熟称的&ldquo;TF&rdquo;卡。  T-Flash全名（TransFLash),这是Motorola与SanDisk共同推出的最新一代的记忆卡规格，它采用了最新的封装技术，并配合  SanDisk最新NAND MLC技术及控制器技术。大小(11mm x 15mm x1mm)，约等于半张SIM卡，Trans-Flash  Card为SD  Card产品成员的一员,附有SD转接器，可兼容任何SD读卡器，TF卡可经SD卡转换器后，当SD卡使用。T-Flash卡是市面上最小的闪存卡,适用 于多项多媒体应用.Trans-flash产品采用SD架构设计而成,SD协会于2004年年底正式将其更名为 Micro  SD，已成为SD产品中的一员。 关键词&mdash;&mdash;MLC技术</p>
+<p>概念三：【MLC】储存单元分为两类：SLC（Single Layer Cell 单层单元）和MLC（Multi-Level  Cell多层单元）。SLC的特点是成本高、容量小、速度快  SLC闪存的优点是复写次数高达100000次，比MLC闪存高10倍。此外，为了保证MLC的寿命，控制芯片都校验和智能磨损平衡技术算法，使得每个存 储单元的写入次数可以平均分摊，达到100万小时故障间隔时间(MTBF)。关键词&mdash;&mdash;1w次的写入寿命目前的 TF  卡无写入次数平均分摊管理，导致写入次数为理论上的 1w次。那么建立 swap 分区意味着系统会对这一组单元集中作频繁写入操作，是否会导致 TF  卡的迅速损坏呢？</p>
+<p>概念四：【swappiness】可以通过修改/dev/sys/vm/swappiness的值来告诉系统你想交换的多勤快在 Linux  里面，swappiness的值的大小对如何使用swap分区是有着很大的联系的。swappiness=0的时候表示最大限度使用物理内存，然后才是  swap空间，swappiness＝100的时候表示积极的使用swap分区，并且把内存上的数据及时的搬运到swap空间里面。两个极端，对于  ubuntu的默认设置，这个值等于60，建议修改为10或20。关键词&mdash;&mdash;swappiness＝10 所以我们可修改 swappiness  来控制系统对 swap 分区的写入频率。如何修改 swappiness  请参考校长贴：图文教程：以修改swappiness参数为例，介绍SUFBS超级大杀器！</p>
+<p>SenSen 观点：针对目前 G1 内存严重不足的情况，使用 swap 分区来缓解这一情况是以牺牲 TF  卡寿命为代价的。有的同学说：TF 卡便宜，坏了再卖 or TF 卡有保修，坏了去换。也有同学觉得 TF 卡转移数据还是比较麻烦的，至少涉及到  FAT32 分区和 ext 分区两部分的数据，其中 ext 分区的数据还有权限问题。以上观点仁者见仁智者见智。  BenAngel观点：Swap并不能提高太多的运行速度，它的作用是提高占用大内存软件运行时的内存交换空间，让同一软件内运行得更流畅，同时也提高软 件的后台存活率-  -，举例说明，以G1来说，你用浏览器上了个WebQQ，然后出去听听歌，照照像，你的浏览器基本上就自动关闭了，因为内存不足，换句话说WebQQ也掉 线了，用Swap就能有效的改善这个问题。</p>
+
+<hr>
+<p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/needisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a/">https://need.uno/needisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/Android/" class="post-tags__link button"># Android</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a%2F&amp;text=TF%20%E5%8D%A1%20swap%20%E5%88%86%E5%8C%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E8%A7%82%E7%82%B9%E5%8F%8A%E5%85%B6%E5%88%A9%E5%BC%8A&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fneedisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a%2F&amp;title=TF%20%E5%8D%A1%20swap%20%E5%88%86%E5%8C%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E8%A7%82%E7%82%B9%E5%8F%8A%E5%85%B6%E5%88%A9%E5%BC%8A"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a%2F&amp;text=TF%20%E5%8D%A1%20swap%20%E5%88%86%E5%8C%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E8%A7%82%E7%82%B9%E5%8F%8A%E5%85%B6%E5%88%A9%E5%BC%8A"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a%2F&amp;title=TF%20%E5%8D%A1%20swap%20%E5%88%86%E5%8C%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E8%A7%82%E7%82%B9%E5%8F%8A%E5%85%B6%E5%88%A9%E5%BC%8A&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a%2F&amp;title=TF%20%E5%8D%A1%20swap%20%E5%88%86%E5%8C%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E8%A7%82%E7%82%B9%E5%8F%8A%E5%85%B6%E5%88%A9%E5%BC%8A&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fneedisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a%2F&amp;title=TF%20%E5%8D%A1%20swap%20%E5%88%86%E5%8C%BA%E7%9A%84%E4%B8%80%E4%BA%9B%E5%9F%BA%E6%9C%AC%E8%A7%82%E7%82%B9%E5%8F%8A%E5%85%B6%E5%88%A9%E5%BC%8A&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/needisme-2010-01-21-e887aae5bbbatwitter-apie79a84e696b9e6b395/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            自建twitter API的方法
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/needisme-2010-01-21-e8aea9e588b7e69cbae5928ce58886e58cbae58f98e5be97e7ae80e58d95/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            让刷机和分区变得简单
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="needisme-2010-01-21-tf-e58da1-swap-e58886e58cbae79a84e4b880e4ba9be59fbae69cace8a782e782b9e58f8ae585b6e588a9e5bc8a/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

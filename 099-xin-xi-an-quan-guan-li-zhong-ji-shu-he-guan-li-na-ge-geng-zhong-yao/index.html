@@ -1,0 +1,948 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>信息安全管理中，技术和管理哪个更重要？ | Need.UNO</title>
+
+
+    <meta name="keywords" content="企业管理, 管理心得, 数字化, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="企业管理的108个问题 · 第99问 上一问我们聊了”数据驱动决策”（第98问）——核心结论：数据文化不是买来的，是做出来的。 但”数据驱动”做起来之后——一个更棘手的问题立刻浮出水面： 你把数据都打通了、系统都上了、报表都自动生成了——那这些数据，谁来保护？ 这就是今天要聊的：信息安全。 而且信息安全这个领域有个”灵魂拷问”——到底是靠技术防住黑客，还是靠管理管住人？   一、先讲一个真实的故事">
+<meta property="og:type" content="website">
+<meta property="og:title" content="信息安全管理中，技术和管理哪个更重要？">
+<meta property="og:url" content="https://need.uno/099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="企业管理的108个问题 · 第99问 上一问我们聊了”数据驱动决策”（第98问）——核心结论：数据文化不是买来的，是做出来的。 但”数据驱动”做起来之后——一个更棘手的问题立刻浮出水面： 你把数据都打通了、系统都上了、报表都自动生成了——那这些数据，谁来保护？ 这就是今天要聊的：信息安全。 而且信息安全这个领域有个”灵魂拷问”——到底是靠技术防住黑客，还是靠管理管住人？   一、先讲一个真实的故事">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-05T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.095Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="企业管理">
+<meta property="article:tag" content="管理心得">
+<meta property="article:tag" content="数字化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "信息安全管理中，技术和管理哪个更重要？",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-07-05",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao/" },
+  "description": "信息安全管理中，技术和管理哪个更重要？"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        信息安全管理中，技术和管理哪个更重要？
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/07/" class="post-meta__date button">2026-07-05</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E7%AE%A1%E7%90%86/" class="button">管理</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <h1 id="企业管理的108个问题-·-第99问"><a href="#企业管理的108个问题-·-第99问" class="headerlink" title="企业管理的108个问题 · 第99问"></a>企业管理的108个问题 · 第99问</h1><blockquote>
+<p>上一问我们聊了”数据驱动决策”（<a href="/098-shu-ju-qu-dong-jue-ce-qi-ye-shu-ju-wen-hua-ru-he-jian-li/">第98问</a>）——核心结论：<strong>数据文化不是买来的，是做出来的。</strong></p>
+<p>但”数据驱动”做起来之后——一个更棘手的问题立刻浮出水面：</p>
+<p><strong>你把数据都打通了、系统都上了、报表都自动生成了——那这些数据，谁来保护？</strong></p>
+<p>这就是今天要聊的：信息安全。</p>
+<p>而且信息安全这个领域有个”灵魂拷问”——<strong>到底是靠技术防住黑客，还是靠管理管住人？</strong></p>
+</blockquote>
+<hr>
+<h2 id="一、先讲一个真实的故事"><a href="#一、先讲一个真实的故事" class="headerlink" title="一、先讲一个真实的故事"></a>一、先讲一个真实的故事</h2><p>2023年，某中型制造企业——上了ERP、CRM、还有自研的生产管理系统——数据化做得挺不错。</p>
+<p>有一天——财务总监发现账上少了300万。</p>
+<p>查了一圈——不是黑客攻击——不是系统漏洞——是一个离职三个月的采购经理——离职时公司没及时注销他的系统账号——他用旧密码登录——修改了供应商付款账户信息——把钱转走了。</p>
+<p><strong>技术层面：系统没问题，防火墙没被攻破，加密没被破解。</strong></p>
+<p><strong>管理层面：离职账号3个月没注销。</strong></p>
+<p>这个案例——不是孤例。根据Verizon《2024年数据泄露调查报告》——<strong>68%的数据泄露事件——涉及人为因素</strong>——包括社会工程攻击、内部人员失误、权限管理疏忽。</p>
+<p>所以问题来了——</p>
+<hr>
+<h2 id="二、技术和管理的”分工”是什么？"><a href="#二、技术和管理的”分工”是什么？" class="headerlink" title="二、技术和管理的”分工”是什么？"></a>二、技术和管理的”分工”是什么？</h2><p>如果把信息安全比作一座城堡——</p>
+<table>
+<thead>
+<tr>
+<th align="center">维度</th>
+<th align="center">技术</th>
+<th align="center">管理</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center"><strong>比喻</strong></td>
+<td align="center">城墙、护城河、瞭望塔</td>
+<td align="center">巡逻制度、出入登记、岗哨轮换</td>
+</tr>
+<tr>
+<td align="center"><strong>核心职能</strong></td>
+<td align="center">挡住外部攻击</td>
+<td align="center">防止内部出问题</td>
+</tr>
+<tr>
+<td align="center"><strong>典型手段</strong></td>
+<td align="center">防火墙、加密、入侵检测、漏洞扫描</td>
+<td align="center">权限制度、培训、审计、应急预案</td>
+</tr>
+<tr>
+<td align="center"><strong>失效后果</strong></td>
+<td align="center">被黑客入侵、数据被窃取</td>
+<td align="center">内部泄露、误操作、合规违规</td>
+</tr>
+<tr>
+<td align="center"><strong>投入特征</strong></td>
+<td align="center">一次性投入大——持续性维护成本低</td>
+<td align="center">持续投入——见效慢——但”悔之晚矣”时才觉得值</td>
+</tr>
+</tbody></table>
+<p><strong>一句话结论：技术是”门锁”——管理是”钥匙保管制度”。</strong></p>
+<p>你花十万块装了全世界最安全的门锁——但钥匙随便放——等于没装。</p>
+<hr>
+<h2 id="三、为什么很多企业”重技术、轻管理”？"><a href="#三、为什么很多企业”重技术、轻管理”？" class="headerlink" title="三、为什么很多企业”重技术、轻管理”？"></a>三、为什么很多企业”重技术、轻管理”？</h2><p>这不是个别现象——几乎是一种”组织惯性”——背后有几个原因：</p>
+<h3 id="原因一：技术的”可见性”更高"><a href="#原因一：技术的”可见性”更高" class="headerlink" title="原因一：技术的”可见性”更高"></a>原因一：技术的”可见性”更高</h3><ul>
+<li>买了一台防火墙——摆在那儿——老板看得见——“嗯，我们信息安全有投入了”</li>
+<li>花80万上了一个安全系统——年终总结可以写进去——“我们完成了信息安全体系升级”</li>
+<li>但”制定了一份《离职员工账号注销流程》”——写进年终总结——没人觉得这是什么”成果”</li>
+</ul>
+<p><strong>管理成果——天然”不可见”——所以容易被忽略。</strong></p>
+<h3 id="原因二：”不出事-没问题”的错觉"><a href="#原因二：”不出事-没问题”的错觉" class="headerlink" title="原因二：”不出事&#x3D;没问题”的错觉"></a>原因二：”不出事&#x3D;没问题”的错觉</h3><p>这是信息安全最大的心理陷阱。</p>
+<p><strong>场景：</strong></p>
+<p>公司五年没出过安全事故→管理者觉得”我们信息安全做得挺好”。</p>
+<p>但真相可能是：</p>
+<ul>
+<li>离职账号一直没注销——只是恰好没出问题</li>
+<li>员工U盘随便插——只是恰好没中勒索病毒</li>
+<li>数据库没做备份——只是恰好服务器还没坏</li>
+</ul>
+<p><strong>信息安全管理的悲剧在于——你永远不知道”侥幸”能持续多久。</strong></p>
+<p>等你”知道”的那一天——就是出事的这一天。</p>
+<h3 id="原因三：管理需要”全员参与”——技术可以”外包”"><a href="#原因三：管理需要”全员参与”——技术可以”外包”" class="headerlink" title="原因三：管理需要”全员参与”——技术可以”外包”"></a>原因三：管理需要”全员参与”——技术可以”外包”</h3><ul>
+<li>防火墙可以买——加密系统可以部署——渗透测试可以找第三方</li>
+<li>但”每个员工都养成信息安全习惯”——外包不了。</li>
+</ul>
+<p>而”全员的信息安全意识”——恰恰是信息安全最薄弱也最重要的一环。</p>
+<p><strong>钓鱼邮件测试数据：</strong></p>
+<p>某公司做了内部钓鱼邮件演练——向全员发送伪装成”HR通知”的钓鱼邮件——结果：</p>
+<ul>
+<li>第一次测试：43%的员工点击了链接</li>
+<li>经过两次培训后：仍有18%点击</li>
+</ul>
+<p><strong>——这就是”管理”的难处：技术可以一次部署到位——人的行为——需要反复训练——而且永远有”漏网之鱼”。</strong></p>
+<hr>
+<h2 id="四、一个”技术和管理的结合”实战框架"><a href="#四、一个”技术和管理的结合”实战框架" class="headerlink" title="四、一个”技术和管理的结合”实战框架"></a>四、一个”技术和管理的结合”实战框架</h2><p>信息安全管理——不是”二选一”——而是”两手抓”——但管理的分量往往被低估。</p>
+<p>以下是”三层防护”模型：</p>
+<h3 id="第一层：技术防线——“不让坏人进来”"><a href="#第一层：技术防线——“不让坏人进来”" class="headerlink" title="第一层：技术防线——“不让坏人进来”"></a>第一层：技术防线——“不让坏人进来”</h3><p>这是底线——该花的钱——不能省。</p>
+<p><strong>必做的技术措施：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">措施</th>
+<th align="center">作用</th>
+<th align="center">投入级别</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">网络防火墙 + 入侵检测</td>
+<td align="center">阻止外部攻击</td>
+<td align="center">中等</td>
+</tr>
+<tr>
+<td align="center">数据加密（传输 + 存储）</td>
+<td align="center">数据即使泄露也无法读取</td>
+<td align="center">低-中</td>
+</tr>
+<tr>
+<td align="center">多因素认证（MFA）</td>
+<td align="center">防止密码被盗用</td>
+<td align="center">低（甚至免费）</td>
+</tr>
+<tr>
+<td align="center">终端安全（杀毒&#x2F;EDR）</td>
+<td align="center">防止员工设备成为突破口</td>
+<td align="center">中</td>
+</tr>
+<tr>
+<td align="center">定期漏洞扫描和渗透测试</td>
+<td align="center">主动发现弱点</td>
+<td align="center">中-高（按需）</td>
+</tr>
+<tr>
+<td align="center">数据备份（3-2-1原则）</td>
+<td align="center">勒索病毒的最后防线</td>
+<td align="center">中</td>
+</tr>
+</tbody></table>
+<blockquote>
+<p><strong>3-2-1备份原则：3份数据副本、2种不同介质、1份离线（或隔离）存储。</strong></p>
+</blockquote>
+<p><strong>这些该做——但做完不等于”安全了”——因为突破口往往不在这里。</strong></p>
+<h3 id="第二层：制度防线——“不让内部出问题”"><a href="#第二层：制度防线——“不让内部出问题”" class="headerlink" title="第二层：制度防线——“不让内部出问题”"></a>第二层：制度防线——“不让内部出问题”</h3><p><strong>这是管理的主战场——也是”性价比最高”的安全投入。</strong></p>
+<p><strong>五项核心制度：</strong></p>
+<p><strong>① 账号全生命周期管理</strong></p>
+<ul>
+<li>入职当天开通——离职当天注销——岗位变动当天调整权限</li>
+<li><strong>红线：离职账号超过24小时未注销——视为安全事件——追责到人</strong></li>
+</ul>
+<p><strong>② 最小权限原则（Least Privilege）</strong></p>
+<ul>
+<li>每个人只拥有”完成本职工作所需的最小权限”</li>
+<li>财务能看到所有客户数据吗？——不需要就不给</li>
+<li>普通员工能导出全公司通讯录吗？——不能</li>
+</ul>
+<p><strong>③ 特权账号”双人制”管理</strong></p>
+<ul>
+<li>系统管理员、数据库管理员——这些”超级权限”——不能一个人说了算</li>
+<li>关键操作——需要双人审批——需要操作日志——需要定期审计</li>
+</ul>
+<p><strong>④ 数据分级分类制度</strong></p>
+<ul>
+<li>把公司的数据分成：公开级、内部级、机密级、绝密级</li>
+<li>不同级别——不同的”访问规则”和”传输规则”</li>
+<li>举例：机密级数据——禁止通过微信&#x2F;个人邮箱传输</li>
+</ul>
+<p><strong>⑤ 第三方供应商安全管理</strong></p>
+<ul>
+<li>供应商能访问你的系统吗？——签保密协议了吗？——对方的安全标准达标吗？</li>
+<li>很多数据泄露——不是”自己人”干的——是”供应商”干的</li>
+</ul>
+<p><strong>这些——不需要花多少钱——需要的是”下定决心去做”。</strong></p>
+<h3 id="第三层：文化防线——“让每个人成为安全防线”"><a href="#第三层：文化防线——“让每个人成为安全防线”" class="headerlink" title="第三层：文化防线——“让每个人成为安全防线”"></a>第三层：文化防线——“让每个人成为安全防线”</h3><p><strong>技术是”锁”——制度是”规定”——文化是”习惯”。</strong></p>
+<p><strong>具体做法：</strong></p>
+<ul>
+<li><strong>每月一次”信息安全5分钟”</strong> ——不是长篇大论培训——是每次会议开头5分钟——分享一个安全小贴士</li>
+<li><strong>每季度一次钓鱼邮件演练</strong> ——不通报个人——只通报部门统计——让大家有”集体荣誉感”</li>
+<li><strong>每年一次”信息安全周”</strong> ——全员参与——案例分享——互动答题——氛围到了</li>
+<li><strong>建立”安全事件上报无惩罚”机制</strong> ——员工误点了钓鱼链接——主动上报——不处罚——反而表扬</li>
+</ul>
+<p><strong>最后一个最重要。</strong></p>
+<p>如果员工担心”点错链接会被骂”——他就不上报——然后潜在的入侵者——就潜伏下来了。</p>
+<p><strong>安全文化 &#x3D; 透明 + 信任 + 持续教育</strong></p>
+<hr>
+<h2 id="五、安全投入的”二八法则”"><a href="#五、安全投入的”二八法则”" class="headerlink" title="五、安全投入的”二八法则”"></a>五、安全投入的”二八法则”</h2><p>如果你预算有限——想把钱花在刀刃上：</p>
+<table>
+<thead>
+<tr>
+<th align="center">优先级</th>
+<th align="center">投入项</th>
+<th align="center">类型</th>
+<th align="center">理由</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">🔴 第一优先</td>
+<td align="center">数据备份</td>
+<td align="center">技术</td>
+<td align="center">勒索病毒的”后悔药”——没有备份——出事就是灭顶之灾</td>
+</tr>
+<tr>
+<td align="center">🔴 第一优先</td>
+<td align="center">账号管理和权限管控</td>
+<td align="center">管理</td>
+<td align="center">成本极低——见效最快——防止内部泄露</td>
+</tr>
+<tr>
+<td align="center">🟡 第二优先</td>
+<td align="center">多因素认证（MFA）</td>
+<td align="center">技术</td>
+<td align="center">成本低——大幅降低账号被盗风险</td>
+</tr>
+<tr>
+<td align="center">🟡 第二优先</td>
+<td align="center">员工安全意识培训</td>
+<td align="center">管理</td>
+<td align="center">性价比最高的安全投入</td>
+</tr>
+<tr>
+<td align="center">🟢 第三优先</td>
+<td align="center">防火墙&#x2F;入侵检测</td>
+<td align="center">技术</td>
+<td align="center">基础防御——该有</td>
+</tr>
+<tr>
+<td align="center">🟢 第三优先</td>
+<td align="center">渗透测试和漏洞扫描</td>
+<td align="center">技术+管理</td>
+<td align="center">定期做——主动发现问题</td>
+</tr>
+</tbody></table>
+<p><strong>发现规律了吗？——成本最低的几项——全是”管理”。</strong></p>
+<hr>
+<h2 id="六、最后的结论"><a href="#六、最后的结论" class="headerlink" title="六、最后的结论"></a>六、最后的结论</h2><p>回到标题的问题：<strong>技术和管理——哪个更重要？</strong></p>
+<p>我的回答是——</p>
+<p><strong>如果非要”二选一”——管理更重要。</strong></p>
+<p>因为：</p>
+<ul>
+<li>最好的防火墙——管不住一个把密码贴在显示器上的员工</li>
+<li>最先进的入侵检测系统——检测不出一个离职没注销的账号</li>
+<li>花再多钱做渗透测试——挡不住一个在咖啡厅用公共WiFi处理机密文件的习惯</li>
+</ul>
+<p><strong>技术是”武器”——管理是”使用武器的人”。</strong></p>
+<p>但更好的答案——当然是——两者都要。</p>
+<p><strong>技术 + 管理 + 文化——三层防护——缺一不可。</strong></p>
+<p>信息安全——不是IT部门的事——是CEO应该亲自过问的事。</p>
+<p><strong>因为——数据是公司的血液——信息安全——就是公司的免疫系统。</strong></p>
+<p>免疫系统出问题——不是某个器官的问题——是全身的问题。</p>
+<p><strong>今天就可以做的一件事：让IT部门拉一份”最近90天未登录的账号清单”——看看有多少是应该注销却没注销的。</strong></p>
+<p><strong>——这件事不花钱——但可能比花10万买防火墙——更能保护你的公司。</strong> 🔒</p>
+<hr>
+<p><a href="/qi-ye-guan-li-de-108-ge-wen-ti/">⬅️ 返回目录</a><br><strong>明日预告：第100问 —— 企业文化是”长出来”的还是”设计出来”的？</strong></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao/">https://need.uno/099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 企业管理</a><a href="/tags/%E7%AE%A1%E7%90%86%E5%BF%83%E5%BE%97/" class="post-tags__link button"># 管理心得</a><a href="/tags/%E6%95%B0%E5%AD%97%E5%8C%96/" class="post-tags__link button"># 数字化</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2F099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao%2F&amp;text=%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%AD%EF%BC%8C%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%A1%E7%90%86%E5%93%AA%E4%B8%AA%E6%9B%B4%E9%87%8D%E8%A6%81%EF%BC%9F&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2F099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2F099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao%2F&amp;title=%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%AD%EF%BC%8C%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%A1%E7%90%86%E5%93%AA%E4%B8%AA%E6%9B%B4%E9%87%8D%E8%A6%81%EF%BC%9F"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2F099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao%2F&amp;text=%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%AD%EF%BC%8C%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%A1%E7%90%86%E5%93%AA%E4%B8%AA%E6%9B%B4%E9%87%8D%E8%A6%81%EF%BC%9F"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2F099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao%2F&amp;title=%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%AD%EF%BC%8C%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%A1%E7%90%86%E5%93%AA%E4%B8%AA%E6%9B%B4%E9%87%8D%E8%A6%81%EF%BC%9F&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2F099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao%2F&amp;title=%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%AD%EF%BC%8C%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%A1%E7%90%86%E5%93%AA%E4%B8%AA%E6%9B%B4%E9%87%8D%E8%A6%81%EF%BC%9F&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2F099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao%2F&amp;title=%E4%BF%A1%E6%81%AF%E5%AE%89%E5%85%A8%E7%AE%A1%E7%90%86%E4%B8%AD%EF%BC%8C%E6%8A%80%E6%9C%AF%E5%92%8C%E7%AE%A1%E7%90%86%E5%93%AA%E4%B8%AA%E6%9B%B4%E9%87%8D%E8%A6%81%EF%BC%9F&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/104-dang-qi-ye-wen-hua-yu-shang-ye-li-yi-chong-tu-shi-gai-zen-me-xuan/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            当企业文化与商业利益冲突时该怎么选？
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/100-qi-ye-wen-hua-shi-chang-chu-lai-de-huan-shi-she-ji-chu-lai-de/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            企业文化是&#34;长出来&#34;的还是&#34;设计出来&#34;的？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="099-xin-xi-an-quan-guan-li-zhong-ji-shu-he-guan-li-na-ge-geng-zhong-yao/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

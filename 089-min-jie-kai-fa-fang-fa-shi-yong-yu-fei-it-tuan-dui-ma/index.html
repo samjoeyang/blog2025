@@ -1,0 +1,926 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>敏捷开发方法适用于非IT团队吗？ | Need.UNO</title>
+
+
+    <meta name="keywords" content="企业管理, 运营, 管理心得, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="企业管理的108个问题 · 第89问 上一问我们深入挖了项目延期的”元凶”和”治延”策略（第88问），核心结论是：延期不是”不够努力”，是”计划方式出了问题”。 但今天我们要聊的——不是”怎么让项目不延期”，而是一个更基础的问题——“做项目的方法论，到底该选哪一种？”  几乎所有做IT、做软件开发的人——都听说过”敏捷”（Agile）。 Scrum、Kanban、Sprint、Stand-up M">
+<meta property="og:type" content="website">
+<meta property="og:title" content="敏捷开发方法适用于非IT团队吗？">
+<meta property="og:url" content="https://need.uno/089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="企业管理的108个问题 · 第89问 上一问我们深入挖了项目延期的”元凶”和”治延”策略（第88问），核心结论是：延期不是”不够努力”，是”计划方式出了问题”。 但今天我们要聊的——不是”怎么让项目不延期”，而是一个更基础的问题——“做项目的方法论，到底该选哪一种？”  几乎所有做IT、做软件开发的人——都听说过”敏捷”（Agile）。 Scrum、Kanban、Sprint、Stand-up M">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-30T04:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.094Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="企业管理">
+<meta property="article:tag" content="运营">
+<meta property="article:tag" content="管理心得">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "敏捷开发方法适用于非IT团队吗？",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-06-30",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma/" },
+  "description": "敏捷开发方法适用于非IT团队吗？"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        敏捷开发方法适用于非IT团队吗？
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/06/" class="post-meta__date button">2026-06-30</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E7%AE%A1%E7%90%86/" class="button">管理</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <h1 id="企业管理的108个问题-·-第89问"><a href="#企业管理的108个问题-·-第89问" class="headerlink" title="企业管理的108个问题 · 第89问"></a>企业管理的108个问题 · 第89问</h1><blockquote>
+<p>上一问我们深入挖了项目延期的”元凶”和”治延”策略（<a href="/088-xiang-mu-yan-qi-de-zui-chang-jian-yuan-yin-ji-ying-dui-ce-lue/">第88问</a>），核心结论是：延期不是”不够努力”，是”计划方式出了问题”。</p>
+<p>但今天我们要聊的——不是”怎么让项目不延期”，而是一个更基础的问题——<strong>“做项目的方法论，到底该选哪一种？”</strong></p>
+</blockquote>
+<p>几乎所有做IT、做软件开发的人——都听说过”敏捷”（Agile）。</p>
+<p>Scrum、Kanban、Sprint、Stand-up Meeting——这些词，对程序员来说，就像厨房里的锅碗瓢勺——日常到不能再日常。</p>
+<p>但如果你去问一个市场部、HR、财务或者制造团队的人——</p>
+<p>“你们在用敏捷吗？”</p>
+<p>——大概率收到的回复是：”那是什么？程序员用的？跟我们有什么关系？”</p>
+<p><strong>那么问题来了：敏捷——到底是”IT专用方法论”——还是”可以跨越行业的通用管理工具”？</strong></p>
+<p>今天我们就来掰开揉碎聊清楚。👇</p>
+<hr>
+<h2 id="一、敏捷到底是什么？先别急着”归为IT”"><a href="#一、敏捷到底是什么？先别急着”归为IT”" class="headerlink" title="一、敏捷到底是什么？先别急着”归为IT”"></a>一、敏捷到底是什么？先别急着”归为IT”</h2><p>很多人对敏捷的理解是：<strong>“不就是两周一个版本、每天站个会、弄个看板吗？”</strong></p>
+<p>那你就把敏捷”想小了”。</p>
+<p><strong>敏捷的本质，其实是一套”应对不确定性”的管理哲学。</strong></p>
+<p>它诞生于软件开发领域——因为软件项目的不确定性太高了——需求随时会变、技术随时会踩坑、用户随时会翻脸。传统的”先什么都计划好，然后按部就班执行”的瀑布式管理——根本玩不转。</p>
+<p><strong>所以敏捷的核心思想其实是这四条：</strong></p>
+<ol>
+<li><strong>个体和互动 &gt; 流程和工具</strong>（先把人搞定，再谈流程）</li>
+<li><strong>可工作的成果 &gt; 面面俱到的文档</strong>（做出来比写出来重要）</li>
+<li><strong>客户合作 &gt; 合同谈判</strong>（跟客户一起”摸着石头过河”）</li>
+<li><strong>响应变化 &gt; 遵循计划</strong>（计划赶不上变化，那就拥抱变化）</li>
+</ol>
+<p>——你读一遍这四条——跟”IT”有什么关系？</p>
+<p><strong>一点关系都没有。</strong></p>
+<p>这四条——放之任何团队、任何岗位、任何行业——都成立。</p>
+<hr>
+<h2 id="二、非IT团队用敏捷，能解决什么问题？"><a href="#二、非IT团队用敏捷，能解决什么问题？" class="headerlink" title="二、非IT团队用敏捷，能解决什么问题？"></a>二、非IT团队用敏捷，能解决什么问题？</h2><p>我们来看看——不同的非IT团队，如果用”敏捷”的思路，能治什么”病”。</p>
+<h3 id="场景一：市场部-活动策划团队"><a href="#场景一：市场部-活动策划团队" class="headerlink" title="场景一：市场部 &#x2F; 活动策划团队"></a>场景一：市场部 &#x2F; 活动策划团队</h3><p><strong>传统痛点：</strong></p>
+<ul>
+<li>做一场大型活动——提前3个月开始策划——所有事都写在”甘特图”上——</li>
+<li>结果活动中途，老板说：”竞品也搞了活动，咱们加个新环节”</li>
+<li>策划团队：？？？我们的计划全打乱了</li>
+</ul>
+<p><strong>敏捷怎么救？</strong></p>
+<p>把”3个月的超大项目”拆成”2周一个的Sprint”：</p>
+<table>
+<thead>
+<tr>
+<th align="center">传统方式</th>
+<th align="center">敏捷方式</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">一次策划3个月的活动</td>
+<td align="center">每2周交付一个”可执行的小活动&#x2F;内容”</td>
+</tr>
+<tr>
+<td align="center">等所有内容都准备好再上线</td>
+<td align="center">先做一个小版本测试市场反应</td>
+</tr>
+<tr>
+<td align="center">计划定了就不能改</td>
+<td align="center">每个Sprint结束复盘——下一Sprint灵活调整</td>
+</tr>
+</tbody></table>
+<p><strong>实操案例：</strong> 某互联网公司的市场部，把”年度营销计划”拆成”每2周一个Sprint”——每个Sprint结束时回顾过去两周的投放数据——下个Sprint根据数据调整策略。结果是——ROI提升了30%，因为”反应速度变快了”。</p>
+<h3 id="场景二：人力资源团队"><a href="#场景二：人力资源团队" class="headerlink" title="场景二：人力资源团队"></a>场景二：人力资源团队</h3><p><strong>传统痛点：</strong></p>
+<ul>
+<li>做一次全公司的”绩效改革”——从调研到方案到推行——一共花了9个月</li>
+<li>结果推完发现：员工不买账——很多设计跟实际脱节——但”已经推了，改不了了”</li>
+<li>再来一次？——没人有这个精力</li>
+</ul>
+<p><strong>敏捷怎么救？</strong></p>
+<p>“绩效改革”不是”大爆炸式”一次推完——而是”迭代式”：</p>
+<ol>
+<li><strong>先选一个部门做试点</strong>（不是全公司一起上）</li>
+<li><strong>2周后收集反馈</strong>——大家觉得哪好用哪不好用</li>
+<li><strong>根据反馈修改方案</strong>——再试一轮</li>
+<li><strong>试得差不多了</strong>——再推广到更多部门</li>
+</ol>
+<p><strong>结果：</strong> 不是”一次做对”——是”边做边调”——最终方案的质量，比”一次性设计”高得多。</p>
+<h3 id="场景三：制造-生产团队"><a href="#场景三：制造-生产团队" class="headerlink" title="场景三：制造 &#x2F; 生产团队"></a>场景三：制造 &#x2F; 生产团队</h3><p><strong>传统痛点：</strong></p>
+<ul>
+<li>生产线出了问题——发现是”供应链和仓库”之间的信息没对齐</li>
+<li>等”跨部门会议”开完——已经过去了3天——生产线已经停了2天</li>
+</ul>
+<p><strong>敏捷怎么救？</strong></p>
+<p><strong>每日站会——不是程序员的专利。</strong></p>
+<p>制造团队每天早上站5~10分钟——每个人说三句话：</p>
+<ol>
+<li>昨天完成了什么</li>
+<li>今天准备做什么</li>
+<li>有什么”堵住我的”问题</li>
+</ol>
+<p>——有问题——当场协调——不等”每周例会”。</p>
+<p><strong>结果：</strong> 信息延迟从”2-3天”缩到”1天以内”——生产线因为”信息不通”导致的停工减少了60%。</p>
+<hr>
+<h2 id="三、非IT团队用敏捷的”三个关键调整”"><a href="#三、非IT团队用敏捷的”三个关键调整”" class="headerlink" title="三、非IT团队用敏捷的”三个关键调整”"></a>三、非IT团队用敏捷的”三个关键调整”</h2><p>但注意——<strong>“照搬IT的Scrum”对非IT团队行不通。</strong></p>
+<p>非IT团队用敏捷——要做三个”本地化”调整。</p>
+<h3 id="调整一：Sprint周期——“2周”不是硬性规定"><a href="#调整一：Sprint周期——“2周”不是硬性规定" class="headerlink" title="调整一：Sprint周期——“2周”不是硬性规定"></a>调整一：Sprint周期——“2周”不是硬性规定</h3><p>IT团队用2周一个Sprint——因为软件版本迭代的节奏就是这么快。</p>
+<p>但非IT团队——<strong>要根据自己的”交付节奏”来定Sprint周期。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">团队类型</th>
+<th align="center">推荐Sprint周期</th>
+<th align="center">原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">市场&#x2F;运营</td>
+<td align="center">1-2周</td>
+<td align="center">活动、内容产出快——反馈周期短</td>
+</tr>
+<tr>
+<td align="center">人力资源</td>
+<td align="center">2-4周</td>
+<td align="center">员工访谈、培训、制度设计——需要一定时间沉淀</td>
+</tr>
+<tr>
+<td align="center">财务&#x2F;法务</td>
+<td align="center">3-4周</td>
+<td align="center">合规性工作节奏慢——太快的Sprint反而增加压力</td>
+</tr>
+<tr>
+<td align="center">制造&#x2F;供应链</td>
+<td align="center">2周</td>
+<td align="center">生产节奏本来就短——Sprint可以同步排产周期</td>
+</tr>
+<tr>
+<td align="center">R&amp;D&#x2F;产品设计</td>
+<td align="center">2-3周</td>
+<td align="center">需要一定的”深入时间”——但太快没有意义</td>
+</tr>
+</tbody></table>
+<p><strong>关键原则：</strong> Sprint周期的选择——<strong>以”你最快能交付一个可评审的成果”为基准</strong>——不是”别人用2周，我也用2周”。</p>
+<h3 id="调整二：站会——别搞成”汇报大会”"><a href="#调整二：站会——别搞成”汇报大会”" class="headerlink" title="调整二：站会——别搞成”汇报大会”"></a>调整二：站会——别搞成”汇报大会”</h3><p>非IT团队最容易犯的错误是——“每日站会变成了进度汇报大会”。</p>
+<p><strong>正确的站会应该是：</strong></p>
+<ul>
+<li><strong>站——真的站着开</strong>（不超过15分钟）</li>
+<li><strong>不报流水账</strong>——“我做了什么、做了什么”——没人关心</li>
+<li><strong>只聊”卡住”的事</strong>——“我今天需要谁的支持？”——“什么阻碍了我？”</li>
+<li><strong>会后跟进</strong>——站会上暴露的问题——会后相关负责人单独聊——不要站会本身变成”解决问题的场合”</li>
+</ul>
+<h3 id="调整三：回顾（Retrospective）——“最重要的一步”"><a href="#调整三：回顾（Retrospective）——“最重要的一步”" class="headerlink" title="调整三：回顾（Retrospective）——“最重要的一步”"></a>调整三：回顾（Retrospective）——“最重要的一步”</h3><p>敏捷真正的”灵魂”——不在”站会”——不在”Sprint”——在<strong>回顾</strong>。</p>
+<p><strong>回顾的目的不是”追责”——是”找到可以改进的地方”。</strong></p>
+<p><strong>回顾的经典”三步法”（任何团队通用）：</strong></p>
+<ol>
+<li><strong>保持（Keep）：</strong> 这个Sprint里，做对了什么？值得继续做？</li>
+<li><strong>问题（Problem）：</strong> 这个Sprint里，什么让你不爽？什么拖慢了进度？</li>
+<li><strong>尝试（Try）：</strong> 下个Sprint，我们想尝试改变什么？</li>
+</ol>
+<p><strong>关键：</strong> 每次回顾结束时——确定1-2个”下个Sprint要改进的具体动作”——不是”我们要更努力”——是”下班后不允许再回消息”或”跨部门协作统一用共享文档”——这种可执行的动作。</p>
+<hr>
+<h2 id="四、非IT团队引入敏捷的”三步落地法”"><a href="#四、非IT团队引入敏捷的”三步落地法”" class="headerlink" title="四、非IT团队引入敏捷的”三步落地法”"></a>四、非IT团队引入敏捷的”三步落地法”</h2><h3 id="第一步：选一个”痛得最厉害”的团队做试点"><a href="#第一步：选一个”痛得最厉害”的团队做试点" class="headerlink" title="第一步：选一个”痛得最厉害”的团队做试点"></a>第一步：选一个”痛得最厉害”的团队做试点</h3><p>不要一开始就跟全公司说：”我们要全面推行敏捷。”</p>
+<p><strong>那等于自杀。</strong></p>
+<p><strong>选一个”痛点最突出”的团队——最能体现出”敏捷改进效果”的：</strong></p>
+<ul>
+<li>如果市场部总是”赶不上热点”——选市场部</li>
+<li>如果HR的绩效改革”推不动”——选HR部门</li>
+<li>如果供应链”总是断档”——选供应链</li>
+</ul>
+<p><strong>选一个试点——先做出效果——再推广。</strong></p>
+<h3 id="第二步：用”最轻量”的敏捷工具——不要一上来就上Jira"><a href="#第二步：用”最轻量”的敏捷工具——不要一上来就上Jira" class="headerlink" title="第二步：用”最轻量”的敏捷工具——不要一上来就上Jira"></a>第二步：用”最轻量”的敏捷工具——不要一上来就上Jira</h3><p>非IT团队不需要”复杂的敏捷工具”。</p>
+<p><strong>最简单的组合就够了：</strong></p>
+<ul>
+<li><strong>可视化管理：</strong> 一面白板 + 三种颜色的便利贴<ul>
+<li>红：待办（To Do）</li>
+<li>黄：进行中（In Progress）</li>
+<li>绿：已完成（Done）</li>
+</ul>
+</li>
+<li><strong>Sprint规划：</strong> 每周一早上花30分钟——定本周要完成的”红贴”</li>
+<li><strong>每日站会：</strong> 每天5-10分钟——围着白板站一圈</li>
+</ul>
+<p><strong>别怀疑——你就用这三样——效果不比Jira差。</strong> 工具只是”辅助”——核心是”人在用”。</p>
+<h3 id="第三步：设置”改进反馈周期”——不是”改了就行”——是”改着看””"><a href="#第三步：设置”改进反馈周期”——不是”改了就行”——是”改着看””" class="headerlink" title="第三步：设置”改进反馈周期”——不是”改了就行”——是”改着看””"></a>第三步：设置”改进反馈周期”——不是”改了就行”——是”改着看””</h3><p>引入敏捷本身就是一个”敏捷过程”。</p>
+<p><strong>每2-4周，回顾一次”敏捷引入本身的效果”：</strong></p>
+<ul>
+<li>团队感觉敏捷了吗？还是更累了？</li>
+<li>站会变成了负担——还是真的提高了沟通效率？</li>
+<li>Sprint周期合理吗？太长还是太短？</li>
+</ul>
+<p><strong>根据反馈——随时调整——不是”定的规则就不能改”。</strong></p>
+<p>这才是”敏捷的精神”本身。</p>
+<hr>
+<h2 id="五、敏捷不适合哪些非IT场景？"><a href="#五、敏捷不适合哪些非IT场景？" class="headerlink" title="五、敏捷不适合哪些非IT场景？"></a>五、敏捷不适合哪些非IT场景？</h2><p><strong>任何事情都有边界。</strong> 敏捷虽然”通用”——但有些场景，它不适合，或者需要”大大地改装”。</p>
+<p><strong>敏捷不太适合的场景：</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">场景</th>
+<th align="center">原因</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">强法规&#x2F;强合规场景（如制药、金融审计）</td>
+<td align="center">迭代式的变更可能导致合规风险——需要”一次性通过”</td>
+</tr>
+<tr>
+<td align="center">大型工程建设（如盖楼、造桥）</td>
+<td align="center">楼梯不可能”盖一半、改一下”——结构上就决定了”必须一次性规划好”</td>
+</tr>
+<tr>
+<td align="center">创意型&#x2F;艺术型工作（如品牌定位、VI设计）</td>
+<td align="center">需要一个较长的”完整构思期”——不适合”切碎成2周一段”</td>
+</tr>
+<tr>
+<td align="center">高度依赖外部供应商&#x2F;合作伙伴的工作</td>
+<td align="center">你的Sprint跑得再快——合作伙伴按”季度”走——还是跟不上</td>
+</tr>
+</tbody></table>
+<p><strong>在这些场景里——传统项目管理方法（如瀑布式&#x2F;关键路径法CPM）可能更合适——或者用”混合式”：核心按瀑布——执行层面按敏捷。</strong></p>
+<hr>
+<h2 id="六、最后的话"><a href="#六、最后的话" class="headerlink" title="六、最后的话"></a>六、最后的话</h2><p><strong>敏捷不是程序员的”特权”。</strong></p>
+<p>它是一种”面对不确定性的管理思路”——任何团队、任何行业——都可以从中受益。</p>
+<p><strong>但它也不是”万能药”。</strong></p>
+<p>盲目引入Scrum——照搬IT的所有仪式——然后发现”团队更累了、效率更低”——那不是敏捷的错——是”引入方式”的错。</p>
+<p><strong>对非IT团队来说——用敏捷最好的方式——是”偷”它的原则：</strong></p>
+<ul>
+<li>把大事拆小</li>
+<li>先做出来再看</li>
+<li>定期回顾、找出改进点</li>
+<li>别怕改计划</li>
+</ul>
+<p>——而不是”原封不动地照搬一切仪式”。</p>
+<p><strong>管理工具和方法论——最终都要”为我所用”——而不是”我被工具所用”。</strong></p>
+<hr>
+<p><a href="/qi-ye-guan-li-de-108-ge-wen-ti/">⬅️ 返回目录</a><br><strong>明日预告：第90问 —— 如何做好项目优先级排序？</strong></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma/">https://need.uno/089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 企业管理</a><a href="/tags/%E8%BF%90%E8%90%A5/" class="post-tags__link button"># 运营</a><a href="/tags/%E7%AE%A1%E7%90%86%E5%BF%83%E5%BE%97/" class="post-tags__link button"># 管理心得</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2F089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma%2F&amp;text=%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E4%BA%8E%E9%9D%9EIT%E5%9B%A2%E9%98%9F%E5%90%97%EF%BC%9F&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2F089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2F089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma%2F&amp;title=%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E4%BA%8E%E9%9D%9EIT%E5%9B%A2%E9%98%9F%E5%90%97%EF%BC%9F"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2F089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma%2F&amp;text=%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E4%BA%8E%E9%9D%9EIT%E5%9B%A2%E9%98%9F%E5%90%97%EF%BC%9F"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2F089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma%2F&amp;title=%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E4%BA%8E%E9%9D%9EIT%E5%9B%A2%E9%98%9F%E5%90%97%EF%BC%9F&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2F089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma%2F&amp;title=%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E4%BA%8E%E9%9D%9EIT%E5%9B%A2%E9%98%9F%E5%90%97%EF%BC%9F&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2F089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma%2F&amp;title=%E6%95%8F%E6%8D%B7%E5%BC%80%E5%8F%91%E6%96%B9%E6%B3%95%E9%80%82%E7%94%A8%E4%BA%8E%E9%9D%9EIT%E5%9B%A2%E9%98%9F%E5%90%97%EF%BC%9F&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/092-kua-bu-men-xiang-mu-zhong-de-quan-ze-bu-qing-wen-ti-ru-he-jie-jue/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            跨部门项目中的权责不清问题如何解决？
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/090-ru-he-zuo-hao-xiang-mu-you-xian-ji-pai-xu/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            如何做好项目优先级排序？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="089-min-jie-kai-fa-fang-fa-shi-yong-yu-fei-it-tuan-dui-ma/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

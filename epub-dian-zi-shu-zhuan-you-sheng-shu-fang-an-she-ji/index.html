@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>EPUB 电子书转有声书方案设计 | Need.UNO</title>
+
+
+    <meta name="keywords" content="TTS, 前端, Electron, EPUB, 有声书, 架构设计, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="设计日期：2026-06-05 | 基于 unobox 现有 EPUB 阅读器 + TTS 多引擎架构   一、方案概述1.1 目标在现有 EPUB 阅读器（EpubPreview.tsx，基于 epubjs 0.3.93）基础上，增加完整有声书功能。用户点击”朗读”按钮后，当前章节文本被逐句提取、送入 TTS 引擎合成为音频、通过独立音频元素播放，同时：  当前朗读的句子在阅读器中高亮显示 高">
+<meta property="og:type" content="website">
+<meta property="og:title" content="EPUB 电子书转有声书方案设计">
+<meta property="og:url" content="https://need.uno/epub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="设计日期：2026-06-05 | 基于 unobox 现有 EPUB 阅读器 + TTS 多引擎架构   一、方案概述1.1 目标在现有 EPUB 阅读器（EpubPreview.tsx，基于 epubjs 0.3.93）基础上，增加完整有声书功能。用户点击”朗读”按钮后，当前章节文本被逐句提取、送入 TTS 引擎合成为音频、通过独立音频元素播放，同时：  当前朗读的句子在阅读器中高亮显示 高">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-06-14T14:30:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.098Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="TTS">
+<meta property="article:tag" content="前端">
+<meta property="article:tag" content="Electron">
+<meta property="article:tag" content="EPUB">
+<meta property="article:tag" content="有声书">
+<meta property="article:tag" content="架构设计">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "EPUB 电子书转有声书方案设计",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-06-14",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/epub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji/" },
+  "description": "EPUB 电子书转有声书方案设计"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        EPUB 电子书转有声书方案设计
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/06/" class="post-meta__date button">2026-06-14</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E6%8A%80%E6%9C%AF/" class="button">技术</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <blockquote>
+<p>设计日期：2026-06-05 | 基于 unobox 现有 EPUB 阅读器 + TTS 多引擎架构</p>
+</blockquote>
+<hr>
+<h2 id="一、方案概述"><a href="#一、方案概述" class="headerlink" title="一、方案概述"></a>一、方案概述</h2><h3 id="1-1-目标"><a href="#1-1-目标" class="headerlink" title="1.1 目标"></a>1.1 目标</h3><p>在现有 EPUB 阅读器（<code>EpubPreview.tsx</code>，基于 epubjs 0.3.93）基础上，增加<strong>完整有声书功能</strong>。用户点击”朗读”按钮后，当前章节文本被逐句提取、送入 TTS 引擎合成为音频、通过独立音频元素播放，同时：</p>
+<ul>
+<li>当前朗读的句子在阅读器中高亮显示</li>
+<li>高亮句超出当前视口时自动翻页</li>
+<li>跨章节自动连续播放</li>
+<li>进度持久化，下次打开可从断点继续</li>
+</ul>
+<h3 id="1-2-核心设计原则"><a href="#1-2-核心设计原则" class="headerlink" title="1.2 核心设计原则"></a>1.2 核心设计原则</h3><table>
+<thead>
+<tr>
+<th>原则</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>TTS 默认本地免费</strong></td>
+<td>有声书默认使用本地引擎（Kokoro&#x2F;Supertonic），无需 API Key，零成本</td>
+</tr>
+<tr>
+<td><strong>云端 TTS 可选增强</strong></td>
+<td>高级用户在设置中配好 API Key 后，可在有声书模块中选择云端引擎</td>
+</tr>
+<tr>
+<td><strong>逐句合成 + DOM 标记同步</strong></td>
+<td>文本分句 → TTS 逐个合成 → DOM span 标记 → 播放时逐句高亮</td>
+</tr>
+<tr>
+<td><strong>复用现有播放器基础设施</strong></td>
+<td>音频输出使用独立 <code>HTMLAudioElement</code>（参考 <code>useAudioEngine</code> 模式），不污染全局 <code>useMediaPlayerStore</code> 队列</td>
+</tr>
+<tr>
+<td><strong>epubjs 内置分页驱动力</strong></td>
+<td>自动翻页完全依赖 epubjs <code>rendition.next()</code> + <code>relocated</code> 事件</td>
+</tr>
+<tr>
+<td><strong>非侵入式改造</strong></td>
+<td>不影响现有 EPUB 阅读功能，有声书模式为可选叠加层</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="二、系统架构"><a href="#二、系统架构" class="headerlink" title="二、系统架构"></a>二、系统架构</h2><h3 id="2-1-整体数据流"><a href="#2-1-整体数据流" class="headerlink" title="2.1 整体数据流"></a>2.1 整体数据流</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│                     EPUB 有声书系统架构                              │</span><br><span class="line">├─────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│                                                                     │</span><br><span class="line">│  主进程 (Main Process)             渲染进程 (Renderer)              │</span><br><span class="line">│  ════════════════════             ═══════════════════════           │</span><br><span class="line">│                                                                     │</span><br><span class="line">│  ┌──────────────────────┐        ┌─────────────────────────┐        │</span><br><span class="line">│  │  TTS 引擎层 (Phase 1) │  IPC  │  EpubPreview.tsx        │        │</span><br><span class="line">│  │  ├─ SherpaOnnx       │ tts:   │  (现有 942 行组件)      │        │</span><br><span class="line">│  │  ├─ Supertonic       │ speak()│  ┌─────────────────────┐│        │</span><br><span class="line">│  │  └─ PiperCli         │◄───────│  │ + 有声书模式叠加    ││        │</span><br><span class="line">│  └──────────────────────┘        │  │  ├─ 播放/暂停按钮   ││        │</span><br><span class="line">│                                   │  │  ├─ 语音选择器     ││        │</span><br><span class="line">│  ┌──────────────────────┐  IPC    │  │  ├─ 语速调节       ││        │</span><br><span class="line">│  │  AudiobookProgressDB │ audio-  │  │  └─ 定时关闭       ││        │</span><br><span class="line">│  │  ├─ 进度 CRUD        │ book:   │  └─────────────────────┘│        │</span><br><span class="line">│  │  ├─ 书签 CRUD        │◄────────│                         │        │</span><br><span class="line">│  │  └─ 播放统计         │         │  ┌─────────────────────┐│        │</span><br><span class="line">│  └──────────────────────┘         │  │  AudiobookPlayer    ││        │</span><br><span class="line">│                                   │  │  (内嵌播放条 UI)    ││        │</span><br><span class="line">│  ┌──────────────────────┐  IPC    │  │  ├─ 字幕 + 进度条  ││        │</span><br><span class="line">│  │  VoiceManager        │ tts:    │  │  ├─ 快进/快退按钮  ││        │</span><br><span class="line">│  │  ├─ 模型列表         │ downl-  │  │  └─ 章节导航       ││        │</span><br><span class="line">│  │  ├─ 下载/删除/校验   │ oad-    │  └─────────────────────┘│        │</span><br><span class="line">│  │  └─ 进度回调         │ voice() │                         │        │</span><br><span class="line">│  └──────────────────────┘         │  ┌─────────────────────┐│        │</span><br><span class="line">│                                   │  │  useAudiobook       ││        │</span><br><span class="line">│                                   │  │  (核心调度 Hook)    ││        │</span><br><span class="line">│  ┌──────────────────────┐         │  │  ├─ 文本提取+分句  ││        │</span><br><span class="line">│  │  TTS 模型存储        │         │  │  ├─ TTS 合成队列   ││        │</span><br><span class="line">│  │  &#123;userData&#125;/         │         │  │  ├─ DOM 标记+高亮  ││        │</span><br><span class="line">│  │  tts-models/         │         │  │  ├─ 自动翻页同步   ││        │</span><br><span class="line">│  │  ├─ kokoro/          │         │  │  └─ 预缓冲管理     ││        │</span><br><span class="line">│  │  ├─ supertonic/      │         │  └─────────────────────┘│        │</span><br><span class="line">│  │  └─ piper/           │         │                         │        │</span><br><span class="line">│  └──────────────────────┘         │  ┌─────────────────────┐│        │</span><br><span class="line">│                                   │  │  Audio 元素 (独立)  ││        │</span><br><span class="line">│                                   │  │  ├─ 逐句拼接播放   ││        │</span><br><span class="line">│  ┌──────────────────────┐         │  │  ├─ 速率控制       ││        │</span><br><span class="line">│  │  数据库 (SQLite)     │         │  │  └─ ended → 下一句 ││        │</span><br><span class="line">│  │  unobox.db           │         │  └─────────────────────┘│        │</span><br><span class="line">│  │  ├─ audiobook_progress         └─────────────────────────┘        │</span><br><span class="line">│  │  ├─ audiobook_bookmarks                                         │</span><br><span class="line">│  │  └─ audiobook_history                                           │</span><br><span class="line">│  └──────────────────────┘                                          │</span><br><span class="line">└─────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="2-2-与现有系统的集成关系"><a href="#2-2-与现有系统的集成关系" class="headerlink" title="2.2 与现有系统的集成关系"></a>2.2 与现有系统的集成关系</h3><table>
+<thead>
+<tr>
+<th>现有模块</th>
+<th>有声书如何使用</th>
+<th align="center">修改量</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><code>EpubPreview.tsx</code></td>
+<td>嵌入有声书按钮 + 文本标记 + 翻页同步，约 +200 行</td>
+<td align="center">中等</td>
+</tr>
+<tr>
+<td><code>useAudioEngine.ts</code></td>
+<td><strong>不直接复用</strong>——有声书使用独立 <code>Audio</code> 元素，参考其 blob URL 处理模式</td>
+<td align="center">零</td>
+</tr>
+<tr>
+<td><code>useMediaPlayerStore</code></td>
+<td><strong>不干扰</strong>——有声书激活时暂停全局播放器，关闭后恢复</td>
+<td align="center">微小（新增互斥逻辑）</td>
+</tr>
+<tr>
+<td><code>MiniPlayer / FullPlayer</code></td>
+<td>零改动——有声书使用独立播放条 <code>AudiobookPlayer</code></td>
+<td align="center">零</td>
+</tr>
+<tr>
+<td><code>api.file.readBuffer</code></td>
+<td>零改动——epubjs 自行加载 EPUB 内容，不需要 IPC 读取</td>
+<td align="center">零</td>
+</tr>
+<tr>
+<td><code>api.epub.*</code> (FTS5 搜索)</td>
+<td>零改动——全文搜索保持独立</td>
+<td align="center">零</td>
+</tr>
+<tr>
+<td><code>api.tts.*</code> (Phase 1 本地 TTS)</td>
+<td>核心依赖——有声书通过 <code>api.tts.speak()</code> 逐句合成</td>
+<td align="center">零（调方）</td>
+</tr>
+<tr>
+<td><code>api.db.*</code></td>
+<td>有声书进度&#x2F;书签通过 <code>api.db.run/query</code> 读写</td>
+<td align="center">零（调方）</td>
+</tr>
+<tr>
+<td><code>TTSManager</code> (主进程)</td>
+<td>零改动——有声书通过已有 IPC 调用，不感知管理层</td>
+<td align="center">零</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="三、核心模块设计"><a href="#三、核心模块设计" class="headerlink" title="三、核心模块设计"></a>三、核心模块设计</h2><h3 id="3-1-文本提取与分句-textSplitter-ts"><a href="#3-1-文本提取与分句-textSplitter-ts" class="headerlink" title="3.1 文本提取与分句 (textSplitter.ts)"></a>3.1 文本提取与分句 (<code>textSplitter.ts</code>)</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * textSplitter.ts</span></span><br><span class="line"><span class="comment"> * EPUB 有声书文本处理工具</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/** 跳过的非正文元素选择器 */</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">SKIP_SELECTORS</span> = [</span><br><span class="line">  <span class="string">&#x27;[epub|type=&quot;pagebreak&quot;]&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;.page-break&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;.page-number&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;.footnote&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;.endnote&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;sup.reference&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;.fn-ref&#x27;</span>,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 判断 DOM 元素是否为可朗读的正文 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">isReadableElement</span>(<span class="params"><span class="attr">el</span>: <span class="title class_">Element</span></span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line">  <span class="comment">// 跳过隐藏元素</span></span><br><span class="line">  <span class="keyword">if</span> (!(el <span class="keyword">as</span> <span class="title class_">HTMLElement</span>).<span class="property">offsetParent</span> &amp;&amp; el.<span class="property">tagName</span> !== <span class="string">&#x27;BODY&#x27;</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment">// 跳过非正文选择器匹配的元素</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="variable constant_">SKIP_SELECTORS</span>.<span class="title function_">some</span>(<span class="function"><span class="params">sel</span> =&gt;</span> el.<span class="title function_">matches</span>(sel) || el.<span class="title function_">closest</span>(sel))) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment">// 跳过空元素</span></span><br><span class="line">  <span class="keyword">const</span> text = (el.<span class="property">textContent</span> || <span class="string">&#x27;&#x27;</span>).<span class="title function_">trim</span>()</span><br><span class="line">  <span class="keyword">if</span> (!text) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  <span class="comment">// 跳过纯数字（可能是页码）</span></span><br><span class="line">  <span class="keyword">if</span> (<span class="regexp">/^\d&#123;1,4&#125;$/</span>.<span class="title function_">test</span>(text)) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 将文本按句子分割（支持中英文混合） */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">splitSentences</span>(<span class="params"><span class="attr">text</span>: <span class="built_in">string</span></span>): <span class="built_in">string</span>[] &#123;</span><br><span class="line">  <span class="comment">// 预处理：合并多余空白</span></span><br><span class="line">  <span class="keyword">const</span> normalized = text.<span class="title function_">replace</span>(<span class="regexp">/\s+/g</span>, <span class="string">&#x27; &#x27;</span>).<span class="title function_">trim</span>()</span><br><span class="line">  <span class="keyword">if</span> (!normalized) <span class="keyword">return</span> []</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 分句正则：匹配常见句子结束标点</span></span><br><span class="line">  <span class="comment">// 中文：。！？； ｜ 英文：. ! ? ; 后跟空格或换行</span></span><br><span class="line">  <span class="comment">// 特殊处理：省略号…… / ... 不在此处分句；引号收尾 »「」』&quot; 算前句</span></span><br><span class="line">  <span class="keyword">const</span> <span class="variable constant_">SENTENCE_END</span> = <span class="regexp">/([。！？；]|(?&lt;!\d)\.(?!\d)|[!?;])(?=\s|$|[“”「」『』‘’‚‛&quot;&quot;&#x27;&#x27;»«])/g</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> <span class="attr">sentences</span>: <span class="built_in">string</span>[] = []</span><br><span class="line">  <span class="keyword">let</span> lastIdx = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> <span class="attr">match</span>: <span class="title class_">RegExpExecArray</span> | <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 使用 exec 循环以支持全局正则</span></span><br><span class="line">  <span class="keyword">const</span> regex = <span class="keyword">new</span> <span class="title class_">RegExp</span>(<span class="variable constant_">SENTENCE_END</span>.<span class="property">source</span>, <span class="string">&#x27;g&#x27;</span>)</span><br><span class="line">  <span class="keyword">while</span> ((match = regex.<span class="title function_">exec</span>(normalized)) !== <span class="literal">null</span>) &#123;</span><br><span class="line">    <span class="keyword">const</span> endIdx = match.<span class="property">index</span> + match[<span class="number">0</span>].<span class="property">length</span></span><br><span class="line">    <span class="keyword">const</span> sentence = normalized.<span class="title function_">slice</span>(lastIdx, endIdx).<span class="title function_">trim</span>()</span><br><span class="line">    <span class="keyword">if</span> (sentence.<span class="property">length</span> &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">      sentences.<span class="title function_">push</span>(sentence)</span><br><span class="line">    &#125;</span><br><span class="line">    lastIdx = endIdx</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 收尾片段</span></span><br><span class="line">  <span class="keyword">const</span> tail = normalized.<span class="title function_">slice</span>(lastIdx).<span class="title function_">trim</span>()</span><br><span class="line">  <span class="keyword">if</span> (tail.<span class="property">length</span> &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">    sentences.<span class="title function_">push</span>(tail)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> sentences</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 从 epubjs Rendition 当前视图提取可朗读段落的纯文本序列 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">extractReadableText</span>(<span class="params"><span class="attr">doc</span>: <span class="title class_">Document</span></span>): <span class="built_in">string</span>[] &#123;</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">paragraphs</span>: <span class="built_in">string</span>[] = []</span><br><span class="line">  <span class="comment">// 遍历块级元素</span></span><br><span class="line">  <span class="keyword">const</span> blocks = doc.<span class="property">body</span>.<span class="title function_">querySelectorAll</span>(</span><br><span class="line">    <span class="string">&#x27;p, h1, h2, h3, h4, h5, h6, div, li, td, th, blockquote, pre&#x27;</span></span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> blocks) &#123;</span><br><span class="line">    <span class="keyword">if</span> (!<span class="title function_">isReadableElement</span>(block)) <span class="keyword">continue</span></span><br><span class="line">    <span class="keyword">const</span> text = (block.<span class="property">textContent</span> || <span class="string">&#x27;&#x27;</span>).<span class="title function_">replace</span>(<span class="regexp">/\s+/g</span>, <span class="string">&#x27; &#x27;</span>).<span class="title function_">trim</span>()</span><br><span class="line">    <span class="keyword">if</span> (text.<span class="property">length</span> &gt;= <span class="number">2</span>) &#123;</span><br><span class="line">      paragraphs.<span class="title function_">push</span>(text)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> paragraphs</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 完整流程：提取段落 → 逐段分句 → 扁平化为全局句子数组 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">extractSentences</span>(<span class="params"><span class="attr">doc</span>: <span class="title class_">Document</span></span>): <span class="title class_">SentenceItem</span>[] &#123;</span><br><span class="line">  <span class="keyword">const</span> paragraphs = <span class="title function_">extractReadableText</span>(doc)</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">sentences</span>: <span class="title class_">SentenceItem</span>[] = []</span><br><span class="line">  <span class="keyword">let</span> globalIdx = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">let</span> pIdx = <span class="number">0</span>; pIdx &lt; paragraphs.<span class="property">length</span>; pIdx++) &#123;</span><br><span class="line">    <span class="keyword">const</span> parts = <span class="title function_">splitSentences</span>(paragraphs[pIdx]!)</span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> sIdx = <span class="number">0</span>; sIdx &lt; parts.<span class="property">length</span>; sIdx++) &#123;</span><br><span class="line">      sentences.<span class="title function_">push</span>(&#123;</span><br><span class="line">        <span class="attr">globalIndex</span>: globalIdx++,</span><br><span class="line">        <span class="attr">paragraphIndex</span>: pIdx,</span><br><span class="line">        <span class="attr">sentenceInParagraph</span>: sIdx,</span><br><span class="line">        <span class="attr">text</span>: parts[sIdx]!,</span><br><span class="line">      &#125;)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">return</span> sentences</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">interface</span> <span class="title class_">SentenceItem</span> &#123;</span><br><span class="line">  <span class="attr">globalIndex</span>: <span class="built_in">number</span>       <span class="comment">// 全局唯一序号</span></span><br><span class="line">  <span class="attr">paragraphIndex</span>: <span class="built_in">number</span>    <span class="comment">// 段落序号</span></span><br><span class="line">  <span class="attr">sentenceInParagraph</span>: <span class="built_in">number</span> <span class="comment">// 段内句序号</span></span><br><span class="line">  <span class="attr">text</span>: <span class="built_in">string</span>              <span class="comment">// 纯文本句子</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-2-DOM-标记与高亮-domMarker-ts"><a href="#3-2-DOM-标记与高亮-domMarker-ts" class="headerlink" title="3.2 DOM 标记与高亮 (domMarker.ts)"></a>3.2 DOM 标记与高亮 (<code>domMarker.ts</code>)</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * domMarker.ts</span></span><br><span class="line"><span class="comment"> * EPUB DOM 中的句子标记与高亮管理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">MARK_ATTR</span> = <span class="string">&#x27;data-tts-idx&#x27;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">ACTIVE_CLASS</span> = <span class="string">&#x27;tts-sentence-active&#x27;</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">PLAYED_CLASS</span> = <span class="string">&#x27;tts-sentence-played&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在当前 epubjs 视图中为每个句子包裹 &lt;span&gt; 标记</span></span><br><span class="line"><span class="comment"> * 索引与 AudioSentence.globalIndex 一一对应</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">markSentencesInDOM</span>(<span class="params"></span></span><br><span class="line"><span class="params">  <span class="attr">doc</span>: <span class="title class_">Document</span>,</span></span><br><span class="line"><span class="params">  <span class="attr">sentences</span>: <span class="title class_">SentenceItem</span>[]</span></span><br><span class="line"><span class="params"></span>): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="comment">// 先清除旧标记</span></span><br><span class="line">  <span class="title function_">clearAllMarks</span>(doc)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> blocks = doc.<span class="property">body</span>.<span class="title function_">querySelectorAll</span>(</span><br><span class="line">    <span class="string">&#x27;p, h1, h2, h3, h4, h5, h6, div, li, td, th, blockquote, pre&#x27;</span></span><br><span class="line">  )</span><br><span class="line">  <span class="keyword">const</span> blockList = <span class="title class_">Array</span>.<span class="title function_">from</span>(blocks).<span class="title function_">filter</span>(<span class="function"><span class="params">el</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> text = (el.<span class="property">textContent</span> || <span class="string">&#x27;&#x27;</span>).<span class="title function_">trim</span>()</span><br><span class="line">    <span class="keyword">return</span> text.<span class="property">length</span> &gt;= <span class="number">2</span></span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">let</span> sentenceIdx = <span class="number">0</span></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> block <span class="keyword">of</span> blockList) &#123;</span><br><span class="line">    <span class="keyword">const</span> text = block.<span class="property">textContent</span> || <span class="string">&#x27;&#x27;</span></span><br><span class="line">    <span class="keyword">const</span> parts = <span class="title function_">splitSentences</span>(text)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 在原 DOM 中查找并包裹每个句子</span></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">const</span> part <span class="keyword">of</span> parts) &#123;</span><br><span class="line">      <span class="keyword">const</span> wrapper = doc.<span class="title function_">createElement</span>(<span class="string">&#x27;span&#x27;</span>)</span><br><span class="line">      wrapper.<span class="title function_">setAttribute</span>(<span class="variable constant_">MARK_ATTR</span>, <span class="title class_">String</span>(sentenceIdx))</span><br><span class="line">      <span class="comment">// 在原文本中定位并包裹</span></span><br><span class="line">      <span class="keyword">if</span> (<span class="title function_">wrapTextInElement</span>(block, part, wrapper)) &#123;</span><br><span class="line">        sentenceIdx++</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * 在容器元素中查找文本子串并用 span 包裹</span></span><br><span class="line"><span class="comment"> * 使用 TreeWalker 遍历文本节点，找到匹配位置后分割替换</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"><span class="keyword">function</span> <span class="title function_">wrapTextInElement</span>(<span class="params"></span></span><br><span class="line"><span class="params">  <span class="attr">container</span>: <span class="title class_">Element</span>,</span></span><br><span class="line"><span class="params">  <span class="attr">searchText</span>: <span class="built_in">string</span>,</span></span><br><span class="line"><span class="params">  <span class="attr">wrapper</span>: <span class="title class_">HTMLSpanElement</span></span></span><br><span class="line"><span class="params"></span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> walker = <span class="variable language_">document</span>.<span class="title function_">createTreeWalker</span>(container, <span class="title class_">NodeFilter</span>.<span class="property">SHOW_TEXT</span>)</span><br><span class="line">  <span class="keyword">const</span> <span class="attr">textNodes</span>: <span class="title class_">Text</span>[] = []</span><br><span class="line">  <span class="keyword">let</span> <span class="attr">node</span>: <span class="title class_">Text</span> | <span class="literal">null</span></span><br><span class="line">  <span class="keyword">while</span> ((node = walker.<span class="title function_">nextNode</span>() <span class="keyword">as</span> <span class="title class_">Text</span> | <span class="literal">null</span>)) &#123;</span><br><span class="line">    textNodes.<span class="title function_">push</span>(node)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 拼接所有文本以定位</span></span><br><span class="line">  <span class="keyword">const</span> fullText = textNodes.<span class="title function_">map</span>(<span class="function"><span class="params">n</span> =&gt;</span> n.<span class="property">textContent</span> || <span class="string">&#x27;&#x27;</span>).<span class="title function_">join</span>(<span class="string">&#x27;&#x27;</span>)</span><br><span class="line">  <span class="keyword">const</span> idx = fullText.<span class="title function_">indexOf</span>(searchText)</span><br><span class="line">  <span class="keyword">if</span> (idx &lt; <span class="number">0</span>) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 找到跨越的文本节点并插入 span</span></span><br><span class="line">  <span class="keyword">let</span> currentPos = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> <span class="attr">startNode</span>: <span class="title class_">Text</span> | <span class="literal">null</span> = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">let</span> startOffset = <span class="number">0</span></span><br><span class="line">  <span class="keyword">let</span> <span class="attr">endNode</span>: <span class="title class_">Text</span> | <span class="literal">null</span> = <span class="literal">null</span></span><br><span class="line">  <span class="keyword">let</span> endOffset = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">for</span> (<span class="keyword">const</span> tn <span class="keyword">of</span> textNodes) &#123;</span><br><span class="line">    <span class="keyword">const</span> len = (tn.<span class="property">textContent</span> || <span class="string">&#x27;&#x27;</span>).<span class="property">length</span></span><br><span class="line">    <span class="keyword">if</span> (!startNode &amp;&amp; currentPos + len &gt; idx) &#123;</span><br><span class="line">      startNode = tn</span><br><span class="line">      startOffset = idx - currentPos</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span> (!endNode &amp;&amp; currentPos + len &gt;= idx + searchText.<span class="property">length</span>) &#123;</span><br><span class="line">      endNode = tn</span><br><span class="line">      endOffset = idx + searchText.<span class="property">length</span> - currentPos</span><br><span class="line">      <span class="keyword">break</span></span><br><span class="line">    &#125;</span><br><span class="line">    currentPos += len</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!startNode || !endNode) <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> range = <span class="variable language_">document</span>.<span class="title function_">createRange</span>()</span><br><span class="line">  range.<span class="title function_">setStart</span>(startNode, startOffset)</span><br><span class="line">  range.<span class="title function_">setEnd</span>(endNode, endOffset)</span><br><span class="line">  range.<span class="title function_">surroundContents</span>(wrapper)</span><br><span class="line">  range.<span class="title function_">detach</span>()</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 高亮当前朗读的句子 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">highlightSentence</span>(<span class="params"><span class="attr">doc</span>: <span class="title class_">Document</span>, <span class="attr">sentenceIdx</span>: <span class="built_in">number</span></span>): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="comment">// 移除上一个高亮</span></span><br><span class="line">  <span class="keyword">const</span> prev = doc.<span class="title function_">querySelector</span>(<span class="string">`.<span class="subst">$&#123;ACTIVE_CLASS&#125;</span>`</span>) <span class="keyword">as</span> <span class="title class_">HTMLElement</span> | <span class="literal">null</span></span><br><span class="line">  <span class="keyword">if</span> (prev) &#123;</span><br><span class="line">    prev.<span class="property">classList</span>.<span class="title function_">remove</span>(<span class="variable constant_">ACTIVE_CLASS</span>)</span><br><span class="line">    prev.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="variable constant_">PLAYED_CLASS</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 添加新高亮</span></span><br><span class="line">  <span class="keyword">const</span> el = doc.<span class="title function_">querySelector</span>(<span class="string">`[<span class="subst">$&#123;MARK_ATTR&#125;</span>=&quot;<span class="subst">$&#123;sentenceIdx&#125;</span>&quot;]`</span>) <span class="keyword">as</span> <span class="title class_">HTMLElement</span> | <span class="literal">null</span></span><br><span class="line">  <span class="keyword">if</span> (el) &#123;</span><br><span class="line">    el.<span class="property">classList</span>.<span class="title function_">add</span>(<span class="variable constant_">ACTIVE_CLASS</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 清除所有标记（还原 DOM） */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">clearAllMarks</span>(<span class="params"><span class="attr">doc</span>: <span class="title class_">Document</span></span>): <span class="built_in">void</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> marks = doc.<span class="title function_">querySelectorAll</span>(<span class="string">`[<span class="subst">$&#123;MARK_ATTR&#125;</span>]`</span>)</span><br><span class="line">  marks.<span class="title function_">forEach</span>(<span class="function"><span class="params">mark</span> =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> parent = mark.<span class="property">parentNode</span></span><br><span class="line">    <span class="keyword">if</span> (!parent) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">while</span> (mark.<span class="property">firstChild</span>) &#123;</span><br><span class="line">      parent.<span class="title function_">insertBefore</span>(mark.<span class="property">firstChild</span>, mark)</span><br><span class="line">    &#125;</span><br><span class="line">    parent.<span class="title function_">removeChild</span>(mark)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 检查指定句子是否在当前视口内 */</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">isSentenceInViewport</span>(<span class="params"></span></span><br><span class="line"><span class="params">  <span class="attr">doc</span>: <span class="title class_">Document</span>,</span></span><br><span class="line"><span class="params">  <span class="attr">sentenceIdx</span>: <span class="built_in">number</span>,</span></span><br><span class="line"><span class="params">  <span class="attr">viewerEl</span>: <span class="title class_">HTMLElement</span></span></span><br><span class="line"><span class="params"></span>): <span class="built_in">boolean</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> el = doc.<span class="title function_">querySelector</span>(<span class="string">`[<span class="subst">$&#123;MARK_ATTR&#125;</span>=&quot;<span class="subst">$&#123;sentenceIdx&#125;</span>&quot;]`</span>)</span><br><span class="line">  <span class="keyword">if</span> (!el) <span class="keyword">return</span> <span class="literal">true</span> <span class="comment">// 未找到元素时不触发翻页</span></span><br><span class="line">  <span class="keyword">const</span> rect = el.<span class="title function_">getBoundingClientRect</span>()</span><br><span class="line">  <span class="keyword">const</span> viewerRect = viewerEl.<span class="title function_">getBoundingClientRect</span>()</span><br><span class="line">  <span class="comment">// 句子底部超出视口底部 → 需要翻页</span></span><br><span class="line">  <span class="keyword">return</span> rect.<span class="property">bottom</span> &lt;= viewerRect.<span class="property">bottom</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-3-核心调度-Hook-useAudiobook-ts"><a href="#3-3-核心调度-Hook-useAudiobook-ts" class="headerlink" title="3.3 核心调度 Hook (useAudiobook.ts)"></a>3.3 核心调度 Hook (<code>useAudiobook.ts</code>)</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * useAudiobook.ts</span></span><br><span class="line"><span class="comment"> * 有声书核心调度 Hook</span></span><br><span class="line"><span class="comment"> *</span></span><br><span class="line"><span class="comment"> * 职责：</span></span><br><span class="line"><span class="comment"> * 1. 管理音频队列（预缓冲 + 播放）</span></span><br><span class="line"><span class="comment"> * 2. 协调 TTS 合成 → DOM 高亮 → 自动翻页</span></span><br><span class="line"><span class="comment"> * 3. 进度持久化 + 断点恢复</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; useEffect, useRef, useCallback &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useAudiobookStore &#125; <span class="keyword">from</span> <span class="string">&#x27;../store/useAudiobookStore&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  extractSentences,</span><br><span class="line">  <span class="keyword">type</span> <span class="title class_">SentenceItem</span>,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;../utils/textSplitter&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123;</span><br><span class="line">  markSentencesInDOM,</span><br><span class="line">  highlightSentence,</span><br><span class="line">  clearAllMarks,</span><br><span class="line">  isSentenceInViewport,</span><br><span class="line">&#125; <span class="keyword">from</span> <span class="string">&#x27;../utils/domMarker&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">PREBUFFER_SIZE</span> = <span class="number">5</span>       <span class="comment">// 预缓冲句子数</span></span><br><span class="line"><span class="keyword">const</span> <span class="variable constant_">SAVE_INTERVAL</span> = <span class="number">5000</span>     <span class="comment">// 进度保存间隔（毫秒）</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">function</span> <span class="title function_">useAudiobook</span>(<span class="params"></span></span><br><span class="line"><span class="params">  <span class="attr">rendition</span>: <span class="built_in">any</span>,              <span class="comment">// epubjs Rendition 实例</span></span></span><br><span class="line"><span class="params">  <span class="attr">book</span>: <span class="built_in">any</span>,                   <span class="comment">// epubjs Book 实例</span></span></span><br><span class="line"><span class="params">  <span class="attr">viewerRef</span>: <span class="title class_">React</span>.<span class="title class_">RefObject</span>&lt;<span class="title class_">HTMLDivElement</span>&gt;,</span></span><br><span class="line"><span class="params">  <span class="attr">bookPath</span>: <span class="built_in">string</span>             <span class="comment">// EPUB 文件路径</span></span></span><br><span class="line"><span class="params"></span>) &#123;</span><br><span class="line">  <span class="keyword">const</span> audioRef = useRef&lt;<span class="title class_">HTMLAudioElement</span> | <span class="literal">null</span>&gt;(<span class="literal">null</span>)</span><br><span class="line">  <span class="keyword">const</span> saveTimerRef = useRef&lt;<span class="title class_">ReturnType</span>&lt;<span class="keyword">typeof</span> <span class="built_in">setInterval</span>&gt;&gt;()</span><br><span class="line">  <span class="keyword">const</span> storeRef = <span class="title function_">useRef</span>(useAudiobookStore.<span class="title function_">getState</span>())</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 订阅 store 最新值</span></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> useAudiobookStore.<span class="title function_">subscribe</span>(<span class="function"><span class="params">s</span> =&gt;</span> &#123; storeRef.<span class="property">current</span> = s &#125;)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 初始化 / 销毁 audio 元素 ──</span></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> audio = <span class="keyword">new</span> <span class="title class_">Audio</span>()</span><br><span class="line">    audioRef.<span class="property">current</span> = audio</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123;</span><br><span class="line">      audio.<span class="title function_">pause</span>()</span><br><span class="line">      audioRef.<span class="property">current</span> = <span class="literal">null</span></span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 开始朗读当前章节 ──</span></span><br><span class="line">  <span class="keyword">const</span> startReading = <span class="title function_">useCallback</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> store = useAudiobookStore.<span class="title function_">getState</span>()</span><br><span class="line">    <span class="keyword">const</span> doc = rendition?.<span class="title function_">getContents</span>()?.[<span class="number">0</span>]?.<span class="property">document</span> <span class="keyword">as</span> <span class="title class_">Document</span> | <span class="literal">undefined</span></span><br><span class="line">    <span class="keyword">if</span> (!doc) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 1. 提取文本 + 分句</span></span><br><span class="line">    <span class="keyword">const</span> sentences = <span class="title function_">extractSentences</span>(doc)</span><br><span class="line">    <span class="keyword">if</span> (sentences.<span class="property">length</span> === <span class="number">0</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 2. 标记 DOM</span></span><br><span class="line">    <span class="title function_">markSentencesInDOM</span>(doc, sentences)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 3. 更新 store</span></span><br><span class="line">    store.<span class="title function_">setSentences</span>(sentences)</span><br><span class="line">    store.<span class="title function_">setIsActive</span>(<span class="literal">true</span>)</span><br><span class="line">    store.<span class="title function_">setIsPlaying</span>(<span class="literal">true</span>)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 4. 从断点恢复或从头开始</span></span><br><span class="line">    <span class="keyword">const</span> progress = store.<span class="property">currentProgress</span></span><br><span class="line">    <span class="keyword">const</span> startIdx = progress?.<span class="property">sentenceIndex</span> ?? <span class="number">0</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 5. 预缓冲前 N 句</span></span><br><span class="line">    <span class="keyword">await</span> <span class="title function_">prebufferRange</span>(startIdx, <span class="title class_">Math</span>.<span class="title function_">min</span>(startIdx + <span class="variable constant_">PREBUFFER_SIZE</span>, sentences.<span class="property">length</span>))</span><br><span class="line">  &#125;, [rendition, bookPath])</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 预缓冲指定范围的句子 ──</span></span><br><span class="line">  <span class="keyword">const</span> prebufferRange = <span class="title function_">useCallback</span>(<span class="title function_">async</span> (<span class="attr">fromIdx</span>: <span class="built_in">number</span>, <span class="attr">toIdx</span>: <span class="built_in">number</span>) =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> store = useAudiobookStore.<span class="title function_">getState</span>()</span><br><span class="line">    <span class="keyword">const</span> &#123; sentences, voiceEngineId, voiceId, speed &#125; = store</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = fromIdx; i &lt; toIdx &amp;&amp; i &lt; sentences.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="keyword">const</span> sentence = sentences[i]</span><br><span class="line">      <span class="keyword">if</span> (!sentence || sentence.<span class="property">audioStatus</span> !== <span class="string">&#x27;pending&#x27;</span>) <span class="keyword">continue</span></span><br><span class="line"></span><br><span class="line">      store.<span class="title function_">updateSentenceStatus</span>(i, <span class="string">&#x27;synthesizing&#x27;</span>)</span><br><span class="line"></span><br><span class="line">      <span class="keyword">try</span> &#123;</span><br><span class="line">        <span class="comment">// 调用 TTS IPC</span></span><br><span class="line">        <span class="keyword">const</span> result = <span class="keyword">await</span> <span class="variable language_">window</span>.<span class="property">api</span>.<span class="property">tts</span>.<span class="title function_">speak</span>(sentence.<span class="property">text</span>, &#123;</span><br><span class="line">          <span class="attr">engineId</span>: voiceEngineId,</span><br><span class="line">          <span class="attr">voiceId</span>: voiceId,</span><br><span class="line">          <span class="attr">speed</span>: speed,</span><br><span class="line">        &#125;)</span><br><span class="line"></span><br><span class="line">        <span class="keyword">if</span> (result.<span class="property">success</span> &amp;&amp; result.<span class="property">filePath</span>) &#123;</span><br><span class="line">          store.<span class="title function_">addAudioChunk</span>(&#123; <span class="attr">sentenceIdx</span>: i, <span class="attr">audioUrl</span>: result.<span class="property">filePath</span>, <span class="attr">duration</span>: result.<span class="property">duration</span> ?? <span class="number">0</span> &#125;)</span><br><span class="line">          store.<span class="title function_">updateSentenceStatus</span>(i, <span class="string">&#x27;ready&#x27;</span>)</span><br><span class="line">        &#125;</span><br><span class="line">      &#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">        <span class="variable language_">console</span>.<span class="title function_">warn</span>(<span class="string">`[Audiobook] 合成句子 <span class="subst">$&#123;i&#125;</span> 失败:`</span>, e)</span><br><span class="line">        store.<span class="title function_">updateSentenceStatus</span>(i, <span class="string">&#x27;failed&#x27;</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 播放循环 ──</span></span><br><span class="line">  <span class="keyword">const</span> playLoop = <span class="title function_">useCallback</span>(<span class="title function_">async</span> () =&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> audio = audioRef.<span class="property">current</span></span><br><span class="line">    <span class="keyword">if</span> (!audio) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> store = useAudiobookStore.<span class="title function_">getState</span>()</span><br><span class="line">    <span class="keyword">const</span> &#123; sentences, audioQueue &#125; = store</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="keyword">let</span> i = store.<span class="property">currentSentenceIdx</span>; i &lt; sentences.<span class="property">length</span>; i++) &#123;</span><br><span class="line">      <span class="comment">// 检查是否需要预缓冲</span></span><br><span class="line">      <span class="keyword">const</span> remainingReady = audioQueue.<span class="title function_">filter</span>(</span><br><span class="line">        <span class="function"><span class="params">c</span> =&gt;</span> c.<span class="property">sentenceIdx</span> &gt;= i &amp;&amp; c.<span class="property">sentenceIdx</span> &lt; i + <span class="variable constant_">PREBUFFER_SIZE</span></span><br><span class="line">      ).<span class="property">length</span></span><br><span class="line">      <span class="keyword">if</span> (remainingReady &lt; <span class="number">3</span>) &#123;</span><br><span class="line">        <span class="title function_">prebufferRange</span>(i + <span class="variable constant_">PREBUFFER_SIZE</span> - remainingReady, i + <span class="variable constant_">PREBUFFER_SIZE</span>)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 等待当前句合成完成</span></span><br><span class="line">      <span class="keyword">let</span> chunk = audioQueue.<span class="title function_">find</span>(<span class="function"><span class="params">c</span> =&gt;</span> c.<span class="property">sentenceIdx</span> === i)</span><br><span class="line">      <span class="keyword">while</span> (!chunk) &#123;</span><br><span class="line">        <span class="keyword">await</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function"><span class="params">r</span> =&gt;</span> <span class="built_in">setTimeout</span>(r, <span class="number">200</span>))</span><br><span class="line">        chunk = audioQueue.<span class="title function_">find</span>(<span class="function"><span class="params">c</span> =&gt;</span> c.<span class="property">sentenceIdx</span> === i)</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 播放</span></span><br><span class="line">      store.<span class="title function_">setCurrentSentenceIdx</span>(i)</span><br><span class="line">      <span class="keyword">await</span> <span class="title function_">playAudioUrl</span>(audio, chunk.<span class="property">audioUrl</span>, store.<span class="property">speed</span>)</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 高亮</span></span><br><span class="line">      <span class="keyword">const</span> doc = rendition.<span class="title function_">getContents</span>()?.[<span class="number">0</span>]?.<span class="property">document</span></span><br><span class="line">      <span class="keyword">if</span> (doc) &#123;</span><br><span class="line">        <span class="title function_">highlightSentence</span>(doc, i)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 检查自动翻页</span></span><br><span class="line">        <span class="keyword">if</span> (viewerRef.<span class="property">current</span> &amp;&amp; !<span class="title function_">isSentenceInViewport</span>(doc, i, viewerRef.<span class="property">current</span>)) &#123;</span><br><span class="line">          <span class="keyword">await</span> rendition.<span class="title function_">next</span>()</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line"></span><br><span class="line">      <span class="comment">// 进度持久化</span></span><br><span class="line">      store.<span class="title function_">updateProgress</span>(i)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;, [rendition, viewerRef, prebufferRange])</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 播放单个音频 URL ──</span></span><br><span class="line">  <span class="keyword">const</span> playAudioUrl = <span class="title function_">useCallback</span>((</span><br><span class="line">    <span class="attr">audio</span>: <span class="title class_">HTMLAudioElement</span>,</span><br><span class="line">    <span class="attr">url</span>: <span class="built_in">string</span>,</span><br><span class="line">    <span class="attr">speed</span>: <span class="built_in">number</span></span><br><span class="line">  ): <span class="title class_">Promise</span>&lt;<span class="built_in">void</span>&gt; =&gt; &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">new</span> <span class="title class_">Promise</span>(<span class="function">(<span class="params">resolve</span>) =&gt;</span> &#123;</span><br><span class="line">      audio.<span class="property">src</span> = url</span><br><span class="line">      audio.<span class="property">playbackRate</span> = speed</span><br><span class="line">      audio.<span class="property">onended</span> = <span class="function">() =&gt;</span> <span class="title function_">resolve</span>()</span><br><span class="line">      audio.<span class="property">onerror</span> = <span class="function">() =&gt;</span> <span class="title function_">resolve</span>() <span class="comment">// 跳过失败的句子</span></span><br><span class="line">      audio.<span class="title function_">play</span>().<span class="title function_">catch</span>(<span class="function">() =&gt;</span> <span class="title function_">resolve</span>())</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── epubjs relocated 事件 → 对新页面重新标记句子 ──</span></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> (!rendition) <span class="keyword">return</span></span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">handler</span> = (<span class="params"><span class="attr">loc</span>: <span class="built_in">any</span></span>) =&gt; &#123;</span><br><span class="line">      <span class="keyword">const</span> store = useAudiobookStore.<span class="title function_">getState</span>()</span><br><span class="line">      <span class="keyword">if</span> (!store.<span class="property">isActive</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">      <span class="comment">// 延迟等待 DOM 渲染</span></span><br><span class="line">      <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">const</span> doc = rendition.<span class="title function_">getContents</span>()?.[<span class="number">0</span>]?.<span class="property">document</span> <span class="keyword">as</span> <span class="title class_">Document</span> | <span class="literal">undefined</span></span><br><span class="line">        <span class="keyword">if</span> (!doc) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">const</span> sentences = <span class="title function_">extractSentences</span>(doc)</span><br><span class="line">        <span class="title function_">markSentencesInDOM</span>(doc, sentences)</span><br><span class="line">        store.<span class="title function_">appendSentences</span>(sentences)</span><br><span class="line"></span><br><span class="line">        <span class="comment">// 恢复高亮</span></span><br><span class="line">        <span class="title function_">highlightSentence</span>(doc, store.<span class="property">currentSentenceIdx</span>)</span><br><span class="line">      &#125;, <span class="number">200</span>)</span><br><span class="line">    &#125;</span><br><span class="line">    rendition.<span class="title function_">on</span>(<span class="string">&#x27;relocated&#x27;</span>, handler)</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123; rendition.<span class="property">off</span>?.(<span class="string">&#x27;relocated&#x27;</span>, handler) &#125;</span><br><span class="line">  &#125;, [rendition])</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 进度定时保存 ──</span></span><br><span class="line">  <span class="title function_">useEffect</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    saveTimerRef.<span class="property">current</span> = <span class="built_in">setInterval</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> &#123; isActive, currentSentenceIdx, sentences &#125; = useAudiobookStore.<span class="title function_">getState</span>()</span><br><span class="line">      <span class="keyword">if</span> (!isActive) <span class="keyword">return</span></span><br><span class="line">      <span class="title function_">persistProgress</span>(currentSentenceIdx)</span><br><span class="line">    &#125;, <span class="variable constant_">SAVE_INTERVAL</span>)</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> &#123; <span class="keyword">if</span> (saveTimerRef.<span class="property">current</span>) <span class="built_in">clearInterval</span>(saveTimerRef.<span class="property">current</span>) &#125;</span><br><span class="line">  &#125;, [])</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &#123; startReading, playLoop &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/** 持久化进度到 SQLite */</span></span><br><span class="line"><span class="keyword">async</span> <span class="keyword">function</span> <span class="title function_">persistProgress</span>(<span class="params"><span class="attr">sentenceIdx</span>: <span class="built_in">number</span></span>): <span class="title class_">Promise</span>&lt;<span class="built_in">void</span>&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> store = useAudiobookStore.<span class="title function_">getState</span>()</span><br><span class="line">  <span class="keyword">try</span> &#123;</span><br><span class="line">    <span class="keyword">await</span> <span class="variable language_">window</span>.<span class="property">api</span>.<span class="property">db</span>.<span class="title function_">run</span>(</span><br><span class="line">      <span class="string">`INSERT OR REPLACE INTO audiobook_progress</span></span><br><span class="line"><span class="string">       (book_path, cfi, sentence_index, voice_engine_id, voice_id, speed, updated_at)</span></span><br><span class="line"><span class="string">       VALUES (?, ?, ?, ?, ?, ?, ?)`</span>,</span><br><span class="line">      [</span><br><span class="line">        store.<span class="property">currentBookPath</span>,</span><br><span class="line">        store.<span class="property">currentCfi</span>,</span><br><span class="line">        sentenceIdx,</span><br><span class="line">        store.<span class="property">voiceEngineId</span>,</span><br><span class="line">        store.<span class="property">voiceId</span>,</span><br><span class="line">        store.<span class="property">speed</span>,</span><br><span class="line">        <span class="title class_">Date</span>.<span class="title function_">now</span>(),</span><br><span class="line">      ]</span><br><span class="line">    )</span><br><span class="line">  &#125; <span class="keyword">catch</span> &#123; <span class="comment">/* 非 Electron 环境 */</span> &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="3-4-状态管理-useAudiobookStore-ts"><a href="#3-4-状态管理-useAudiobookStore-ts" class="headerlink" title="3.4 状态管理 (useAudiobookStore.ts)"></a>3.4 状态管理 (<code>useAudiobookStore.ts</code>)</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment"> * useAudiobookStore.ts</span></span><br><span class="line"><span class="comment"> * 有声书全局状态管理</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> &#123; create &#125; <span class="keyword">from</span> <span class="string">&#x27;zustand&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">Sentence</span> &#123;</span><br><span class="line">  <span class="attr">globalIndex</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">text</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">audioStatus</span>: <span class="string">&#x27;pending&#x27;</span> | <span class="string">&#x27;synthesizing&#x27;</span> | <span class="string">&#x27;ready&#x27;</span> | <span class="string">&#x27;failed&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">AudioChunk</span> &#123;</span><br><span class="line">  <span class="attr">sentenceIdx</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">audioUrl</span>: <span class="built_in">string</span>    <span class="comment">// unbox-file:// 或 blob URL</span></span><br><span class="line">  <span class="attr">duration</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">AudiobookBookmark</span> &#123;</span><br><span class="line">  <span class="attr">id</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">bookPath</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">cfi</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">sentenceIndex</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">label</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">voiceEngineId</span>?: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">voiceId</span>?: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">speed</span>?: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">createdAt</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">AudiobookProgress</span> &#123;</span><br><span class="line">  <span class="attr">bookPath</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">cfi</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">sentenceIndex</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">voiceEngineId</span>?: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">voiceId</span>?: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">speed</span>: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">AudiobookState</span> &#123;</span><br><span class="line">  <span class="comment">// ── 激活状态 ──</span></span><br><span class="line">  <span class="attr">isActive</span>: <span class="built_in">boolean</span></span><br><span class="line">  <span class="attr">isPlaying</span>: <span class="built_in">boolean</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 书籍信息 ──</span></span><br><span class="line">  <span class="attr">currentBookPath</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">currentCfi</span>: <span class="built_in">string</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 句子数据 ──</span></span><br><span class="line">  <span class="attr">sentences</span>: <span class="title class_">Sentence</span>[]</span><br><span class="line">  <span class="attr">currentSentenceIdx</span>: <span class="built_in">number</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 音频队列 ──</span></span><br><span class="line">  <span class="attr">audioQueue</span>: <span class="title class_">AudioChunk</span>[]</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── TTS 配置 ──</span></span><br><span class="line">  <span class="attr">voiceEngineId</span>: <span class="built_in">string</span>    <span class="comment">// 当前使用的 TTS 引擎 ID</span></span><br><span class="line">  <span class="attr">voiceId</span>: <span class="built_in">string</span>          <span class="comment">// 当前使用的语音 ID</span></span><br><span class="line">  <span class="attr">speed</span>: <span class="built_in">number</span>            <span class="comment">// 播放速度 0.5-4.0</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── UI 偏好 ──</span></span><br><span class="line">  <span class="attr">sleepTimerMinutes</span>: <span class="built_in">number</span> | <span class="literal">null</span>       <span class="comment">// 定时关闭（分钟）</span></span><br><span class="line">  <span class="attr">sleepTimerStartedAt</span>: <span class="built_in">number</span> | <span class="literal">null</span>     <span class="comment">// 定时器启动时间戳</span></span><br><span class="line">  <span class="attr">textFollowMode</span>: <span class="built_in">boolean</span>                <span class="comment">// 文本跟随模式（自动滚动到高亮句）</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 书签 ──</span></span><br><span class="line">  <span class="attr">bookmarks</span>: <span class="title class_">AudiobookBookmark</span>[]</span><br><span class="line"></span><br><span class="line">  <span class="comment">// ── 进度 ──</span></span><br><span class="line">  <span class="attr">currentProgress</span>: <span class="title class_">AudiobookProgress</span> | <span class="literal">null</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// Actions</span></span><br><span class="line">  <span class="attr">setIsActive</span>: <span class="function">(<span class="params"><span class="attr">v</span>: <span class="built_in">boolean</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">setIsPlaying</span>: <span class="function">(<span class="params"><span class="attr">v</span>: <span class="built_in">boolean</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">initBook</span>: <span class="function">(<span class="params"><span class="attr">bookPath</span>: <span class="built_in">string</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">setSentences</span>: <span class="function">(<span class="params"><span class="attr">sentences</span>: <span class="title class_">Sentence</span>[]</span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">appendSentences</span>: <span class="function">(<span class="params"><span class="attr">sentences</span>: <span class="title class_">Sentence</span>[]</span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">setCurrentSentenceIdx</span>: <span class="function">(<span class="params"><span class="attr">idx</span>: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">updateSentenceStatus</span>: <span class="function">(<span class="params"><span class="attr">idx</span>: <span class="built_in">number</span>, <span class="attr">status</span>: <span class="title class_">Sentence</span>[<span class="string">&#x27;audioStatus&#x27;</span>]</span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">addAudioChunk</span>: <span class="function">(<span class="params"><span class="attr">chunk</span>: <span class="title class_">AudioChunk</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">setVoiceEngine</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">setSpeed</span>: <span class="function">(<span class="params"><span class="attr">speed</span>: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">setSleepTimer</span>: <span class="function">(<span class="params"><span class="attr">minutes</span>: <span class="built_in">number</span> | <span class="literal">null</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">setTextFollowMode</span>: <span class="function">(<span class="params"><span class="attr">v</span>: <span class="built_in">boolean</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">setBookmarks</span>: <span class="function">(<span class="params"><span class="attr">bookmarks</span>: <span class="title class_">AudiobookBookmark</span>[]</span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">updateProgress</span>: <span class="function">(<span class="params"><span class="attr">sentenceIdx</span>: <span class="built_in">number</span></span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="attr">reset</span>: <span class="function">() =&gt;</span> <span class="built_in">void</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="四、语音包二次下载机制"><a href="#四、语音包二次下载机制" class="headerlink" title="四、语音包二次下载机制"></a>四、语音包二次下载机制</h2><h3 id="4-1-设计原则"><a href="#4-1-设计原则" class="headerlink" title="4.1 设计原则"></a>4.1 设计原则</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line">&#123;userData&#125;/tts-models/       ← 语音模型根目录</span><br><span class="line">├── .manifest.json            ← 本地清单（版本/校验）</span><br><span class="line">├── kokoro/                   ← Kokoro 模型</span><br><span class="line">│   ├── kokoro-multi-lang-v1_0.onnx  (~160MB)</span><br><span class="line">│   ├── tokens.txt</span><br><span class="line">│   └── espeak-ng-data/       ← 音素化数据</span><br><span class="line">├── supertonic/               ← Supertonic 模型</span><br><span class="line">│   ├── dp.onnx               (~25MB)</span><br><span class="line">│   ├── text_encoder.onnx     (~30MB)</span><br><span class="line">│   ├── vector_estimator.onnx (~20MB)</span><br><span class="line">│   ├── vocoder.onnx          (~24MB)</span><br><span class="line">│   └── voice_styles/         ← 语音风格 JSON</span><br><span class="line">├── piper/                    ← Piper 模型</span><br><span class="line">│   ├── zh_CN-huayan-medium.onnx      (~50MB)</span><br><span class="line">│   ├── zh_CN-huayan-medium.onnx.json</span><br><span class="line">│   └── en_US-lessac-medium.onnx      (~50MB)</span><br><span class="line">└── matcha/                   ← MATCHA-TTS 保底语音</span><br><span class="line">    ├── matcha-icefall-zh-baker.onnx  (~8MB)</span><br><span class="line">    └── tokens.txt</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-2-三层分级下载"><a href="#4-2-三层分级下载" class="headerlink" title="4.2 三层分级下载"></a>4.2 三层分级下载</h3><p><strong>第一层：预打包（随安装包分发，零下载等待）</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>引擎</td>
+<td>MATCHA-TTS</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>matcha-icefall-zh-baker.onnx (~8MB)</td>
+</tr>
+<tr>
+<td>语言</td>
+<td>中文（保底）</td>
+</tr>
+<tr>
+<td>场景</td>
+<td>断网环境 &#x2F; 首次启动 &#x2F; 极低配设备</td>
+</tr>
+<tr>
+<td>成本</td>
+<td>安装包体积增加 ~8MB</td>
+</tr>
+</tbody></table>
+<p><strong>第二层：首次启动后台静默下载（自动，有进度提示）</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>引擎</td>
+<td>Sherpa-ONNX + Kokoro</td>
+</tr>
+<tr>
+<td>模型</td>
+<td>kokoro-multi-lang-v1_0.onnx (~160MB)</td>
+</tr>
+<tr>
+<td>语音</td>
+<td>中文 8 种 + 英文 10+ 种</td>
+</tr>
+<tr>
+<td>触发</td>
+<td>首次启动完成 30 秒后</td>
+</tr>
+<tr>
+<td>条件</td>
+<td>检测到网络可用</td>
+</tr>
+<tr>
+<td>体验</td>
+<td>下载期间用第一层保底语音；完成后自动切换</td>
+</tr>
+<tr>
+<td>通知</td>
+<td>系统托盘显示 “TTS 语音包下载中 45%…”</td>
+</tr>
+<tr>
+<td></td>
+<td>设置页显示进度条，用户可暂停&#x2F;取消</td>
+</tr>
+</tbody></table>
+<p><strong>第三层：用户按需手动下载（需用户主动操作）</strong></p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>内容</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>引擎</td>
+<td>Supertonic &#x2F; Piper &#x2F; 额外 Kokoro 语音</td>
+</tr>
+<tr>
+<td>触发</td>
+<td>用户在 TTS 设置页浏览语音列表</td>
+</tr>
+<tr>
+<td>体验</td>
+<td>点击”下载” → 进度条 → 完成后可试听</td>
+</tr>
+<tr>
+<td>管理</td>
+<td>已下载语音可删除释放空间</td>
+</tr>
+</tbody></table>
+<h3 id="4-3-下载流程设计"><a href="#4-3-下载流程设计" class="headerlink" title="4.3 下载流程设计"></a>4.3 下载流程设计</h3><p>用户在 TTS 设置页看到的界面：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────────────────────────────────────────────┐</span><br><span class="line">│  🔊 语音合成 (TTS)                                          │</span><br><span class="line">│─────────────────────────────────────────────────────────────│</span><br><span class="line">│  引擎：🏠 Sherpa-ONNX + Kokoro [本地免费]                    │</span><br><span class="line">│                                                             │</span><br><span class="line">│  ┌─ 已下载语音 ────────────────────────────────────────────┐ │</span><br><span class="line">│  │ 🟢 中文 · 小北 (zf_xiaobei)  Kokoro · 78MB             │ │</span><br><span class="line">│  │ 🟢 英文 · Bella (af_bella)    Kokoro · 80MB             │ │</span><br><span class="line">│  └─────────────────────────────────────────────────────────┘ │</span><br><span class="line">│  ┌─ 可供下载 ──────────────────────────────────────────────┐ │</span><br><span class="line">│  │ ⬇️ 中文 · 小妮 (zf_xiaoni)     Kokoro · 75MB            │ │</span><br><span class="line">│  │ ⬇️ 中文 · 逍遥 (度逍遥)        百度 · 12MB               │ │</span><br><span class="line">│  │ ⬇️ 英文 · Nicole (af_nicole)   Kokoro · 78MB            │ │</span><br><span class="line">│  │ ⬇️ 英文 · Lessac (Medium)       Piper · 52MB             │ │</span><br><span class="line">│  └─────────────────────────────────────────────────────────┘ │</span><br><span class="line">│                                                             │</span><br><span class="line">│  ┌─ ⚙️ 可选引擎 ──────────────────────────────────────────┐ │</span><br><span class="line">│  │ ⬜ Supertonic (极速英文) [安装引擎 ~99MB]                │ │</span><br><span class="line">│  │ ⬜ Piper CLI (多语言兜底) [已安装]                       │ │</span><br><span class="line">│  └─────────────────────────────────────────────────────────┘ │</span><br><span class="line">│                                                             │</span><br><span class="line">│  磁盘使用：已用 158MB / 可用 12.3GB                         │</span><br><span class="line">│  [下载管理]  批量删除 · 清除缓存                            │</span><br><span class="line">└─────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-4-下载管理器-VoiceManager"><a href="#4-4-下载管理器-VoiceManager" class="headerlink" title="4.4 下载管理器 (VoiceManager)"></a>4.4 下载管理器 (VoiceManager)</h3><p>主进程中的语音模型下载管理，复用项目 <code>@ffmpeg-installer</code> 的二进制管理思路和 <code>updater.ts</code> 的进度通知模式：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// apps/desktop/src/main/tts/VoiceManager.ts</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> <span class="title class_">DownloadTask</span> &#123;</span><br><span class="line">  <span class="attr">engineId</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">voiceId</span>: <span class="built_in">string</span></span><br><span class="line">  <span class="attr">url</span>: <span class="built_in">string</span>                    <span class="comment">// Hugging Face / 各引擎官方下载源</span></span><br><span class="line">  <span class="attr">targetPath</span>: <span class="built_in">string</span>             <span class="comment">// 本地目标路径</span></span><br><span class="line">  <span class="attr">expectedSize</span>?: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">expectedSha256</span>?: <span class="built_in">string</span>        <span class="comment">// 完整性校验</span></span><br><span class="line">  <span class="attr">status</span>: <span class="string">&#x27;pending&#x27;</span> | <span class="string">&#x27;downloading&#x27;</span> | <span class="string">&#x27;verifying&#x27;</span> | <span class="string">&#x27;completed&#x27;</span> | <span class="string">&#x27;failed&#x27;</span> | <span class="string">&#x27;cancelled&#x27;</span></span><br><span class="line">  <span class="attr">progress</span>: <span class="built_in">number</span>               <span class="comment">// 0-100</span></span><br><span class="line">  <span class="attr">bytesDownloaded</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">totalBytes</span>: <span class="built_in">number</span></span><br><span class="line">  <span class="attr">error</span>?: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">VoiceManager</span> &#123;</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">tasks</span>: <span class="title class_">Map</span>&lt;<span class="built_in">string</span>, <span class="title class_">DownloadTask</span>&gt; = <span class="keyword">new</span> <span class="title class_">Map</span>()</span><br><span class="line">  <span class="keyword">private</span> <span class="attr">downloadQueue</span>: <span class="built_in">string</span>[] = []</span><br><span class="line">  <span class="keyword">private</span> activeDownloads = <span class="number">0</span></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">readonly</span> <span class="variable constant_">MAX_CONCURRENT</span> = <span class="number">2</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/**</span></span><br><span class="line"><span class="comment">   * 开始下载语音模型</span></span><br><span class="line"><span class="comment">   * <span class="doctag">@returns</span> taskId 用于查询进度和取消</span></span><br><span class="line"><span class="comment">   */</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">startDownload</span>(<span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span>): <span class="title class_">Promise</span>&lt;<span class="built_in">string</span>&gt; &#123;</span><br><span class="line">    <span class="keyword">const</span> taskId = <span class="string">`<span class="subst">$&#123;engineId&#125;</span>:<span class="subst">$&#123;voiceId&#125;</span>`</span></span><br><span class="line">    <span class="keyword">if</span> (<span class="variable language_">this</span>.<span class="property">tasks</span>.<span class="title function_">has</span>(taskId) &amp;&amp; <span class="variable language_">this</span>.<span class="property">tasks</span>.<span class="title function_">get</span>(taskId)!.<span class="property">status</span> === <span class="string">&#x27;downloading&#x27;</span>) &#123;</span><br><span class="line">      <span class="keyword">return</span> taskId</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> url = <span class="variable language_">this</span>.<span class="title function_">resolveDownloadUrl</span>(engineId, voiceId)</span><br><span class="line">    <span class="keyword">const</span> targetPath = <span class="variable language_">this</span>.<span class="title function_">resolveTargetPath</span>(engineId, voiceId)</span><br><span class="line"></span><br><span class="line">    <span class="keyword">const</span> <span class="attr">task</span>: <span class="title class_">DownloadTask</span> = &#123;</span><br><span class="line">      engineId, voiceId, url, targetPath,</span><br><span class="line">      <span class="attr">status</span>: <span class="string">&#x27;pending&#x27;</span>, <span class="attr">progress</span>: <span class="number">0</span>,</span><br><span class="line">      <span class="attr">bytesDownloaded</span>: <span class="number">0</span>, <span class="attr">totalBytes</span>: <span class="number">0</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">tasks</span>.<span class="title function_">set</span>(taskId, task)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="property">downloadQueue</span>.<span class="title function_">push</span>(taskId)</span><br><span class="line">    <span class="variable language_">this</span>.<span class="title function_">processQueue</span>()</span><br><span class="line">    <span class="keyword">return</span> taskId</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 获取下载进度 */</span></span><br><span class="line">  <span class="title function_">getProgress</span>(<span class="attr">taskId</span>: <span class="built_in">string</span>): <span class="title class_">DownloadTask</span> | <span class="literal">undefined</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable language_">this</span>.<span class="property">tasks</span>.<span class="title function_">get</span>(taskId)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 取消下载 */</span></span><br><span class="line">  <span class="title function_">cancelDownload</span>(<span class="attr">taskId</span>: <span class="built_in">string</span>): <span class="built_in">void</span> &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 删除已下载的模型 */</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">deleteModel</span>(<span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span>): <span class="title class_">Promise</span>&lt;<span class="built_in">void</span>&gt; &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 校验模型完整性 */</span></span><br><span class="line">  <span class="keyword">async</span> <span class="title function_">verifyModel</span>(<span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span>): <span class="title class_">Promise</span>&lt;<span class="built_in">boolean</span>&gt; &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 获取本地已下载模型清单 */</span></span><br><span class="line">  <span class="title function_">getLocalManifest</span>(): <span class="title class_">LocalManifest</span> &#123; <span class="comment">/* ... */</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="keyword">async</span> <span class="title function_">processQueue</span>(): <span class="title class_">Promise</span>&lt;<span class="built_in">void</span>&gt; &#123; <span class="comment">/* 并发控制 + fetch + 进度广播 */</span> &#125;</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 解析下载源 URL */</span></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">resolveDownloadUrl</span>(<span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span>): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="attr">SOURCES</span>: <span class="title class_">Record</span>&lt;<span class="built_in">string</span>, <span class="built_in">string</span>&gt; = &#123;</span><br><span class="line">      <span class="string">&#x27;kokoro&#x27;</span>: <span class="string">&#x27;https://huggingface.co/csukuangfj/kokoro-multi-lang-v1_0/resolve/main/&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;sherpa-onnx&#x27;</span>: <span class="string">&#x27;https://github.com/k2-fsa/sherpa-onnx/releases/download/tts-models/&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;supertonic&#x27;</span>: <span class="string">&#x27;https://huggingface.co/Supertone/supertonic/resolve/main/assets/onnx/&#x27;</span>,</span><br><span class="line">      <span class="string">&#x27;piper&#x27;</span>: <span class="string">&#x27;https://huggingface.co/rhasspy/piper-voices/resolve/v1.0.0/&#x27;</span>,</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="variable constant_">SOURCES</span>[engineId] ?? <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">private</span> <span class="title function_">resolveTargetPath</span>(<span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span>): <span class="built_in">string</span> &#123;</span><br><span class="line">    <span class="comment">// → &#123;userData&#125;/tts-models/&#123;engineId&#125;/&#123;voiceId&#125;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="4-5-下载流程-IPC-接口"><a href="#4-5-下载流程-IPC-接口" class="headerlink" title="4.5 下载流程 IPC 接口"></a>4.5 下载流程 IPC 接口</h3><p>新增 <code>tts:download-voice</code>、<code>tts:get-download-progress</code>、<code>tts:cancel-download</code> 三个 IPC 通道：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// preload/index.ts 补充</span></span><br><span class="line">api.<span class="property">tts</span> = &#123;</span><br><span class="line">  <span class="comment">// ... 原有合成接口</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 开始下载语音模型，返回 taskId */</span></span><br><span class="line">  <span class="attr">downloadVoice</span>: <span class="function">(<span class="params"><span class="attr">engineId</span>: <span class="built_in">string</span>, <span class="attr">voiceId</span>: <span class="built_in">string</span></span>)</span></span><br><span class="line"><span class="function">    =&gt;</span> ipcRenderer.<span class="title function_">invoke</span>(<span class="string">&#x27;tts:download-voice&#x27;</span>, engineId, voiceId),</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 获取下载进度 */</span></span><br><span class="line">  <span class="attr">onDownloadProgress</span>: <span class="function">(<span class="params"><span class="attr">callback</span>: (task: DownloadTask) =&gt; <span class="built_in">void</span></span>) =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> <span class="title function_">listener</span> = (<span class="params"><span class="attr">_event</span>: <span class="built_in">any</span>, <span class="attr">task</span>: <span class="title class_">DownloadTask</span></span>) =&gt; <span class="title function_">callback</span>(task)</span><br><span class="line">    ipcRenderer.<span class="title function_">on</span>(<span class="string">&#x27;tts:download-progress&#x27;</span>, listener)</span><br><span class="line">    <span class="keyword">return</span> <span class="function">() =&gt;</span> ipcRenderer.<span class="title function_">removeListener</span>(<span class="string">&#x27;tts:download-progress&#x27;</span>, listener)</span><br><span class="line">  &#125;,</span><br><span class="line"></span><br><span class="line">  <span class="comment">/** 取消下载 */</span></span><br><span class="line">  <span class="attr">cancelDownload</span>: <span class="function">(<span class="params"><span class="attr">taskId</span>: <span class="built_in">string</span></span>)</span></span><br><span class="line"><span class="function">    =&gt;</span> ipcRenderer.<span class="title function_">invoke</span>(<span class="string">&#x27;tts:cancel-download&#x27;</span>, taskId),</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="五、播放器-UI-设计"><a href="#五、播放器-UI-设计" class="headerlink" title="五、播放器 UI 设计"></a>五、播放器 UI 设计</h2><h3 id="5-1-内嵌播放条-AudiobookPlayer-tsx"><a href="#5-1-内嵌播放条-AudiobookPlayer-tsx" class="headerlink" title="5.1 内嵌播放条 (AudiobookPlayer.tsx)"></a>5.1 内嵌播放条 (<code>AudiobookPlayer.tsx</code>)</h3><p>渲染在 EPUB 阅读器底部，与全局 MiniPlayer 互斥（同一时间只有一个音频输出）：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">┌────────────────────────────────────────────────────────────────────┐</span><br><span class="line">│ 📖 当前朗读句子文本（字幕式，单行滚动，超出时跑马灯）              │</span><br><span class="line">│ &quot;夜色沉沉地压下来，林峰推开那扇半掩的木门——门轴发出一声悠长的呻吟—— │</span><br><span class="line">│  屋内一片漆黑，只有窗缝里漏进几缕月光，在地板上画出冷白色的格子。&quot;  │</span><br><span class="line">├────────────────────────────────────────────────────────────────────┤</span><br><span class="line">│                                                                    │</span><br><span class="line">│  ⏮  ⏪ -10s  ▶ / ⏸  ⏩ +30s  ⏭                                  │</span><br><span class="line">│  上一章  后退  播放/暂停  快进  下一章                             │</span><br><span class="line">│                                                                    │</span><br><span class="line">│  ──●────────────────────────────────────── 12:34 / 45:12          │</span><br><span class="line">│       进度条（可拖拽）                  已播 / 全书预估             │</span><br><span class="line">│                                                                    │</span><br><span class="line">│  🔊 小北(中文) │ 语速 1.25x │ ⏱ 30分钟后 │ 📎 书签 │ ⚙          │</span><br><span class="line">│  语音选择器     语速调节      定时关闭      添加书签   更多         │</span><br><span class="line">└────────────────────────────────────────────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-2-与全局-MiniPlayer-的关系"><a href="#5-2-与全局-MiniPlayer-的关系" class="headerlink" title="5.2 与全局 MiniPlayer 的关系"></a>5.2 与全局 MiniPlayer 的关系</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">有声书模式激活时:</span><br><span class="line"> 1. 暂停全局 useMediaPlayerStore（保留队列和播放位置）</span><br><span class="line"> 2. 隐藏 MiniPlayer / FullPlayer（isVisible = false）</span><br><span class="line"> 3. 渲染 AudiobookPlayer 在 EPUB 阅读器底部</span><br><span class="line"> 4. AudiobookPlayer 使用独立 Audio 元素</span><br><span class="line"></span><br><span class="line">用户关闭有声书时:</span><br><span class="line"> 1. AudiobookPlayer destroy → 释放 Audio 元素</span><br><span class="line"> 2. 保存进度到 SQLite</span><br><span class="line"> 3. 恢复全局 useMediaPlayerStore（但不自动播放，等用户操作）</span><br><span class="line"> 4. MiniPlayer 重新可见</span><br><span class="line"></span><br><span class="line">用户手动切换到 MiniPlayer 模式:</span><br><span class="line"> 1. AudiobookPlayer 右上角 [📱] 按钮</span><br><span class="line"> 2. AudiobookPlayer 转为 MiniPlayer 模式渲染</span><br><span class="line"> 3. 方便用户最小化阅读器后继续听书</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-3-语音选择器-AudiobookVoiceSelector-tsx"><a href="#5-3-语音选择器-AudiobookVoiceSelector-tsx" class="headerlink" title="5.3 语音选择器 (AudiobookVoiceSelector.tsx)"></a>5.3 语音选择器 (<code>AudiobookVoiceSelector.tsx</code>)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────┐</span><br><span class="line">│  选择朗读语音                 │</span><br><span class="line">│──────────────────────────────│</span><br><span class="line">│  ┌─ 🏠 本地免费 ────────────┐ │</span><br><span class="line">│  │ 🔘 小北 (zf_xiaobei)    │ │</span><br><span class="line">│  │    中文 · Kokoro · 78MB  │ │</span><br><span class="line">│  │ ○  小妮 (zf_xiaoni)     │ │</span><br><span class="line">│  │    中文 · Kokoro · 75MB  │ │</span><br><span class="line">│  │ ○  Bella (af_bella)     │ │</span><br><span class="line">│  │    英文 · Kokoro · 80MB  │ │</span><br><span class="line">│  └──────────────────────────┘ │</span><br><span class="line">│  ┌─ ☁️ 云端高级（需配 Key）──┐ │</span><br><span class="line">│  │ ○  度逍遥 (阿里云)       │ │</span><br><span class="line">│  │    中文 · 精品音色        │ │</span><br><span class="line">│  │ ○  Alloy (OpenAI)        │ │</span><br><span class="line">│  │    英文 · tts-1           │ │</span><br><span class="line">│  └──────────────────────────┘ │</span><br><span class="line">│                               │</span><br><span class="line">│  [试听选中语音]  [管理语音包]  │</span><br><span class="line">└──────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<h3 id="5-4-定时关闭-AudiobookSleepTimer-tsx"><a href="#5-4-定时关闭-AudiobookSleepTimer-tsx" class="headerlink" title="5.4 定时关闭 (AudiobookSleepTimer.tsx)"></a>5.4 定时关闭 (<code>AudiobookSleepTimer.tsx</code>)</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">┌──────────────────────────────┐</span><br><span class="line">│  ⏱ 定时关闭                  │</span><br><span class="line">│──────────────────────────────│</span><br><span class="line">│  ○ 关闭                      │</span><br><span class="line">│  ○ 15 分钟后                 │</span><br><span class="line">│  ● 30 分钟后                 │</span><br><span class="line">│  ○ 60 分钟后                 │</span><br><span class="line">│  ○ 90 分钟后                 │</span><br><span class="line">│  ○ 当前章节结束时            │</span><br><span class="line">│                              │</span><br><span class="line">│  剩余: 约 23 分钟            │</span><br><span class="line">│  [确定]                      │</span><br><span class="line">└──────────────────────────────┘</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="六、进度持久化与断点恢复"><a href="#六、进度持久化与断点恢复" class="headerlink" title="六、进度持久化与断点恢复"></a>六、进度持久化与断点恢复</h2><h3 id="6-1-数据库设计"><a href="#6-1-数据库设计" class="headerlink" title="6.1 数据库设计"></a>6.1 数据库设计</h3><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">-- 有声书播放进度</span></span><br><span class="line"><span class="keyword">CREATE TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> audiobook_progress (</span><br><span class="line">  book_path TEXT <span class="keyword">PRIMARY KEY</span>,</span><br><span class="line">  cfi TEXT <span class="keyword">NOT NULL</span>,                              <span class="comment">-- epubjs CFI 位置</span></span><br><span class="line">  sentence_index <span class="type">INTEGER</span> <span class="keyword">NOT NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,      <span class="comment">-- 章节内句子全局索引</span></span><br><span class="line">  voice_engine_id TEXT,                           <span class="comment">-- 上次使用的 TTS 引擎</span></span><br><span class="line">  voice_id TEXT,                                  <span class="comment">-- 上次使用的语音</span></span><br><span class="line">  speed <span class="type">REAL</span> <span class="keyword">NOT NULL</span> <span class="keyword">DEFAULT</span> <span class="number">1.0</span>,                <span class="comment">-- 播放速度</span></span><br><span class="line">  position_ms <span class="type">INTEGER</span> <span class="keyword">NOT NULL</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,         <span class="comment">-- 音频位置（毫秒）- 预留</span></span><br><span class="line">  updated_at <span class="type">INTEGER</span> <span class="keyword">NOT NULL</span> <span class="keyword">DEFAULT</span> (strftime(<span class="string">&#x27;%s&#x27;</span>,<span class="string">&#x27;now&#x27;</span>) <span class="operator">*</span> <span class="number">1000</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 有声书书签</span></span><br><span class="line"><span class="keyword">CREATE TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> audiobook_bookmarks (</span><br><span class="line">  id <span class="type">INTEGER</span> <span class="keyword">PRIMARY KEY</span> AUTOINCREMENT,</span><br><span class="line">  book_path TEXT <span class="keyword">NOT NULL</span>,</span><br><span class="line">  cfi TEXT <span class="keyword">NOT NULL</span>,                              <span class="comment">-- 书签位置的 CFI</span></span><br><span class="line">  sentence_index <span class="type">INTEGER</span>,                         <span class="comment">-- 书签位置的句子索引</span></span><br><span class="line">  label TEXT,                                     <span class="comment">-- 用户自定义名称</span></span><br><span class="line">  voice_engine_id TEXT,</span><br><span class="line">  voice_id TEXT,</span><br><span class="line">  speed <span class="type">REAL</span>,</span><br><span class="line">  created_at <span class="type">INTEGER</span> <span class="keyword">NOT NULL</span> <span class="keyword">DEFAULT</span> (strftime(<span class="string">&#x27;%s&#x27;</span>,<span class="string">&#x27;now&#x27;</span>) <span class="operator">*</span> <span class="number">1000</span>)</span><br><span class="line">);</span><br><span class="line"></span><br><span class="line"><span class="comment">-- 播放统计</span></span><br><span class="line"><span class="keyword">CREATE TABLE</span> IF <span class="keyword">NOT</span> <span class="keyword">EXISTS</span> audiobook_history (</span><br><span class="line">  id <span class="type">INTEGER</span> <span class="keyword">PRIMARY KEY</span> AUTOINCREMENT,</span><br><span class="line">  book_path TEXT <span class="keyword">NOT NULL</span>,</span><br><span class="line">  book_title TEXT,                                <span class="comment">-- 书名（从 epub meta 提取）</span></span><br><span class="line">  started_at <span class="type">INTEGER</span> <span class="keyword">NOT NULL</span>,                    <span class="comment">-- 开始时间戳</span></span><br><span class="line">  ended_at <span class="type">INTEGER</span>,                               <span class="comment">-- 结束时间戳</span></span><br><span class="line">  duration_seconds <span class="type">INTEGER</span>,                       <span class="comment">-- 实际播放时长（秒）</span></span><br><span class="line">  sentences_read <span class="type">INTEGER</span> <span class="keyword">DEFAULT</span> <span class="number">0</span>,               <span class="comment">-- 朗读句子总数</span></span><br><span class="line">  voice_engine_id TEXT,</span><br><span class="line">  voice_id TEXT,</span><br><span class="line">  speed <span class="type">REAL</span></span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h3 id="6-2-保存策略"><a href="#6-2-保存策略" class="headerlink" title="6.2 保存策略"></a>6.2 保存策略</h3><table>
+<thead>
+<tr>
+<th>触发条件</th>
+<th>保存内容</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>每 5 秒定时</td>
+<td><code>audiobook_progress</code> 全部字段</td>
+<td>精确到当前句子索引</td>
+</tr>
+<tr>
+<td>用户暂停</td>
+<td><code>audiobook_progress</code></td>
+<td>立即保存</td>
+</tr>
+<tr>
+<td>用户翻页（epubjs relocated）</td>
+<td>CFI + sentence_index</td>
+<td>跨章节关键节点</td>
+</tr>
+<tr>
+<td>用户关闭有声书</td>
+<td><code>audiobook_progress</code> + <code>audiobook_history</code> 写入结束时间</td>
+<td></td>
+</tr>
+<tr>
+<td>用户添加书签</td>
+<td><code>audiobook_bookmarks</code> 插入新行</td>
+<td>含自定义标签</td>
+</tr>
+<tr>
+<td>应用退出前</td>
+<td><code>audiobook_progress</code> + <code>audiobook_history</code></td>
+<td>beforeunload 事件</td>
+</tr>
+</tbody></table>
+<h3 id="6-3-断点恢复流程"><a href="#6-3-断点恢复流程" class="headerlink" title="6.3 断点恢复流程"></a>6.3 断点恢复流程</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">用户打开 EPUB 文件</span><br><span class="line"> │</span><br><span class="line"> ├─ 1. 检查 audiobook_progress (book_path = current)</span><br><span class="line"> │   ├─ 有记录 → 显示 &quot;上次听到第 X 章，是否继续？&quot;</span><br><span class="line"> │   │   ├─ 是 → rendition.display(savedCfi) → 从 sentence_index 继续</span><br><span class="line"> │   │   └─ 否 → 清除进度，从头开始</span><br><span class="line"> │   └─ 无记录 → 正常阅读模式</span><br><span class="line"> │</span><br><span class="line"> └─ 2. 恢复上次使用的语音和语速（从 audiobook_progress 字段）</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="七、自动翻页逻辑"><a href="#七、自动翻页逻辑" class="headerlink" title="七、自动翻页逻辑"></a>七、自动翻页逻辑</h2><h3 id="7-1-核心机制"><a href="#7-1-核心机制" class="headerlink" title="7.1 核心机制"></a>7.1 核心机制</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">播放句子 N 时:</span><br><span class="line"> │</span><br><span class="line"> ├─ 1. doc.querySelector(`[data-tts-idx=&quot;$&#123;N&#125;&quot;]`) → 找到 DOM 元素</span><br><span class="line"> │</span><br><span class="line"> ├─ 2. getBoundingClientRect() → 获取元素的视口位置</span><br><span class="line"> │</span><br><span class="line"> ├─ 3. 判断: rect.bottom &gt; viewerRect.bottom？</span><br><span class="line"> │   ├─ 否 → 句子完全在视口内，无需翻页</span><br><span class="line"> │   └─ 是 → 句子底部超出视口</span><br><span class="line"> │       │</span><br><span class="line"> │       └─ 4. 调用 rendition.next()（epubjs 自动跨章节处理）</span><br><span class="line"> │           │</span><br><span class="line"> │           └─ 5. relocated 事件触发</span><br><span class="line"> │               ├─ 新页面 DOM 就绪 → 重新提取句子 + 重新标记</span><br><span class="line"> │               ├─ 全局句子索引继续递增（不重置）</span><br><span class="line"> │               └─ 恢复高亮当前句</span><br></pre></td></tr></table></figure>
+
+<h3 id="7-2-跨章节连续播放"><a href="#7-2-跨章节连续播放" class="headerlink" title="7.2 跨章节连续播放"></a>7.2 跨章节连续播放</h3><p>epubjs 的 <code>rendition.next()</code> 在到达当前章节最后一页时，<strong>自动加载下一章</strong>并触发 <code>relocated</code> 事件。这使得有声书天然支持跨章节连续播放：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">章节 A (Section 1, 3 页)       章节 B (Section 2, 5 页)</span><br><span class="line">┌─────┐ ┌─────┐ ┌─────┐     ┌─────┐ ┌─────┐ ┌─────┐ ┌─────┐</span><br><span class="line">│页 1 │ │页 2 │ │页 3 │ → next() → │页 4 │ │页 5 │ │页 6 │ │页 7 │ ...</span><br><span class="line">└─────┘ └─────┘ └─────┘     └─────┘ └─────┘ └─────┘ └─────┘</span><br><span class="line">                              ↑ relocated: section=2, page=4 ↑</span><br><span class="line">                              重新提取句子，追加到 sentences[] 继续播放</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// relocated 事件处理</span></span><br><span class="line">rendition.<span class="title function_">on</span>(<span class="string">&#x27;relocated&#x27;</span>, <span class="function">(<span class="params"><span class="attr">loc</span>: <span class="built_in">any</span></span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">if</span> (!audiobookStore.<span class="property">isActive</span>) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> newHref = loc.<span class="property">start</span>?.<span class="property">href</span>  <span class="comment">// 新章节的 href</span></span><br><span class="line">  <span class="keyword">const</span> newCfi = loc.<span class="property">start</span>?.<span class="property">cfi</span></span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更新 CFI</span></span><br><span class="line">  audiobookStore.<span class="title function_">setCurrentCfi</span>(newCfi)</span><br><span class="line"></span><br><span class="line">  <span class="built_in">setTimeout</span>(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">    <span class="keyword">const</span> doc = rendition.<span class="title function_">getContents</span>()?.[<span class="number">0</span>]?.<span class="property">document</span></span><br><span class="line">    <span class="keyword">if</span> (!doc) <span class="keyword">return</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 新章节 → 提取新句子并追加</span></span><br><span class="line">    <span class="keyword">const</span> newSentences = <span class="title function_">extractSentences</span>(doc)</span><br><span class="line">    <span class="title function_">markSentencesInDOM</span>(doc, newSentences)</span><br><span class="line">    audiobookStore.<span class="title function_">appendSentences</span>(newSentences)</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 恢复上一句高亮（可能在新页面中）</span></span><br><span class="line">    <span class="title function_">highlightSentence</span>(doc, audiobookStore.<span class="property">currentSentenceIdx</span>)</span><br><span class="line">  &#125;, <span class="number">200</span>)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="八、特色功能详细设计"><a href="#八、特色功能详细设计" class="headerlink" title="八、特色功能详细设计"></a>八、特色功能详细设计</h2><h3 id="8-1-功能清单与优先级"><a href="#8-1-功能清单与优先级" class="headerlink" title="8.1 功能清单与优先级"></a>8.1 功能清单与优先级</h3><table>
+<thead>
+<tr>
+<th>功能</th>
+<th align="center">优先级</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td><strong>断点续听</strong></td>
+<td align="center">P0</td>
+<td>记录最后 CFI + 句子索引，下次打开提示恢复</td>
+</tr>
+<tr>
+<td><strong>多语音选择</strong></td>
+<td align="center">P0</td>
+<td>从已下载的本地语音列表中选择</td>
+</tr>
+<tr>
+<td><strong>语速调节</strong></td>
+<td align="center">P0</td>
+<td>0.5x-4.0x，滑块 + 预设按钮</td>
+</tr>
+<tr>
+<td><strong>逐句高亮</strong></td>
+<td align="center">P0</td>
+<td>当前朗读句黄色背景，已读句淡灰色</td>
+</tr>
+<tr>
+<td><strong>自动翻页</strong></td>
+<td align="center">P0</td>
+<td>高亮句超出视口自动 rendition.next()</td>
+</tr>
+<tr>
+<td><strong>字幕显示</strong></td>
+<td align="center">P1</td>
+<td>播放器顶部显示当前句完整文本</td>
+</tr>
+<tr>
+<td><strong>定时关闭</strong></td>
+<td align="center">P1</td>
+<td>15&#x2F;30&#x2F;60&#x2F;90 分钟 &#x2F; 当前章节结束</td>
+</tr>
+<tr>
+<td><strong>快进快退</strong></td>
+<td align="center">P1</td>
+<td>-10s &#x2F; +30s 快捷跳转（跨句边界）</td>
+</tr>
+<tr>
+<td><strong>章节导航</strong></td>
+<td align="center">P1</td>
+<td>⏮上一章 &#x2F; ⏭下一章（通过 TOC&#x2F;spine）</td>
+</tr>
+<tr>
+<td><strong>书签</strong></td>
+<td align="center">P1</td>
+<td>命名书签 + 跳转 + 恢复语音&#x2F;语速</td>
+</tr>
+<tr>
+<td><strong>跳过非正文</strong></td>
+<td align="center">P1</td>
+<td>自动跳过页眉&#x2F;页码&#x2F;脚注</td>
+</tr>
+<tr>
+<td><strong>文本跟随</strong></td>
+<td align="center">P2</td>
+<td>高亮句始终在视口中央（<code>scrollIntoView</code>）</td>
+</tr>
+<tr>
+<td><strong>播放历史</strong></td>
+<td align="center">P2</td>
+<td>每次听书记录时长&#x2F;日期&#x2F;书名</td>
+</tr>
+<tr>
+<td><strong>导出音频</strong></td>
+<td align="center">P2</td>
+<td>当前章&#x2F;全书导出 WAV&#x2F;MP3（后台批量合成）</td>
+</tr>
+<tr>
+<td><strong>音效优化</strong></td>
+<td align="center">P2</td>
+<td>句间 200ms 间隔 &#x2F; 淡入淡出 &#x2F; 长句停顿</td>
+</tr>
+<tr>
+<td><strong>进度条拖拽</strong></td>
+<td align="center">P2</td>
+<td>已合成的句子可拖拽跳转</td>
+</tr>
+<tr>
+<td><strong>语音预览</strong></td>
+<td align="center">P2</td>
+<td>每个语音试听一句测试文本</td>
+</tr>
+<tr>
+<td><strong>多人朗读</strong></td>
+<td align="center">P3</td>
+<td>基于 epub 语义标注（角色），需模型支持</td>
+</tr>
+<tr>
+<td><strong>播放统计面板</strong></td>
+<td align="center">P3</td>
+<td>今日&#x2F;本周&#x2F;总计听书时长仪表板</td>
+</tr>
+</tbody></table>
+<h3 id="8-2-字幕实现"><a href="#8-2-字幕实现" class="headerlink" title="8.2 字幕实现"></a>8.2 字幕实现</h3><figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// AudiobookPlayer 中的字幕行</span></span><br><span class="line">&#123;subtitle &amp;&amp; currentSentence &amp;&amp; (</span><br><span class="line">  <span class="language-xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&quot;audiobook-subtitle&quot;</span> <span class="attr">style</span>=<span class="string">&#123;&#123;</span></span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">overflow:</span> &#x27;<span class="attr">hidden</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">whiteSpace:</span> &#x27;<span class="attr">nowrap</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">textOverflow:</span> &#x27;<span class="attr">ellipsis</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">padding:</span> &#x27;<span class="attr">6px</span> <span class="attr">12px</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">fontSize:</span> &#x27;<span class="attr">13px</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">color:</span> &#x27;#<span class="attr">ccc</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">background:</span> &#x27;<span class="attr">rgba</span>(<span class="attr">0</span>,<span class="attr">0</span>,<span class="attr">0</span>,<span class="attr">0.3</span>)&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">    <span class="attr">borderRadius:</span> &#x27;<span class="attr">4px</span>&#x27;,</span></span></span><br><span class="line"><span class="tag"><span class="language-xml">  &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="language-xml">    &#123;currentSentence.text.length &gt; 80</span></span><br><span class="line"><span class="language-xml">      ? currentSentence.text.slice(0, 77) + &#x27;...&#x27;</span></span><br><span class="line"><span class="language-xml">      : currentSentence.text</span></span><br><span class="line"><span class="language-xml">    &#125;</span></span><br><span class="line"><span class="language-xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">)&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-3-快进快退"><a href="#8-3-快进快退" class="headerlink" title="8.3 快进快退"></a>8.3 快进快退</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">快退 -10s: 当前的句子不是第一句，计算前 N 句的音频总时长</span><br><span class="line">  跳到超过 10 秒的那个句子 → 从该句重新播放</span><br><span class="line"></span><br><span class="line">快进 +30s: 类似逻辑，向前跳过 ~30 秒的句子</span><br><span class="line"></span><br><span class="line">实现依赖: 每个 AudioChunk 携带已知 duration（TTS 合成后填充）</span><br><span class="line">  实时 accumulative 时长可通过累加 played chunks 获取</span><br></pre></td></tr></table></figure>
+
+<h3 id="8-4-导出音频"><a href="#8-4-导出音频" class="headerlink" title="8.4 导出音频"></a>8.4 导出音频</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">用户点击 &quot;导出本章为 MP3&quot;</span><br><span class="line"> │</span><br><span class="line"> ├─ 1. 收集本章全部句子的文本（已提取）</span><br><span class="line"> ├─ 2. 显示进度弹窗：</span><br><span class="line"> │    &quot;正在合成第 12/156 句...&quot;</span><br><span class="line"> │    [████████░░░░░░░░] 45%</span><br><span class="line"> ├─ 3. 逐句调用 api.tts.speak() 获取 WAV 文件</span><br><span class="line"> ├─ 4. 合并全部 WAV → 调用 IPC 通知主进程用 FFmpeg 拼接</span><br><span class="line"> │    ffmpeg -f concat -i list.txt -c copy output.wav</span><br><span class="line"> ├─ 5. 可选转码为 MP3</span><br><span class="line"> │    ffmpeg -i output.wav -codec:a libmp3lame -b:a 128k output.mp3</span><br><span class="line"> └─ 6. 弹出保存对话框 → 用户选择保存路径</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="九、文件清单"><a href="#九、文件清单" class="headerlink" title="九、文件清单"></a>九、文件清单</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line">新增文件（11 个）:</span><br><span class="line">═══════════════════════════════════════</span><br><span class="line"></span><br><span class="line">渲染进程 - 核心逻辑（3 个）:</span><br><span class="line">├── apps/desktop/src/renderer/src/</span><br><span class="line">│   ├── hooks/useAudiobook.ts          # 核心调度 Hook（TTS 队列+播放+同步）</span><br><span class="line">│   ├── utils/textSplitter.ts          # 文本提取+分句+非正文过滤</span><br><span class="line">│   └── utils/domMarker.ts             # DOM 句子标记+高亮管理</span><br><span class="line"></span><br><span class="line">渲染进程 - 状态管理（1 个）:</span><br><span class="line">├── apps/desktop/src/renderer/src/</span><br><span class="line">│   └── store/useAudiobookStore.ts     # 有声书 Zustand Store</span><br><span class="line"></span><br><span class="line">渲染进程 - UI 组件（4 个）:</span><br><span class="line">├── apps/desktop/src/renderer/src/components/</span><br><span class="line">│   ├── AudiobookPlayer.tsx            # 内嵌播放条（字幕+控制+进度）</span><br><span class="line">│   ├── AudiobookVoiceSelector.tsx     # 语音选择弹窗（本地/云端）</span><br><span class="line">│   ├── AudiobookSleepTimer.tsx        # 定时关闭设置弹窗</span><br><span class="line">│   └── AudiobookBookmarkList.tsx      # 书签列表管理</span><br><span class="line"></span><br><span class="line">主进程 - DB + 语音管理（2 个）:</span><br><span class="line">├── apps/desktop/src/main/tts/</span><br><span class="line">│   ├── VoiceManager.ts                # 语音模型下载/缓存/校验/清单</span><br><span class="line">│   └── AudiobookProgressDB.ts         # 进度/书签/统计 DB CRUD</span><br><span class="line"></span><br><span class="line">主进程 - 入口修改（1 个）:</span><br><span class="line">└── apps/desktop/src/main/index.ts     # 新增 tts:download-voice / audiobook:* IPC</span><br><span class="line"></span><br><span class="line">预加载/类型修改（2 个）:</span><br><span class="line">├── apps/desktop/src/preload/index.ts  # 新增 api.audiobook / api.tts.downloadVoice</span><br><span class="line">└── apps/desktop/src/renderer/src/env.d.ts  # 类型声明</span><br><span class="line"></span><br><span class="line">────────</span><br><span class="line"></span><br><span class="line">修改文件（1 个，约 +200 行）:</span><br><span class="line">└── apps/desktop/src/renderer/src/components/previews/</span><br><span class="line">    └── EpubPreview.tsx                # 嵌入&quot;朗读&quot;按钮 + 播放停靠区 + relocated 同步</span><br></pre></td></tr></table></figure>
+
+<hr>
+<h2 id="十、实施计划"><a href="#十、实施计划" class="headerlink" title="十、实施计划"></a>十、实施计划</h2><h3 id="10-1-里程碑"><a href="#10-1-里程碑" class="headerlink" title="10.1 里程碑"></a>10.1 里程碑</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br></pre></td><td class="code"><pre><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">Milestone 0：前置依赖 —— TTS Phase 1 本地引擎（14-20 天）</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">  交付物: api.tts.speak() IPC 可用 + 本地引擎就绪 + 语音模型按需下载</span><br><span class="line">  验收标准: 右键消息&quot;朗读&quot;能出声</span><br><span class="line"></span><br><span class="line">  注：本有声书方案的所有 TTS 依赖均通过 api.tts.speak() 满足，</span><br><span class="line">  不依赖远程云引擎。Milestone 0 完成即可开始有声书开发。</span><br><span class="line"></span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">Milestone 1：核心有声书循环（+7-9 天）</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">  交付物:</span><br><span class="line">  ├─ textSplitter.ts + domMarker.ts（文本处理+DOM标记）</span><br><span class="line">  ├─ useAudiobookStore.ts（状态管理）</span><br><span class="line">  ├─ useAudiobook.ts（核心调度：合成→播放→高亮→翻页）</span><br><span class="line">  ├─ AudiobookPlayer.tsx（基础版：播放/暂停+进度条+字幕）</span><br><span class="line">  └─ EpubPreview.tsx 集成（朗读按钮+播放停靠区）</span><br><span class="line">  验收标准: 打开 EPUB → 点&quot;朗读&quot; → 逐句高亮 + 自动翻页 + 可暂停</span><br><span class="line"></span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">Milestone 2：播放体验完善（+3-5 天）</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">  交付物:</span><br><span class="line">  ├─ AudiobookVoiceSelector.tsx（语音选择+试听）</span><br><span class="line">  ├─ AudiobookSleepTimer.tsx（定时关闭）</span><br><span class="line">  ├─ 语速调节 + 快进快退</span><br><span class="line">  ├─ 跨章节连续播放验证</span><br><span class="line">  └─ 全局播放器互斥逻辑</span><br><span class="line">  验收标准: 可选语音/语速 + 定时关闭 + 跨章节不断播</span><br><span class="line"></span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">Milestone 3：进度与书签（+2-3 天）</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">  交付物:</span><br><span class="line">  ├─ AudiobookProgressDB.ts（SQLite 表 + CRUD IPC）</span><br><span class="line">  ├─ 断点恢复提示弹窗</span><br><span class="line">  └─ AudiobookBookmarkList.tsx（书签增删改查+跳转）</span><br><span class="line">  验收标准: 关闭重开可恢复 + 书签可用</span><br><span class="line"></span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">Milestone 4：打磨与高级功能（+2-3 天）</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">  交付物:</span><br><span class="line">  ├─ 文本跟随模式（scrollIntoView）</span><br><span class="line">  ├─ 播放统计</span><br><span class="line">  ├─ 导出音频功能</span><br><span class="line">  ├─ 音效优化（句间停顿+淡入淡出）</span><br><span class="line">  └─ 边界测试（空章节/纯图片章/长句/并发取消/网络中断降级）</span><br><span class="line">  验收标准: 各种边界情况不崩溃</span><br><span class="line"></span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br><span class="line">  总计: +14-20 天 (纯有声书部分)</span><br><span class="line">  含 TTS: 28-40 天 (TTS 14-20 + 有声书 14-20)</span><br><span class="line">═══════════════════════════════════════════════════════════════</span><br></pre></td></tr></table></figure>
+
+<h3 id="10-2-技术风险与缓解"><a href="#10-2-技术风险与缓解" class="headerlink" title="10.2 技术风险与缓解"></a>10.2 技术风险与缓解</h3><table>
+<thead>
+<tr>
+<th>风险</th>
+<th align="center">等级</th>
+<th>缓解措施</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>epubjs 0.3.x 的 DOM 操作不稳定</td>
+<td align="center">🟡</td>
+<td>已有大量 patch 经验（EpubPreview.tsx 含多个 workaround）；domMarker 通过 TreeWalker 而非 innerHTML 操作</td>
+</tr>
+<tr>
+<td>长句 TTS 合成时间 &gt; 播放时间</td>
+<td align="center">🟡</td>
+<td>预缓冲 5-8 句；超快引擎（Supertonic）天然无此问题</td>
+</tr>
+<tr>
+<td>跨章节换页间隙可能断播</td>
+<td align="center">🟡</td>
+<td>relocated 事件 200ms 延迟后重新标记；跨章间隙插入 500ms 静音</td>
+</tr>
+<tr>
+<td>epub 无文本（纯图片 PDF 合成的 epub）</td>
+<td align="center">🟢</td>
+<td>extractSentences 返回空数组 → 提示”本章无可朗读文本”</td>
+</tr>
+<tr>
+<td>TTS 引擎编译失败</td>
+<td align="center">🟢</td>
+<td>降级链已设计（Sherpa → Piper CLI → MATCHA-TTS）</td>
+</tr>
+<tr>
+<td>中文分句不精确</td>
+<td align="center">🟡</td>
+<td>分句正则经过三轮迭代；Phase 2 可引入更精确的 NLP 分句</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="十一、与全局-TTS-方案的衔接"><a href="#十一、与全局-TTS-方案的衔接" class="headerlink" title="十一、与全局 TTS 方案的衔接"></a>十一、与全局 TTS 方案的衔接</h2><p>有声书模块完全基于 TTS Phase 1 的本地引擎运行，与远程云服务的关系如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">TTS 方案中的引擎分层 → 有声书如何使用</span><br><span class="line">─────────────────────────────────────────────────────</span><br><span class="line">🏠 Phase 1 本地引擎（默认） → ✅ 有声书默认使用，零成本</span><br><span class="line">  ├─ Sherpa-ONNX + Kokoro  → 中文有声书主力</span><br><span class="line">  ├─ Supertonic            → 英文有声书极速</span><br><span class="line">  └─ Piper CLI + MATCHA-TTS → 编译失败 / 极低配兜底</span><br><span class="line"></span><br><span class="line">☁️ Phase 2 远程云引擎（可选） → ✅ 高级用户在设置页配好 Key 后可选</span><br><span class="line">  ├─ 阿里云 / 火山引擎等   → 追求最佳中文音质时切换</span><br><span class="line">  └─ OpenAI / Google 等    → 多语言有声书场景</span><br><span class="line"></span><br><span class="line">💎 Phase 3 专业增强（可选） → ✅ 语音克隆场景</span><br><span class="line">  └─ ElevenLabs             → 用户自备订阅后可用来读英文书</span><br></pre></td></tr></table></figure>
+
+<p><strong>对有声书用户来说，TTS 引擎的切换是透明的</strong>——他们只需在语音选择器中挑一个语音，系统自动路由到对应的引擎。如果没有配置远程引擎，语音选择器只显示本地已下载的语音。</p>
+<hr>
+<h2 id="十二、性能预估"><a href="#十二、性能预估" class="headerlink" title="十二、性能预估"></a>十二、性能预估</h2><table>
+<thead>
+<tr>
+<th>指标</th>
+<th align="center">本地 Kokoro</th>
+<th align="center">本地 Supertonic</th>
+<th align="center">远程阿里云</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>单句合成延迟（15 字中文）</td>
+<td align="center">~0.5s</td>
+<td align="center">N&#x2F;A (无中文)</td>
+<td align="center">~0.3s</td>
+</tr>
+<tr>
+<td>单句合成延迟（15 词英文）</td>
+<td align="center">~0.3s</td>
+<td align="center">~0.01s</td>
+<td align="center">~0.2s</td>
+</tr>
+<tr>
+<td>预缓冲 5 句时间</td>
+<td align="center">~2.5s</td>
+<td align="center">~0.05s</td>
+<td align="center">~1.5s</td>
+</tr>
+<tr>
+<td>首次交互到开始播放</td>
+<td align="center">~2-3s</td>
+<td align="center">~0.5s</td>
+<td align="center">~1-2s</td>
+</tr>
+<tr>
+<td>跨章节间隙</td>
+<td align="center">&lt;1s</td>
+<td align="center">&lt;1s</td>
+<td align="center">&lt;1s</td>
+</tr>
+<tr>
+<td>内存占用 (模型加载后)</td>
+<td align="center">~300MB</td>
+<td align="center">~150MB</td>
+<td align="center">~0（无本地模型）</td>
+</tr>
+<tr>
+<td>磁盘占用</td>
+<td align="center">~160MB</td>
+<td align="center">~99MB</td>
+<td align="center">0</td>
+</tr>
+</tbody></table>
+<p><strong>结论：Supertonic 在英文有声书场景下几乎是即时响应；Kokoro 中文场景需 2-3 秒预缓冲后即可流畅播放。</strong> 两者都满足”边合成边播放”的体验要求。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/epub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji/">https://need.uno/epub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/TTS/" class="post-tags__link button"># TTS</a><a href="/tags/%E5%89%8D%E7%AB%AF/" class="post-tags__link button"># 前端</a><a href="/tags/Electron/" class="post-tags__link button"># Electron</a><a href="/tags/EPUB/" class="post-tags__link button"># EPUB</a><a href="/tags/%E6%9C%89%E5%A3%B0%E4%B9%A6/" class="post-tags__link button"># 有声书</a><a href="/tags/%E6%9E%B6%E6%9E%84%E8%AE%BE%E8%AE%A1/" class="post-tags__link button"># 架构设计</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fepub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji%2F&amp;text=EPUB%20%E7%94%B5%E5%AD%90%E4%B9%A6%E8%BD%AC%E6%9C%89%E5%A3%B0%E4%B9%A6%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fepub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fepub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji%2F&amp;title=EPUB%20%E7%94%B5%E5%AD%90%E4%B9%A6%E8%BD%AC%E6%9C%89%E5%A3%B0%E4%B9%A6%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fepub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji%2F&amp;text=EPUB%20%E7%94%B5%E5%AD%90%E4%B9%A6%E8%BD%AC%E6%9C%89%E5%A3%B0%E4%B9%A6%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fepub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji%2F&amp;title=EPUB%20%E7%94%B5%E5%AD%90%E4%B9%A6%E8%BD%AC%E6%9C%89%E5%A3%B0%E4%B9%A6%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fepub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji%2F&amp;title=EPUB%20%E7%94%B5%E5%AD%90%E4%B9%A6%E8%BD%AC%E6%9C%89%E5%A3%B0%E4%B9%A6%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fepub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji%2F&amp;title=EPUB%20%E7%94%B5%E5%AD%90%E4%B9%A6%E8%BD%AC%E6%9C%89%E5%A3%B0%E4%B9%A6%E6%96%B9%E6%A1%88%E8%AE%BE%E8%AE%A1&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/unobox-tts-duo-yin-qing-ji-cheng-ping-gu-bao-gao/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            unobox TTS 多引擎集成评估报告
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/053-cheng-ben-kong-zhi-ru-he-zuo-dao-gai-sheng-sheng-gai-hua-hua/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            成本控制如何做到&#34;该省省、该花花&#34;？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="epub-dian-zi-shu-zhuan-you-sheng-shu-fang-an-she-ji/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

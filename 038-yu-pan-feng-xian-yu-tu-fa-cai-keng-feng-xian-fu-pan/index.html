@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>预判对的风险和突发踩坑的风险怎么复盘？ | Need.UNO</title>
+
+
+    <meta name="keywords" content="PMP, 项目管理, 职场, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="PMP职场实战108问 · 第38问预判对的风险和突发踩坑的风险怎么复盘？你有没有过这种体验：项目复盘会上，大家把“风险识别不足”写进教训，领导点点头，这事儿就过去了。然后下一个项目，该踩的坑一个没少。 更扎心的是——有些风险你明明预判到了，也登记在册了，最后它还是发生了。而有些风险根本不在你的雷达上，像个暗雷，咔一下就炸了。 两种风险，复盘的方法完全不同。混在一起处理，等于白复盘。 今天直接拆清">
+<meta property="og:type" content="website">
+<meta property="og:title" content="预判对的风险和突发踩坑的风险怎么复盘？">
+<meta property="og:url" content="https://need.uno/038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="PMP职场实战108问 · 第38问预判对的风险和突发踩坑的风险怎么复盘？你有没有过这种体验：项目复盘会上，大家把“风险识别不足”写进教训，领导点点头，这事儿就过去了。然后下一个项目，该踩的坑一个没少。 更扎心的是——有些风险你明明预判到了，也登记在册了，最后它还是发生了。而有些风险根本不在你的雷达上，像个暗雷，咔一下就炸了。 两种风险，复盘的方法完全不同。混在一起处理，等于白复盘。 今天直接拆清">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://need.uno/images/pmp/q038-%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98.svg">
+<meta property="article:published_time" content="2026-07-15T18:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.085Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="PMP">
+<meta property="article:tag" content="项目管理">
+<meta property="article:tag" content="职场">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://need.uno/images/pmp/q038-%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98.svg">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "预判对的风险和突发踩坑的风险怎么复盘？",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-07-16",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan/" },
+  "description": "预判对的风险和突发踩坑的风险怎么复盘？"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        预判对的风险和突发踩坑的风险怎么复盘？
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/07/" class="post-meta__date button">2026-07-16</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <h1 id="PMP职场实战108问-·-第38问"><a href="#PMP职场实战108问-·-第38问" class="headerlink" title="PMP职场实战108问 · 第38问"></a>PMP职场实战108问 · 第38问</h1><h2 id="预判对的风险和突发踩坑的风险怎么复盘？"><a href="#预判对的风险和突发踩坑的风险怎么复盘？" class="headerlink" title="预判对的风险和突发踩坑的风险怎么复盘？"></a>预判对的风险和突发踩坑的风险怎么复盘？</h2><p>你有没有过这种体验：项目复盘会上，大家把“风险识别不足”写进教训，领导点点头，这事儿就过去了。然后下一个项目，该踩的坑一个没少。</p>
+<p>更扎心的是——有些风险你明明预判到了，也登记在册了，最后它还是发生了。而有些风险根本不在你的雷达上，像个暗雷，咔一下就炸了。</p>
+<p>两种风险，复盘的方法完全不同。混在一起处理，等于白复盘。</p>
+<p>今天直接拆清楚：<strong>预判对但没防住的风险</strong>，和<strong>突发踩坑的风险</strong>，到底怎么复盘才有用？</p>
+<hr>
+<h3 id="一、为什么你的复盘总是“复盘了个寂寞”？"><a href="#一、为什么你的复盘总是“复盘了个寂寞”？" class="headerlink" title="一、为什么你的复盘总是“复盘了个寂寞”？"></a>一、为什么你的复盘总是“复盘了个寂寞”？</h3><p>先看两个真实场景。</p>
+<p><strong>场景A：</strong> 你预判了供应商可能延期，风险登记册里写得清清楚楚：“关键物料交付存在延期风险，概率70%，影响程度高。” 应对措施也写了：“提前下单+找备选供应商”。结果呢？备选供应商报价太高没批，原供应商还是延了一周。项目延期，复盘时大家说：“风险识别挺到位，但应对没执行到位。” 然后？没有然后。</p>
+<p><strong>场景B：</strong> 上线当天，客户突然说某个功能不符合业务场景，要回滚。你翻遍风险登记册，这事儿压根没出现过。复盘时大家面面相觑：“这谁能想到？” 然后写一句“加强需求调研”，草草收场。</p>
+<p>发现问题了吗？这两种复盘，都把“现象”当成了“原因”。</p>
+<p>预判对的风险复盘，真正该问的是：<strong>为什么应对措施没起作用？</strong><br>突发踩坑的风险复盘，真正该问的是：<strong>为什么这个风险没有被识别出来？</strong></p>
+<p>不拆开问，结论永远是“以后要更小心”。等于没说。</p>
+<hr>
+<span id="more"></span>
+
+<hr>
+<h3 id="二、预判对的风险：别怪“没执行”，要怪“应对策略没闭环”"><a href="#二、预判对的风险：别怪“没执行”，要怪“应对策略没闭环”" class="headerlink" title="二、预判对的风险：别怪“没执行”，要怪“应对策略没闭环”"></a>二、预判对的风险：别怪“没执行”，要怪“应对策略没闭环”</h3><p><strong>一个职场案例：</strong></p>
+<p>我负责一个系统迁移项目。预判的风险是：新系统上线后，旧数据格式不兼容，可能造成数据丢失。应对措施写了：“迁移前做两次全量数据比对”。项目经理也签了。</p>
+<p>结果上线后，确实发现了数据缺失。复盘会上，开发组长说：“比对了啊，当时没发现问题。” 再深挖才发现：比对用的是抽样，没有全量比对，因为全量比对跑一次要8小时，时间不够。项目经理说：“那你们怎么不提？” 开发说：“提了，你说按计划执行。”</p>
+<p>这里的问题不是“没执行”，而是<strong>应对措施在设计层面就有漏洞</strong>——全量比对需要停机8小时，业务部门不同意。这个约束没提前识别，导致措施写了等于没写。</p>
+<p><strong>对这种风险，复盘的三个关键步骤：</strong></p>
+<ol>
+<li><p><strong>撕开“执行不力”的面纱，找到策略层面的bug</strong><br>✅ 问：我们制定的应对措施，是否考虑了所有现实约束？<br>✅ 问：这个措施在实际操作中，有没有隐藏成本或阻力？<br>✅ 问：如果措施执行了还是出问题，是措施本身不对，还是执行条件变了？</p>
+</li>
+<li><p><strong>建立“应对措施体检机制”</strong><br>风险登记册不应该放着吃灰。每个月用30分钟，把高风险项的应对措施再过一遍——不是看有没有写，是看<strong>今天还管不管用</strong>。</p>
+</li>
+<li><p><strong>识别“应对措施的二次风险”</strong><br>每个应对措施本身可能带来新风险。比如“提前下单”可能带来库存积压，“找备选”可能带来质量不稳定。复盘时要把这些列出来，下次写在主风险旁边。</p>
+</li>
+</ol>
+<p><strong>一句话总结：</strong> 被预判到的风险还是发生了，别急着怪人，九成是措施设计没算清楚“账”。</p>
+<hr>
+<h3 id="三、突发踩坑的风险：别写“识别不足”，要找出“识别盲区”"><a href="#三、突发踩坑的风险：别写“识别不足”，要找出“识别盲区”" class="headerlink" title="三、突发踩坑的风险：别写“识别不足”，要找出“识别盲区”"></a>三、突发踩坑的风险：别写“识别不足”，要找出“识别盲区”</h3><p><strong>另一个职场案例：</strong></p>
+<p>一个敏捷开发项目，已经跑了三个迭代，一切正常。第四个迭代中途，突然被公司信息安全部门叫停，说我们的开发环境用了某个开源组件，有合规风险。所有人都懵了——这个组件用了三个月，没人提过有风险。</p>
+<p>复盘会上一片沉默。有人小声说：“我们又不是信息安全专家，谁能想到这个？” 然后负责人写了一句：“加强安全合规的风险识别。” 说实话，下次遇到类似情况，还是识别不出来。</p>
+<p><strong>对这种风险，复盘的三个关键步骤：</strong></p>
+<ol>
+<li><p><strong>做“事中陷阱挖掘”，别只做“事后总结”</strong><br>不要只问“当时为什么不识别”，要问**“这个风险出现在项目的哪个决策点”**。比如这个案例，关键决策点是“选择开源组件”的那个评审会。当时只有技术选型讨论，没有引入安全合规的角色参与。<strong>盲区出在决策流程，不在个人能力。</strong></p>
+</li>
+<li><p><strong>建立“风险盲区清单”</strong><br>每次踩到一个突发坑，把它记下来。不仅要记录风险本身，还要记录<strong>它属于哪类盲区</strong>：</p>
+<ul>
+<li>流程盲区：没有某个角色参与决策</li>
+<li>信息盲区：没人知道有这个要求</li>
+<li>假设盲区：默认“应该没问题”</li>
+<li>环境盲区：外部政策或市场突然变了</li>
+</ul>
+<p>积累6个以上盲区，你会发现规律。比如：你们项目总在“第三方依赖”上踩坑。那就直接在模板里加一条：“每次引入第三方组件&#x2F;服务，必须做一次快速合规扫描。”</p>
+</li>
+<li><p><strong>给突发风险设“最低防御线”</strong><br>不是所有风险都能提前识别。但你可以设置“如果出了事，我们能不再踩第二次”的机制。比如：所有项目必须预留5%的应急储备，专门应对“没识别到的风险”。下次出事，至少有钱能快速止血。</p>
+</li>
+</ol>
+<p><strong>一句话总结：</strong> 突发踩坑不可怕，可怕的是复盘点只在“识别”上打转，不往“决策流程”里翻。</p>
+<hr>
+<h3 id="四、一个通用复盘框架，两种风险都能用"><a href="#四、一个通用复盘框架，两种风险都能用" class="headerlink" title="四、一个通用复盘框架，两种风险都能用"></a>四、一个通用复盘框架，两种风险都能用</h3><p>不管哪种风险，复盘时都可以套这个三问框架：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>预判对的风险</th>
+<th>突发踩坑的风险</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>我们当时怎么想的？</td>
+<td>应对措施为什么觉得可行？</td>
+<td>为什么没把这个列入考虑？</td>
+</tr>
+<tr>
+<td>中间发生了什么？</td>
+<td>执行中遇到了什么阻力？</td>
+<td>踩坑的导火索是什么？</td>
+</tr>
+<tr>
+<td>下次怎么防止？</td>
+<td>措施设计需要改什么？</td>
+<td>决策流程需要加什么？</td>
+</tr>
+</tbody></table>
+<p><strong>记住一个原则：</strong> 复盘不是为了责怪任何人，是为了<strong>让下一次做决策的人，拥有比这次更好的判断依据</strong>。</p>
+<hr>
+<blockquote>
+<p><strong>📌 今日动作</strong>：打开你当前项目的风险登记册，选一个高风险项，回答三个问题：①这个应对措施在真实执行中，有没有隐藏成本？②如果今天重新评估，这个措施还管用吗？③如果它失效，我们的备选方案是什么？写下来，明天和团队讨论30分钟。</p>
+</blockquote>
+<hr>
+<hr>
+<p><img src="/images/pmp/q038-%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98.svg" class="lazy" data-srcset="/images/pmp/q038-%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="第38问：预判对的风险和突发踩坑的风险怎么复盘？"></p>
+<p>📚 <strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan/">https://need.uno/038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2F038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan%2F&amp;text=%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98%EF%BC%9F&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2F038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2F038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan%2F&amp;title=%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98%EF%BC%9F"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2F038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan%2F&amp;text=%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98%EF%BC%9F"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2F038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan%2F&amp;title=%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98%EF%BC%9F&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2F038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan%2F&amp;title=%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98%EF%BC%9F&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2F038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan%2F&amp;title=%E9%A2%84%E5%88%A4%E5%AF%B9%E7%9A%84%E9%A3%8E%E9%99%A9%E5%92%8C%E7%AA%81%E5%8F%91%E8%B8%A9%E5%9D%91%E7%9A%84%E9%A3%8E%E9%99%A9%E6%80%8E%E4%B9%88%E5%A4%8D%E7%9B%98%EF%BC%9F&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/037-mei-ri-xin-zeng-lin-shi-feng-xian-ji-lu-xi-guan/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            每日新增临时风险的记录习惯
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/039-feng-xian-huan-chong-shi-jian-yu-liu-duo-shao-he-li/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            风险缓冲时间预留多少才合理？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="038-yu-pan-feng-xian-yu-tu-fa-cai-keng-feng-xian-fu-pan/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

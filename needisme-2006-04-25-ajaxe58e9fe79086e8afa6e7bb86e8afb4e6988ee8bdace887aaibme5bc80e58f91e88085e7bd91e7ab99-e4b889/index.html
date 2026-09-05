@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>Ajax原理详细说明(转自ibm开发者网站) (三) | Need.UNO</title>
+
+
+    <meta name="keywords" content="HTML, Java, JavaScript, XML, 互联网, AJAX, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="连接 Web 表单 还有什么呢？实际上没有多少了。一个 JavaScript 方法捕捉用户输入表单的信息并将其发送到服务器，另一个 JavaScript 方法监听和处理响应，并在响应返回时设置字段的值。所有这些实际上都依赖于调用第一个 JavaScript 方法，它启动了整个过程。最明显的办法是在 HTML 表单中增加一个按钮，但这是 2001 年的办法，您不这样认为吗？还是像 清单 7 这样">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Ajax原理详细说明(转自ibm开发者网站) (三)">
+<meta property="og:url" content="https://need.uno/needisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="连接 Web 表单 还有什么呢？实际上没有多少了。一个 JavaScript 方法捕捉用户输入表单的信息并将其发送到服务器，另一个 JavaScript 方法监听和处理响应，并在响应返回时设置字段的值。所有这些实际上都依赖于调用第一个 JavaScript 方法，它启动了整个过程。最明显的办法是在 HTML 表单中增加一个按钮，但这是 2001 年的办法，您不这样认为吗？还是像 清单 7 这样">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2006-04-24T21:11:42.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.103Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="HTML">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="JavaScript">
+<meta property="article:tag" content="XML">
+<meta property="article:tag" content="互联网">
+<meta property="article:tag" content="AJAX">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+    <meta name="robots" content="noindex, nofollow">
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Ajax原理详细说明(转自ibm开发者网站) (三)",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2006-04-25",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/needisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889/" },
+  "description": "Ajax原理详细说明(转自ibm开发者网站) (三)"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        Ajax原理详细说明(转自ibm开发者网站) (三)
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2006/04/" class="post-meta__date button">2006-04-25</a>
+        
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <div id="msgcns!A634C4CD7A14B666!295" class="bvMsg">
+<div>
+<div style="line-height:14.25pt;" align="left"><a><strong><span style="font-size:13.5pt;color:black;font-family:宋体;">连接</span></strong></a><strong><span style="font-size:13.5pt;color:black;font-family:Arial;"> Web </span></strong><strong><span style="font-size:13.5pt;color:black;font-family:宋体;">表单</span></strong></div>
+<div style="line-height:14.25pt;" align="left"><span style="font-size:9pt;color:black;font-family:宋体;">还有什么呢？实际上没有多少了。一个</span><span style="font-size:9pt;color:black;font-family:Verdana;"> JavaScript </span><span style="font-size:9pt;color:black;font-family:宋体;">方法捕捉用户输入表单的信息并将其发送到服务器，另一个</span><span style="font-size:9pt;color:black;font-family:Verdana;"> JavaScript </span><span style="font-size:9pt;color:black;font-family:宋体;">方法监听和处理响应，并在响应返回时设置字段的值。所有这些实际上都依赖于<em>调用</em></span><span style="font-size:9pt;color:black;font-family:宋体;">第一个</span><span style="font-size:9pt;color:black;font-family:Verdana;"> JavaScript </span><span style="font-size:9pt;color:black;font-family:宋体;">方法，它启动了整个过程。最明显的办法是在</span><span style="font-size:9pt;color:black;font-family:Verdana;"> HTML </span><span style="font-size:9pt;color:black;font-family:宋体;">表单中增加一个按钮，但这是</span><span style="font-size:9pt;color:black;font-family:Verdana;"> 2001 </span><span style="font-size:9pt;color:black;font-family:宋体;">年的办法，您不这样认为吗？还是像</span><span style="font-size:9pt;color:black;font-family:Verdana;"> <a target="_blank" rel="noopener" href="http://www-128.ibm.com/developerworks/cn/xml/wa-ajaxintro1.html#code7#code7"><span style="font-family:宋体;"><font face="宋体"><u><font color="#0000ff"><span>清单</span> 7</font></u></font></span></a> </span><span style="font-size:9pt;color:black;font-family:宋体;">这样利用</span><span style="font-size:9pt;color:black;font-family:Verdana;"> JavaScript </span><span style="font-size:9pt;color:black;font-family:宋体;">技术吧。</span></div>
+<div style="line-height:14.25pt;" align="left"><span style="font-size:9pt;color:black;font-family:Verdana;"><br /></span><a><strong><span style="font-size:9pt;color:black;font-family:宋体;">清单</span></strong></a><strong><span style="font-size:9pt;color:black;font-family:Verdana;"> 7. </span></strong><strong><span style="font-size:9pt;color:black;font-family:宋体;">启动一个</span></strong><strong><span style="font-size:9pt;color:black;font-family:Verdana;"> Ajax </span></strong><strong><span style="font-size:9pt;color:black;font-family:宋体;">过程</span></strong></div>
+<table style="background:#eeeeee;width:100%;" cellspacing="0" cellpadding="0" width="100%" border="1">
+<tbody>
+<tr>
+<td>
+<div style="line-height:14.25pt;text-align:left;" align="left">&nbsp;</div>
+<div style="line-height:14.25pt;text-align:left;" align="left"><span style="font-size:12pt;color:black;font-family:'Lucida Console';"><br />
+<form></span></div>
+<div style="line-height:14.25pt;text-align:left;" align="left"><span style="font-size:12pt;color:black;font-family:'Lucida Console';">&nbsp;
+<p>City: <input type="text" name="city" id="city" size="25" </span></div>
+<div style="line-height:14.25pt;text-align:left;" align="left"><span style="font-size:12pt;color:black;font-family:'Lucida Console';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>onChange="callServer();"</strong> /></p>
+<p></span></div>
+<div style="line-height:14.25pt;text-align:left;" align="left"><span style="font-size:12pt;color:black;font-family:'Lucida Console';">&nbsp;
+<p>State: <input type="text" name="state" id="state" size="25" </span></div>
+<div style="line-height:14.25pt;text-align:left;" align="left"><span style="font-size:12pt;color:black;font-family:'Lucida Console';">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>onChange="callServer();"</strong> /></p>
+<p></span></div>
+<div style="line-height:14.25pt;text-align:left;" align="left"><span style="font-size:12pt;color:black;font-family:'Lucida Console';">&nbsp;
+<p>Zip Code: <input type="text" name="zipCode" id="city" size="5" /></p>
+<p></span></div>
+<div style="line-height:14.25pt;text-align:left;" align="left"><span style="font-size:12pt;color:black;font-family:'Lucida Console';"></form>
+<p></span></div>
+</td>
+</tr>
+</tbody>
+</table>
+<div style="line-height:14.25pt;" align="left">&nbsp;</div>
+<div style="line-height:14.25pt;" align="left"><span style="font-size:9pt;color:black;font-family:宋体;">如果感觉这像是一段相当普通的代码，那就对了，正是如此！当用户在</span><span style="font-size:9pt;color:black;font-family:Verdana;"> city </span><span style="font-size:9pt;color:black;font-family:宋体;">或</span><span style="font-size:9pt;color:black;font-family:Verdana;"> state </span><span style="font-size:9pt;color:black;font-family:宋体;">字段中输入新的值时，</span><span style="font-size:12pt;color:black;font-family:宋体;">callServer()</span><span style="font-size:9pt;color:black;font-family:宋体;">方法就被触发，于是</span><span style="font-size:9pt;color:black;font-family:Verdana;"> Ajax </span><span style="font-size:9pt;color:black;font-family:宋体;">开始运行了。有点儿明白怎么回事了吧？好，就是如此！</span></div>
+<div style="line-height:14.25pt;" align="left">&nbsp;</div>
+<table style="width:100%;" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tbody>
+<tr></tr>
+</tbody>
+</table>
+<table cellspacing="0" cellpadding="0" align="right" border="0">
+<tbody>
+<tr>
+<td>
+<div align="right">
+<table cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<tr>
+<td valign="top">
+<div style="line-height:14.25pt;" align="right"><span style="font-size:9pt;color:black;font-family:Verdana;"><a target="_blank" rel="noopener" href="http://www-128.ibm.com/developerworks/cn/xml/wa-ajaxintro1.html#main#main"><strong><span style="font-family:宋体;text-decoration:none;"><font color="#0000ff">回页首</font></span></strong></a></span></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div align="left">&nbsp;</div>
+<div style="line-height:14.25pt;" align="left"><a><strong><span style="font-size:13.5pt;color:black;font-family:宋体;">结束语</span></strong></a></div>
+<div style="line-height:14.25pt;" align="left"><span style="font-size:9pt;color:black;font-family:宋体;">现在您可能已经准备开始编写第一个</span><span style="font-size:9pt;color:black;font-family:Verdana;"> Ajax </span><span style="font-size:9pt;color:black;font-family:宋体;">应用程序了，至少也希望认真读一下</span><span style="font-size:9pt;color:black;font-family:Verdana;"> <a target="_blank" rel="noopener" href="http://www-128.ibm.com/developerworks/cn/xml/wa-ajaxintro1.html#resources#resources"><span style="font-family:宋体;"><span><u><font face="宋体" color="#0000ff">参考资料</font></u></span></span></a> </span><span style="font-size:9pt;color:black;font-family:宋体;">中的那些文章了吧？但可以首先从这些应用程序如何工作的基本概念开始，对</span><span style="font-size:12pt;color:black;font-family:宋体;">XMLHttpRequest</span><span style="font-size:9pt;color:black;font-family:宋体;">对象有基本的了解。在下一期文章中，您将掌握这个对象，学会如何处理</span><span style="font-size:9pt;color:black;font-family:Verdana;"> JavaScript </span><span style="font-size:9pt;color:black;font-family:宋体;">和服务器的通信、如何使用</span><span style="font-size:9pt;color:black;font-family:Verdana;"> HTML </span><span style="font-size:9pt;color:black;font-family:宋体;">表单以及如何获得</span><span style="font-size:9pt;color:black;font-family:Verdana;"> DOM </span><span style="font-size:9pt;color:black;font-family:宋体;">句柄。</span></div>
+<div style="line-height:14.25pt;" align="left"><span style="font-size:9pt;color:black;font-family:宋体;">现在先花点儿时间考虑考虑</span><span style="font-size:9pt;color:black;font-family:Verdana;"> Ajax </span><span style="font-size:9pt;color:black;font-family:宋体;">应用程序有多么强大。设想一下，当单击按钮、输入一个字段、从组合框中选择一个选项或者用鼠标在屏幕上拖动时，</span><span style="font-size:9pt;color:black;font-family:Verdana;">Web </span><span style="font-size:9pt;color:black;font-family:宋体;">表单能够立刻作出响应会是什么情形。想一想<em>异步</em></span><span style="font-size:9pt;color:black;font-family:宋体;">究竟意味着什么，想一想</span><span style="font-size:9pt;color:black;font-family:Verdana;"> JavaScript </span><span style="font-size:9pt;color:black;font-family:宋体;">代码运行而且<em>不等待</em></span><span style="font-size:9pt;color:black;font-family:宋体;">服务器对它的请求作出响应。会遇到什么样的问题？会进入什么样的领域？考虑到这种新的方法，编程的时候应如何改变表单的设计？</span></div>
+<div style="line-height:14.25pt;" align="left"><span style="font-size:9pt;color:black;font-family:宋体;">如果在这些问题上花一点儿时间，与简单地剪切</span><span style="font-size:9pt;color:black;font-family:Verdana;">/</span><span style="font-size:9pt;color:black;font-family:宋体;">粘贴某些代码到您根本不理解的应用程序中相比，收益会更多。在下一期文章中，我们将把这些概念付诸实践，详细介绍使应用程序按照这种方式工作所需要的代码。因此，现在先享受一下</span><span style="font-size:9pt;color:black;font-family:Verdana;"> Ajax </span><span style="font-size:9pt;color:black;font-family:宋体;">所带来的可能性吧。</span></div>
+<div style="line-height:14.25pt;" align="left">&nbsp;</div>
+<table style="width:100%;" cellspacing="0" cellpadding="0" width="100%" border="0">
+<tbody>
+<tr></tr>
+</tbody>
+</table>
+<table cellspacing="0" cellpadding="0" align="right" border="0">
+<tbody>
+<tr>
+<td>
+<div align="right">
+<table cellspacing="0" cellpadding="0" border="0">
+<tbody>
+<tr>
+<td valign="top">
+<div style="line-height:14.25pt;" align="right"><span style="font-size:9pt;color:black;font-family:Verdana;"><a target="_blank" rel="noopener" href="http://www-128.ibm.com/developerworks/cn/xml/wa-ajaxintro1.html#main#main"><strong><span style="font-family:宋体;text-decoration:none;"><font color="#0000ff">回页首</font></span></strong></a></span></div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<div align="left">&nbsp;</div>
+<div style="line-height:14.25pt;" align="left"><a><strong><span style="font-size:13.5pt;color:black;font-family:宋体;">参考资料</span></strong></a><strong><span style="font-size:13.5pt;color:black;font-family:Arial;"> </span></strong></div>
+<div style="line-height:14.25pt;" align="left"><strong><span style="font-size:9pt;color:black;font-family:宋体;">学习</span></strong></div>
+<ul>
+<li><span style="font-size:9pt;font-family:宋体;">您可以参阅本文在</span><span style="font-size:9pt;font-family:Arial;"> developerWorks </span><span style="font-size:9pt;font-family:宋体;">全球站点上的</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://www.ibm.com/developerworks/xml/library/wa-ajaxintro1.html"><span style="font-family:宋体;"><span><font face="宋体" color="#5c81a7"><u>英文原文</u></font></span></span></a></span><span style="font-size:9pt;font-family:宋体;">。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www.adaptivepath.com/"><font color="#5c81a7"><u>Adaptive Path</u></font></a> </span><span style="font-size:9pt;font-family:宋体;">是一家领先的用户界面设计公司，仔细阅读他们的网站可以更多地了解</span><span style="font-size:9pt;font-family:Arial;"> Ajax</span><span style="font-size:9pt;font-family:宋体;">。</span>
+</li>
+<li><span style="font-size:9pt;font-family:宋体;">如果关心</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">一词的来历，请看一看</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://adaptivepath.com/team/jjg.php"><span><font face="Arial" color="#5c81a7"><u>Jesse James Garrett</u></font></span></a> </span><span style="font-size:9pt;font-family:宋体;">和他的</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">文章（比如</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://adaptivepath.com/publications/essays/archives/000385.php"><span style="font-family:宋体;"><span><font face="宋体" color="#5c81a7"><u>这一篇</u></font></span></span></a></span><span style="font-size:9pt;font-family:宋体;">）。</span>
+</li>
+<li><span style="font-size:9pt;font-family:宋体;">可以先了解下一期文章的主题</span><span style="font-size:12pt;font-family:宋体;">XMLHttpRequest</span><span style="font-size:9pt;font-family:宋体;">对象，请阅读</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://www.jibbering.com/2002/4/httprequest.html"><font color="#5c81a7"><span style="font-family:宋体;"><font face="宋体"><u><span>关于</span><span style="font-size:12pt;font-family:宋体;">XMLHttpRequest</span> <span style="font-family:宋体;">对象的这篇文章</span></u></font></span></font></a></span><span style="font-size:9pt;font-family:宋体;">。</span>
+</li>
+<li><span style="font-size:9pt;font-family:宋体;">如果使用</span><span style="font-size:9pt;font-family:Arial;"> Internet Explorer</span><span style="font-size:9pt;font-family:宋体;">，可以访问</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://msdn.microsoft.com/xml/"><font color="#5c81a7"><span><u><font face="Arial">Microsoft Developer Network </font><span style="font-family:宋体;">的</span><font face="Arial"> XML Developer Center</font></u></span></font></a></span><span style="font-size:9pt;font-family:宋体;">。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www-128.ibm.com/developerworks/cn/java/j-ajax1/"><u><font color="#0000ff"><span style="font-family:宋体;">面向</span> Java <span style="font-family:宋体;">开发人员的</span> Ajax: <span style="font-family:宋体;">构建动态的</span> Java <span style="font-family:宋体;">应用程序</span></font></u></a></span><span style="font-size:9pt;font-family:宋体;">（</span><span style="font-size:9pt;font-family:Arial;">developerWorks</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2005 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 9 </span><span style="font-size:9pt;font-family:宋体;">月）介绍了这种革新方法，它解决了页面重新加载难题，可以创建动态的</span><span style="font-size:9pt;font-family:Arial;"> Web </span><span style="font-size:9pt;font-family:宋体;">应用程序体验。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www-128.ibm.com/developerworks/cn/java/j-ajax2/"><font color="#5c81a7"><u><span style="font-family:宋体;">面向</span> Java <span style="font-family:宋体;">开发人员的</span> Ajax: Ajax <span style="font-family:宋体;">的</span> Java <span style="font-family:宋体;">对象序列化</span></u></font></a></span><span style="font-size:9pt;font-family:宋体;">（</span><span style="font-size:9pt;font-family:Arial;">developerWorks</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2005 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 10 </span><span style="font-size:9pt;font-family:宋体;">月）介绍了在</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">应用程序中对数据进行序列化的五种方法。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www-128.ibm.com/developerworks/edu/os-dw-os-phpajax-i.html"><font color="#5c81a7"><u>Using Ajax with PHP and Sajax</u></font></a></span><span style="font-size:9pt;font-family:宋体;">（</span><span style="font-size:9pt;font-family:Arial;">developerWorks</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2005 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 10 </span><span style="font-size:9pt;font-family:宋体;">月），这篇教程针对那些对开发丰富</span><span style="font-size:9pt;font-family:Arial;"> Web </span><span style="font-size:9pt;font-family:宋体;">应用程序感兴趣的人，介绍了使用</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">和</span><span style="font-size:9pt;font-family:Arial;"> PHP </span><span style="font-size:9pt;font-family:宋体;">动态更新内容。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www-128.ibm.com/developerworks/webservices/library/ws-wsajax/"><font color="#5c81a7"><u>Call SOAP Web services with AJAX, Part 1: Build the Web services client</u></font></a></span><span style="font-size:9pt;font-family:宋体;">（</span><span style="font-size:9pt;font-family:Arial;">developerWorks</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2005 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 10 </span><span style="font-size:9pt;font-family:宋体;">月）介绍了如何使用</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">设计模式实现基于</span><span style="font-size:9pt;font-family:Arial;"> Web </span><span style="font-size:9pt;font-family:宋体;">浏览器的</span><span style="font-size:9pt;font-family:Arial;"> SOAP Web </span><span style="font-size:9pt;font-family:宋体;">服务客户机。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www.ibm.com/developerworks/cn/xml/x-matters41.html"><font color="#5c81a7"><u>XML <span style="font-family:宋体;">问题</span>: <span style="font-family:宋体;">超越</span> DOM</u></font></a></span><span style="font-size:9pt;font-family:宋体;">（</span><span style="font-size:9pt;font-family:Arial;">developerWorks</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2005 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 5 </span><span style="font-size:9pt;font-family:宋体;">月）详细阐述了如何使用文档对象模型来构建动态</span><span style="font-size:9pt;font-family:Arial;"> Web </span><span style="font-size:9pt;font-family:宋体;">应用程序。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www.ibm.com/developerworks/edu/wa-dw-wa-ajax-i.html"><font color="#5c81a7"><u>Build apps with Asynchronous JavaScript with XML, or AJAX</u></font></a></span><span style="font-size:9pt;font-family:宋体;">（</span><span style="font-size:9pt;font-family:Arial;">developerWorks</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2005 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 11 </span><span style="font-size:9pt;font-family:宋体;">月）演示了如何使用</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">构造支持实时检验的</span><span style="font-size:9pt;font-family:Arial;"> Web </span><span style="font-size:9pt;font-family:宋体;">应用程序。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www.ibm.com/developerworks/cn/java/j-ajax3/"><font color="#5c81a7"><u><span style="font-family:宋体;">面向</span> Java <span style="font-family:宋体;">开发人员的</span> Ajax: <span style="font-family:宋体;">结合</span> Direct Web Remoting <span style="font-family:宋体;">使用</span> Ajax </u></font></a></span><span style="font-size:9pt;font-family:宋体;">（</span><span style="font-size:9pt;font-family:Arial;">developerWorks</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2005 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 11 </span><span style="font-size:9pt;font-family:宋体;">月）演示了如何实现</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">的繁琐细节的自动化处理。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;">OSA Foundation </span><span style="font-size:9pt;font-family:宋体;">有一个</span><span style="font-size:9pt;font-family:Arial;"> wiki <a target="_blank" rel="noopener" href="http://wiki.osafoundation.org/bin/view/Projects/AjaxLibraries"><font color="#5c81a7"><u><span style="font-family:宋体;">调查了</span> AJAX/JavaScript <span style="font-family:宋体;">库</span></u></font></a></span><span style="font-size:9pt;font-family:宋体;">。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;">XUL Planet </span><span style="font-size:9pt;font-family:宋体;">的</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://www.xulplanet.com/references/objref/XMLHttpRequest.html"><span style="font-family:宋体;"><span><font face="宋体" color="#5c81a7"><u>对象参考部分</u></font></span></span></a> </span><span style="font-size:9pt;font-family:宋体;">详细介绍了</span><span style="font-size:9pt;font-family:Arial;"> XMLHttpRequest </span><span style="font-size:9pt;font-family:宋体;">对象（更不用说其他各种</span><span style="font-size:9pt;font-family:Arial;"> XML </span><span style="font-size:9pt;font-family:宋体;">对象了，如</span><span style="font-size:9pt;font-family:Arial;"> DOM</span><span style="font-size:9pt;font-family:宋体;">、</span><span style="font-size:9pt;font-family:Arial;">CSS</span><span style="font-size:9pt;font-family:宋体;">、</span><span style="font-size:9pt;font-family:Arial;">HTML</span><span style="font-size:9pt;font-family:宋体;">、</span><span style="font-size:9pt;font-family:Arial;">Web Service </span><span style="font-size:9pt;font-family:宋体;">以及</span><span style="font-size:9pt;font-family:Arial;"> Windows </span><span style="font-size:9pt;font-family:宋体;">和</span><span style="font-size:9pt;font-family:Arial;"> Navigation </span><span style="font-size:9pt;font-family:宋体;">对象）。</span>
+</li>
+<li><span style="font-size:9pt;font-family:宋体;">关于</span><span style="font-size:9pt;font-family:Arial;"> AJax </span><span style="font-size:9pt;font-family:宋体;">的基本原理，请阅读</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://www.backbase.com/download/Whitepaper Backbase AJAX and Beyond.pdf"><span style="font-family:宋体;"><span><font face="宋体" color="#5c81a7"><u>策略白皮书</u></font></span></span></a></span><span style="font-size:9pt;font-family:宋体;">。</span>
+</li>
+<li><span style="font-size:9pt;font-family:宋体;">请看看</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://www.flickr.com/"><span><font face="Arial" color="#5c81a7"><u>Flickr.com</u></font></span></a> </span><span style="font-size:9pt;font-family:宋体;">上展示的一些很棒的</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">应用程序。</span>
+</li>
+<li><span style="font-size:9pt;font-family:Arial;">Google </span><span style="font-size:9pt;font-family:宋体;">的</span><span style="font-size:9pt;font-family:Arial;"> <a target="_blank" rel="noopener" href="http://gmail.google.com/"><span><font face="Arial" color="#5c81a7"><u>GMail</u></font></span></a> </span><span style="font-size:9pt;font-family:宋体;">是另一个利用</span><span style="font-size:9pt;font-family:Arial;"> Ajax </span><span style="font-size:9pt;font-family:宋体;">的革命性</span><span style="font-size:9pt;font-family:Arial;"> Web </span><span style="font-size:9pt;font-family:宋体;">应用程序的例子。</span>
+</li>
+<li><em><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www.oreilly.com/catalog/headra/index.html"><font color="#5c81a7"><u>Head Rush Ajax</u></font></a></span></em><span style="font-size:9pt;font-family:宋体;">（</span><span style="font-size:9pt;font-family:Arial;">O'Reilly Media, Inc.</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2006 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 2 </span><span style="font-size:9pt;font-family:宋体;">月）包含了本文以及本系列文章所述的内容（还有更多），并采用了创新的获奖格式</span><span style="font-size:9pt;font-family:Arial;"> Head First</span><span style="font-size:9pt;font-family:宋体;">。</span>
+</li>
+<li><em><span style="font-size:9pt;font-family:Arial;"><a target="_blank" rel="noopener" href="http://www.oreilly.com/catalog/jscript4/index.html"><font color="#5c81a7"><u>JavaScript: The Definitive Guide</u></font></a></span></em><span style="font-size:9pt;font-family:宋体;">，第</span><span style="font-size:9pt;font-family:Arial;"> 4 </span><span style="font-size:9pt;font-family:宋体;">版（</span><span style="font-size:9pt;font-family:Arial;">O'Reilly Media, Inc.</span><span style="font-size:9pt;font-family:宋体;">，</span><span style="font-size:9pt;font-family:Arial;">2001 </span><span style="font-size:9pt;font-family:宋体;">年</span><span style="font-size:9pt;font-family:Arial;"> 11 </span><span style="font-size:9pt;font-family:宋体;">月）是关于</span><span style="font-size:9pt;font-family:Arial;"> JavaScript </span><span style="font-size:9pt;font-family:宋体;">语言和使用动态网页的好资料。</span>
+</li>
+<li style="color:black;line-height:14.25pt;text-align:left;"><span style="font-size:9pt;font-family:Arial;">developerWorks <a target="_blank" rel="noopener" href="http://www.ibm.com/developerworks/web/"><font color="#5c81a7"><u>Web <span style="font-family:宋体;">体系结构专区</span></u></font></a> </span><span style="font-size:9pt;font-family:宋体;">专门发表关于各种基于</span><span style="font-size:9pt;font-family:Arial;"> Web </span><span style="font-size:9pt;font-family:宋体;">的解决方案的文章。</span> </li>
+</ul>
+<div>&nbsp;</div>
+<p>Trackback: http://tb.blog.csdn.net/TrackBack.aspx?PostId=586267</p>
+</div>
+</div>
+
+<hr>
+<p><a href="/needisme-mu-lu/">📚 返回目录</a></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/needisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889/">https://need.uno/needisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/Java/" class="post-tags__link button"># Java</a><a href="/tags/JavaScript/" class="post-tags__link button"># JavaScript</a><a href="/tags/XML/" class="post-tags__link button"># XML</a><a href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" class="post-tags__link button"># 互联网</a><a href="/tags/AJAX/" class="post-tags__link button"># AJAX</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fneedisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889%2F&amp;text=Ajax%E5%8E%9F%E7%90%86%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E(%E8%BD%AC%E8%87%AAibm%E5%BC%80%E5%8F%91%E8%80%85%E7%BD%91%E7%AB%99)%20(%E4%B8%89)&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fneedisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fneedisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889%2F&amp;title=Ajax%E5%8E%9F%E7%90%86%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E(%E8%BD%AC%E8%87%AAibm%E5%BC%80%E5%8F%91%E8%80%85%E7%BD%91%E7%AB%99)%20(%E4%B8%89)"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fneedisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889%2F&amp;text=Ajax%E5%8E%9F%E7%90%86%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E(%E8%BD%AC%E8%87%AAibm%E5%BC%80%E5%8F%91%E8%80%85%E7%BD%91%E7%AB%99)%20(%E4%B8%89)"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fneedisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889%2F&amp;title=Ajax%E5%8E%9F%E7%90%86%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E(%E8%BD%AC%E8%87%AAibm%E5%BC%80%E5%8F%91%E8%80%85%E7%BD%91%E7%AB%99)%20(%E4%B8%89)&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fneedisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889%2F&amp;title=Ajax%E5%8E%9F%E7%90%86%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E(%E8%BD%AC%E8%87%AAibm%E5%BC%80%E5%8F%91%E8%80%85%E7%BD%91%E7%AB%99)%20(%E4%B8%89)&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fneedisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889%2F&amp;title=Ajax%E5%8E%9F%E7%90%86%E8%AF%A6%E7%BB%86%E8%AF%B4%E6%98%8E(%E8%BD%AC%E8%87%AAibm%E5%BC%80%E5%8F%91%E8%80%85%E7%BD%91%E7%AB%99)%20(%E4%B8%89)&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/needisme-2006-11-10-linuxe4b88be8bdafe4bbb6e5ae89e8a385e696b9e6b395e680bbe7bb93/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            Linux下软件安装方法总结
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/needisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4ba8c/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            Ajax原理详细说明(转自ibm开发者网站) (二)
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="needisme-2006-04-25-ajaxe58e9fe79086e8afa6e7bb86e8afb4e6988ee8bdace887aaibme5bc80e58f91e88085e7bd91e7ab99-e4b889/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

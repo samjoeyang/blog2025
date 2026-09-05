@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>从裸机到浏览器——开源阅读器的技术栈全景 | Need.UNO</title>
+
+
+    <meta name="keywords" content="unobox, KOReader, Readest, FreeInk, 技术栈, Rust, Flutter, C++, Lua, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="前两篇文章聊了 FreeInk 的全栈设计和开源阅读器的硬件&#x2F;软件路线之争。今天换个角度，从技术栈切入，看看这些项目的开发者们分别选择了什么工具来造轮子。 作为一个写了十几年代码的人，我有个习惯：看到一个开源项目，第一反应不是「这玩意儿能干啥」，而是「它怎么写的」。技术栈的选择往往暴露了一个项目的核心哲学——你选什么语言、什么框架、什么构建工具，背后都藏着你在乎什么、不在乎什么。 这篇就">
+<meta property="og:type" content="website">
+<meta property="og:title" content="从裸机到浏览器——开源阅读器的技术栈全景">
+<meta property="og:url" content="https://need.uno/cong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="前两篇文章聊了 FreeInk 的全栈设计和开源阅读器的硬件&#x2F;软件路线之争。今天换个角度，从技术栈切入，看看这些项目的开发者们分别选择了什么工具来造轮子。 作为一个写了十几年代码的人，我有个习惯：看到一个开源项目，第一反应不是「这玩意儿能干啥」，而是「它怎么写的」。技术栈的选择往往暴露了一个项目的核心哲学——你选什么语言、什么框架、什么构建工具，背后都藏着你在乎什么、不在乎什么。 这篇就">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-07-24T06:00:00.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.134Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="unobox">
+<meta property="article:tag" content="KOReader">
+<meta property="article:tag" content="Readest">
+<meta property="article:tag" content="FreeInk">
+<meta property="article:tag" content="技术栈">
+<meta property="article:tag" content="Rust">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Lua">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "从裸机到浏览器——开源阅读器的技术栈全景",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-07-24",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/cong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing/" },
+  "description": "从裸机到浏览器——开源阅读器的技术栈全景"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        从裸机到浏览器——开源阅读器的技术栈全景
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/07/" class="post-meta__date button">2026-07-24</a>
+        
+    <span class="separate-dot"></span><a href="/categories/%E6%8A%80%E6%9C%AF%E7%9B%98%E7%82%B9/" class="button">技术盘点</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <p>前两篇文章聊了 FreeInk 的全栈设计和开源阅读器的硬件&#x2F;软件路线之争。今天换个角度，从技术栈切入，看看这些项目的开发者们分别选择了什么工具来造轮子。</p>
+<p>作为一个写了十几年代码的人，我有个习惯：看到一个开源项目，第一反应不是「这玩意儿能干啥」，而是「它怎么写的」。技术栈的选择往往暴露了一个项目的核心哲学——你选什么语言、什么框架、什么构建工具，背后都藏着你在乎什么、不在乎什么。</p>
+<p>这篇就带你在开源阅读器的技术栈里走一圈。</p>
+<span id="more"></span>
+
+<hr>
+<h2 id="FreeInk：C-17-的嵌入式浪漫"><a href="#FreeInk：C-17-的嵌入式浪漫" class="headerlink" title="FreeInk：C++17 的嵌入式浪漫"></a>FreeInk：C++17 的嵌入式浪漫</h2><p>选 <strong>C++17 + PlatformIO + ESP-IDF + Arduino 框架</strong>，这个组合说明了一件事：FreeInk 团队不在乎开发效率，在乎的是<strong>能不能把硬件榨干</strong>。</p>
+<p>ESP32-C3 是一个 RISC-V 单核芯片，主频 160MHz，400KB SRAM，外挂 2MB PSRAM。在这种资源限制下，你要一个 EPUB 排版引擎流畅跑起来，C++ 几乎是唯一现实的选择。Garbage Collection 的语言不行（GC pause 不可控），解释型语言也不行（性能不够），Python 更不用说（MicroPython 的生态不够）。C 当然也可以，但 C++17 的 <code>constexpr</code>、模板元编程、RAII 能让嵌入式代码写得更安全、更优雅。</p>
+<p>FreeInk 的代码风格也很有味道。它不是 Arduino 库那种「一个 .ino 文件塞满全局变量」的写法，而是正经的 C++ 工程组织：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">namespace</span> freeink &#123;</span><br><span class="line"><span class="keyword">namespace</span> book &#123;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ChapterLayout</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">  <span class="function"><span class="type">static</span> BookStatus <span class="title">layout</span><span class="params">(</span></span></span><br><span class="line"><span class="params"><span class="function">    BookSource&amp; source,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> ZipArchive&amp; zip,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> ZipEntry&amp; entry,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> std::string&amp; href,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">const</span> LayoutParams&amp; params,</span></span></span><br><span class="line"><span class="params"><span class="function">    Arena&amp; scratch,</span></span></span><br><span class="line"><span class="params"><span class="function">    PageCacheWriter&amp; writer,</span></span></span><br><span class="line"><span class="params"><span class="function">    ProgressCallback* progress,</span></span></span><br><span class="line"><span class="params"><span class="function">    <span class="type">uint32_t</span>* outTotalChars</span></span></span><br><span class="line"><span class="params"><span class="function">  )</span></span>;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<p>有命名空间、有 RAII、有显式的内存管理（<code>Arena</code> 分配器）。这在嵌入式 C++ 世界里算是「讲究」的那一档。</p>
+<p><strong>代价？</strong> 开发速度慢。一个排版 bug 改完要重新编译、烧录、跑测试，循环好几分钟。没有热更新，没有 Chrome DevTools。你对着一个串口输出 <code>printf</code> 调试。这不是所有人能接受的节奏。</p>
+<hr>
+<h2 id="KOReader：Lua-的十年坚守"><a href="#KOReader：Lua-的十年坚守" class="headerlink" title="KOReader：Lua 的十年坚守"></a>KOReader：Lua 的十年坚守</h2><p>KOReader 的选择很有意思：<strong>内核层用 C，逻辑层用 Lua</strong>。</p>
+<p>Lua 是一个被很多人低估的语言。它极其轻量（完整运行时 200KB 不到），嵌入友好，而且有一个杀手级特性：<strong>热更新</strong>。KOReader 可以在运行中加载新的 Lua 脚本，这意味着你可以改一个翻页动画然后立即看到效果——在电子墨水屏设备上，这简直是天赐的开发体验。不用重编译、不用刷机、不用漫长的等待。</p>
+<p>Lua 的另一面是，它太灵活了。没有强类型系统，没有模块化的工程约束，一个大项目写久了容易变成一盘意大利面。KOReader 能撑十年不乱，说明核心维护者的架构能力很强。</p>
+<p><strong>有意思的细节：</strong> KOReader 的 C 层封装了 MuPDF（PDF&#x2F;DJVU 渲染引擎）、CRe（Cool Reader Engine，EPUB&#x2F;FB2 引擎）和 KOPT（页面优化库）。这些底层引擎负责最吃性能的渲染，Lua 层则负责 UI、交互逻辑和配置管理。各司其职，分工清晰。</p>
+<p>这个技术栈也解释了为什么 KOReader 的生态如此丰富——你不需要会 C 就能写 KOReader 的插件，Lua 脚本的编写门槛低太多了。</p>
+<hr>
+<h2 id="Readest：Flutter-的跨平台豪赌"><a href="#Readest：Flutter-的跨平台豪赌" class="headerlink" title="Readest：Flutter 的跨平台豪赌"></a>Readest：Flutter 的跨平台豪赌</h2><p>Readest 是 2025-2026 年增长最快的开源阅读器，22k+ star。技术栈选择了 <strong>Flutter + Dart</strong>。</p>
+<p>选择 Flutter 的逻辑很清楚：你需要一个 iOS、Android、Windows、macOS、Linux 五端一致的体验，而 Flutter 是目前综合来看做这件事最好的框架。它有自己的渲染引擎（Skia&#x2F;Impeller），不依赖平台原生控件，所以 UI 一致性极好。Dart 的 AOT 编译性能也够用，启动速度和交互响应都接近原生。</p>
+<p>Flutter 的阅读器体验确实好。翻页动画丝滑、字体渲染漂亮、双指缩放流畅。这些在 Flutter 里是天然优势，因为它的渲染管线允许你精确控制每一帧。</p>
+<p><strong>代价？</strong> Flutter 的包体积偏大（一个空 App 就要 20MB），Dart 的生态相比 TypeScript 还是小一圈。而且 Flutter 的桌面端支持虽然这两年进步很大，但和 Electron&#x2F;Tauri 方案比，一些系统级集成还是麻烦（比如系统托盘、全局快捷键）。</p>
+<hr>
+<h2 id="unobox：纯前端的「以退为进」"><a href="#unobox：纯前端的「以退为进」" class="headerlink" title="unobox：纯前端的「以退为进」"></a>unobox：纯前端的「以退为进」</h2><p>自家的孩子，我知道技术栈选择的争议性。</p>
+<p><strong>React 19 + TypeScript + Vite + Epub.js</strong>。一个纯粹的 Web 技术栈。</p>
+<p>如果你拿 FreeInk 的标准来看——没有本地存储、没有离线缓存、依赖浏览器——这简直不是一个阅读器。但如果你换个角度想：<strong>为什么阅读器一定需要安装？</strong></p>
+<p>unobox 的回答是：读书这个动作的核心价值在内容本身，而不是在「打开一个 App」这件事上。你打开浏览器就拿到了一整个阅读器，读完关掉标签页就走。没有安装、没有登录、没有数据同步、没有任何附加条件。</p>
+<p>这个选择能成立，靠的是三个技术条件：</p>
+<ol>
+<li><strong>Vite + React 19 的构建效率</strong>——开发体验极好，HMR 毫秒级热更新</li>
+<li><strong>Epub.js 成熟的 EPUB 渲染能力</strong>——纯 JavaScript 的排版引擎，虽然性能不如 C++，但对 EPUB 格式的支持足够好</li>
+<li><strong>浏览器能力的成熟</strong>——File API、IndexedDB、Web Worker、Service Worker，这些十年前还是纸上谈兵的东西，现在已经足够支撑一个完整的阅读器</li>
+</ol>
+<p><strong>代价很明显：</strong> 做不到离线体验，做不到极致的性能优化。浏览器沙箱限制了很多底层操作（比如自定义字体渲染引擎、不同刷新率的屏幕适配）。这是一个「做减法」的技术栈——放弃了一部分能力，换来了零门槛的访问体验。</p>
+<hr>
+<h2 id="其他有意思的选手"><a href="#其他有意思的选手" class="headerlink" title="其他有意思的选手"></a>其他有意思的选手</h2><h3 id="Foliate：GNOME-的纯粹"><a href="#Foliate：GNOME-的纯粹" class="headerlink" title="Foliate：GNOME 的纯粹"></a>Foliate：GNOME 的纯粹</h3><p>Foliate 是一个 GTK4 + JavaScript（GJS）的桌面阅读器。它是我见过最漂亮的 Linux 原生阅读器。GTK 的渲染质量在桌面端是一流的，尤其字体排版。它的翻页动画用的是 GTK 的 OpenGL 支持，效果不输给 Flutter。</p>
+<h3 id="Koodo-Reader：Electron-时代的遗产"><a href="#Koodo-Reader：Electron-时代的遗产" class="headerlink" title="Koodo Reader：Electron 时代的遗产"></a>Koodo Reader：Electron 时代的遗产</h3><p>Koodo Reader 用 <strong>Electron + React</strong>，27k star。Electron 在 2026 年已经被很多人吐槽太重了（一个阅读器打包 200MB），但 Koodo 的功能确实丰富——阅读统计、云同步、多标签、书摘导出。它代表了「功能优先，重量不是问题」的思路。</p>
+<h3 id="Alexandria：Tauri-新势力"><a href="#Alexandria：Tauri-新势力" class="headerlink" title="Alexandria：Tauri 新势力"></a>Alexandria：Tauri 新势力</h3><p>Alexandria 是 <strong>Tauri + React + Epub.js</strong> 的组合。和 Koodo Reader 功能相似，但体积小 10 倍（Tauri 的后端是 Rust 写的系统 WebView，不捆绑 Chromium）。如果你喜欢 Koodo 的体验但受不了它的体积，Alexandria 是个好选择。</p>
+<h3 id="Lector：Qt-的怀旧"><a href="#Lector：Qt-的怀旧" class="headerlink" title="Lector：Qt 的怀旧"></a>Lector：Qt 的怀旧</h3><p>Lector 用 <strong>Qt + Python</strong>。纯粹、简单、直接。打开即用，没有花哨的动画，排版质量稳定。适合那些想要一个「像旧时代软件一样好用」的阅读器的用户。</p>
+<hr>
+<h2 id="一张技术栈对照表"><a href="#一张技术栈对照表" class="headerlink" title="一张技术栈对照表"></a>一张技术栈对照表</h2><p>如果上面的内容记不住，下面这张表可以帮你快速对照：</p>
+<table>
+<thead>
+<tr>
+<th>项目</th>
+<th>语言</th>
+<th>渲染层</th>
+<th>目标平台</th>
+<th>核心哲学</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>FreeInk</td>
+<td>C++17</td>
+<td>自研帧缓冲+面板驱动</td>
+<td>ESP32 硬件</td>
+<td>榨干硬件，全栈开放</td>
+</tr>
+<tr>
+<td>KOReader</td>
+<td>C + Lua</td>
+<td>MuPDF &#x2F; CRe</td>
+<td>电子墨水屏设备</td>
+<td>极致可定制</td>
+</tr>
+<tr>
+<td>Readest</td>
+<td>Dart (Flutter)</td>
+<td>Skia&#x2F;Impeller</td>
+<td>手机&#x2F;桌面&#x2F;平板</td>
+<td>跨平台一致体验</td>
+</tr>
+<tr>
+<td>unobox</td>
+<td>TypeScript (React)</td>
+<td>浏览器 + Epub.js</td>
+<td>一切有浏览器的设备</td>
+<td>零门槛，隐私优先</td>
+</tr>
+<tr>
+<td>Foliate</td>
+<td>JavaScript (GJS)</td>
+<td>GTK4 + WebKitGTK</td>
+<td>Linux 桌面</td>
+<td>原生质感</td>
+</tr>
+<tr>
+<td>Koodo Reader</td>
+<td>TypeScript (React)</td>
+<td>Electron</td>
+<td>桌面端</td>
+<td>功能丰富</td>
+</tr>
+<tr>
+<td>Alexandria</td>
+<td>Rust (Tauri)</td>
+<td>系统 WebView</td>
+<td>桌面端</td>
+<td>轻量现代</td>
+</tr>
+<tr>
+<td>Lector</td>
+<td>Python (PyQt)</td>
+<td>Qt WebEngine</td>
+<td>桌面端</td>
+<td>简洁至上</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="选技术栈就是选价值观"><a href="#选技术栈就是选价值观" class="headerlink" title="选技术栈就是选价值观"></a>选技术栈就是选价值观</h2><p>写这篇文章的时候，我一直在想一个问题：<strong>这些技术栈的选择，真的是技术原因决定的吗？</strong></p>
+<p>回头看了一遍，我觉得不是。</p>
+<p>FreeInk 选 C++，不是因为 Lua 或 JavaScript 做不了嵌入式——<code>Espruino</code> 就是 JavaScript 跑在 ESP32 上的。但 FreeInk 要的是对硬件完全控制，要的是能写出极致的性能。这背后是一种<strong>控制欲</strong>——对代码控制到比特级的欲望。</p>
+<p>Readest 选 Flutter，不是因为 React Native 做不了跨平台——实际上 Readest 放弃了一致性之外的几乎所有东西。这背后是一种<strong>统一欲</strong>——五端一致，不分彼此。</p>
+<p>unobox 选择纯前端，不是因为 Electron&#x2F;Tauri 做不出好体验——只是不想让用户多花那三秒钟去安装什么东西。这背后是一种<strong>减法的意志</strong>——主动放弃能力来换更纯粹的价值。</p>
+<p>技术栈从来不只是技术栈。它是一群人关于「什么东西最重要」的共识。</p>
+<p>下一篇文章是这个系列的最后一篇，聊聊阅读器的未来——离线 AI、交互式内容和开源生态还能走多远。</p>
+<p>📚 <strong><a href="./ying-jian-kai-yuan-vs-ruan-jian-kai-yuan-yue-du-qi-de-liang-tiao-lu-xian/">上一篇：硬件开源 vs 软件开源 →</a></strong> | <strong><a href="./yue-du-qi-de-xia-yi-zhan-chi-xian-ai-jiao-hu-shi-nei-rong-yu-kai-yuan-sheng-tai-de-wei-lai/">下一篇：阅读器的下一站 →</a></strong></p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/cong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing/">https://need.uno/cong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/unobox/" class="post-tags__link button"># unobox</a><a href="/tags/KOReader/" class="post-tags__link button"># KOReader</a><a href="/tags/Readest/" class="post-tags__link button"># Readest</a><a href="/tags/FreeInk/" class="post-tags__link button"># FreeInk</a><a href="/tags/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-tags__link button"># 技术栈</a><a href="/tags/Rust/" class="post-tags__link button"># Rust</a><a href="/tags/Flutter/" class="post-tags__link button"># Flutter</a><a href="/tags/C/" class="post-tags__link button"># C++</a><a href="/tags/Lua/" class="post-tags__link button"># Lua</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fcong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing%2F&amp;text=%E4%BB%8E%E8%A3%B8%E6%9C%BA%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E2%80%94%E2%80%94%E5%BC%80%E6%BA%90%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E6%8A%80%E6%9C%AF%E6%A0%88%E5%85%A8%E6%99%AF&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fcong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fcong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing%2F&amp;title=%E4%BB%8E%E8%A3%B8%E6%9C%BA%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E2%80%94%E2%80%94%E5%BC%80%E6%BA%90%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E6%8A%80%E6%9C%AF%E6%A0%88%E5%85%A8%E6%99%AF"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fcong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing%2F&amp;text=%E4%BB%8E%E8%A3%B8%E6%9C%BA%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E2%80%94%E2%80%94%E5%BC%80%E6%BA%90%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E6%8A%80%E6%9C%AF%E6%A0%88%E5%85%A8%E6%99%AF"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fcong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing%2F&amp;title=%E4%BB%8E%E8%A3%B8%E6%9C%BA%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E2%80%94%E2%80%94%E5%BC%80%E6%BA%90%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E6%8A%80%E6%9C%AF%E6%A0%88%E5%85%A8%E6%99%AF&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fcong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing%2F&amp;title=%E4%BB%8E%E8%A3%B8%E6%9C%BA%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E2%80%94%E2%80%94%E5%BC%80%E6%BA%90%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E6%8A%80%E6%9C%AF%E6%A0%88%E5%85%A8%E6%99%AF&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fcong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing%2F&amp;title=%E4%BB%8E%E8%A3%B8%E6%9C%BA%E5%88%B0%E6%B5%8F%E8%A7%88%E5%99%A8%E2%80%94%E2%80%94%E5%BC%80%E6%BA%90%E9%98%85%E8%AF%BB%E5%99%A8%E7%9A%84%E6%8A%80%E6%9C%AF%E6%A0%88%E5%85%A8%E6%99%AF&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/002-huang-ren-xun-shou-ci-fa-sheng-yu-openai-bu-yuan-qian-ming-de-sheng-ming/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            黄仁勋的首次发声，和那份让OpenAI不愿签名的声明
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/082-shou-quan-bu-deng-yu-fang-quan-shou-shou-zheng-que-shou-quan/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            授权不等于放权——熟手如何被正确授权？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="cong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>

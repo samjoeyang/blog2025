@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察 | Need.UNO</title>
+
+
+    <meta name="keywords" content="AI, LLM, 软件开发, Andrej Karpathy, 编程范式, 软件 2.0, 软件 3.0, Y Combinator, 演讲, 视频翻译, 技术演进, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="好的，以下是一篇格式完整、内容丰富的博客文章，标题建议为：  软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察 作者：Andrej Karpathy演讲时间：2024年?演讲场合：Y Combinator 演讲活动视频链接：YouTube - Software 2.0 and 3.0   🧭 导语：当软件开始“写”软件我们正在经历一场前所未有的技术范式变革。从人类写的硬编码逻">
+<meta property="og:type" content="website">
+<meta property="og:title" content="软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察">
+<meta property="og:url" content="https://need.uno/ruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="好的，以下是一篇格式完整、内容丰富的博客文章，标题建议为：  软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察 作者：Andrej Karpathy演讲时间：2024年?演讲场合：Y Combinator 演讲活动视频链接：YouTube - Software 2.0 and 3.0   🧭 导语：当软件开始“写”软件我们正在经历一场前所未有的技术范式变革。从人类写的硬编码逻">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2025-07-08T08:47:02.000Z">
+<meta property="article:modified_time" content="2026-09-05T20:14:54.138Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="LLM">
+<meta property="article:tag" content="软件开发">
+<meta property="article:tag" content="Andrej Karpathy">
+<meta property="article:tag" content="编程范式">
+<meta property="article:tag" content="软件 2.0">
+<meta property="article:tag" content="软件 3.0">
+<meta property="article:tag" content="Y Combinator">
+<meta property="article:tag" content="演讲">
+<meta property="article:tag" content="视频翻译">
+<meta property="article:tag" content="技术演进">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2025-07-08",
+  "dateModified": "2026-09-06",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/ruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha/" },
+  "description": "软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2025/07/" class="post-meta__date button">2025-07-08</a>
+        
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <p>好的，以下是一篇格式完整、内容丰富的博客文章，标题建议为：</p>
+<hr>
+<h1 id="软件正在吞噬软件：Karpathy-对-AI-编程范式演化的深度洞察"><a href="#软件正在吞噬软件：Karpathy-对-AI-编程范式演化的深度洞察" class="headerlink" title="软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察"></a>软件正在吞噬软件：Karpathy 对 AI 编程范式演化的深度洞察</h1><blockquote>
+<p><strong>作者</strong>：Andrej Karpathy<br><strong>演讲时间</strong>：2024年?<br><strong>演讲场合</strong>：Y Combinator 演讲活动<br><strong>视频链接</strong>：<a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=LCEmiRjPEtQ">YouTube - Software 2.0 and 3.0</a></p>
+</blockquote>
+<hr>
+<h2 id="🧭-导语：当软件开始“写”软件"><a href="#🧭-导语：当软件开始“写”软件" class="headerlink" title="🧭 导语：当软件开始“写”软件"></a>🧭 导语：当软件开始“写”软件</h2><p>我们正在经历一场前所未有的技术范式变革。<br>从人类写的硬编码逻辑，到用数据“训练”神经网络，再到今天我们只需用自然语言与 AI 对话，软件开发的界限正在迅速模糊。</p>
+<p>Andrej Karpathy，这位 OpenAI、Tesla 和 DeepMind 的资深 AI 专家，用他的直觉与洞察向我们展示了这个变化是如何发生的——以及它将如何重塑整个软件世界。在 Y Combinator 的这场演讲中，他不仅回顾了软件 1.0 到 3.0 的演进，还大胆描绘了“LLM 作为新操作系统”的愿景，直指未来开发者的角色转型与生态重构。</p>
+<hr>
+<h2 id="🔍-核心主题概览"><a href="#🔍-核心主题概览" class="headerlink" title="🔍 核心主题概览"></a>🔍 核心主题概览</h2><ul>
+<li>软件的三个时代：1.0（传统编码）、2.0（神经网络）、3.0（自然语言提示）</li>
+<li>LLM 是新的“计算机 + 操作系统”</li>
+<li>“自主性滑块”：人类与 AI 合作编程的自由度选择</li>
+<li>氛围编程、教育新范式与产品设计的重构</li>
+<li>为 LLM 打造的插件系统、控制接口与未来生态</li>
+</ul>
+<hr>
+<h2 id="👨‍💻-演讲者简介：Andrej-Karpathy-是谁？"><a href="#👨‍💻-演讲者简介：Andrej-Karpathy-是谁？" class="headerlink" title="👨‍💻 演讲者简介：Andrej Karpathy 是谁？"></a>👨‍💻 演讲者简介：Andrej Karpathy 是谁？</h2><p>Karpathy 是 AI 领域最具影响力的人物之一，拥有斯坦福博士背景，曾在 Tesla 领导自动驾驶 AI 系统开发，是 OpenAI 的联合创始工程师之一。他也因在 CS231n（Stanford 计算机视觉课程）中的教学而闻名，是“Software 2.0”概念的提出者。</p>
+<p>他的写作与演讲风格一贯清晰、幽默、比喻生动，本场演讲可谓其思想精华的再升华。</p>
+<hr>
+<h2 id="🎥-视频链接"><a href="#🎥-视频链接" class="headerlink" title="🎥 视频链接"></a>🎥 视频链接</h2><blockquote>
+<p><a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=LCEmiRjPEtQ">🔗 观看原始演讲视频（英文）</a><br>视频标题：<strong>Software 2.0 and 3.0</strong><br>主讲人：<strong>Andrej Karpathy</strong><br>发布平台：<strong>Y Combinator 官方频道</strong></p>
+</blockquote>
+<hr>
+<h2 id="📖-中文全文翻译"><a href="#📖-中文全文翻译" class="headerlink" title="📖 中文全文翻译"></a>📖 中文全文翻译</h2><blockquote>
+<p>以下为 Karpathy 在 YC 的完整演讲内容翻译，由 AI 整理，忠实还原其思想脉络与表达风格。</p>
+</blockquote>
+<p>（👇 <strong>点击展开完整中文翻译内容</strong>）</p>
+<details>
+<summary>视频链接：https://www.youtube.com/watch?v=LCEmiRjPEtQ</summary>
+
+<p><strong>新 YouTube 资源</strong><br>摘自 YouTube 频道“Y Combinator”上传的视频“Andrej Karpathy：软件再次发生变化”的转录片段：</p>
+<p><strong>[1]</strong><br>请欢迎特斯拉前人工智能总监 Andre Carpathy。大家好，哇，好多人啊。大家好。嗯，好的，我很高兴今天能在这里和大家谈谈人工智能时代的软件。我听说你们很多人都是学生，比如本科生、硕士生、博士生等等，你们即将进入这个行业。我认为现在进入这个行业是一个极其独特和非常有趣的时期。我认为根本原因在于，嗯，软件再次发生变化。我说“再次”，是因为我其实已经做过一次这个演讲了。但是问题是软件一直在变化，所以我有很多材料可以创作新的演讲。我认为它正在发生非常根本性的变化。我认为大致来说，软件在过去 70 年里没有发生过如此根本性的变化，然后我认为在过去几年里它发生了大约两次非常快速的变化。所以有大量的工作要做，大量的软件需要编写和重写。所以让我们来看看软件的领域。如果我们把这看作是软件的地图，这是一个非常酷的工具，叫做 GitHub 地图。这就像所有已编写的软件，它们是给计算机的指令，用于在数字空间中执行任务。如果你放大这里，这些都是不同类型的存储库，这是所有已编写的代码。几年前，我观察到软件正在发生变化，出现了一种新的软件类型。我当时称之为软件 2.0。其理念是软件 1.0 是你为计算机编写的代码，软件 2.0 基本上是神经网络，特别是神经网络的权重。你不是直接编写这些代码，你更多的是调整数据集，然后运行优化器来创建神经网络的参数。我认为当时神经网络被看作只是一种不同类型的分类器，比如决策树什么的。所以我认为这种框架更合适。而现在我们拥有的是软件 2.0 领域中的一个等同于 GitHub 的东西。</p>
+<p><strong>[2]</strong><br>我认为 Hugging Face 基本上是软件 2.0 中的 GitHub 的等同物，还有 Model Atlas，如果你好奇的话，你可以在那里可视化所有编写的代码。顺便说一下，中间的巨大圆圈是 Flux 图像生成器的参数。所以，每当有人在 Flux 模型之上进行微调时，你基本上就在这个空间中创建了一个 Git commit，你创建了一个不同类型的图像生成器。所以基本上，我们有软件 1.0 是编程计算机的计算机代码，软件 2.0 是编程神经网络的权重。这里有一个 AlexNet 图像识别器神经网络的例子。到目前为止，我们直到最近才熟悉的所有神经网络都像是固定功能的计算机，比如图像到类别之类的。我认为已经改变的，而且我认为是一个相当根本性的改变是，神经网络变得可以通过大型语言模型（LLM）进行编程。所以我认为这相当独特，它是一种新型计算机。所以在我看来，它值得一个新的称谓，即软件 3.0。基本上，你的提示现在是编程 LLM 的程序。而且值得注意的是，这些提示是用英语写的，所以它是一种非常有趣的编程语言。所以也许，总结一下区别，如果你正在做情感分类，例如，你可以想象编写一些 Python 代码来做情感分类，或者你可以训练一个神经网络，或者你可以提示一个大型语言模型。所以这里这是一个少量样本提示，你可以想象改变它并以稍微不同的方式编程计算机。所以基本上我们有软件 1.0、软件 2.0，我认为我们正在看到，也许你已经看到很多 GitHub 代码不再仅仅是代码了，里面夹杂着很多英语。所以，我认为有一种不断增长的新型代码类别。所以它不仅是一种新的编程范式，而且令我惊讶的是，它是用我们的母语英语编写的。所以当这在几年前让我大吃一惊时，我发了这条推文，而且我认为它引起了很多人的关注，这就是</p>
+<p><strong>[3]</strong><br>我目前置顶的推文是，令人惊奇的是，我们现在正在用英语编程计算机。当年我在特斯拉的时候，我们正在开发自动驾驶系统，我们试图让汽车能够行驶。我当时展示了这张幻灯片，你可以想象汽车的输入在底部，它们通过一个软件堆栈来产生转向和加速。我当时观察到，自动驾驶系统中有大量的 C++ 代码，那是软件 1.0 代码，然后里面有一些神经网络做图像识别。我观察到，随着时间的推移，当我们改进自动驾驶系统时，神经网络的能力和规模都在增长，除此之外，所有的 C++ 代码都被删除了，而且很多最初用 1.0 编写的功能和能力都迁移到了 2.0。举个例子，很多来自不同摄像头和跨时间的图像信息拼接都是由神经网络完成的，我们能够删除大量的代码。所以软件 2.0 堆栈确实吞噬了自动驾驶的软件堆栈。我觉得这在当时非常了不起，我认为我们正在再次看到同样的事情，即我们有了一种新型软件，它正在吞噬整个堆栈。我们有三种完全不同的编程范式，我认为如果你正在进入这个行业，精通所有这些范式是一个非常好的主意，因为它们都有各自的优缺点，你可能想用 1.0、2.0 或 3.0 来编程某些功能。你是要训练神经网络？还是只是提示 LLM？这应该是一段显式代码等等。所以我们都必须做出这些决定，并且可能需要在这些范式之间流畅地转换。所以我现在想深入探讨的是，首先我想在第一部分谈谈 LLM，以及如何思考这种新范式和生态系统，以及它看起来像什么。这种新型计算机是什么样子，生态系统又是什么样子？我被安德鲁·图灵多年前的一句话所震撼，我认为安德鲁将紧随我之后发言，但他当时说“AI 是新的电力”，我确实认为它捕捉到了一些非常有趣的东西，即 LLM 肯定感觉像现在具有公用事业的特性。</p>
+<p><strong>[4]</strong><br>所以，像 OpenAI、Gemini、Anthropic 等大型语言模型实验室投入资本支出（CapEx）来训练大型语言模型，这相当于建设电网。然后有运营支出（OpEx）通过 API 向我们所有人提供这种智能，这通过按百万令牌计费的方式完成，我们对这种 API 有很多类似公用事业的需求，我们要求低延迟、高正常运行时间、一致的质量等。在电力领域，你会有一个转换开关，这样你就可以将你的电力来源从电网、太阳能、电池或发电机中切换。在大型语言模型领域，我们可能有 OpenRouter，可以轻松地在不同类型的大型语言模型之间切换，因为大型语言模型是软件，它们不争夺物理空间，所以有六个电力供应商是可以的，你可以在它们之间切换，因为它们不会以如此直接的方式竞争。我认为还有一点非常吸引人，我们实际上在过去几天看到了这一点，许多大型语言模型都宕机了，人们被困住了，无法工作。我认为对我来说，当最先进的大型语言模型宕机时，这实际上就像是世界范围内的智能“褐化”（brownout），就像电网电压不稳定时一样，而且地球变得更笨了，我们对这些模型的依赖程度越高，这种现象就越显著，而且我认为这种依赖还会继续增长。但是大型语言模型不仅具有公用事业的特性，我认为也可以说它们具有一些晶圆厂（fab）的特性，原因在于构建大型语言模型所需的资本支出实际上相当大，它不仅仅是建造一些发电站之类的东西，你投入了大量的资金，我认为技术树正在快速增长。所以我们处于一个拥有深厚技术树、研究和开发秘密集中在大型语言模型实验室的世界里。但是我相信</p>
+<p><strong>[5]</strong><br>这种类比也有些模糊，因为正如我所提到的，这是软件，而软件由于其可塑性，防御性稍弱。所以，我认为这是一个有趣的事情，也许可以做很多类比，比如 4 纳米的工艺节点可能类似于一个具有特定最大浮点运算能力的集群，当你使用英伟达 GPU 并且只做软件而不做硬件时，这就像无晶圆厂模型，但如果你实际上也在构建自己的硬件并在 TPU 上训练，如果你是谷歌，那就像英特尔模型，你拥有自己的晶圆厂。所以我认为这里有一些有意义的类比，但实际上我认为最能说明问题的类比是，在我看来，大型语言模型与操作系统有着非常强的类比，因为这不仅仅是电力或水，它不是从水龙头流出的商品，它们现在是日益复杂的软件生态系统，所以它们不仅仅是简单的商品，比如电力。令我感兴趣的是，这个生态系统正在以非常相似的方式形成，你有一些闭源提供商，比如 Windows 或 Mac OS，然后你有一个开源替代品，比如 Linux。我认为对于神经网络，对于大型语言模型也是如此，我们有几个相互竞争的闭源提供商，然后也许 Llama 生态系统目前可能是一个接近于可能发展成类似 Linux 的东西。再说一次，我认为这仍然非常早期，因为它们只是简单的大型语言模型，但我们开始看到它们会变得更加复杂。这不仅仅是关于大型语言模型本身，而是关于所有的工具使用和多模态以及所有这些是如何工作的。所以当我早些时候有这个认识时，我试图把它勾勒出来，它在我看来，大型语言模型有点像一个新的操作系统，所以大型语言模型是一种新型计算机，它就像 CPU 的等价物，上下文窗口有点像内存，然后大型语言模型正在协调内存和计算，用于解决问题，使用所有这些</p>
+<p><strong>[6]</strong><br>这些功能。所以如果你从这个角度看，它确实非常像操作系统。再举几个例子，比如如果你想下载一个应用，比如说我去 VS Code 并下载，你可以在 Windows、Linux 或 Mac 上运行 VS Code。同样地，你可以下载一个 LLM 应用，比如 Cursor，并将其运行在 GPT、Cloud 或 Gemini 系列上，这只是一个下拉菜单，所以在这方面也很相似。我认为令我震惊的更多类比是，我们现在有点像处于 1960 年代左右的时代，LLM 计算对于这种新型计算机来说仍然非常昂贵，这迫使 LLM 集中在云端，而我们都只是瘦客户端，通过网络与它交互，我们都没有充分利用这些计算机，因此使用分时（time sharing）是有意义的，我们都只是它们在云端运行计算机时批处理的一个维度，这与当时计算机的样子非常相似，操作系统在云端，一切都通过流传输，并且有批处理。所以个人计算革命尚未发生，因为它不经济，没有意义。但我认为有些人正在尝试，事实证明 Mac mini 对于某些 LLM 来说非常适合，因为它全是，如果你做的是批量推理，这都是超级内存密集型的，所以这实际上是有效的，我认为这些可能是个人计算的一些早期迹象，但它还没有真正发生，不清楚它会是什么样子。也许你们中的一些人会发明它是什么或者它是如何工作的，或者它应该是什么。也许我还会提到一个类比是，每当我直接在文本中与 ChatGPT 或某个 LLM 交流时，我感觉就像通过终端与操作系统对话一样，它只是文本，是对操作系统的直接访问，我认为目前还没有普遍发明出一种图形用户界面（GUI），比如 ChatGPT 应该有一个不同于文本气泡的 GUI 吗？当然，我们稍后会提到的一些应用程序确实有 GUI，但没有一个通用的 GUI 来处理所有任务，如果这说得通的话。</p>
+<p><strong>[7]</strong><br>在某些方面，大型语言模型（LLM）与早期计算和操作系统截然不同，而且相当独特。我曾撰文探讨过这种非常不同的特性：LLM 扭转了技术扩散的方向。通常，对于电力、密码学、计算、飞行、互联网、GPS 等新的变革性技术，由于它们是新生且昂贵的，政府和企业是首批使用者，随后才扩散到消费者。但我觉得 LLM 似乎颠倒了过来。或许早期计算机主要用于弹道学和军事用途，但 LLM 却主要用于“如何煮鸡蛋”之类的事情。我个人就经常这样使用。因此，拥有一台新的神奇计算机却用来帮我煮鸡蛋，这让我感到非常着迷，它并没有帮助政府做一些非常疯狂的事情，比如军事弹道学或一些特殊技术。事实上，企业和政府在采纳所有这些技术方面都落后于我们所有人。所以这完全是反过来了，我认为这也许说明了我们如何使用这项技术，或者一些首批应用程序在哪里等等。所以，总结一下到目前为止，大型语言模型实验室（LLM labs）和大型语言模型（LLM），我认为用这个词是准确的，但大型语言模型是复杂的操作系统，它们处于计算领域的 1960 年代左右，我们正在重新进行计算，它们目前通过分时方式提供，像公用事业一样分发。**新的和前所未有的地方在于，它们不在少数政府和企业手中，而是在我们所有人手中，因为我们每个人都有一台计算机，而且它都是软件。ChatGPT 像闪电般地、瞬间地、一夜之间地被投射到我们数亿人的计算机上，这太疯狂了。**令我感到疯狂的是，事实就是如此。现在是我们进入这个行业，编程这些计算机的时候了，这太疯狂了。所以我认为这相当了不起。在我们编程大型语言模型之前，我们必须花一些时间来</p>
+<p><strong>[8]</strong><br>思考这些东西是什么，我特别喜欢谈论它们的“心理”。我喜欢将大型语言模型（LLM）视为一种“人类灵魂的随机模拟”[8]。这个模拟器恰好是一个自回归的 Transformer [8]。Transformer 是一种神经网络，它以“令牌”（token）为单位进行处理，每次处理一个“块”，每个“块”的计算量几乎相等 [8]。当然，这个模拟器只是涉及到一些权重，我们将其拟合到互联网上所有的文本数据中，然后你就得到了这样一个模拟器 [8]。因为它是在人类数据上训练的，所以它具有一种类似人类的涌现心理 [8]。你会注意到的第一件事是，LLM 具有百科全书般的知识和记忆，它们能记住比任何单个个体人类多得多的东西，因为它们阅读了太多的内容 [8]。这让我想起了电影《雨人》，我真的强烈推荐大家看这部电影，这是一部很棒的电影，我喜欢这部电影 [8]。达斯汀·霍夫曼在电影中饰演一个患有自闭症的学者，他拥有近乎完美的记忆力，他可以读一本电话簿并记住所有的名字和电话号码 [8]。我感觉 LLM 非常相似，它们可以非常轻松地记住 SHA 哈希值和许多不同类型的东西 [8]。所以它们在某些方面确实拥有超能力，但它们也有很多认知缺陷 [8]。它们会经常“幻觉”，编造一些东西，而且对自我认知没有很好的内部模型，至少不够充分，尽管这方面有所改善但仍不完美 [8]。它们表现出“锯齿状智能”，在某些问题解决领域它们会超人一等，然后会犯下基本上没有人会犯的错误，比如它们会坚持说 9.11 大于 9.9，或者说“草莓”（strawberry）这个词里有两个 R [8]。这些都是一些著名的例子，但基本上，它们有很多你可能会绊倒的粗糙边缘，所以我觉得这也是独一无二的 [8]。它们还患有顺行性遗忘症 [9]。</p>
+<p><strong>[9]</strong><br>所以我在这里暗示的是，如果你的同事加入你的组织，这位同事会随着时间的推移了解你的组织，他们会理解并获得大量关于组织的上下文，他们回家睡觉，巩固知识，并随着时间积累专业知识。大型语言模型（LLM）天生不具备这种能力，我认为这在 LLM 的研发中还没有真正解决 [9]。所以上下文窗口实际上就像工作记忆，你必须相当直接地编程工作记忆，因为它们不会默认变得更聪明 [9]。我认为很多人会因此被类比所困扰 [9]。在流行文化中，我推荐大家看这两部电影：《记忆碎片》（Momento）和《初恋 50 次》（51st Dates）[9]。在这两部电影中，主角的权重是固定的，他们的上下文窗口每天早上都会被清空 [9]。当这种情况发生时，去工作或建立人际关系会非常困难，而这种情况经常发生在 LLM 身上 [9]。我想再指出一点是与安全相关的 LLM 使用限制 [9]。例如，LLM 相当容易上当受骗，它们容易受到提示注入风险的影响，它们可能会泄露你的数据等等 [9]。还有许多其他与安全相关的考量 [9]。所以长话短说，你必须同时思考这个既有超人能力又有一堆认知缺陷和问题的东西，但它们又极其有用 [9]。我们如何编程它们，如何避开它们的缺陷并享受它们的超人能力 [9]。我现在想转到的是讨论如何使用这些模型的机会，以及一些最大的机会是什么 [9]。这并不是一个全面的列表，只是我在这次演讲中觉得有趣的一些事情 [9]。我首先感到兴奋的是我称之为“部分自主应用程序”[9]。例如，我们以编程为例，你当然可以直接去 ChatGPT，开始复制粘贴代码，复制粘贴错误报告等等，获取代码然后复制粘贴所有东西 [9]。你为什么要那样做呢？你为什么要直接去操作系统呢？[9] 拥有一个专门的应用程序更有意义 [9]。</p>
+<p><strong>[10]</strong><br>你为什么要这样做呢？你为什么要直接使用操作系统？拥有一个专门的应用程序更有意义。所以我认为你们很多人都在使用 Cursor，我也一样。Cursor 就是你想要的那种东西，你不想直接使用 ChatGPT。我认为 Cursor 是一个很好的早期 LLM 应用程序的例子，它具有许多我认为对所有 LLM 应用程序都有用的特性。特别是，你会注意到我们有一个传统的界面，允许人类像以前一样手动完成所有工作，但除此之外，我们现在有了 LLM 集成，允许我们以更大的块进行操作。因此，我认为 LLM 应用程序的一些共同且有用的特性是：第一，LLM 基本上处理了大量的上下文管理 [10]。第二，它们协调对 LLM 的多次调用 [10]。所以在 Cursor 的例子中，后台有所有文件的嵌入模型，实际的聊天模型，将差异应用于代码的模型，所有这些都为你进行了协调 [10]。一个非常重要但可能并未完全被充分认识到的特性是应用程序特定的 GUI 及其重要性 [10]。因为你不想直接通过文本与操作系统对话，文本很难阅读、解释和理解，而且你也不想直接通过文本执行某些操作 [10]。所以最好直接以红色和绿色变化的形式看到差异，你可以看到添加和删除的内容，这更容易，只需按 Command+Y 接受或 Command+N 拒绝，我不应该通过文本输入 [10]。所以 GUI 允许人类审计这些易出错系统的工作，并提高速度 [10]。我稍后还会回到这一点 [10]。我想指出的最后一个特性是，有一个我称之为“自主滑块”的东西 [10]。例如，在 Cursor 中，你只需轻按完成，你大部分时间都在掌控中，你可以选择一段代码，然后按 Command+K 更改那一段代码，你可以按 Command+L 更改整个文件，或者你可以按 Command+I，它就会让你在整个代码库中随意操作，这是完全自主的代理版本 [10]。</p>
+<p><strong>[11]</strong><br>你负责自主性滑块，并且根据手头任务的复杂性，你可以调整你愿意为该任务放弃的自主性程度 [11]。也许再举一个相当成功的大型语言模型（LLM）应用程序的例子：Perplexity，它也具有我刚才在 Cursor 中指出的一些非常相似的功能 [11]。它打包了大量信息，协调多个 LLM，它有一个 GUI 允许你审计它的一些工作 [11]。例如，它会引用来源，你可以想象检查它们 [11]。它有一个自主性滑块，你可以选择快速搜索，或者进行研究，或者进行深度研究并在 10 分钟后回来 [11]。所以这都是你赋予工具的不同程度的自主性 [11]。所以我的问题是，我觉得很多软件都会变得部分自主 [11]。我正在思考这会是什么样子，对于许多维护产品和服务的人来说，你们将如何使你们的产品和服务变得部分自主 [11]？LLM 能否看到人类能看到的一切 [11]？LLM 能否以人类能采取的所有方式行动 [11]？人类能否监督并参与到这项活动中 [11]？因为这些又是容易出错的系统，它们还不完美 [11]。在 Photoshop 或类似软件中，差异会是什么样子 [11]？而且，很多传统软件现在都有这些开关和各种东西，这些都是为人类设计的，所有这些都必须改变，并变得对 LLM 可访问 [11]。我想强调的一件事是，对于许多这些 LLM 应用程序，我不确定是否得到了足够的关注，那就是我们现在有点像在与 AI 合作，通常它们负责生成，而我们人类负责验证 [11]。为了让这个循环尽可能快地进行，从而完成大量工作，这是符合我们利益的 [11]。我认为有两种主要方法可以做到这一点：第一，你可以大大加快验证速度 [11]。我认为 GUI 在这方面极其重要，因为 GUI 利用了我们大脑中的计算机视觉 GPU，阅读文本是费力的，而且不好玩，但看东西是好玩的，它就像一条高速公路通向你的大脑 [11]。</p>
+<p><strong>[12]</strong><br>所以我认为 GUI 对于审计系统和一般视觉表示都非常有用 [12]。第二，我想说的是，我们必须让 AI 保持在控制之中 [12]。我认为很多人对 AI 代理过于兴奋了 [12]。对我来说，收到一个 10,000 行代码的差异（diff）到我的代码库是没有用的 [12]。我仍然是瓶颈，即使这 10,000 行代码是瞬间生成的，我也必须确保这个东西没有引入 bug，并且它做的是正确的事情，而且没有安全问题等等 [12]。所以，嗯，我认为，是的，基本上我们必须努力使这两者的流程非常非常快 [12]。我们必须以某种方式让 AI 保持在控制之中，因为它变得过于活跃 [12]。这就像我进行 AI 辅助编码时的感受，如果我只是单纯地编写代码，一切都很好，但如果我真的想完成工作，有一个过于活跃的代理做所有这些事情就不是那么好了 [12]。所以这张幻灯片不是很好，抱歉，但我想说的是，我正在像你们许多人一样，开发一些在我的编码工作流程中利用这些代理的方法，并进行 AI 辅助编码 [12]。在我自己的工作中，我总是害怕收到太大的差异，我总是以小而增量的方式进行，我想确保一切都好，我想非常非常快地转动这个循环 [12]。我致力于小块的单一具体事物 [12]。所以我认为你们中的许多人可能正在开发与大型语言模型（LLM）合作的类似方式 [12]。我也看到了一些博客文章试图为与 LLM 合作制定最佳实践，这里有一篇我最近读到并认为非常好的文章，它讨论了一些技术，其中一些与如何让 AI 保持在控制之中有关 [12]。例如，如果你的提示很模糊，那么 AI 可能不会完全按照你想要的方式做，在这种情况下验证会失败，你会要求其他东西，如果验证失败，你就会开始打转 [12]。所以花更多的时间在提示上更具体会更有意义，这会增加成功验证的可能性 [12]。你可以向前推进 [13]。</p>
+<p><strong>[13]</strong><br>所以我想我们很多人最终都会找到这样的技术。我认为在我自己的工作中，我现在也对在有了人工智能和大型语言模型（LLM）之后，教育会是什么样子很感兴趣。对我来说，很大一部分思考是如何控制人工智能。我认为直接去 ChatGPT 说“嘿，教我物理”是行不通的。我认为这行不通，因为人工智能会迷失在森林里。所以对我来说，这实际上是两个独立的应用程序。例如，有一个应用程序供教师创建课程，然后有一个应用程序接收课程并将其提供给学生。在这两种情况下，我们现在都有了一个中间的课程工件，它是可审计的，我们可以确保它很好，我们可以确保它是一致的，人工智能在特定的教学大纲、特定的项目进展等方面都受到控制。这是一种控制人工智能的方法，我认为这样做的成功可能性要高得多，而且人工智能也不会迷失在森林里。我想再引申一个类比是，我对部分自主性并不陌生，我在特斯拉工作了五年，这也是一个部分自主性产品，并且具有很多特点，例如仪表盘上就有自动驾驶系统的 GUI，它显示了神经网络看到了什么等等。我们也有自主性滑块，在我任职期间，我们为用户完成了越来越多的自主任务。我想简单讲一个故事，我第一次驾驶自动驾驶汽车是在 2013 年，我有一个朋友在 Waymo 工作，他提出带我在帕洛阿尔托兜风。我当时用 Google Glass 拍了这张照片，你们很多人都很年轻，可能都不知道那是什么。但是，是的，当时这很流行。我们上了车，在帕洛阿尔托的高速公路和街道上开了大约 30 分钟，这次驾驶非常完美，零干预。那是 2013 年，距离现在已经</p>
+<p><strong>[14]</strong><br>12 年了。这让我很震惊，因为当时我有了这次完美的驾驶体验，这次完美的演示，我觉得哇，自动驾驶迫在眉睫，因为它就是成功了，这太不可思议了。但 12 年过去了，我们仍在研究自动驾驶。我们仍在研究驾驶代理，即使现在我们还没有真正解决这个问题，你可能会看到 Waymo 在路上行驶，它们看起来像是无人驾驶，但你知道，很多驾驶仍然有很多远程操作和人类参与。所以我们甚至还没有宣布成功，但我认为它肯定会成功，只是需要很长时间。所以我觉得软件真的很棘手，就像驾驶也很棘手一样。所以当我看到诸如“2025 年是代理之年”之类的说法时，我感到非常担忧，我感觉，你知道，这是“代理的十年”，这将需要相当长的时间。我们需要人类参与，我们需要谨慎行事，这是软件，我们应该认真对待。我总是在思考的另一个类比是钢铁侠战衣。我一直很喜欢钢铁侠，我认为它在很多方面都非常正确，关于技术将如何发展以及它将如何发挥作用。我喜欢钢铁侠战衣的地方在于，它既是一种增强，托尼·斯塔克可以驾驶它，它也是一个代理，在某些电影中，钢铁侠战衣是相当自主的，可以四处飞行并找到托尼等等。所以这就是自主性滑块，我们可以构建增强，也可以构建代理，我们都想做一点，但在现阶段，我想说的是，在使用易错的大型语言模型时，我想说，你想要构建的不是钢铁侠机器人，而是钢铁侠战衣。它不是构建自主代理的炫耀性演示，而是构建部分自主产品。这些产品具有自定义的 GUI 和 UI&#x2F;UX，我们正在努力，这样做是为了使人类的生成验证循环非常非常快，但我们并没有忘记原则上可以自动化这项工作的事实，而且你的产品中应该有一个自主性滑块，并且你</p>
+<p><strong>[15]</strong><br>应该考虑如何滑动那个自主性滑块，并使您的产品随着时间的推移变得更加自主 [15]。但这就是我思考这些产品中存在大量机会的方式 [15]。我现在想稍微改变一下话题，谈谈另一个我认为非常独特的维度 [15]。不仅出现了一种新的编程语言，允许软件实现自主性，而且正如我所提到的，它是用英语编写的，这是一种自然界面 [15]。突然间，每个人都成了程序员，因为每个人都说自然语言，比如英语 [15]。这对我来说极其看好且非常有趣，而且也完全是前所未有的 [15]。以前你需要花 5 到 10 年学习一些东西才能在软件领域做一些事情，现在不再是这样了 [15]。所以我不知道有没有人听说过“氛围编程”（vibe coding），这条推文就是介绍它的，但我听说这现在已经是一个主要的迷因了 [15]。关于这件事的一个有趣故事是，我已经使用 Twitter 15 年左右了，但我仍然不知道哪条推文会走红，哪条推文会默默无闻，没有人关心 [15]。我当时以为这条推文会是后者，我不知道，那只是一时兴起想到的，但它却成了一个彻头彻尾的迷因，我真的无法判断 [15]。但我想它触动了人们的心弦，并给了一种大家都感受到了但无法用语言表达的东西命名 [15]。所以现在甚至有了维基百科页面，这就像一个重大的贡献一样 [15]。所以 Hugging Face 的 Tom Wolf 分享了一段我非常喜欢的漂亮视频 [15]。这些是孩子们在氛围编程，我觉得这是一个如此温馨的视频，我爱这个视频 [15]。你怎么能看到这个视频却对未来感到悲观呢？未来很美好，我认为这将成为软件开发的入门毒品 [15]。我不是一个对未来一代感到悲观的人，我认为，是的，我喜欢这个视频 [15]。我也尝试了一下氛围编程，因为它太有趣了 [15]。当你想要构建一些超级定制的、似乎不存在的东西，并且你只是想随心所欲地做，比如在一个周六，氛围编程就太棒了 [16]。</p>
+<p><strong>[16]</strong><br>我构建了这个 iOS 应用程序，我其实不会用 Swift 编程，但我真的很震惊我竟然能够构建一个超级基础的应用程序，我不会解释它，它真的很蠢，但我很喜欢，这只是一天的工作，当天晚些时候它就在我的手机上运行了，我当时想“哇，这太棒了。”我不需要花五天时间阅读 Swift 才能开始。我还通过氛围编程开发了这个叫做 MenuGen 的应用程序，这个应用程序现在正在运行，你可以在 menu.app 尝试它。我基本上遇到了一个问题，我到一个餐厅，浏览菜单，却不知道任何菜品是什么，我需要图片。所以没有这样的东西。于是我想“嘿，我要用氛围编程来实现它。”所以，这就是它的样子，你访问 menu.app，然后你拍一张菜单的照片，然后 MenuGen 会生成图片。每个人注册后都会获得 5 美元的免费积分，因此这对我来说是一个主要的成本中心，所以这对我来说是一个负收入的应用程序，我目前在 MenuGen 上亏了很多钱。但 MenuGen 对我来说最吸引人的地方是，氛围编程的部分，也就是代码部分，其实是氛围编程 MenuGen 最容易的部分。大部分时间花在了我试图让它真正可用上，这样你才能有身份验证、支付、域名和 Vercel 部署，这真的很难。而所有这些都不是代码，所有这些 DevOps 的东西都是我在浏览器中点击的，这非常慢，又花了一周的时间。所以这真的很有趣，我在几个小时内就在我的笔记本电脑上让 MenuGen 的演示版本运行起来了，然后又花了一周时间，因为我试图让它变成一个真实的产品。原因在于这真的很烦人。例如，如果你尝试给你的网页添加 Google 登录，我知道这很小，但 Clerck 库有大量指令告诉我如何集成这个，这太疯狂了，它告诉我：“去这个 URL，点击这个下拉菜单，选择这个，去那个，点击那个。”它就像计算机一样告诉我应该采取哪些行动。你来做啊，我为什么要这样做？搞什么鬼？我必须遵循所有这些指令，这太疯狂了。所以我认为我演讲的最后一部分因此聚焦于我们能否只为代理构建产品？我不想做这些工作。代理能做这些吗？谢谢。好的，大致来说，我认为出现了一种新的数字信息消费者和操纵者。以前只有人类通过 GUI 或计算机通过 API，现在我们有了一个全新的东西。代理是计算机，但它们有点像人类，对吧？它们是“人类灵魂”，互联网上存在“人类灵魂”，它们需要与我们的软件基础设施交互。我们能为它们构建产品吗？这是一个新事物。例如，你可以在你的域名上设置 robots.txt，并指示或建议网络爬虫如何在你的网站上行为。同样地，你可以有一个 lm.txt 文件，它只是一个简单的 Markdown 文件，告诉大型语言模型这个域名是关于什么的。这对于大型语言模型来说非常容易理解。如果它不得不获取你的网页的 HTML 并尝试解析它，那将非常容易出错且困难，而且会搞砸，无法工作。所以我们可以直接与大型语言模型对话，这是值得的。目前有大量的文档是为人类编写的，所以你会看到列表、粗体和图片，这些对于大型语言模型来说并不直接可访问。所以我看到一些服务现在正在将它们的文档大量转换为专门为大型语言模型设计的格式。Vercel 和 Stripe 就是早期的例子，但我已经看到了一些其他公司也这样做了，它们以 Markdown 格式提供文档，Markdown 对于大型语言模型来说非常容易理解，这很棒。也许还有一个我自己的经验中的简单例子，也许你们中的一些人知道 Three Blue One Brown，他在 YouTube 上制作了精美的动画视频。是的，我喜欢他编写的 Manim 库。我想制作我自己的动画，Manim 有大量的文档说明如何使用，所以我不想真正阅读它。我把整个文档复制粘贴给一个大型语言模型，我描述了我想要什么，然后它就直接工作了。大型语言模型直接用代码为我生成了一个动画，完全符合我的要求。我当时想“哇，这太棒了。”所以如果我们能让文档对大型语言模型来说易于理解，这将释放大量的用途，而且我认为这很棒，应该更多地发生。我想指出的另一件事是，不幸的是，你必须这样做，这不仅仅是将你的文档转换为 Markdown 格式那么简单，那只是容易的部分。我们实际上必须改变文档，因为任何时候你的文档中出现“点击”这个词，都是不好的。大型语言模型现在无法直接执行这个动作。所以 Vercel 例如正在将所有出现“点击”的地方替换为你的大型语言模型代理可以代表你执行的等效 curl 命令。所以我认为这非常有趣。当然，还有 Anthropic 的模型上下文协议，这也是另一种直接与代理对话的方式，作为这种新的数字信息消费者和操纵者。所以我非常看好这些想法。我真正喜欢的另一件事是，有许多小工具可以帮助以非常大型语言模型友好的格式摄取数据。例如，当我访问 GitHub 仓库，比如我的 nanoGPT 仓库时，我无法将它输入到大型语言模型中并提问，因为那是 GitHub 上的一个人类界面。所以当你将 URL 从 GitHub 更改为 get ingest 时，这实际上会将所有文件连接成一个巨大的文本文件，并创建一个目录结构等等，这就可以复制粘贴到你最喜欢的大型语言模型中，你可以做一些事情。也许更具戏剧性的例子是 Deep Wiki，它不仅仅是这些文件的原始内容，这是来自 Devon 的，而且 Devon 基本上对 GitHub 仓库进行了分析，并且 Devon 基本上为你的仓库构建了完整的文档页面，你可以想象这对于复制粘贴到你的大型语言模型中会更有帮助。所以我喜欢所有这些小工具，你只需更改 URL 就可以使某些东西对大型语言模型可访问，这都很好，我认为应该有更多这样的工具。我想再补充一点是，未来大型语言模型绝对有可能，这甚至不是未来，现在就可以，它们将能够四处点击等等。但我仍然认为，与大型语言模型对半分是值得的，让它们更容易访问所有这些信息，因为这仍然相当昂贵，我想说使用起来也更困难。所以我确实认为，很多软件会有一个长尾，它们不会像实时玩家那样适应应用程序，比如存储库或数字基础设施，我们需要这些工具。但我认为对于其他人来说，我认为在某个中间点相遇是非常值得的。所以如果这说得通的话，我两者都看好。总之，现在进入这个行业真是太棒了，我们需要重写大量的代码，大量的代码将由专业人士和编码人员编写。这些大型语言模型有点像公用事业，有点像晶圆厂，但它们尤其像操作系统，但现在还很早期，就像 1960 年代的操作系统一样，而且我认为很多类比都交叉了。这些大型语言模型有点像这些会犯错的“人类灵魂”，我们必须学会与它们合作，为了正确地做到这一点，我们需要调整我们的基础设施以适应它们。所以当你构建这些大型语言模型应用程序时，我描述了一些与这些大型语言模型有效合作的方式，以及一些使之成为可能的工具，以及你如何非常快速地转动这个循环，并基本上创建部分自主产品。然后，是的，还需要为代理更直接地编写大量代码。但无论如何，回到钢铁侠战衣的类比，我认为在未来十年左右，我们将看到的是，我们将把滑块从左向右滑动，我非常感兴趣，看到那会是什么样子，我迫不及待地想和你们所有人一起构建它。谢谢。</p>
+</details>
+
+<hr>
+<h2 id="🧠-知识卡片总结"><a href="#🧠-知识卡片总结" class="headerlink" title="🧠 知识卡片总结"></a>🧠 知识卡片总结</h2><table>
+<thead>
+<tr>
+<th>关键概念</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>软件 1.0</td>
+<td>程序员手写代码，明确指令与逻辑（例如 C++）</td>
+</tr>
+<tr>
+<td>软件 2.0</td>
+<td>用数据和梯度优化“训练”出的程序（例如深度神经网络）</td>
+</tr>
+<tr>
+<td>软件 3.0</td>
+<td>用自然语言提示（prompt）“激活”潜能，实现类编程任务</td>
+</tr>
+<tr>
+<td>LLM &#x3D; OS + 计算机</td>
+<td>LLM 同时承担运行时与开发接口的角色，可视为“新型通用计算平台”</td>
+</tr>
+<tr>
+<td>自主性滑块</td>
+<td>控制代理自动执行任务的程度，从完全手动控制到完全委托</td>
+</tr>
+<tr>
+<td>vibe coding（氛围编程）</td>
+<td>用模糊但真实的表达与 AI 协作，强调自然语言沟通与创意激发</td>
+</tr>
+<tr>
+<td>LM.txt</td>
+<td>供 LLM 阅读的网页元信息文件，类似于 robots.txt，用于理解页面结构和功能</td>
+</tr>
+<tr>
+<td>LLM 插件与生态系统</td>
+<td>类似于操作系统的 app&#x2F;plugin 层，支持调用工具（如浏览器、终端、图像编辑器等）</td>
+</tr>
+</tbody></table>
+<hr>
+<h2 id="💬-博主评论与反思"><a href="#💬-博主评论与反思" class="headerlink" title="💬 博主评论与反思"></a>💬 博主评论与反思</h2><p>Karpathy 这场演讲，不只是技术宣言，更是哲学宣言。他实际上在提出这样一个问题：</p>
+<blockquote>
+<p><strong>“如果人类语言本身就是编程语言，那谁才是真正的程序员？”</strong></p>
+</blockquote>
+<p>他不再鼓励你死磕 API，而是鼓励你重拾语言、场景与合作。你不再是命令机器的工程师，而是<strong>与机器共舞的导演、设计者、产品人</strong>。</p>
+<p>对于 AI 开发者、产品经理、设计师、内容创作者来说，这一变化意义深远：</p>
+<ul>
+<li>LLM 不是工具链的一部分，它<strong>就是操作系统本身</strong>；</li>
+<li>编程语言的门槛将继续下降，懂场景、懂人、懂交互将越来越重要；</li>
+<li>未来的软件行业不是“code 或不 code”，而是“提示工程 + AI 协作”。</li>
+</ul>
+<p><strong>软件不再是一个人写给机器的东西，而是人与 AI 共同编织出的“多感官协作体验”。</strong></p>
+<hr>
+<h2 id="🧭-下一步你可以做什么？"><a href="#🧭-下一步你可以做什么？" class="headerlink" title="🧭 下一步你可以做什么？"></a>🧭 下一步你可以做什么？</h2><ul>
+<li><input disabled="" type="checkbox"> 重温并精读 Karpathy 的演讲视频</li>
+<li><input disabled="" type="checkbox"> 尝试用自然语言 prompt 完成一个简单的应用构建</li>
+<li><input disabled="" type="checkbox"> 构思你所在行业如何嵌入“软件 3.0”范式</li>
+<li><input disabled="" type="checkbox"> 关注相关工具生态（如 Open Interpreter、Open Agents、GPTs 插件机制）</li>
+</ul>
+<hr>
+<blockquote>
+<p>📌 本文整理自 <a target="_blank" rel="noopener" href="https://www.youtube.com/watch?v=LCEmiRjPEtQ">Y Combinator YouTube 演讲</a> + [翻译整理 by ChatGPT]<br>原始翻译及知识卡片内容欢迎转载，注明出处即可。</p>
+</blockquote>
+<hr>
+<p>是否需要我帮你将这篇文章输出为 Markdown 文件格式，或者适配你当前使用的博客系统（如 Hexo、VuePress、Notion、Obsidian 等）？我也可以协助添加代码块样式、文章封面图、阅读进度条等细节。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/ruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha/">https://need.uno/ruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-09-06</p></div> 
+    <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/LLM/" class="post-tags__link button"># LLM</a><a href="/tags/%E8%BD%AF%E4%BB%B6%E5%BC%80%E5%8F%91/" class="post-tags__link button"># 软件开发</a><a href="/tags/Andrej-Karpathy/" class="post-tags__link button"># Andrej Karpathy</a><a href="/tags/%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F/" class="post-tags__link button"># 编程范式</a><a href="/tags/%E8%BD%AF%E4%BB%B6-2-0/" class="post-tags__link button"># 软件 2.0</a><a href="/tags/%E8%BD%AF%E4%BB%B6-3-0/" class="post-tags__link button"># 软件 3.0</a><a href="/tags/Y-Combinator/" class="post-tags__link button"># Y Combinator</a><a href="/tags/%E6%BC%94%E8%AE%B2/" class="post-tags__link button"># 演讲</a><a href="/tags/%E8%A7%86%E9%A2%91%E7%BF%BB%E8%AF%91/" class="post-tags__link button"># 视频翻译</a><a href="/tags/%E6%8A%80%E6%9C%AF%E6%BC%94%E8%BF%9B/" class="post-tags__link button"># 技术演进</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha%2F&amp;text=%E8%BD%AF%E4%BB%B6%E6%AD%A3%E5%9C%A8%E5%90%9E%E5%99%AC%E8%BD%AF%E4%BB%B6%EF%BC%9AKarpathy%20%E5%AF%B9%20AI%20%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F%E6%BC%94%E5%8C%96%E7%9A%84%E6%B7%B1%E5%BA%A6%E6%B4%9E%E5%AF%9F&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha%2F&amp;title=%E8%BD%AF%E4%BB%B6%E6%AD%A3%E5%9C%A8%E5%90%9E%E5%99%AC%E8%BD%AF%E4%BB%B6%EF%BC%9AKarpathy%20%E5%AF%B9%20AI%20%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F%E6%BC%94%E5%8C%96%E7%9A%84%E6%B7%B1%E5%BA%A6%E6%B4%9E%E5%AF%9F"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha%2F&amp;text=%E8%BD%AF%E4%BB%B6%E6%AD%A3%E5%9C%A8%E5%90%9E%E5%99%AC%E8%BD%AF%E4%BB%B6%EF%BC%9AKarpathy%20%E5%AF%B9%20AI%20%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F%E6%BC%94%E5%8C%96%E7%9A%84%E6%B7%B1%E5%BA%A6%E6%B4%9E%E5%AF%9F"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha%2F&amp;title=%E8%BD%AF%E4%BB%B6%E6%AD%A3%E5%9C%A8%E5%90%9E%E5%99%AC%E8%BD%AF%E4%BB%B6%EF%BC%9AKarpathy%20%E5%AF%B9%20AI%20%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F%E6%BC%94%E5%8C%96%E7%9A%84%E6%B7%B1%E5%BA%A6%E6%B4%9E%E5%AF%9F&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha%2F&amp;title=%E8%BD%AF%E4%BB%B6%E6%AD%A3%E5%9C%A8%E5%90%9E%E5%99%AC%E8%BD%AF%E4%BB%B6%EF%BC%9AKarpathy%20%E5%AF%B9%20AI%20%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F%E6%BC%94%E5%8C%96%E7%9A%84%E6%B7%B1%E5%BA%A6%E6%B4%9E%E5%AF%9F&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha%2F&amp;title=%E8%BD%AF%E4%BB%B6%E6%AD%A3%E5%9C%A8%E5%90%9E%E5%99%AC%E8%BD%AF%E4%BB%B6%EF%BC%9AKarpathy%20%E5%AF%B9%20AI%20%E7%BC%96%E7%A8%8B%E8%8C%83%E5%BC%8F%E6%BC%94%E5%8C%96%E7%9A%84%E6%B7%B1%E5%BA%A6%E6%B4%9E%E5%AF%9F&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/chao-xiang-xi-jiao-cheng-django-shi-shi-tong-zhi-xi-tong-quan-zhan-ji-cheng-fang-an/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            超详细教程：Django 实时通知系统全栈集成方案
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/dang-ai-kai-shi-le-suo-ren-lei-anthropic-de-jing-gao-zhi-shi-bing-shan-yi-jiao/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            当AI开始“勒索”人类：Anthropic的警告只是冰山一角？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="ruan-jian-zheng-zai-tun-shi-ruan-jian-karpathy-dui-ai-bian-cheng-fan-shi-yan-hua-de-shen-du-dong-cha/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>
