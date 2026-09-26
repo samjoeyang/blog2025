@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 440 186" width="440" height="186">
+  <style>
+    .label { font: 600 12px/1.3 ui-sans-serif,system-ui,sans-serif; fill: var(--fg, #172033); }
+    .header rect { fill: var(--process, #c7d2fe); stroke: var(--line, #64748b); stroke-width: 1; }
+    .node rect { stroke: var(--line, #64748b); stroke-width: 1; }
+    .neutral rect { fill: var(--neutral, #e2e8f0); }
+    .input rect { fill: var(--input, #bfdbfe); }
+    .risk rect { fill: var(--risk, #fecaca); }
+    .title { font: 700 16px/1.3 ui-sans-serif,system-ui,sans-serif; fill: var(--fg, #172033); }
+    .subtitle { font: 12px/1.3 ui-sans-serif,system-ui,sans-serif; fill: var(--muted, #5b6475); }
+  </style>
+  <text x="220" y="28" text-anchor="middle" class="title">第34问：定性分析与定量分析在职场中的简化版</text>
+  <text x="220" y="48" text-anchor="middle" class="subtitle">PMP职场实战108问 · 图解</text>
+  
+</svg>
