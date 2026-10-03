@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+    <head>
+    <meta charset="utf-8">
+
+    
+
+    <!-- 渲染优化 -->
+    <meta name="renderer" content="webkit">
+    <meta name="force-rendering" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="HandheldFriendly" content="True" >
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
+    
+    <!--icon-->
+
+    
+    
+    
+    
+    
+
+
+    <!-- meta -->
+
+
+<title>搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟 | Need.UNO</title>
+
+
+    <meta name="keywords" content="AI, RAG, 检索增强生成, 技术科普, 知识库, 向量检索, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+
+
+
+
+    <!-- OpenGraph -->
+ 
+    <meta name="description" content="搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟故事从一张表格说起。某个团队给公司搭了个 AI 知识库，把产品手册整个喂了进去，用户问，产品 A 的保修期是多久，AI 回答，3 年。手册上白纸黑字写的是，2 年。你先别急着骂模型，我第一次看到这个案例的时候，也以为是它不够聪明。 那问题到底出在哪？依我看，错的原因比错误本身有意思得多。那本手册是 PDF，里面有一张表格，三行并排列着：产品 A 保修">
+<meta property="og:type" content="website">
+<meta property="og:title" content="搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟">
+<meta property="og:url" content="https://need.uno/da-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou/index.html">
+<meta property="og:site_name" content="Need.UNO">
+<meta property="og:description" content="搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟故事从一张表格说起。某个团队给公司搭了个 AI 知识库，把产品手册整个喂了进去，用户问，产品 A 的保修期是多久，AI 回答，3 年。手册上白纸黑字写的是，2 年。你先别急着骂模型，我第一次看到这个案例的时候，也以为是它不够聪明。 那问题到底出在哪？依我看，错的原因比错误本身有意思得多。那本手册是 PDF，里面有一张表格，三行并排列着：产品 A 保修">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-09-28T14:20:00.000Z">
+<meta property="article:modified_time" content="2026-10-03T20:19:01.274Z">
+<meta property="article:author" content="Samjoe Yang">
+<meta property="article:tag" content="AI">
+<meta property="article:tag" content="RAG">
+<meta property="article:tag" content="检索增强生成">
+<meta property="article:tag" content="技术科普">
+<meta property="article:tag" content="知识库">
+<meta property="article:tag" content="向量检索">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:creator" content="@samjoeyang">
+
+
+    
+<link rel="stylesheet" href="/css/style/main.css">
+ 
+
+    
+    
+    
+
+    
+
+     
+
+    <!-- custom head -->
+
+
+    
+  
+  
+    <meta name="baidu-site-verification" content="codeva-cUEi2fKc7m">
+  
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟",
+  "author": { "@type": "Person", "name": "Samjoe Yang" },
+  "datePublished": "2026-09-28",
+  "dateModified": "2026-10-04",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/da-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou/" },
+  "description": "搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟"
+}
+</script>
+
+
+<!-- 百度自动推送 -->
+<script>
+(function(){
+    var bp = document.createElement("script");
+    bp.src = (window.location.protocol === "https:" ? "https://zz.bdstatic.com/linksubmit/push.js" : "http://push.zhanzhang.baidu.com/push.js");
+    var s = document.getElementsByTagName("script")[0];
+    s.parentNode.insertBefore(bp, s);
+})();
+</script>
+
+
+    <script async custom-element="amp-auto-ads" src="https://cdn.ampproject.org/v0/amp-auto-ads-0.1.js"></script>
+<meta name="generator" content="Hexo 7.3.0"><link rel="alternate" href="/atom.xml" title="Need.UNO" type="application/atom+xml">
+<link rel="alternate" href="/rss2.xml" title="Need.UNO" type="application/rss+xml">
+</head>
+
+    <body>
+        <div id="app" tabindex="-1">
+            <header class="header">
+    <div class="header__left">
+        <a href="/" class="button">
+            <span class="logo__text">Need.UNO</span>
+        </a>
+    </div>
+    <div class="header__right">
+        
+            <div class="navbar__menus">
+                
+                    <a href="/" class="navbar-menu button">首页</a>
+                
+                    <a href="/categories/" class="navbar-menu button">分类</a>
+                
+                    <a href="/tags/" class="navbar-menu button">标签</a>
+                
+                    <a href="/archives/" class="navbar-menu button">归档</a>
+                
+                    <a href="/about/" class="navbar-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
+            </div>
+        
+        
+        
+    <a href="/search/" id="btn-search">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024" width="24" height="24" fill="currentColor" stroke="currentColor" stroke-width="32"><path d="M192 448c0-141.152 114.848-256 256-256s256 114.848 256 256-114.848 256-256 256-256-114.848-256-256z m710.624 409.376l-206.88-206.88A318.784 318.784 0 0 0 768 448c0-176.736-143.264-320-320-320S128 271.264 128 448s143.264 320 320 320a318.784 318.784 0 0 0 202.496-72.256l206.88 206.88 45.248-45.248z"></path></svg>
+    </a>
+
+
+        
+        
+
+        
+            <a class="dropdown-icon button" id="btn-dropdown" tabindex="0"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" width='24' height='24' fill="none" stroke="currentColor" stroke-width="0.7" stroke-linecap="round" stroke-linejoin="round"><path fill="currentColor" d="M3.314,4.8h13.372c0.41,0,0.743-0.333,0.743-0.743c0-0.41-0.333-0.743-0.743-0.743H3.314c-0.41,0-0.743,0.333-0.743,0.743C2.571,4.467,2.904,4.8,3.314,4.8z M16.686,15.2H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,15.2,16.686,15.2z M16.686,9.257H3.314c-0.41,0-0.743,0.333-0.743,0.743s0.333,0.743,0.743,0.743h13.372c0.41,0,0.743-0.333,0.743-0.743S17.096,9.257,16.686,9.257z"></path></svg></a>
+            <div class="dropdown-menus" id="dropdown-menus">
+                
+                    <a href="/" class="dropdown-menu button">首页</a>
+                
+                    <a href="/categories/" class="dropdown-menu button">分类</a>
+                
+                    <a href="/tags/" class="dropdown-menu button">标签</a>
+                
+                    <a href="/archives/" class="dropdown-menu button">归档</a>
+                
+                    <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
+                
+            </div>
+        
+    </div>
+</header>
+
+
+            <main class="main">
+    
+
+<div class="post-title">
+    <h1 class="post-title__text">
+        搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟
+    </h1>
+    
+    <div class="post-title__meta">
+        <a href="/archives/2026/09/" class="post-meta__date button">2026-09-28</a>
+        
+    <span class="separate-dot"></span><a href="/categories/AI/" class="button">AI</a>
+
+ 
+        <a class="post-cats__link" id="btn-speech" href="javascript:void(0)" onclick="toggleSpeech()" title="朗读本文">
+  🎧 朗读
+</a>
+
+        
+    
+    
+
+
+ 
+
+ 
+    </div>
+</div>
+
+
+
+<article class="post content-card">
+    <div class="post__header"></div>
+
+
+<script>
+// ===== 朗读引擎 v4 —— 单次朗读，绝不停顿 =====
+(function(){
+    var syn = window.speechSynthesis;
+    var speaking = false;
+    var paused = false;
+    var timer = null;
+    var curMsg = null;
+    var voiceCache = null;
+
+    // ---- 自动连播 ----
+    if (sessionStorage.getItem('speech_autoplay') === '1') {
+        sessionStorage.removeItem('speech_autoplay');
+        setTimeout(function(){
+            var btn = document.getElementById('btn-speech');
+            if (btn) btn.click();
+        }, 500);
+    }
+
+    function pickVoice() {
+        if (voiceCache) return voiceCache;
+        var voices = syn.getVoices();
+        var picks = ['xiaoxiao','xiao','yunxi','yunyang','zhong','mei-jia','meijia','ting-ting','tingting','huihui','yaoyao'];
+        for (var p = 0; p < picks.length; p++)
+            for (var v = 0; v < voices.length; v++)
+                if (voices[v].lang.startsWith('zh') && voices[v].name.toLowerCase().indexOf(picks[p]) !== -1)
+                    return (voiceCache = voices[v]);
+        for (var v = 0; v < voices.length; v++)
+            if (voices[v].lang.startsWith('zh'))
+                return (voiceCache = voices[v]);
+        return (voiceCache = voices[0] || null);
+    }
+
+    function updateBtn() {
+        var btn = document.getElementById('btn-speech');
+        if (!btn) return;
+        if (paused) {
+            btn.innerHTML = '▶️ 继续'; btn.classList.add('speaking');
+        } else if (speaking) {
+            btn.innerHTML = '⏹ 停止'; btn.classList.add('speaking');
+        } else {
+            btn.innerHTML = '🎧 朗读'; btn.classList.remove('speaking');
+        }
+    }
+
+    function goNext() {
+        var link = document.querySelector('.nav__next a.nav__link');
+        if (link && link.href) {
+            sessionStorage.setItem('speech_autoplay', '1');
+            window.location.href = link.href;
+        }
+    }
+
+    function pollDone() {
+        if (paused) return;
+        if (syn.speaking) return;
+        // 读完了！
+        clearInterval(timer); timer = null;
+        speaking = false; paused = false;
+        updateBtn();
+        setTimeout(goNext, 1500);
+    }
+
+    function startPoll() {
+        if (timer) clearInterval(timer);
+        timer = setInterval(pollDone, 500);
+    }
+
+    function getArticleText() {
+        var el = document.getElementsByClassName('post__content')[0];
+        return el ? el.innerText.trim() : '';
+    }
+
+    window.toggleSpeech = function() {
+        var btn = document.getElementById('btn-speech');
+
+        // 暂停 -> 继续
+        if (paused) {
+            syn.resume();
+            paused = false;
+            startPoll();
+            updateBtn();
+            return;
+        }
+
+        // 朗读中 -> 暂停
+        if (speaking) {
+            syn.pause();
+            paused = true;
+            updateBtn();
+            return;
+        }
+
+        // 开始新的朗读
+        var text = getArticleText();
+        if (!text) return;
+
+        if (syn.getVoices().length === 0) {
+            syn.onvoiceschanged = function() {
+                syn.onvoiceschanged = null;
+                doSpeak(text);
+            };
+            syn.getVoices();
+            return;
+        }
+
+        doSpeak(text);
+    };
+
+    function doSpeak(text) {
+        var msg = new SpeechSynthesisUtterance(text);
+        msg.lang = 'zh-CN';
+        msg.rate = 0.85;
+        msg.pitch = 1.0;
+        msg.volume = 1.0;
+        var v = pickVoice();
+        if (v) msg.voice = v;
+
+        // 等语音真正开始读了再启动轮询
+        msg.onstart = function() {
+            startPoll();
+        };
+        msg.onerror = function() {
+            clearInterval(timer); timer = null;
+            speaking = false; paused = false;
+            updateBtn();
+        };
+
+        curMsg = msg;
+        speaking = true;
+        paused = false;
+        updateBtn();
+        syn.speak(msg);
+    }
+
+    window.addEventListener('beforeunload', function() {
+        if (timer) clearInterval(timer);
+        syn.cancel();
+    });
+})();
+</script>
+
+
+    <div class="post__content">
+        <h1 id="搭-RAG-知识库，能跑和能用之间，隔着一条鸿沟"><a href="#搭-RAG-知识库，能跑和能用之间，隔着一条鸿沟" class="headerlink" title="搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟"></a>搭 RAG 知识库，能跑和能用之间，隔着一条鸿沟</h1><p>故事从一张表格说起。某个团队给公司搭了个 AI 知识库，把产品手册整个喂了进去，用户问，产品 A 的保修期是多久，AI 回答，3 年。手册上白纸黑字写的是，2 年。你先别急着骂模型，我第一次看到这个案例的时候，也以为是它不够聪明。</p>
+<p>那问题到底出在哪？依我看，错的原因比错误本身有意思得多。那本手册是 PDF，里面有一张表格，三行并排列着：产品 A 保修期 2 年、产品 B 保修期 1 年、产品 C 保修期 5 年。解析成纯文本的时候，表格的行列关系被打烂了，变成”产品A 保修期 &#x2F; 2年 产品B 保修期 &#x2F; 1年 产品C 保修期”这样的错位排列，那个”2 年”跑到了产品 A 的下一行，跟产品 B 挤在了一起。模型读到的信息本来就是错位的，于是它非常自信地，把错位的答案告诉了用户。</p>
+<p>模型没有任何错。它拿到的东西，本来就是烂的。这句话我建议所有做知识库的人都抄下来。</p>
+<p>这个案例我确认过，不是我编的，是最近读到的技术复盘里的真事。我问过身边几个搭过知识库的朋友，这类解析事故的变体，几乎人人踩过。还有更扎心的：有个团队 RAG 搭了两个月，上线之后用户问什么答不对什么，使用率不到 10%，项目最后整个回退到人工查找。两个月，白干。</p>
+<p>RAG 这玩意现在教程满天飞，文档切块、向量化、检索、拼提示词，四步跑通，看起来简单得不行。可你发现没有，真正上线之后能用的，少之又少。能跑和能用之间，隔着一条巨大的鸿沟。这条鸿沟到底怎么填？我把手头能找到的资料翻了个遍，把工程师们的复盘揉在一起，试着讲明白。</p>
+<p>先说清楚，我自己并没有从头到尾跑通过一个生产级的 RAG 系统，这篇文章是一次资料整理，你且听且判断。</p>
+<h2 id="先说-RAG-是干什么的"><a href="#先说-RAG-是干什么的" class="headerlink" title="先说 RAG 是干什么的"></a>先说 RAG 是干什么的</h2><p>想搞懂怎么填坑，得先知道这坑挖在哪。大语言模型有两个先天残疾，这两个毛病我猜你早就听腻了。一个是知识截止，训练数据有个日期，过了那个日期的事儿它一概不知；另一个是幻觉，不知道的事它不会老实说不知道，它会一本正经地编，编得比真的还真。</p>
+<p>RAG 就是冲着这两个残疾去的，思路特别朴素：回答之前，先去你的知识库里翻一圈，把相关的文档片段捞出来塞进提示词，让模型照着材料回答。不靠模型记性，靠检索补知识。就这么简单一个思路，为什么做起来这么难？</p>
+<p>这个东西是什么、为什么值得做，我在《<a href="/ai-zui-da-de-huang-yan-shi-you-chu-chu-de/">AI 最大的谎言，是有出处的</a>》那篇里已经从头拆过一遍了，从判例幻觉讲到开卷考试的比喻。所以这篇不重复，只讲一件事：为什么大部分 RAG 搭出来是废的，以及怎么救。</p>
+<h2 id="六宗罪"><a href="#六宗罪" class="headerlink" title="六宗罪"></a>六宗罪</h2><p>把各家复盘放在一起看，病灶高度一致，我数了数，六宗罪。你家的知识库中了哪几条？可以拿去自查，基本一查一个准。</p>
+<p><strong>第一宗罪是解析差</strong>，在我见过的翻车案例里，这是重灾区中的重灾区。PDF 表格变乱码、图片里的文字没提取、标题层级全丢，都是常态。扫描版 PDF 更麻烦，里面根本没有文字层，你不做 OCR 它就是一坨图片，而 OCR 还有讲究，分辨率要 300 DPI 以上，要去噪，语言要指定中英文，不然出来还是乱码。你说这些细节烦不烦？可就是它们决定了成败。表格是这里面最难啃的骨头，目前公认的解法是把它转成 Markdown，行是行，列是列，保住结构，模型才能读懂谁对应谁。还有个我觉得特别骚的小技巧，把全文里出现超过 5 次的短行自动判定成页眉页脚删掉，简单粗暴，但真的管用。</p>
+<p><strong>第二宗罪是分块乱切</strong>，这一条我特别想多花点篇幅，因为几家复盘在这一点上措辞全都激动了，有人说这是 RAG 链路里最影响效果的环节，没有之一。我先说结论：文档得切成小块才能检索，但怎么切，是门手艺。</p>
+<h2 id="切块：为什么”按字数平均分”是个陷阱"><a href="#切块：为什么”按字数平均分”是个陷阱" class="headerlink" title="切块：为什么”按字数平均分”是个陷阱"></a>切块：为什么”按字数平均分”是个陷阱</h2><p>最省事的切法，是设一个固定长度，比如每 500 个字切一刀，从头切到尾。你觉得这法子靠不靠谱？这个做法几乎必然出事，因为它完全不管语义，一刀下去往往正好落在句子中间、表格中间、问答中间。</p>
+<p>我请你想象一下那份保修手册，如果”产品 A 的保修期为 2 年”和”产品 B 的保修期为 1 年”这两句刚好被切在两块里，会发生什么？用户问产品 A 的保修期，检索命中的那一块里只有”产品 A 的保修期为”这几个字，后面那个”2 年”被切到了下一块的块首。模型拿到的是一句没说完的话，它要么答不上来，要么就顺着上下文开始编。开头那个保修期事故，本质上是同一类错误，只是发生在解析环节而不是切分环节——信息没断，但关系断了。</p>
+<p>那到底怎么切才对？现在行业里磨合出来的经验值是每块 256 到 512 个 token，相邻块之间留 10% 到 20% 的重叠。我一开始也不理解这两个数字是怎么来的，后来才琢磨明白。块太大，检索不精准，你问一句具体的话，捞回来的是一大坨，噪声把信号埋了；块太小，信息不完整，一句话被拆成三段，谁都不完整。至于重叠，是为了防止关键信息刚好卡在切口上被切成两半，留一段重叠，等于给切口买了个保险。代价当然也有，同一个句子会在两块里各存一份，存储和检索都会有点冗余，但比起信息被切断，这点冗余完全可以接受。</p>
+<p>可是光把尺寸调对就够了吗？远远不够。真正决定成败的是<strong>从哪里下刀</strong>。这就是递归切分的意义。</p>
+<h2 id="递归切分：从最粗的边界开始，切不动再降级"><a href="#递归切分：从最粗的边界开始，切不动再降级" class="headerlink" title="递归切分：从最粗的边界开始，切不动再降级"></a>递归切分：从最粗的边界开始，切不动再降级</h2><p>递归切分的核心思想其实特别朴素：不要去猜”应该在哪里断句”，而是准备一串从粗到细的分隔符，优先在语义最完整的边界下刀，切出来的块如果还是太长，就换更细的分隔符继续切，一层一层降下去，直到每一块都塞得进目标尺寸为止。</p>
+<p>这句话听着有点抽象，拆开看就清楚了。你跟着我走一遍就明白了。拿中文文档举例，那串分隔符的优先级大概是这样排的：先试连续空行（那是章节之间的大断口），不行再试单个换行（段落之间），再不行试句号、感叹号、问号（句子之间），接着是分号、逗号（从句之间），最后实在没辙了，才按单个字符硬切。英文文档同理，只是标点换成句点、问号、逗号和空格。</p>
+<p>还是用那份手册举例，假设目标块大小是 100 个字。第一刀按双换行切下去，拿到三个段落块：第一章那段四十来个字，没超标，直接留用；第二章那段写了一长串免责情形，超过 100 字了，那就对这一块单独降一级，按单换行切；切完还有超标的，再降到句号切；句号切完还超，就上逗号；直到每一块都不超标为止。</p>
+<p>这么做到底值在哪？我的答案是，它保证了<strong>每一次下刀，都尽可能落在语义的天然断点上</strong>。章节之间、段落之间、句子之间，本来就是作者划好的边界，顺着这些边界切，每一块自己都是完整的、能独立读懂的。反过来，固定长度切分是在跟作者较劲，把作者辛苦排好的结构当成无意义的字符流，一刀切在哪儿全凭运气。</p>
+<p>这里有个很多人踩过的坑，我自己也踩过：市面上不少默认的递归切分器，分隔符列表是照着英文写的，拿它切中文文档，效果会打折扣，因为中文的句号是全角”。”，逗号是”；””，”这些，跟英文的 . 和 , 不是一回事。中文语料要单独配一份分隔符表，这件事看起来琐碎，但它直接决定了你的块边界落得准不准。做中文 RAG 的人，这一条千万别偷懒。</p>
+<p>尺寸和边界都定完了，还有一件事逃不掉：给每块挂<strong>元数据</strong>。至少要带上它来自哪个文件、第几页、属于哪一级标题。为什么？因为用户看到一个答案，第一反应永远是”这话你从哪看来的”，你得能一秒指出出处。而且有了章节标题，检索的范围还能收窄，用户问财务的问题，就没必要去翻技术附录。切块这件事，切的是内容，挂的是身份，两个都得做。</p>
+<p>如果你还想再讲究一点，还有几种更进阶的切法，我自己最喜欢第二种。一种是<strong>结构感知切分</strong>，不看标点，直接认 Markdown 的标题符号、HTML 的标签、代码块的分隔符，让切点跟着文档的结构走。另一种是<strong>父子块</strong>，也叫小块检索、大块喂饭：把文档切成大小两套，检索的时候用小块的精度去找，命中之后，把它所属的那个大块整段交给模型，这样既能精准命中，又能保证上下文完整，是这几年实践中很受欢迎的组合拳。还有一种是<strong>语义切分</strong>，不算标点了，直接算相邻句子的向量相似度，相似度陡然掉下来的地方就是语义断点，理论上最贴近”意思”这个层面，代价是慢，而且贵。至于表格和代码这类特殊内容，最稳妥的办法是单独抽出来，一张表整块处理，不要跟正文混在一起切。</p>
+<p>这么简单的道理，为什么大多数人还是做不到？我也说不清，可能是大家都急着上线吧。这些方法不是非此即彼，实际项目里经常混着用。但无论用哪一种，判断标准只有一个：切完之后，随便抽一块出来单独读，它是不是一句完整、独立、能读懂的话。</p>
+<h2 id="剩下的四宗罪"><a href="#剩下的四宗罪" class="headerlink" title="剩下的四宗罪"></a>剩下的四宗罪</h2><p><strong>第三宗罪是检索太天真</strong>，具体说就是只用向量检索。你可能会问，向量检索不是最先进的做法吗？向量检索擅长懂人话，你问”账期不对”，它知道你在问付款问题，但它认死理，碰到产品编号、代码、型号这种精确词，经常给你搞丢。关键词检索反过来，精确匹配很强，完全不懂语义。这俩配合着用，一路走向量、一路走 BM25 关键词，两边结果用 RRF 倒数排名融合，各自补上对方的短板，效果比单打独斗好很多。Anthropic 也提过，把纯向量检索换成混合检索之后，检索质量有明显提升，他们给出的数字相当可观。你只要记住一点：检索这一步，别指望一个模型包打天下。</p>
+<p><strong>第四宗罪是不优化用户的问题</strong>。你有没有想过，用户的原话本身就是一团乱麻？用户的话是口语的、模糊的、带指代的，”这个能退吗””上次那个多少钱”，你原样扔去检索，召回质量稀烂。进阶做法是让模型先把问题改写扩展成好几个角度，多路去搜，再合并结果。</p>
+<p><strong>第五宗罪是提示词裸奔</strong>。我见过最典型的错误，是没告诉模型只能基于文档回答，没要求标注来源，最致命的是，没定义检索不到的时候该怎么办。于是模型检索不到，就开始自由发挥，你辛苦搭的检索链路全白费。</p>
+<p><strong>第六宗罪是没有评估体系</strong>。这是我最想吐槽的一条，改了参数不知道变好还是变坏，出了问题不知道出在哪一环，全靠感觉，全靠玄学。你发现了吗？这个毛病平时不显，等你想优化的时候才知道有多要命——你连自己在往前走还是往后退都不知道。</p>
+<h2 id="被低估最狠的一步：重排序"><a href="#被低估最狠的一步：重排序" class="headerlink" title="被低估最狠的一步：重排序"></a>被低估最狠的一步：重排序</h2><p>六宗罪里头大部分属于常识，一听就懂。但有一个环节，很多人压根不知道它的存在，而它恰恰是被数据证明、性价比最高的一步。重排序。</p>
+<p>我在资料里看到一组研究数据，反复看了三遍：在混合检索之后加一个 Cross-Encoder 重排序，Recall@5 从 0.696 提到 0.816，MRR@3 从 0.433 提到 0.605，后者的相对涨幅有将近四成。这意味着什么？你没看错，就是在检索完之后多加一道复核工序，让一个更精细的模型把召回的候选文档重新打分排序，把最相关的顶到最前面，仅此而已，指标涨了将近四成。</p>
+<p>为什么这一步这么值？我琢磨了很久，也试着手工算过一遍，因为第一阶段的检索要的是”快”和”全”，它从几百万条里先粗粗捞出几十条候选，宁可错捞也不能漏掉；而重排序要的是”准”，候选就那几十条，它有的是时间一条条细看，把真正相关的那几条挑出来递给模型。生产级的标准做法就是这样两阶段：先广撒网捞出 Top 50，再精排挑出最终那几条。</p>
+<p>顺手还有几个细节，我挑我觉得最实用的说。向量库的索引，1000 万向量以内可以无脑选 HNSW，召回率比 IVFFlat 高，还不用训练。重排序模型，开源的 bge-reranker 中文友好，自己部署免费，不差钱就直接上 Cohere Rerank。</p>
+<p>这些东西单看都是小手术，加起来，就是能用和不能用之间的距离。</p>
+<h2 id="三个更野的玩法"><a href="#三个更野的玩法" class="headerlink" title="三个更野的玩法"></a>三个更野的玩法</h2><p>顺着检索这块再往上翻，还有一批更进阶的路子，我挑三个印象最深的。</p>
+<p>HyDE，假设文档嵌入，这是我最喜欢的一个思路。用户问法和文档用词对不上的时候，语义检索会失灵。它的解法是让模型先编一个假答案，用这个假答案去检索真文档，因为假答案的用词和真文档更接近。你敢信吗，用错误答案去找正确答案，反而更好使。</p>
+<p>Self-RAG，问答自省。我看完这个设计的第一反应是，这不就是给 AI 派了个质检员吗？检索完之后加一步自我质疑，先检查捞回来的东西跟问题相不相关，不相关就改写问题重新搜，答完还要自检一遍是不是真的基于文档说的。相当于给模型配了个质检员，专门盯着它别胡说。</p>
+<p>GraphRAG，知识图谱加 RAG。那它到底适合什么场景？把文档里的实体和关系抽成一张图谱，本地问题用混合检索答，全局问题走图谱的社区摘要，能做跨文档的多跳推理。这东西搭起来复杂，但碰到那种一个问题要串起五份文档的场景，它目前是最优解。</p>
+<p>聊到这，我们停一下。写着写着，我突然想起来一件事——RAG 这套流程，人类自己早就做过一遍了。</p>
+<h2 id="这件事，图书馆早就想明白了"><a href="#这件事，图书馆早就想明白了" class="headerlink" title="这件事，图书馆早就想明白了"></a>这件事，图书馆早就想明白了</h2><p>你想啊，人类从来没有把所有知识装进脑子里，知识装在图书馆里。而图书馆最核心的东西，从来不是书，是那套检索系统。</p>
+<p>我查了一下这段历史：1876 年，杜威搞出了十进制分类法，把人类知识切成十个大类，每本书按编号上架。再往后是卡片目录，一本书一张卡片，卡片上写着书名、作者、分类号、所在架位，你要找东西不用翻遍几百万册藏书，翻目录柜就行。那些图书馆员做的事情是什么？是把一本书拆成一张张知识卡片，给卡片编号，建索引，做交叉引用。</p>
+<p>你有没有觉得这个场景很眼熟？把这份工作和 RAG 的链路摆在一起，你会发现这是一一对应的。分块，是把一本书拆成一张张知识卡片；Embedding，是给每张卡片编一个能被查到的号；元数据里的来源和页码，就是卡片上那行出处；关键词检索和向量检索的混合，就是”按书名精确查”和”按主题模糊翻”两条并行的路子；而重排序，就是柜台后面那位经验丰富的老馆员，你跟他描述需求，他从一堆候选里精准抽出你要的那三本，还顺手告诉你另外两本可能也有用。</p>
+<p>我算了算，人类花了一百多年，才把图书馆的检索系统打磨明白。AI 现在用的这套东西，是同一个问题的同一套解法，只是跑的速度快了一亿倍。</p>
+<p>所以别再把 RAG 当成一个功能来做，找个开源库调调参数就上线，那是自欺欺人。依我看，它是一座图书馆。你不会指望把书全堆在地上、读者就能自己找到想看的书；同样，你也不该指望把文档全塞进向量库、模型就能自己找到答案。图书馆有多讲究，RAG 就得有多讲究。</p>
+<h2 id="可以直接抄的五天作业"><a href="#可以直接抄的五天作业" class="headerlink" title="可以直接抄的五天作业"></a>可以直接抄的五天作业</h2><p>最后给个能立刻上手的东西，把各家复盘的建议揉在一起，是一条五天的路径。</p>
+<p>第一天到第二天，先跑通最土的链路，这一步我建议你别想着优化，先动起来：随便找个 PDF，加载、切分、向量化、存进 Chroma，接上模型问几个问题。先别管效果，先让水流动起来，你得先有个能跑的东西，才知道后面每一步在改什么。</p>
+<p>第三天，回头收拾切块，这是我最想让你重视的一天。用递归切分，块大小往 500 token 附近靠，留一到两成的重叠，每个块把来源文件和页码挂上。这一天花的功夫，收益会比后面所有天加起来都大，因为切块是地基，地基歪了，上面盖什么都白搭。</p>
+<p>第四天，上混合检索加重排序，我会把这天叫做分水岭。BM25 和向量各走一路，用 RRF 融合，再接一个 bge-reranker 做精排。改完之后前后各测一轮，你自己就能看到那个接近四成的提升，那一刻是整条链路里最有成就感的。</p>
+<p>第五天，补上文明社会的标配，这一天的活儿我最喜欢。提示词里写死：只准基于文档回答，答不出来就说信息不足，每个答案标注出处。再攒五十个测试问题做成回归测试集，以后每次改动都跑一遍，好或坏，数字说了算。</p>
+<p>我得坦诚一点，第一天你搭出来的东西大概率很难用，答非所问是常态，别灰心，那六宗罪就是为你准备的。而且调优这个过程真的有点枯燥，远没有调提示词那么有即时反馈，但一个知识库能不能活下去，就靠这些枯燥的活儿。</p>
+<p>还有一条暗坑，我提前给你打预防针：Embedding 模型中途不能随便换，换了就必须把整个库重新向量化一遍，因为不同模型训练出来的向量空间互相不认识，混着用等于鸡同鸭讲。这个坑踩一次，你就永远记住了。</p>
+<p>回到开头那个保修期的故事。我一直在想，那个团队缺的到底是什么。缺的东西，从来不是一个更聪明的模型，而是一张没被切碎的表格、一套干净的页眉页脚、几个挂上去的页码、一道复核的工序。都是笨功夫。但图书馆就是靠这些笨功夫，运转了一百多年。</p>
+<p>今天就做一件事，这也是我给你的唯一要求：打开你手上那个知识库项目，随便抽十块切好的内容出来单独读一遍，只要有三块读不通顺，你的切分规则就该重写了。</p>
+<p>你有没有遇到过那种”明明文档里写着、AI 就是答不对”的情况？当时是怎么绕过去的，评论区聊聊。</p>
+
+    </div>
+    
+    <div class="post__license">
+        <p>
+            <strong>本文作者：</strong>Samjoe Yang
+        </p>
+        <p>
+            <strong>
+                本文链接：
+            </strong>
+            <a href="https://need.uno/da-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou/">https://need.uno/da-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou/</a>
+        </p>
+        
+            <strong>
+                <p>版权声明：本作品采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-sa/4.0/">知识共享署名-相同方式共享 4.0 国际许可协议</a> 进行许可。</p>
+
+            </strong>
+        
+    </div>
+ 
+    <div class="post-footer__meta"><p>更新于 2026-10-04</p></div> 
+    <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/RAG/" class="post-tags__link button"># RAG</a><a href="/tags/%E6%A3%80%E7%B4%A2%E5%A2%9E%E5%BC%BA%E7%94%9F%E6%88%90/" class="post-tags__link button"># 检索增强生成</a><a href="/tags/%E6%8A%80%E6%9C%AF%E7%A7%91%E6%99%AE/" class="post-tags__link button"># 技术科普</a><a href="/tags/%E7%9F%A5%E8%AF%86%E5%BA%93/" class="post-tags__link button"># 知识库</a><a href="/tags/%E5%90%91%E9%87%8F%E6%A3%80%E7%B4%A2/" class="post-tags__link button"># 向量检索</a></div> 
+    
+<div class="post-share">
+    <div class="share-buttons">
+        
+            <a href="https://twitter.com/intent/tweet?url=https%3A%2F%2Fneed.uno%2Fda-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou%2F&amp;text=%E6%90%AD%20RAG%20%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%8C%E8%83%BD%E8%B7%91%E5%92%8C%E8%83%BD%E7%94%A8%E4%B9%8B%E9%97%B4%EF%BC%8C%E9%9A%94%E7%9D%80%E4%B8%80%E6%9D%A1%E9%B8%BF%E6%B2%9F&amp;via=samjoeyang"
+               class="share-button"
+               data-share="twitter"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-twitter"></i>
+            </a>
+        
+            <a href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fneed.uno%2Fda-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou%2F"
+               class="share-button"
+               data-share="facebook"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-facebook"></i>
+            </a>
+        
+            <a href="https://www.reddit.com/submit?url=https%3A%2F%2Fneed.uno%2Fda-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou%2F&amp;title=%E6%90%AD%20RAG%20%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%8C%E8%83%BD%E8%B7%91%E5%92%8C%E8%83%BD%E7%94%A8%E4%B9%8B%E9%97%B4%EF%BC%8C%E9%9A%94%E7%9D%80%E4%B8%80%E6%9D%A1%E9%B8%BF%E6%B2%9F"
+               class="share-button"
+               data-share="reddit"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-reddit"></i>
+            </a>
+        
+            <a href="https://t.me/share/url?url=https%3A%2F%2Fneed.uno%2Fda-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou%2F&amp;text=%E6%90%AD%20RAG%20%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%8C%E8%83%BD%E8%B7%91%E5%92%8C%E8%83%BD%E7%94%A8%E4%B9%8B%E9%97%B4%EF%BC%8C%E9%9A%94%E7%9D%80%E4%B8%80%E6%9D%A1%E9%B8%BF%E6%B2%9F"
+               class="share-button"
+               data-share="telegram"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-telegram"></i>
+            </a>
+        
+            <a href="https://www.linkedin.com/shareArticle?mini=true&amp;url=https%3A%2F%2Fneed.uno%2Fda-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou%2F&amp;title=%E6%90%AD%20RAG%20%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%8C%E8%83%BD%E8%B7%91%E5%92%8C%E8%83%BD%E7%94%A8%E4%B9%8B%E9%97%B4%EF%BC%8C%E9%9A%94%E7%9D%80%E4%B8%80%E6%9D%A1%E9%B8%BF%E6%B2%9F&amp;summary="
+               class="share-button"
+               data-share="linkedin"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-linkedin"></i>
+            </a>
+        
+            <a href="https://service.weibo.com/share/share.php?url=https%3A%2F%2Fneed.uno%2Fda-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou%2F&amp;title=%E6%90%AD%20RAG%20%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%8C%E8%83%BD%E8%B7%91%E5%92%8C%E8%83%BD%E7%94%A8%E4%B9%8B%E9%97%B4%EF%BC%8C%E9%9A%94%E7%9D%80%E4%B8%80%E6%9D%A1%E9%B8%BF%E6%B2%9F&amp;pic="
+               class="share-button"
+               data-share="weibo"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weibo"></i>
+            </a>
+        
+            <a href="https://connect.qq.com/widget/shareqq/index.html?url=https%3A%2F%2Fneed.uno%2Fda-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou%2F&amp;title=%E6%90%AD%20RAG%20%E7%9F%A5%E8%AF%86%E5%BA%93%EF%BC%8C%E8%83%BD%E8%B7%91%E5%92%8C%E8%83%BD%E7%94%A8%E4%B9%8B%E9%97%B4%EF%BC%8C%E9%9A%94%E7%9D%80%E4%B8%80%E6%9D%A1%E9%B8%BF%E6%B2%9F&amp;summary=&amp;pics="
+               class="share-button"
+               data-share="qq"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-qq"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fab fa-weixin"></i>
+            </a>
+        
+            <a href="javascript:void(0)"
+               class="share-button"
+               data-share="wechat-moments"
+               target="_blank"
+               rel="noopener noreferrer">
+                <i class="fas fa-share-alt"></i>
+            </a>
+        
+    </div>
+</div>
+
+<style>
+.post-share {
+    margin: 2rem 0;
+    text-align: center;
+}
+
+.share-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.share-button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background: var(--main-color);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.share-button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+}
+
+.share-button i {
+    font-size: 1.2rem;
+}
+</style>
+
+
+
+</article>
+
+
+    <div class="nav">
+        <div class="nav__prev">
+            
+                <a href="/wei-shi-me-you-xie-lu-shi-han-zui-hou-hui-bian-cheng-he-jie/" class="nav__link">
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
+                    </div>
+                    <div>
+                        <div class="nav__label">
+                            上一篇
+                        </div>
+                        <div class="nav__title">
+                            为什么有些律师函最后会变成和解？
+                        </div>
+                    </div>
+                </a>
+            
+        </div>
+        <div class="nav__next">
+            
+                <a href="/shou-dao-lu-shi-han-yi-hou-neng-bu-neng-zhi-jie-bu-li/" class="nav__link">
+                    <div>
+                        <div class="nav__label">
+                            下一篇
+                        </div>
+                        <div class="nav__title">
+                            收到律师函以后能不能直接不理？
+                        </div>
+                    </div>
+                    <div>
+                        <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M434.944 790.624l-45.248-45.248L623.04 512l-233.376-233.376 45.248-45.248L713.568 512z" fill="#808080"></path></svg>
+                    </div>
+                </a>
+            
+        </div>
+    </div>
+
+
+
+    <div class="post__comments content-card" id="comment">
+        
+    <h4>评论</h4>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+<div id="utterances-container" sid="da-rag-zhi-shi-ku-neng-pao-he-neng-yong-zhi-jian-ge-zhao-yi-tiao-hong-gou/"></div>
+<script type="text/javascript">
+  var repo = "samjoeyang/blog2025";
+  var issueTerm = "title";
+  var theme = "github-light";
+  var label = "";
+  (function () {
+    var container = document.getElementById("utterances-container");
+    var script = document.createElement("script");
+    script.src = "https://utteranc.es/client.js";
+    script.setAttribute("repo", repo);
+    script.setAttribute("issue-term", issueTerm);
+    script.setAttribute("theme", theme);
+    script.setAttribute("label", label);
+    script.crossorigin = "anonymous";
+    script.async = true;
+
+    container.appendChild(script);
+  })();
+</script>
+
+
+
+
+    </div>
+
+
+
+</main>
+
+            <footer class="footer">
+    
+    
+
+
+    
+     
+ 
+
+ 
+    
+        
+        <p class="footer-copyright">
+            Copyright © 2026 <a href="/">Need.UNO</a>
+        </p>
+    
+    
+    <!-- <p>Powered by <a href="https://hexo.io" target="_blank">Hexo</a> | Theme - <a href="https://github.com/ChrAlpha/hexo-theme-cards" target="_blank">Cards</a></p> -->
+</footer>
+
+        </div>
+        
+    <script defer src="https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.1.0/dist/lazyload.min.js"></script>
+    <script>
+        window.lazyLoadOptions = {
+            elements_selector: ".lazy",
+            threshold: 0
+        };
+    </script>
+ 
+
+ 
+    <script>
+        window.ga=window.ga||function(){(ga.q=ga.q||[]).push(arguments)};ga.l=+new Date;
+        ga('create', 'G-KBL1X494XR', 'auto');
+        ga('send', 'pageview');
+    </script>
+    <script async src="https://www.google-analytics.com/analytics.js"></script>
+ 
+
+
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-KBL1X494XR"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-KBL1X494XR');
+    </script>
+ 
+
+ 
+
+ 
+
+
+
+ 
+
+
+
+ 
+
+
+    
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+ 
+
+
+    
+
+    
+
+    
+    
+
+    
+    
+    
+
+    
+    
+
+    
+    
+    
+    
+    
+
+    
+    
+    
+
+
+
+    
+        <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
+    
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+    
+        <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
+    
+
+    </body>
+    <amp-auto-ads type="adsense" data-ad-client="ca-pub-1157022733083083"></amp-auto-ads>
+</html>
