@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,26 +39,26 @@
 <title>HalluPilot-G：驯服幻觉，释放想象力 | Need.UNO</title>
 
 
-    <meta name="keywords" content="人机协作, AI, AI幻觉, 生成式模型, 幻觉研究, 创新工具, 语言模型, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="AI, 人机协作, AI幻觉, 生成式模型, 幻觉研究, 创新工具, 语言模型, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
 
     <!-- OpenGraph -->
  
-    <meta name="description" content="HalluPilot-G：驯服幻觉，释放想象力 ✨ 一个由幻觉驱动的 AI 协作平台🤝 Powered by Generative Models · Co-created by SamjoeYang🧠 Naming: Hallucination + Pilot + G (Group &#x2F; Gemini &#x2F; Generation)    🧭 项目宗旨HalluPilot-G">
+    <meta name="description" content="HalluPilot-G：驯服幻觉，释放想象力 一个由幻觉驱动的 AI 协作平台Powered by Generative Models · Co-created by SamjoeYang名字来源：Hallucination + Pilot + G（Group &#x2F; Gemini &#x2F; Generation）    项目宗旨HalluPilot-G 是个实验性的平台，研究 AI">
 <meta property="og:type" content="website">
 <meta property="og:title" content="HalluPilot-G：驯服幻觉，释放想象力">
 <meta property="og:url" content="https://need.uno/hallupilot-g-xun-fu-huan-jue-shi-fang-xiang-xiang-li/index.html">
 <meta property="og:site_name" content="Need.UNO">
-<meta property="og:description" content="HalluPilot-G：驯服幻觉，释放想象力 ✨ 一个由幻觉驱动的 AI 协作平台🤝 Powered by Generative Models · Co-created by SamjoeYang🧠 Naming: Hallucination + Pilot + G (Group &#x2F; Gemini &#x2F; Generation)    🧭 项目宗旨HalluPilot-G">
+<meta property="og:description" content="HalluPilot-G：驯服幻觉，释放想象力 一个由幻觉驱动的 AI 协作平台Powered by Generative Models · Co-created by SamjoeYang名字来源：Hallucination + Pilot + G（Group &#x2F; Gemini &#x2F; Generation）    项目宗旨HalluPilot-G 是个实验性的平台，研究 AI">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://need.uno/assets/7D9C41CD-7003-4CA1-A966-BB57A1CBB219.png">
 <meta property="article:published_time" content="2025-06-01T14:14:28.000Z">
-<meta property="article:modified_time" content="2026-07-03T07:09:18.663Z">
+<meta property="article:modified_time" content="2026-10-10T02:08:50.758Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="人机协作">
 <meta property="article:tag" content="AI">
+<meta property="article:tag" content="人机协作">
 <meta property="article:tag" content="AI幻觉">
 <meta property="article:tag" content="生成式模型">
 <meta property="article:tag" content="幻觉研究">
@@ -84,6 +93,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -94,7 +109,7 @@
   "headline": "HalluPilot-G：驯服幻觉，释放想象力",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2025-06-01",
-  "dateModified": "2026-07-03",
+  "dateModified": "2026-10-10",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/hallupilot-g-xun-fu-huan-jue-shi-fang-xiang-xiang-li/" },
   "description": "HalluPilot-G：驯服幻觉，释放想象力"
 }
@@ -139,6 +154,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -164,6 +181,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -349,21 +368,21 @@
 
     <div class="post__content">
         <h1 id="HalluPilot-G：驯服幻觉，释放想象力"><a href="#HalluPilot-G：驯服幻觉，释放想象力" class="headerlink" title="HalluPilot-G：驯服幻觉，释放想象力"></a>HalluPilot-G：驯服幻觉，释放想象力</h1><blockquote>
-<p>✨ 一个由幻觉驱动的 AI 协作平台<br>🤝 Powered by Generative Models · Co-created by SamjoeYang<br>🧠 Naming: Hallucination + Pilot + G (Group &#x2F; Gemini &#x2F; Generation)</p>
+<p>一个由幻觉驱动的 AI 协作平台<br>Powered by Generative Models · Co-created by SamjoeYang<br>名字来源：Hallucination + Pilot + G（Group &#x2F; Gemini &#x2F; Generation）</p>
 </blockquote>
 <hr>
 <p><img src="/assets/7D9C41CD-7003-4CA1-A966-BB57A1CBB219.png" class="lazy" data-srcset="/assets/7D9C41CD-7003-4CA1-A966-BB57A1CBB219.png" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="HalluPilot-G LOGO"></p>
-<h2 id="🧭-项目宗旨"><a href="#🧭-项目宗旨" class="headerlink" title="🧭 项目宗旨"></a>🧭 项目宗旨</h2><p><strong>HalluPilot-G</strong> 是一个探索 AI 幻觉本质、控制幻觉行为，并将其转化为人类共创素材的实验平台。我们相信，幻觉不是障碍，而是通向语言生成创造力的“原始形态”。我们的目标不是消灭幻觉，而是<strong>与幻觉共舞</strong>，理解它、标注它、驯服它——最终让它为人类服务。</p>
+<h2 id="项目宗旨"><a href="#项目宗旨" class="headerlink" title="项目宗旨"></a>项目宗旨</h2><p>HalluPilot-G 是个实验性的平台，研究 AI 幻觉到底是什么、能不能控制，以及怎么把它变成人和模型一起创作的素材。我们的看法是：幻觉不是非修掉不可的毛病，而是语言模型生成过程里最”原生态”的那部分创造力。所以目标不是消灭它，而是弄明白它、标出它、驯住它，最后让它为人所用。</p>
 <hr>
-<h2 id="🌌-项目愿景"><a href="#🌌-项目愿景" class="headerlink" title="🌌 项目愿景"></a>🌌 项目愿景</h2><ul>
-<li>将<strong>AI 幻觉从风险转化为创造资源</strong></li>
-<li>建立<strong>多人协作的幻觉标注与解释机制</strong></li>
-<li>推进**“可控幻想”驱动的语言模型微调与增强**</li>
-<li>构建<strong>具备记忆、可追踪与知识融合能力的共创引擎</strong></li>
-<li>探索<strong>AI 在无意识状态下的语义生成边界</strong></li>
+<h2 id="项目愿景"><a href="#项目愿景" class="headerlink" title="项目愿景"></a>项目愿景</h2><ul>
+<li>把 AI 幻觉从”风险”翻转为”创造资源”</li>
+<li>建立多人一起标注、解释幻觉的机制</li>
+<li>推动用”可控幻想”去微调、增强语言模型</li>
+<li>搭一个带记忆、能追踪、能融合知识的共创引擎</li>
+<li>摸一摸 AI 在没有明确指令时，语义生成到底能走到哪</li>
 </ul>
 <hr>
-<h2 id="🧬-名称释义"><a href="#🧬-名称释义" class="headerlink" title="🧬 名称释义"></a>🧬 名称释义</h2><table>
+<h2 id="名称释义"><a href="#名称释义" class="headerlink" title="名称释义"></a>名称释义</h2><table>
 <thead>
 <tr>
 <th>组件</th>
@@ -388,46 +407,44 @@
 </tr>
 </tbody></table>
 <blockquote>
-<p>🧩 HalluPilot-G，既是对“AI 自由生成”的研究者，也是通往“机器想象力”的试飞员。</p>
+<p>HalluPilot-G，既是研究”AI 自由生成”的人，也是飞向”机器想象力”的试飞员。</p>
 </blockquote>
 <hr>
-<h2 id="🎯-关键词"><a href="#🎯-关键词" class="headerlink" title="🎯 关键词"></a>🎯 关键词</h2><ul>
-<li>AI幻觉标注（Hallucination Annotation）  </li>
-<li>幻觉可信度评分（Hallucination Trust Scoring）  </li>
-<li>多模型协同标注（Multi-LLM Co-voting）  </li>
-<li>创造性幻觉触发器（Creative Hallucination Triggering）  </li>
-<li>幻觉语义图谱（Hallucination Semantic Graph）  </li>
+<h2 id="关键词"><a href="#关键词" class="headerlink" title="关键词"></a>关键词</h2><ul>
+<li>AI幻觉标注（Hallucination Annotation）</li>
+<li>幻觉可信度评分（Hallucination Trust Scoring）</li>
+<li>多模型协同标注（Multi-LLM Co-voting）</li>
+<li>创造性幻觉触发器（Creative Hallucination Triggering）</li>
+<li>幻觉语义图谱（Hallucination Semantic Graph）</li>
 <li>带记忆的共创工具（Memory-Aware Co-Authoring）</li>
 </ul>
 <hr>
-<h2 id="🛠️-当前模块（预览）"><a href="#🛠️-当前模块（预览）" class="headerlink" title="🛠️ 当前模块（预览）"></a>🛠️ 当前模块（预览）</h2><ul>
-<li>✅ 幻觉检测引擎（多模型比对 + 信度评分）  </li>
-<li>✅ 幻觉高亮 &amp; 标签界面（用户 + 模型协同）  </li>
-<li>🔄 幻觉解释协同机制（支持多视角解释）  </li>
-<li>🔄 幻觉数据收集与训练集生成器  </li>
-<li>🔄 幻觉驱动内容再生成系统  </li>
-<li>🚧 支持幻觉“驯服”与“触发”的提示词微调引擎</li>
+<h2 id="当前模块（预览）"><a href="#当前模块（预览）" class="headerlink" title="当前模块（预览）"></a>当前模块（预览）</h2><ul>
+<li>幻觉检测引擎（多模型比对 + 信度评分）— 已完成</li>
+<li>幻觉高亮 &amp; 标签界面（用户 + 模型协同）— 已完成</li>
+<li>幻觉解释协同机制（支持多视角解释）— 进行中</li>
+<li>幻觉数据收集与训练集生成器 — 进行中</li>
+<li>幻觉驱动内容再生成系统 — 进行中</li>
+<li>支持幻觉”驯服”与”触发”的提示词微调引擎 — 规划中</li>
 </ul>
 <hr>
-<h2 id="📣-适用场景"><a href="#📣-适用场景" class="headerlink" title="📣 适用场景"></a>📣 适用场景</h2><ul>
-<li>内容生成质量审查 &#x2F; AI 新闻编辑室  </li>
-<li>AI 驱动的幻想小说与剧本共创  </li>
-<li>多人协作写作平台 &#x2F; 研究工具  </li>
-<li>幻觉安全性训练数据采集与评估  </li>
+<h2 id="适用场景"><a href="#适用场景" class="headerlink" title="适用场景"></a>适用场景</h2><ul>
+<li>内容生成质量审查 &#x2F; AI 新闻编辑室</li>
+<li>AI 驱动的幻想小说与剧本共创</li>
+<li>多人协作写作平台 &#x2F; 研究工具</li>
+<li>幻觉安全性训练数据采集与评估</li>
 <li>AI 模型的元认知能力研究试验场</li>
 </ul>
 <hr>
-<h2 id="🤝-我们的信念"><a href="#🤝-我们的信念" class="headerlink" title="🤝 我们的信念"></a>🤝 我们的信念</h2><blockquote>
-<p>幻觉并非 AI 的错误，而是语言生成中的一块荒野。<br><strong>HalluPilot-G</strong> 是穿越这片荒野的导航者，<br>也是为人类未来写作与思维方式铺设通道的先行者。</p>
-</blockquote>
-<h2 id="🎨-LOGO-语建议-项目宣传标语"><a href="#🎨-LOGO-语建议-项目宣传标语" class="headerlink" title="🎨 LOGO 语建议 &amp; 项目宣传标语"></a>🎨 LOGO 语建议 &amp; 项目宣传标语</h2><h3 id="📛-LOGO-Slogan-候选："><a href="#📛-LOGO-Slogan-候选：" class="headerlink" title="📛 LOGO Slogan 候选："></a>📛 LOGO Slogan 候选：</h3><ul>
+<h2 id="我们的想法"><a href="#我们的想法" class="headerlink" title="我们的想法"></a>我们的想法</h2><p>幻觉不是 AI 犯了错，而是语言生成里的一块荒野。HalluPilot-G 是想穿过这片荒野的导航者，也是在为人类以后的写作和思考方式铺路的那一个。</p>
+<h2 id="LOGO-语建议-项目宣传标语"><a href="#LOGO-语建议-项目宣传标语" class="headerlink" title="LOGO 语建议 &amp; 项目宣传标语"></a>LOGO 语建议 &amp; 项目宣传标语</h2><h3 id="LOGO-Slogan-候选："><a href="#LOGO-Slogan-候选：" class="headerlink" title="LOGO Slogan 候选："></a>LOGO Slogan 候选：</h3><ul>
 <li>“Navigate the Imagination Frontier”</li>
 <li>“Where Hallucinations Fuel Creation”</li>
 <li>“Not All Who Hallucinate Are Lost”</li>
 <li>“Beyond Fact, Into Fiction”</li>
 <li>“Control the Wild Mind of the Machine”</li>
 </ul>
-<h3 id="🧠-中文宣传语："><a href="#🧠-中文宣传语：" class="headerlink" title="🧠 中文宣传语："></a>🧠 中文宣传语：</h3><ul>
+<h3 id="中文宣传语："><a href="#中文宣传语：" class="headerlink" title="中文宣传语："></a>中文宣传语：</h3><ul>
 <li>“不是每个幻觉都是错误”</li>
 <li>“与幻觉共创未来”</li>
 <li>“驯服幻觉，让想象有据可依”</li>
@@ -443,7 +460,7 @@
 <h2 id="模块一：为什么需要-HalluPilot-G？"><a href="#模块一：为什么需要-HalluPilot-G？" class="headerlink" title="模块一：为什么需要 HalluPilot-G？"></a>模块一：为什么需要 HalluPilot-G？</h2><ul>
 <li>简述 LLM 幻觉问题与创造潜力</li>
 <li>引用真实幻觉示例（GPT、Gemini 片段）</li>
-<li>加入用户评论（“它让我写小说更快了”）</li>
+<li>加入用户评论（”它让我写小说更快了”）</li>
 </ul>
 <h2 id="模块二：平台能力概览"><a href="#模块二：平台能力概览" class="headerlink" title="模块二：平台能力概览"></a>模块二：平台能力概览</h2><ul>
 <li>多模型比对（Gemini + GPT + Claude）</li>
@@ -475,13 +492,13 @@
 </ul>
 <hr>
 <h2 id="English-Version"><a href="#English-Version" class="headerlink" title="English Version"></a>English Version</h2><h1 id="HalluPilot-G-A-Human-AI-Collaboration-Platform-for-Hallucination-Aware-Creativity"><a href="#HalluPilot-G-A-Human-AI-Collaboration-Platform-for-Hallucination-Aware-Creativity" class="headerlink" title="HalluPilot-G: A Human-AI Collaboration Platform for Hallucination-Aware Creativity"></a>HalluPilot-G: A Human-AI Collaboration Platform for Hallucination-Aware Creativity</h1><blockquote>
-<p>✨ Turn AI hallucinations from bugs into seeds of imagination<br>🤝 Co-created with Gemini, GPT, Claude, and you<br>🧪 Built for research, writing, and experimental content generation</p>
+<p>Turn AI hallucinations from bugs into seeds of imagination<br>Co-created with Gemini, GPT, Claude, and you<br>Built for research, writing, and experimental content generation</p>
 </blockquote>
 <hr>
-<h2 id="🚀-What-is-HalluPilot-G"><a href="#🚀-What-is-HalluPilot-G" class="headerlink" title="🚀 What is HalluPilot-G?"></a>🚀 What is HalluPilot-G?</h2><p><strong>HalluPilot-G</strong> is an open, collaborative platform designed to detect, analyze, annotate, and co-create around AI hallucinations.</p>
+<h2 id="What-is-HalluPilot-G"><a href="#What-is-HalluPilot-G" class="headerlink" title="What is HalluPilot-G?"></a>What is HalluPilot-G?</h2><p><strong>HalluPilot-G</strong> is an open, collaborative platform designed to detect, analyze, annotate, and co-create around AI hallucinations.</p>
 <p>Instead of seeing hallucination as a failure mode, HalluPilot-G treats it as a signal — the edge of machine-generated imagination. It provides tools to interpret, evaluate, tame, or even <strong>intentionally provoke</strong> hallucinations for creative purposes.</p>
 <hr>
-<h2 id="🔍-Why-Does-It-Matter"><a href="#🔍-Why-Does-It-Matter" class="headerlink" title="🔍 Why Does It Matter?"></a>🔍 Why Does It Matter?</h2><p>Large Language Models (LLMs) hallucinate — that is, they generate plausible-sounding but factually incorrect content. Most see this as a flaw.</p>
+<h2 id="Why-Does-It-Matter"><a href="#Why-Does-It-Matter" class="headerlink" title="Why Does It Matter?"></a>Why Does It Matter?</h2><p>Large Language Models (LLMs) hallucinate — that is, they generate plausible-sounding but factually incorrect content. Most see this as a flaw.</p>
 <p>But what if we saw it differently?</p>
 <p>What if hallucinations were:</p>
 <ul>
@@ -491,7 +508,7 @@
 </ul>
 <p><strong>HalluPilot-G</strong> aims to explore this frontier.</p>
 <hr>
-<h2 id="🧩-Name-Breakdown"><a href="#🧩-Name-Breakdown" class="headerlink" title="🧩 Name Breakdown"></a>🧩 Name Breakdown</h2><table>
+<h2 id="Name-Breakdown"><a href="#Name-Breakdown" class="headerlink" title="Name Breakdown"></a>Name Breakdown</h2><table>
 <thead>
 <tr>
 <th>Component</th>
@@ -512,32 +529,32 @@
 </tr>
 </tbody></table>
 <hr>
-<h2 id="🔧-Core-Features"><a href="#🔧-Core-Features" class="headerlink" title="🔧 Core Features"></a>🔧 Core Features</h2><ul>
-<li>🔍 Multi-model hallucination detection (Gemini, GPT, Claude)</li>
-<li>📈 Confidence scoring &amp; explainability tools</li>
-<li>🖍️ Semantic tagging of hallucinations (fiction &#x2F; pseudo-history &#x2F; invented term &#x2F; etc.)</li>
-<li>🧠 Memory-enabled co-writing modules</li>
-<li>👥 Real-time collaborative annotation UI</li>
-<li>🪄 Prompt rewriting for hallucination “steering”</li>
-<li>🗳️ Multi-model voting on factuality</li>
-<li>📚 Dataset creation for hallucination-aware model fine-tuning</li>
+<h2 id="Core-Features"><a href="#Core-Features" class="headerlink" title="Core Features"></a>Core Features</h2><ul>
+<li>Multi-model hallucination detection (Gemini, GPT, Claude)</li>
+<li>Confidence scoring &amp; explainability tools</li>
+<li>Semantic tagging of hallucinations (fiction &#x2F; pseudo-history &#x2F; invented term &#x2F; etc.)</li>
+<li>Memory-enabled co-writing modules</li>
+<li>Real-time collaborative annotation UI</li>
+<li>Prompt rewriting for hallucination “steering”</li>
+<li>Multi-model voting on factuality</li>
+<li>Dataset creation for hallucination-aware model fine-tuning</li>
 </ul>
 <hr>
-<h2 id="💡-Use-Cases"><a href="#💡-Use-Cases" class="headerlink" title="💡 Use Cases"></a>💡 Use Cases</h2><ul>
-<li>Human-in-the-loop fact checking  </li>
-<li>Fiction &amp; myth generation with LLMs  </li>
-<li>Experimental co-authorship tools  </li>
-<li>Language model reliability research  </li>
+<h2 id="Use-Cases"><a href="#Use-Cases" class="headerlink" title="Use Cases"></a>Use Cases</h2><ul>
+<li>Human-in-the-loop fact checking</li>
+<li>Fiction &amp; myth generation with LLMs</li>
+<li>Experimental co-authorship tools</li>
+<li>Language model reliability research</li>
 <li>Prompt engineering sandbox</li>
 </ul>
 <hr>
-<h2 id="🧭-Vision"><a href="#🧭-Vision" class="headerlink" title="🧭 Vision"></a>🧭 Vision</h2><p>We believe that:</p>
+<h2 id="Vision"><a href="#Vision" class="headerlink" title="Vision"></a>Vision</h2><p>We believe that:</p>
 <blockquote>
 <p><em>Hallucination is not just a problem — it’s the starting point for new kinds of creativity.</em></p>
 </blockquote>
 <p>By understanding and guiding it, we can build tools that are not only <strong>accurate</strong>, but <strong>imaginative</strong>, <strong>reflective</strong>, and <strong>collaborative</strong>.</p>
 <hr>
-<h2 id="📦-Project-Status"><a href="#📦-Project-Status" class="headerlink" title="📦 Project Status"></a>📦 Project Status</h2><table>
+<h2 id="Project-Status"><a href="#Project-Status" class="headerlink" title="Project Status"></a>Project Status</h2><table>
 <thead>
 <tr>
 <th>Module</th>
@@ -546,33 +563,33 @@
 </thead>
 <tbody><tr>
 <td>Hallucination highlighter</td>
-<td>✅ Done</td>
+<td>Done</td>
 </tr>
 <tr>
 <td>Confidence radar UI</td>
-<td>✅ Done</td>
+<td>Done</td>
 </tr>
 <tr>
 <td>Multi-model checker (Gemini + GPT + Claude)</td>
-<td>✅ Prototype</td>
+<td>Prototype</td>
 </tr>
 <tr>
 <td>Tagging + user feedback module</td>
-<td>🔄 In Progress</td>
+<td>In Progress</td>
 </tr>
 <tr>
 <td>Memory-layer for user interaction history</td>
-<td>🔄 In Design</td>
+<td>In Design</td>
 </tr>
 <tr>
 <td>Hallucination-triggering prompt engine</td>
-<td>🔄 Research Phase</td>
+<td>Research Phase</td>
 </tr>
 </tbody></table>
 <hr>
-<h2 id="📚-License-Contribution"><a href="#📚-License-Contribution" class="headerlink" title="📚 License &amp; Contribution"></a>📚 License &amp; Contribution</h2><p>Open-source (MIT). Contributions welcome!<br>Roadmap, issue tracker, and discussions available in <code>/docs</code>.</p>
+<h2 id="License-Contribution"><a href="#License-Contribution" class="headerlink" title="License &amp; Contribution"></a>License &amp; Contribution</h2><p>Open-source (MIT). Contributions welcome!<br>Roadmap, issue tracker, and discussions available in <code>/docs</code>.</p>
 <hr>
-<h2 id="🛰️-Join-the-Flight"><a href="#🛰️-Join-the-Flight" class="headerlink" title="🛰️ Join the Flight"></a>🛰️ Join the Flight</h2><p>Whether you’re a researcher, writer, or just hallucination-curious,<br>HalluPilot-G welcomes you aboard —  </p>
+<h2 id="Join-the-Flight"><a href="#Join-the-Flight" class="headerlink" title="Join the Flight"></a>Join the Flight</h2><p>Whether you’re a researcher, writer, or just hallucination-curious,<br>HalluPilot-G welcomes you aboard —</p>
 <blockquote>
 <p><em>“Together, let’s fly through the wild spaces of imagination.”</em></p>
 </blockquote>
@@ -597,8 +614,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C/" class="post-tags__link button"># 人机协作</a><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/AI%E5%B9%BB%E8%A7%89/" class="post-tags__link button"># AI幻觉</a><a href="/tags/%E7%94%9F%E6%88%90%E5%BC%8F%E6%A8%A1%E5%9E%8B/" class="post-tags__link button"># 生成式模型</a><a href="/tags/%E5%B9%BB%E8%A7%89%E7%A0%94%E7%A9%B6/" class="post-tags__link button"># 幻觉研究</a><a href="/tags/%E5%88%9B%E6%96%B0%E5%B7%A5%E5%85%B7/" class="post-tags__link button"># 创新工具</a><a href="/tags/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/" class="post-tags__link button"># 语言模型</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-10-10</p></div> 
+    <div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/%E4%BA%BA%E6%9C%BA%E5%8D%8F%E4%BD%9C/" class="post-tags__link button"># 人机协作</a><a href="/tags/AI%E5%B9%BB%E8%A7%89/" class="post-tags__link button"># AI幻觉</a><a href="/tags/%E7%94%9F%E6%88%90%E5%BC%8F%E6%A8%A1%E5%9E%8B/" class="post-tags__link button"># 生成式模型</a><a href="/tags/%E5%B9%BB%E8%A7%89%E7%A0%94%E7%A9%B6/" class="post-tags__link button"># 幻觉研究</a><a href="/tags/%E5%88%9B%E6%96%B0%E5%B7%A5%E5%85%B7/" class="post-tags__link button"># 创新工具</a><a href="/tags/%E8%AF%AD%E8%A8%80%E6%A8%A1%E5%9E%8B/" class="post-tags__link button"># 语言模型</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -909,9 +926,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

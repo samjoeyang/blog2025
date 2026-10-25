@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,7 +39,7 @@
 <title>敏捷小项目的迭代周期怎么定？ | Need.UNO</title>
 
 
-    <meta name="keywords" content="职场, PMP, 项目管理, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="PMP, 项目管理, 职场, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -46,11 +55,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://need.uno/images/pmp/q026-%E6%95%8F%E6%8D%B7%E5%B0%8F%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%91%A8%E6%9C%9F%E6%80%8E%E4%B9%88%E5%AE%9A.svg">
 <meta property="article:published_time" content="2026-07-13T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-14T23:46:15.600Z">
+<meta property="article:modified_time" content="2026-10-10T16:03:37.427Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="职场">
 <meta property="article:tag" content="PMP">
 <meta property="article:tag" content="项目管理">
+<meta property="article:tag" content="职场">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://need.uno/images/pmp/q026-%E6%95%8F%E6%8D%B7%E5%B0%8F%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%91%A8%E6%9C%9F%E6%80%8E%E4%B9%88%E5%AE%9A.svg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -80,6 +89,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -90,7 +105,7 @@
   "headline": "敏捷小项目的迭代周期怎么定？",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-07-14",
-  "dateModified": "2026-07-15",
+  "dateModified": "2026-10-11",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/026-min-jie-xiao-xiang-mu-die-dai-zhou-qi-zen-me-ding/" },
   "description": "敏捷小项目的迭代周期怎么定？"
 }
@@ -135,6 +150,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -160,6 +177,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -452,13 +471,13 @@
 <p>❌ <strong>不要</strong>：发现周期不合适，硬撑（等“正式review”）<br>✅ <strong>要</strong>：跑两个周期就主动调，敏捷本身就是实验</p>
 <hr>
 <blockquote>
-<p><strong>📌 今日动作</strong>：今天拉上团队，估算一下你的“最小可用周期”——打开最近3个已完成功能点，记录开发天数、验收天数、发布天数，用上面的公式算出一个数字。然后下周按这个新周期跑一轮，周五晚上30分钟复盘，写出“这个周期做对了什么、哪里浪费时间了”。</p>
+<p><strong>今日动作</strong>：今天拉上团队，估算一下你的“最小可用周期”——打开最近3个已完成功能点，记录开发天数、验收天数、发布天数，用上面的公式算出一个数字。然后下周按这个新周期跑一轮，周五晚上30分钟复盘，写出“这个周期做对了什么、哪里浪费时间了”。</p>
 </blockquote>
 <hr>
-<p>你的项目现在用的迭代周期是多少？跑得顺吗？评论区聊聊，我帮你诊断一下。👇</p>
+<p>你的项目现在用的迭代周期是多少？跑得顺吗？评论区聊聊，我帮你诊断一下。</p>
 <hr>
 <p><img src="/images/pmp/q026-%E6%95%8F%E6%8D%B7%E5%B0%8F%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%91%A8%E6%9C%9F%E6%80%8E%E4%B9%88%E5%AE%9A.svg" class="lazy" data-srcset="/images/pmp/q026-%E6%95%8F%E6%8D%B7%E5%B0%8F%E9%A1%B9%E7%9B%AE%E7%9A%84%E8%BF%AD%E4%BB%A3%E5%91%A8%E6%9C%9F%E6%80%8E%E4%B9%88%E5%AE%9A.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="第26问：敏捷小项目的迭代周期怎么定？"></p>
-<p>📚 <strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
+<p><strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
 
     </div>
     
@@ -480,8 +499,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-15</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-10-11</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -604,7 +623,7 @@
     <div class="nav">
         <div class="nav__prev">
             
-                <a href="/027-mei-zhou-jin-du-tong-bu-bu-liu-yu-xing-shi/" class="nav__link">
+                <a href="/025-jin-du-ya-suo-ji-zhu-de-zheng-que-yong-fa/" class="nav__link">
                     <div>
                         <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
                     </div>
@@ -613,7 +632,7 @@
                             上一篇
                         </div>
                         <div class="nav__title">
-                            每周进度同步怎么做才能不流于形式？
+                            进度压缩技术的正确用法
                         </div>
                     </div>
                 </a>
@@ -621,13 +640,13 @@
         </div>
         <div class="nav__next">
             
-                <a href="/2026-nian-kai-yuan-dian-zi-shu-yue-du-qi-sheng-tai-tu/" class="nav__link">
+                <a href="/027-mei-zhou-jin-du-tong-bu-bu-liu-yu-xing-shi/" class="nav__link">
                     <div>
                         <div class="nav__label">
                             下一篇
                         </div>
                         <div class="nav__title">
-                            2026年开源电子书阅读器生态图：百花齐放的黄金时代
+                            每周进度同步怎么做才能不流于形式？
                         </div>
                     </div>
                     <div>
@@ -792,9 +811,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

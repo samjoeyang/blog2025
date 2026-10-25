@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,7 +39,7 @@
 <title>什么是风险登记册？最简单的四列模板就够了 | Need.UNO</title>
 
 
-    <meta name="keywords" content="职场, PMP, 项目管理, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="PMP, 项目管理, 职场, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -46,11 +55,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://need.uno/images/pmp/q032-%E4%BB%80%E4%B9%88%E6%98%AF%E9%A3%8E%E9%99%A9%E7%99%BB%E8%AE%B0%E5%86%8C-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%9B%E5%88%97%E6%A8%A1%E6%9D%BF%E5%B0%B1%E5%A4%9F%E4%BA%86.svg">
 <meta property="article:published_time" content="2026-07-14T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-15T18:01:33.069Z">
+<meta property="article:modified_time" content="2026-10-10T16:03:37.593Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="职场">
 <meta property="article:tag" content="PMP">
 <meta property="article:tag" content="项目管理">
+<meta property="article:tag" content="职场">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://need.uno/images/pmp/q032-%E4%BB%80%E4%B9%88%E6%98%AF%E9%A3%8E%E9%99%A9%E7%99%BB%E8%AE%B0%E5%86%8C-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%9B%E5%88%97%E6%A8%A1%E6%9D%BF%E5%B0%B1%E5%A4%9F%E4%BA%86.svg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -80,6 +89,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -90,7 +105,7 @@
   "headline": "什么是风险登记册？最简单的四列模板就够了",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-07-15",
-  "dateModified": "2026-07-16",
+  "dateModified": "2026-10-11",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/032-feng-xian-deng-ji-ce-si-lie-mo-ban/" },
   "description": "什么是风险登记册？最简单的四列模板就够了"
 }
@@ -135,6 +150,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -160,6 +177,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -403,13 +422,13 @@
 <p><strong>守则二：每次会议第一件事不是翻PPT，而是过风险登记册。</strong> 我会在项目周会前5分钟，让每个人看一眼当前Top5风险的状态。红色的（没有进展或恶化）重点讨论，绿色的（行动按计划执行）直接跳过。10分钟搞定。</p>
 <p><strong>守则三：风险变为问题时，立刻从登记册“出库”。</strong> 如果风险真的发生了，不要继续留在登记册里分析分析再分析，把它转入<strong>问题日志</strong>，用问题管理的流程去解决。登记册只关注<strong>尚未发生但可能发生</strong>的事。</p>
 <h2 id="今日动作"><a href="#今日动作" class="headerlink" title="今日动作"></a>今日动作</h2><blockquote>
-<p><strong>📌 今日动作</strong>：打开你的风险登记册（不管是Excel、Jira还是白板上），用今天学的四列模板重构它——删掉所有超过10条的风险、把每条风险的行动方案改成“责任人+具体动作+截止日期”的格式。然后发消息问项目组：“这周五的会，我们先过风险登记册，每人准备你负责的那条风险的最新状态。”</p>
+<p><strong>今日动作</strong>：打开你的风险登记册（不管是Excel、Jira还是白板上），用今天学的四列模板重构它——删掉所有超过10条的风险、把每条风险的行动方案改成“责任人+具体动作+截止日期”的格式。然后发消息问项目组：“这周五的会，我们先过风险登记册，每人准备你负责的那条风险的最新状态。”</p>
 </blockquote>
 <p>记住：好的风险登记册不告诉别人“可能有哪些风险”，而告诉别人“为应对风险我们已经做了哪些事、正在做什么事”。</p>
 <hr>
 <hr>
 <p><img src="/images/pmp/q032-%E4%BB%80%E4%B9%88%E6%98%AF%E9%A3%8E%E9%99%A9%E7%99%BB%E8%AE%B0%E5%86%8C-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%9B%E5%88%97%E6%A8%A1%E6%9D%BF%E5%B0%B1%E5%A4%9F%E4%BA%86.svg" class="lazy" data-srcset="/images/pmp/q032-%E4%BB%80%E4%B9%88%E6%98%AF%E9%A3%8E%E9%99%A9%E7%99%BB%E8%AE%B0%E5%86%8C-%E6%9C%80%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%9B%E5%88%97%E6%A8%A1%E6%9D%BF%E5%B0%B1%E5%A4%9F%E4%BA%86.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="第32问：什么是风险登记册？最简单的四列模板就够了"></p>
-<p>📚 <strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
+<p><strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
 
     </div>
     
@@ -431,8 +450,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-16</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-10-11</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -555,7 +574,7 @@
     <div class="nav">
         <div class="nav__prev">
             
-                <a href="/030-bei-dong-jia-ban-he-mang-mu-gan-gong-de-jie-jue-fang-an/" class="nav__link">
+                <a href="/031-cong-jiu-huo-shi-gong-zuo-dao-yu-pan-shi-feng-xian-guan-li/" class="nav__link">
                     <div>
                         <svg viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg" width="24" height="24"><path d="M589.088 790.624L310.464 512l278.624-278.624 45.248 45.248L400.96 512l233.376 233.376z" fill="#808080"></path></svg>
                     </div>
@@ -564,7 +583,7 @@
                             上一篇
                         </div>
                         <div class="nav__title">
-                            被动加班和盲目赶工的根本解决方案
+                            从救火式工作到预判式工作——风险管理的本质
                         </div>
                     </div>
                 </a>
@@ -743,9 +762,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

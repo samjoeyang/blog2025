@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -74,6 +83,9 @@
 
 
 
+
+
+
 <!-- 百度自动推送 -->
 <script>
 (function(){
@@ -112,6 +124,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -137,6 +151,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -170,277 +186,242 @@
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        口头加需求怎么办？这套固定话术帮你挡掉80%的坑
+        跨职能团队的协作障碍怎么拆？
     </h2>
     
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
-    
-    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
-
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/015-kou-tou-jia-xu-qiu-gu-ding-hua-zhu/" class="post-entry__link">口头加需求怎么办？这套固定话术帮你挡掉80%的坑</a>
-                </div>
-            
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        验收标准不明确，项目永远做不完
-    </h2>
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
-    
-    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
-
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/014-yan-shou-biao-zhun-bu-ming-que-xiang-mu-yong-yuan-zuo-bu-wan/" class="post-entry__link">验收标准不明确，项目永远做不完</a>
-                </div>
-            
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        一页纸&#34;需求边界清单&#34;该写什么？
-    </h2>
-    
-        <h1 id="PMP职场实战108问-·-第13问"><a href="#PMP职场实战108问-·-第13问" class="headerlink" title="PMP职场实战108问 · 第13问"></a>PMP职场实战108问 · 第13问</h1><h2 id="一页纸“需求边界清单”该写什么？"><a href="#一页纸“需求边界清单”该写什么？" class="headerlink" title="一页纸“需求边界清单”该写什么？"></a>一页纸“需求边界清单”该写什么？</h2><p>“需求又变了！”</p>
-<p>这句话是你项目失败的开场白，还是你每次周报的高频词？</p>
-<p>我这周跟一位做ERP实施的项目经理吃饭，他苦笑着说：<strong>“项目延期了三个月，客户昨天又加了个报表功能，说是‘早就提过的小需求’。”</strong> 我说，兄弟，你缺的不是管理工具，你缺的是一页纸——一张能让所有人闭嘴的“需求边界清单”。</p>
-<p>很多PM以为“边界管理”就是写个《项目范围说明书》，洋洋洒洒几十页，发出去后连自己都不想看第二遍。结果呢？需求变更时翻遍文档也找不到对应条款，客户一句“这不合理吗？”就把你问懵了。</p>
-<p><strong>真相是：90%的需求蔓延，不是因为你没写范围说明书，而是因为你没把“边界”写得像合同条款一样清晰、像白纸黑字一样无歧义。</strong></p>
+        <h1 id="PMP职场实战108问-·-第86问"><a href="#PMP职场实战108问-·-第86问" class="headerlink" title="PMP职场实战108问 · 第86问"></a>PMP职场实战108问 · 第86问</h1><p>“我推不动其他部门的人。”</p>
+<p>这句话，是我在项目复盘会上听到的最高频的抱怨。你明明有项目章程，有高层授权，甚至KPI都挂在了墙上，可一开会，研发说需求不清晰，市场说优先级要调整，运营说时间太赶——所有人都坐在一张桌上，但每个人都觉得自己在“帮你的忙”。</p>
+<p>跨职能协作的真相是：<strong>权力不统一，责任又交叉。</strong></p>
+<p>你在项目管理岗上待得越久，就越会发现，90%的项目延期不是因为技术难，而是因为“人”没对齐。今天我们就拆一下，跨职能协作的障碍到底卡在哪，以及怎么真的把它拆开。</p>
 <hr>
+<h2 id="为什么你总在“求人办事”？"><a href="#为什么你总在“求人办事”？" class="headerlink" title="为什么你总在“求人办事”？"></a>为什么你总在“求人办事”？</h2><p>先别急着怪别人不配合。我们来看三个藏在表面下的核心原因：</p>
+<p><strong>① 目标不对齐，各玩各的算盘</strong><br>每个职能部门的KPI是独立的。市场部看线索量，技术部看上线时间，财务部看预算执行率。你的项目目标在他们眼里，只是“额外的工作量”。</p>
+<p><strong>② 没有共同的“痛点”</strong><br>如果这个项目黄了，对研发主管的季度奖金有影响吗？如果没影响，他凭什么加班帮你赶工期？</p>
+<p><strong>③ 沟通陷入了“汇报模式”</strong><br>你把周报写得再详细，也不如一次15分钟的电话。跨职能协作最怕“通过邮件打仗”，你以为说清楚了，人家压根没看。</p>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-25</a>
     
     <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/013-yi-ye-zhi-xu-qiu-bian-jie-qing-dan-gai-xie-shi-me/" class="post-entry__link">一页纸&#34;需求边界清单&#34;该写什么？</a>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/086-kua-zhi-neng-tuan-dui-xie-zuo-zhang-ai/" class="post-entry__link">跨职能团队的协作障碍怎么拆？</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        关键路径是什么？怎样识别自己项目中的关键路径？
+        虚拟团队和远程协作的管理挑战
     </h2>
     
-        <h1 id="PMP职场实战108问-·-第22问"><a href="#PMP职场实战108问-·-第22问" class="headerlink" title="PMP职场实战108问 · 第22问"></a>PMP职场实战108问 · 第22问</h1><p><strong>关键路径是什么？怎样识别自己项目中的关键路径？</strong></p>
-<p>上周有个项目经理跟我吐槽：项目延期了，老板问他“关键路径在哪”，他当场懵了——不是不知道概念，是真不知道自己的项目里哪条才是“命根子”。</p>
-<p>这不怪他。PMP教材里把关键路径讲成了数学题：最早开始、最晚结束、总浮动时间……但现实是，你的项目甘特图一拉几十行，光依赖关系就绕成蜘蛛网，谁有功夫去算每个任务的浮动时间？</p>
-<p>今天我们就聊点实在的：<strong>怎么用3步找到你项目的“命脉线”</strong>。</p>
-<hr>
-<h2 id="关键路径是啥？一句话说透"><a href="#关键路径是啥？一句话说透" class="headerlink" title="关键路径是啥？一句话说透"></a>关键路径是啥？一句话说透</h2><p>关键路径就是<strong>项目中耗时最长的那条任务链</strong>。</p>
-<p>它不是什么玄学。想象你家装修：水电改造、贴瓷砖、刷墙、装灯。如果贴瓷砖要15天，其他都只要3天，那关键路径就是“贴瓷砖”——它决定了你哪天能住进去。其他任务做再多，只要它慢了，全完蛋。</p>
-<p>关键路径上的任务 <strong>没有浮动时间</strong>（一天都不能耽误），一旦延误，项目必延。</p>
+        <h1 id="PMP职场实战108问-·-第87问"><a href="#PMP职场实战108问-·-第87问" class="headerlink" title="PMP职场实战108问 · 第87问"></a>PMP职场实战108问 · 第87问</h1><h2 id="远程办公两年了，为什么团队反而更累了？"><a href="#远程办公两年了，为什么团队反而更累了？" class="headerlink" title="远程办公两年了，为什么团队反而更累了？"></a>远程办公两年了，为什么团队反而更累了？</h2><p>餐饮门店虽然没有”远程办公”这个词，但多店管理一久，你会发现类似的问题更粗粝、更真实。</p>
+<p>比如我们同时管着五家店的时候，店长们各管各的，我坐在总部办公室，只能靠每天的营业报表和店长电话来判断每家店的情况。</p>
+<p>有一次周六晚高峰，第四家店突然爆单——不是生意好，是后厨排风坏了，温度冲到四十度，两个厨师直接热到中暑。店长给我打电话的时候已经晚上八点了，说”刚才太忙没来得及汇报”。我问他”排风坏了多久了”，他说”中午就开始异响了”。</p>
+<p>你看，这就是”远程管理”的真实困境——出问题的人不一定第一时间告诉你，你知道的时候往往已经晚了。</p>
+<p>PM们面临的虚拟团队管理也一样。早上9点站会，摄像头不开、麦静音，”昨天做完了，今天继续”，然后人消失了。你在Jira上一看，他的状态三天没变过。追进度？半小时回一句”在等接口”。</p>
+<p><strong>虚拟团队的管理难度，一直被严重低估了。</strong></p>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-25</a>
     
     <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/022-guan-jian-lu-jing-shi-shi-me-ru-he-shi-bie/" class="post-entry__link">关键路径是什么？怎样识别自己项目中的关键路径？</a>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/087-xu-ni-tuan-dui-yuan-cheng-xie-zuo-guan-li-tiao-zhan/" class="post-entry__link">虚拟团队和远程协作的管理挑战</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        浮动时间怎么用？非关键任务如何利用缓冲
+        团队知识传承与文档沉淀
     </h2>
-    
-        <h1 id="PMP职场实战108问-·-第23问"><a href="#PMP职场实战108问-·-第23问" class="headerlink" title="PMP职场实战108问 · 第23问"></a>PMP职场实战108问 · 第23问</h1><h2 id="浮动时间怎么用？非关键任务如何利用缓冲"><a href="#浮动时间怎么用？非关键任务如何利用缓冲" class="headerlink" title="浮动时间怎么用？非关键任务如何利用缓冲"></a>浮动时间怎么用？非关键任务如何利用缓冲</h2><p>你有没有遇到过这种情况：项目排期时，所有任务都排得满满当当，一丁点余量都没有。客户让你压缩工期，你咬着牙砍了3天；老板问能不能再快两天，你又硬挤了2天。等真正干起来，任何一个环节出问题，整个项目就崩盘。</p>
-<p>更讽刺的是，<strong>很多人把浮动时间等同于“可以偷懒的时间”</strong>。一旦发现某个任务有缓冲，下意识就想拖一拖，结果拖到后面才发现——这个任务虽然不关键，但它一延期，关键路径上的资源就被占用了，整个项目反而更慢。</p>
-<p>今天咱们就聊聊：浮动时间到底该怎么用？非关键任务上的缓冲，是福利还是陷阱？</p>
-<hr>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-25</a>
     
     <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/023-fu-dong-shi-jian-zen-me-yong-fei-guan-jian-ren-wu-huan-chong/" class="post-entry__link">浮动时间怎么用？非关键任务如何利用缓冲</a>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/088-tuan-dui-zhi-shi-chuan-cheng-wen-dang-chen-dian/" class="post-entry__link">团队知识传承与文档沉淀</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        里程碑节点如何设定？标注&#34;最晚完成时间&#34;的重要性
+        接手项目前必须问自己的三个核心问题
     </h2>
     
-        <h1 id="PMP职场实战108问-·-第24问"><a href="#PMP职场实战108问-·-第24问" class="headerlink" title="PMP职场实战108问 · 第24问"></a>PMP职场实战108问 · 第24问</h1><h2 id="里程碑节点如何设定？标注“最晚完成时间”的重要性"><a href="#里程碑节点如何设定？标注“最晚完成时间”的重要性" class="headerlink" title="里程碑节点如何设定？标注“最晚完成时间”的重要性"></a>里程碑节点如何设定？标注“最晚完成时间”的重要性</h2><p>你有没有遇到过这种情况：项目计划上写着“XX里程碑：6月30日完成”，结果到了6月25日，相关方才慌慌张张地告诉你“可能来不及了”。你问为什么早点不说，对方一脸无辜：“我以为能赶上啊。”</p>
-<p>这不是个例。<strong>我在管理过上百个项目后发现，90%的里程碑延期，不是因为做不完，而是因为没有提前暴露风险。</strong> 真正的问题出在哪里？出在你只设了一个完成日期，却没告诉所有人：到这个时间点之前，你必须告诉我你完不成。</p>
-<p>今天聊聊里程碑设定的两个硬核技巧：一是怎么切分节点才合理，二是为什么必须标注“最晚完成时间”。</p>
-<h3 id="一、大多数项目经理的里程碑，只是个“虚线靶子”"><a href="#一、大多数项目经理的里程碑，只是个“虚线靶子”" class="headerlink" title="一、大多数项目经理的里程碑，只是个“虚线靶子”"></a>一、大多数项目经理的里程碑，只是个“虚线靶子”</h3><p>很多人画里程碑的方式是：把项目分成几个阶段，比如“需求确认”→“设计完成”→“开发完成”→“上线发布”，然后拍一个日期填上去。</p>
-<p>这种做法的坑在哪里？<strong>你把里程碑当成“理想状态下的完成线”，而不是“出现问题的报警线”。</strong></p>
-<p>结果就是：</p>
-<ul>
-<li>团队看到6月30日，心想还早，先干别的</li>
-<li>到了6月20日发现卡住了，不敢说，怕你觉得他不行</li>
-<li>6月28日硬着头皮说“需要延期2周”</li>
-<li>你暴跳如雷，但已经来不及调整</li>
-</ul>
-<p>问题的根源：你设定的里程碑，没有和“风险预警”绑定。</p>
-<h3 id="二、里程碑设定的两个核心原则"><a href="#二、里程碑设定的两个核心原则" class="headerlink" title="二、里程碑设定的两个核心原则"></a>二、里程碑设定的两个核心原则</h3><p><strong>原则1：每个里程碑必须是可验证的交付物，而不是模糊的状态</strong></p>
-<p>❌ 错误示范：“完成需求调研”（什么叫完成？问了三个人算不算？）<br>✅ 正确示范：“输出《需求规格说明书》终稿，并经过关键用户签字确认”</p>
-<p>可验证，才能追责；模糊，就是甩锅的空间。</p>
-<p><strong>原则2：每个里程碑必须有“最晚完成时间”和“预警触发条件”</strong></p>
-<p>这是今天最核心的观点。</p>
-<p>传统计划只写一个日期，导致团队和项目经理的“认知偏差”——团队心里想着“在努力”，你心里想着“肯定行”。直到最后一天，双方才发现认知不同。</p>
-<p><strong>所以，里程碑的日期要设两栏：</strong></p>
-<ul>
-<li><strong>目标完成时间</strong>：你计划要做到的时间（争取的）</li>
-<li><strong>最晚完成时间</strong>：如果到这个时间还没完成，必须立刻报风险（底线）</li>
-</ul>
+        <h1 id="PMP职场实战108问-·-第89问"><a href="#PMP职场实战108问-·-第89问" class="headerlink" title="PMP职场实战108问 · 第89问"></a>PMP职场实战108问 · 第89问</h1><h2 id="接手项目前必须问自己的三个核心问题"><a href="#接手项目前必须问自己的三个核心问题" class="headerlink" title="接手项目前必须问自己的三个核心问题"></a>接手项目前必须问自己的三个核心问题</h2><p>你有没有接过这样的项目：老板笑眯眯地说“这个项目你能力强，交给你我放心”，你拍胸脯接下，两周后才发现——资源只配了半个人，需求模糊得像雾里看花。</p>
+<p>我在餐饮管理里遇到过一模一样的场景。</p>
+<p>去年第一家新店筹备，老板说“你之前管过三家店了，这次你全权负责”。我当时还挺高兴——终于有点权力了。结果开工第一个月我就傻了眼：装修队是老板指定的，菜单是老板钦点的，连招聘名额都是上面定好的。我名义上是“全权负责”，实际就是个监工。</p>
+<p>那次之后我学乖了：<strong>接项目之前，先搞清楚自己到底接的是什么。</strong></p>
+<p>很多项目经理也一样。不是能力不行，是把“接手”当成了“接受”，而不是“审查”。真正的高手，点头之前一定先问自己三个问题——不是问老板、不是问客户，是问自己。</p>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-25</a>
     
     <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/024-li-cheng-bei-jie-dian-she-ding-zui-wan-wan-cheng-shi-jian/" class="post-entry__link">里程碑节点如何设定？标注&#34;最晚完成时间&#34;的重要性</a>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/089-jie-shou-xiang-mu-qian-san-ge-he-xin-wen-ti/" class="post-entry__link">接手项目前必须问自己的三个核心问题</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        进度压缩技术的正确用法
+        能解决公司什么问题——价值对齐思维
     </h2>
     
-        <h1 id="PMP职场实战108问-·-第25问"><a href="#PMP职场实战108问-·-第25问" class="headerlink" title="PMP职场实战108问 · 第25问"></a>PMP职场实战108问 · 第25问</h1><h2 id="进度压缩技术的正确用法"><a href="#进度压缩技术的正确用法" class="headerlink" title="进度压缩技术的正确用法"></a>进度压缩技术的正确用法</h2><p>你有没有遇到过这种情况：老板拍桌子说“这个项目必须提前两周上线”，你翻出PMBOK，找到“进度压缩”四个字，然后<strong>脑子一热就开始加班加人</strong>？</p>
-<p>如果你这么干，恭喜你，你已经成功踩进了进度压缩最常见的坑。</p>
-<p>这里必须说句扎心的话：<strong>80%的项目经理在用错误的方式做进度压缩</strong>。他们以为压缩就是拼命堆资源、延长工时，结果往往是：成本炸了，质量崩了，团队废了，进度反而更慢了。</p>
-<p>今天咱们就把进度压缩这件事聊透。</p>
+        <h1 id="PMP职场实战108问-·-第90问"><a href="#PMP职场实战108问-·-第90问" class="headerlink" title="PMP职场实战108问 · 第90问"></a>PMP职场实战108问 · 第90问</h1><h2 id="能解决公司什么问题——价值对齐思维"><a href="#能解决公司什么问题——价值对齐思维" class="headerlink" title="能解决公司什么问题——价值对齐思维"></a>能解决公司什么问题——价值对齐思维</h2><p>我之前管过的几家连锁餐厅里，有一件事印象特别深。</p>
+<p>第三家门店开业半年，营收死活上不去。店长很着急，天天盯着厨房出菜效率：优化切配流程、改灶台布局、缩短出餐时间到8分钟以内。结果呢？翻台率确实提了，但营收没变——因为用餐高峰时段，等位的人也没增加啊。</p>
+<p>后来我跟店长聊了一次。我问了一句：”你觉得我们的客人，为什么不来？”他说不知道。我让他自己去门口站一周，数一数经过的人流，再看看隔壁店为什么满座。</p>
+<p>一周后他跑来找我：”我发现隔壁的招牌上写着’午市套餐28元起’，我们门口连个价目牌都没有。客人走到门口犹豫一下，就走了。”</p>
+<p>你看，他花了三个月优化厨房效率——但真正的瓶颈，根本不是厨房。</p>
+<p>这就是我今天想聊的：<strong>价值对齐。</strong></p>
+<p>你有没有做过类似的事？熬夜加班、数据漂亮，老板听完只说了句”辛苦了”？或者推动的流程优化明明省了大笔钱，但业务方根本不领情？</p>
+<p>别急着怪别人不懂。真相很可能是——<strong>你做的东西，跟公司眼下要解决的问题，根本不在一张地图上。</strong></p>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-25</a>
     
     <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/025-jin-du-ya-suo-ji-zhu-de-zheng-que-yong-fa/" class="post-entry__link">进度压缩技术的正确用法</a>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/090-jie-zhi-dui-qi-si-wei/" class="post-entry__link">能解决公司什么问题——价值对齐思维</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        每周进度同步怎么做才能不流于形式？
+        黄仁勋的首条 X 推文：Open Weights and American AI Leadership
     </h2>
-    
-        <h1 id="PMP职场实战108问-·-第27问"><a href="#PMP职场实战108问-·-第27问" class="headerlink" title="PMP职场实战108问 · 第27问"></a>PMP职场实战108问 · 第27问</h1><h2 id="每周进度同步怎么做才能不流于形式？"><a href="#每周进度同步怎么做才能不流于形式？" class="headerlink" title="每周进度同步怎么做才能不流于形式？"></a>每周进度同步怎么做才能不流于形式？</h2><p>你有没有参加过这样的周会：每个人轮流念一遍自己干了啥，项目经理听着打哈欠，有人偷偷刷手机，有人提前准备好稿子念完就闭麦。会议结束，大家长出一口气：“又熬过一个小时。”会后，该干啥还干啥，没人记得会上说了什么。</p>
-<p>这不是进度同步，这是“集体朗诵周报”。更可怕的是，你明明知道它没用，还得硬着头皮每周来一次，因为领导说“要同步一下”。</p>
-<p><strong>核心问题</strong>：每周进度同步变成形式主义的原因只有一个——<strong>它只有汇报，没有决策</strong>。</p>
-<hr>
-<h3 id="❌-为什么你每周的进度同步会沦为鸡肋？"><a href="#❌-为什么你每周的进度同步会沦为鸡肋？" class="headerlink" title="❌ 为什么你每周的进度同步会沦为鸡肋？"></a>❌ 为什么你每周的进度同步会沦为鸡肋？</h3><p>先看三个典型场景：</p>
-<ul>
-<li><p><strong>场景A：流水账式同步</strong><br>每个人说“我周一做了A，周二做了B，周三等审批，周四调试完成”，全组听完，信息量等于零。因为大家真正关心的——<strong>风险、变更、依赖</strong>——没人提。</p>
-</li>
-<li><p><strong>场景B：沉默式同步</strong><br>问“有没有问题？”所有人摇头。结果会后半小时，两个开发因为接口联调吵到项目经理办公室。为什么会上不说？因为“会上说问题显得我没能力”。</p>
-</li>
-<li><p><strong>场景C：超长式同步</strong><br>10个人参会，每人讲15分钟，两个半小时过去了。最后10分钟匆匆讨论关键决策，发现时间不够，只好说“回头拉个会再聊”。那这个周会在干什么？浪费时间。</p>
-</li>
-</ul>
-<p><strong>根因就三点</strong>：</p>
-<ol>
-<li><strong>没有明确信息颗粒度</strong>——不该在会上说的细节说了，该在会上讨论的决策没提</li>
-<li><strong>没有强制风险暴露机制</strong>——每个人都默认“报喜不报忧”</li>
-<li><strong>没有产出可执行的Action Item</strong>——会开完，nothing changes</li>
-</ol>
-<hr>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-25</a>
     
-    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+    <span class="separate-dot"></span><a href="/categories/AI/" class="button">AI</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/027-mei-zhou-jin-du-tong-bu-bu-liu-yu-xing-shi/" class="post-entry__link">每周进度同步怎么做才能不流于形式？</a>
+<div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/NVIDIA/" class="post-tags__link button"># NVIDIA</a><a href="/tags/%E9%BB%84%E4%BB%81%E5%8B%8B/" class="post-tags__link button"># 黄仁勋</a><a href="/tags/Jensen-Huang/" class="post-tags__link button"># Jensen Huang</a><a href="/tags/Open-Weights/" class="post-tags__link button"># Open Weights</a><a href="/tags/OpenAI/" class="post-tags__link button"># OpenAI</a><a href="/tags/%E4%BA%BA%E5%B7%A5%E6%99%BA%E8%83%BD/" class="post-tags__link button"># 人工智能</a></div> 
+<a href="/001-huang-ren-xun-shou-tiao-tui-wen-open-weights-and-american-ai-leadership/" class="post-entry__link">黄仁勋的首条 X 推文：Open Weights and American AI Leadership</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        敏捷小项目的迭代周期怎么定？
+        黄仁勋的首次发声，和那份让OpenAI不愿签名的声明
     </h2>
-    
-        <h1 id="PMP职场实战108问-·-第26问"><a href="#PMP职场实战108问-·-第26问" class="headerlink" title="PMP职场实战108问 · 第26问"></a>PMP职场实战108问 · 第26问</h1><h2 id="敏捷小项目的迭代周期怎么定？"><a href="#敏捷小项目的迭代周期怎么定？" class="headerlink" title="敏捷小项目的迭代周期怎么定？"></a>敏捷小项目的迭代周期怎么定？</h2><p>“我们公司做小项目，就3个人，两周一个迭代，结果每次迭代结束都有功能没做完，评审会开得像批斗会。是不是小项目就不适合用敏捷？”</p>
-<p>这是我一个做SaaS创业的学员，上周在群里扔出来的问题。他3个开发、1个产品、他自己兼项目经理，两周一个Sprint，坚持了三个月，团队快崩溃了。</p>
-<p>他的困惑在于：<strong>所有的敏捷书、培训课都在教你“2-4周一个迭代”，但没人告诉你——如果你只做一个小功能、一个小产品，两周可能太长，一周可能太紧，到底怎么定？</strong></p>
-<p>其实这个问题背后，藏着80%小团队对敏捷的误解：<strong>把“迭代周期”当成了一个固定模板，而不是一个可调节的参数。</strong></p>
-<hr>
-<h2 id="为什么小项目更容易被“周期”卡死？"><a href="#为什么小项目更容易被“周期”卡死？" class="headerlink" title="为什么小项目更容易被“周期”卡死？"></a>为什么小项目更容易被“周期”卡死？</h2><p>先想清楚一件事：你定迭代周期的目的是什么？</p>
-<p>不是为了“敏捷而敏捷”，也不是为了每天站会、每两周评审。核心目的是 <strong>“快速获取反馈，降低风险”</strong>。</p>
-<p>大项目（几十人团队、跨部门协作）之所以用2-4周，是因为沟通链条长、部署环境复杂、测试回归慢。但小项目恰恰相反——<strong>你的反馈链路短、变更成本低、发布窗口灵活</strong>。</p>
-<p>这时候硬套2周，就会出现典型问题：</p>
-<ul>
-<li><strong>2周太长</strong>：一个功能两天就写完了，剩下8天在等评审、修边角料、跟产品扯皮</li>
-<li><strong>1周太短</strong>：还没搞懂用户需求，就要演示Demo，焦虑感天天爆炸</li>
-</ul>
-<p>说白了，<strong>小项目不需要用“大公司的节奏”来给自己加戏</strong>。你需要的是一个微调过的、更合适的节奏。</p>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-14</a>
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-25</a>
     
-    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+    <span class="separate-dot"></span><a href="/categories/AI/" class="button">AI</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
-<a href="/026-min-jie-xiao-xiang-mu-die-dai-zhou-qi-zen-me-ding/" class="post-entry__link">敏捷小项目的迭代周期怎么定？</a>
+<div class="post-entry__tags"><a href="/tags/AI/" class="post-tags__link button"># AI</a><a href="/tags/NVIDIA/" class="post-tags__link button"># NVIDIA</a><a href="/tags/%E9%BB%84%E4%BB%81%E5%8B%8B/" class="post-tags__link button"># 黄仁勋</a><a href="/tags/OpenAI/" class="post-tags__link button"># OpenAI</a><a href="/tags/%E5%BC%80%E6%94%BE%E6%9D%83%E9%87%8D/" class="post-tags__link button"># 开放权重</a><a href="/tags/%E5%BC%80%E6%BA%90/" class="post-tags__link button"># 开源</a></div> 
+<a href="/002-huang-ren-xun-shou-ci-fa-sheng-yu-openai-bu-yuan-qian-ming-de-sheng-ming/" class="post-entry__link">黄仁勋的首次发声，和那份让OpenAI不愿签名的声明</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        2026年开源电子书阅读器生态图：百花齐放的黄金时代
+        从裸机到浏览器——开源阅读器的技术栈全景
     </h2>
+    
+        <p>前两篇文章聊了 FreeInk 的全栈设计和开源阅读器的硬件&#x2F;软件路线之争。今天换个角度，从技术栈切入，看看这些项目的开发者们分别选择了什么工具来造轮子。</p>
+<p>作为一个写了十几年代码的人，我有个习惯：看到一个开源项目，第一反应不是「这玩意儿能干啥」，而是「它怎么写的」。技术栈的选择往往暴露了一个项目的核心哲学——你选什么语言、什么框架、什么构建工具，背后都藏着你在乎什么、不在乎什么。</p>
+<p>这篇就带你在开源阅读器的技术栈里走一圈。</p>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-13</a>
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-24</a>
     
     <span class="separate-dot"></span><a href="/categories/%E6%8A%80%E6%9C%AF%E7%9B%98%E7%82%B9/" class="button">技术盘点</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/unobox/" class="post-tags__link button"># unobox</a><a href="/tags/%E7%94%B5%E5%AD%90%E4%B9%A6/" class="post-tags__link button"># 电子书</a><a href="/tags/%E5%BC%80%E6%BA%90/" class="post-tags__link button"># 开源</a><a href="/tags/%E9%98%85%E8%AF%BB%E5%99%A8/" class="post-tags__link button"># 阅读器</a><a href="/tags/KOReader/" class="post-tags__link button"># KOReader</a><a href="/tags/Readest/" class="post-tags__link button"># Readest</a><a href="/tags/Calibre/" class="post-tags__link button"># Calibre</a></div> 
-<a href="/2026-nian-kai-yuan-dian-zi-shu-yue-du-qi-sheng-tai-tu/" class="post-entry__link">2026年开源电子书阅读器生态图：百花齐放的黄金时代</a>
+<div class="post-entry__tags"><a href="/tags/unobox/" class="post-tags__link button"># unobox</a><a href="/tags/KOReader/" class="post-tags__link button"># KOReader</a><a href="/tags/Readest/" class="post-tags__link button"># Readest</a><a href="/tags/FreeInk/" class="post-tags__link button"># FreeInk</a><a href="/tags/%E6%8A%80%E6%9C%AF%E6%A0%88/" class="post-tags__link button"># 技术栈</a><a href="/tags/Rust/" class="post-tags__link button"># Rust</a><a href="/tags/Flutter/" class="post-tags__link button"># Flutter</a><a href="/tags/C/" class="post-tags__link button"># C++</a><a href="/tags/Lua/" class="post-tags__link button"># Lua</a></div> 
+<a href="/cong-luo-ji-dao-liu-lan-qi-kai-yuan-yue-du-qi-de-ji-zhu-zhan-quan-jing/" class="post-entry__link">从裸机到浏览器——开源阅读器的技术栈全景</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        授权不等于放权——熟手如何被正确授权？
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-24</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/082-shou-quan-bu-deng-yu-fang-quan-shou-shou-zheng-que-shou-quan/" class="post-entry__link">授权不等于放权——熟手如何被正确授权？</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        赋能型管理——核心成员的成长路径
+    </h2>
+    
+        <h1 id="PMP职场实战108问-·-第83问"><a href="#PMP职场实战108问-·-第83问" class="headerlink" title="PMP职场实战108问 · 第83问"></a>PMP职场实战108问 · 第83问</h1><h2 id="你的核心成员，为什么越带越“废”？"><a href="#你的核心成员，为什么越带越“废”？" class="headerlink" title="你的核心成员，为什么越带越“废”？"></a>你的核心成员，为什么越带越“废”？</h2><p>我见过太多项目经理，嘴上喊着“赋能”，手上干的是“负载”。</p>
+<p>你让他独立负责一个模块，他搞砸了，你赶紧自己上。你让他去跟客户沟通，他说错话了，你后面跟客户道歉半小时。你让他做个决策，他犹豫不决来问你，你直接告诉他答案。</p>
+<p>看起来你在“帮”他，实际上你在“废”他。</p>
+<p><strong>核心问题：你所谓的赋能，到底是在给能力，还是在给拐杖？</strong></p>
+<p>真正的赋能型管理，不是替下属干活，而是让他长出能独立站住的骨头。</p>
+<hr>
+<h2 id="为什么你越带，团队越弱？"><a href="#为什么你越带，团队越弱？" class="headerlink" title="为什么你越带，团队越弱？"></a>为什么你越带，团队越弱？</h2><p>先帮你拆解一下，为什么很多项目经理带不出核心成员。三个常见坑，你踩过几个？</p>
+<p><strong>❌ 坑一：保姆式管理</strong></p>
+<p>你觉得“交给他不放心”，于是亲自下场改方案、改代码、改PPT。结果呢？他学会了“等领导改”，而不是“一次做对”。你越能干，他越废柴。</p>
+<p><strong>❌ 坑二：指令式培养</strong></p>
+<p>你说“你按我说的做”，他说“好的”。三个月后，你发现他只会执行你的想法，完全没有自己的判断。你不是在培养下一个项目经理，你是在培养一个高级复读机。</p>
+<p><strong>❌ 坑三：真空式授权</strong></p>
+<p>你说“这件事你全权负责”，然后彻底消失。他遇到第一个难题就卡住了，没人问、没人教、没反馈。两星期后交付了一坨屎，你气得想骂人，他还委屈：“不是你说让我全权负责吗？”</p>
+<p>看到了吗？赋能不是“放手不管”，也不是“手把手教”，而是<strong>在关键节点介入，帮他从“会做”进化到“会想”</strong>。</p>
+<hr>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/07/" class="post-meta__date button">2026-07-24</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="button">项目管理</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
+<a href="/083-fu-neng-xing-guan-li-he-xin-cheng-yuan-cheng-chang-lu-jing/" class="post-entry__link">赋能型管理——核心成员的成长路径</a>
                 </div>
             
         
@@ -570,9 +551,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

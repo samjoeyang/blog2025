@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,7 +39,7 @@
 <title>WBS拆到&#34;最小可执行单元&#34;是什么标准？ | Need.UNO</title>
 
 
-    <meta name="keywords" content="职场, PMP, 项目管理, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="PMP, 项目管理, 职场, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -45,11 +54,11 @@
 <meta property="og:description" content="PMP职场实战108问 · 第18问WBS拆到“最小可执行单元”是什么标准？你有没有遇到过这种场景：项目启动会上，你激情澎湃地展示了WBS，团队也很配合。但两周后的进度会上，有人突然说：“这个‘用户注册模块开发’还没做完。”你问：“具体卡在哪？”对方挠头：“呃……就是还没写完代码。”——你心头一紧，因为你知道，这个任务已经挂了整整两周，但没人能说清“差多少”。 这不是个例。WBS拆得不够细，项目经">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-14T18:02:00.000Z">
-<meta property="article:modified_time" content="2026-07-14T02:51:43.978Z">
+<meta property="article:modified_time" content="2026-10-10T16:03:37.293Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="职场">
 <meta property="article:tag" content="PMP">
 <meta property="article:tag" content="项目管理">
+<meta property="article:tag" content="职场">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@samjoeyang">
 
@@ -78,6 +87,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -88,7 +103,7 @@
   "headline": "WBS拆到\&#34;最小可执行单元\&#34;是什么标准？",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-07-15",
-  "dateModified": "2026-07-14",
+  "dateModified": "2026-10-11",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/018-wbs-zui-xiao-ke-zhi-xing-dan-yuan-biao-zhun/" },
   "description": "WBS拆到\&#34;最小可执行单元\&#34;是什么标准？"
 }
@@ -133,6 +148,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -158,6 +175,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -366,7 +385,7 @@
 <p><strong>真实案例：</strong><br>我管过一个后台系统项目。开发说“权限管理模块”他一个人搞定。结果一周后，他前端改了20次，后端写了5个API，测试提了11个Bug。我马上叫停，把这条拆成：</p>
 <ul>
 <li>前端：权限界面UI开发 → 小明</li>
-<li>后端：权限API及数据库逻辑 → 小王  </li>
+<li>后端：权限API及数据库逻辑 → 小王</li>
 <li>测试：权限模块接口测试用例 → 小张</li>
 </ul>
 <p>每人一条，每人认领，三天后全部闭环。</p>
@@ -423,10 +442,10 @@
 <p>结果呢？15天的大包袱，变成了3个小任务依次滚动交付。第10天时，搜索功能已经可以在测试环境跑通了。之前那种“干了两周还不知道差多少”的焦虑感，彻底消失。</p>
 <hr>
 <h3 id="今日动作"><a href="#今日动作" class="headerlink" title="今日动作"></a>今日动作</h3><blockquote>
-<p><strong>📌 今日动作</strong>：打开你正在做的项目WBS，找一条你认为“差不多”的工作包。检查它是否满足三个标准：唯一责任人、明确验收条件、可独立交付。如果不满足，花15分钟把它拆成2-3个更小的单元，并更新进度的估算。你会发现进度瞬间变透明。</p>
+<p><strong>今日动作</strong>：打开你正在做的项目WBS，找一条你认为“差不多”的工作包。检查它是否满足三个标准：唯一责任人、明确验收条件、可独立交付。如果不满足，花15分钟把它拆成2-3个更小的单元，并更新进度的估算。你会发现进度瞬间变透明。</p>
 </blockquote>
 <hr>
-<p>📚 <strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
+<p><strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
 
     </div>
     
@@ -448,8 +467,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-14</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-10-11</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -760,9 +779,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

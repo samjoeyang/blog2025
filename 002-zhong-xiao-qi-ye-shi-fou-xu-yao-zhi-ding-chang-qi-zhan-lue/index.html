@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,25 +39,25 @@
 <title>中小企业是否需要制定长期战略？ | Need.UNO</title>
 
 
-    <meta name="keywords" content="企业管理, 职场, 战略, 组织, 人力, 财务, 运营, 营销, 创新, 管理心得, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="职场, 企业管理, 战略, 组织, 人力, 财务, 运营, 营销, 创新, 管理心得, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
 
     <!-- OpenGraph -->
  
-    <meta name="description" content="企业管理的108个问题 · 第2问 「计划赶不上变化」——这大概是对「战略」最常见的质疑。但这个反应本身，就是一个值得深思的战略问题。  上回聊了战略与战术的区别（第1问），今天我们把聚光灯打在中小企业身上——一个最容易被「战略」二字吓退的群体。  一、先说说那个常见的困惑中小企业的日常是什么样的？ 老板早上到公司，采购说找到了一家更便宜的供应商；销售说有个大客户在犹豫，得赶紧去谈；财务说这个月现">
+    <meta name="description" content="企业管理的108个问题 · 第2问 「计划赶不上变化」——这大概是对「战略」最常见的质疑。但这个反应本身，就是一个值得深思的战略问题。  说实话，这个问题我自己也纠结了很久。 最开始管第一家店的时候，我根本没想过什么三五年战略——每天睁开眼就是：进货多少钱、房租什么时候交、今天有没有客人、店里的下水道又堵了没。 那时候有个人跟我说 根据中国中小企业协会的数据，中国中小企业的平均寿命只有 2.5 年">
 <meta property="og:type" content="website">
 <meta property="og:title" content="中小企业是否需要制定长期战略？">
 <meta property="og:url" content="https://need.uno/002-zhong-xiao-qi-ye-shi-fou-xu-yao-zhi-ding-chang-qi-zhan-lue/index.html">
 <meta property="og:site_name" content="Need.UNO">
-<meta property="og:description" content="企业管理的108个问题 · 第2问 「计划赶不上变化」——这大概是对「战略」最常见的质疑。但这个反应本身，就是一个值得深思的战略问题。  上回聊了战略与战术的区别（第1问），今天我们把聚光灯打在中小企业身上——一个最容易被「战略」二字吓退的群体。  一、先说说那个常见的困惑中小企业的日常是什么样的？ 老板早上到公司，采购说找到了一家更便宜的供应商；销售说有个大客户在犹豫，得赶紧去谈；财务说这个月现">
+<meta property="og:description" content="企业管理的108个问题 · 第2问 「计划赶不上变化」——这大概是对「战略」最常见的质疑。但这个反应本身，就是一个值得深思的战略问题。  说实话，这个问题我自己也纠结了很久。 最开始管第一家店的时候，我根本没想过什么三五年战略——每天睁开眼就是：进货多少钱、房租什么时候交、今天有没有客人、店里的下水道又堵了没。 那时候有个人跟我说 根据中国中小企业协会的数据，中国中小企业的平均寿命只有 2.5 年">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-14T04:05:00.000Z">
-<meta property="article:modified_time" content="2026-07-03T07:09:18.518Z">
+<meta property="article:modified_time" content="2026-10-10T06:03:32.877Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="企业管理">
 <meta property="article:tag" content="职场">
+<meta property="article:tag" content="企业管理">
 <meta property="article:tag" content="战略">
 <meta property="article:tag" content="组织">
 <meta property="article:tag" content="人力">
@@ -85,6 +94,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -95,7 +110,7 @@
   "headline": "中小企业是否需要制定长期战略？",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-05-14",
-  "dateModified": "2026-07-03",
+  "dateModified": "2026-10-10",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/002-zhong-xiao-qi-ye-shi-fou-xu-yao-zhi-ding-chang-qi-zhan-lue/" },
   "description": "中小企业是否需要制定长期战略？"
 }
@@ -140,6 +155,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -165,6 +182,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -354,12 +373,9 @@
         <h1 id="企业管理的108个问题-·-第2问"><a href="#企业管理的108个问题-·-第2问" class="headerlink" title="企业管理的108个问题 · 第2问"></a>企业管理的108个问题 · 第2问</h1><blockquote>
 <p>「计划赶不上变化」——这大概是对「战略」最常见的质疑。但这个反应本身，就是一个值得深思的战略问题。</p>
 </blockquote>
-<p>上回聊了战略与战术的区别（<a href="/001-%E6%88%98%E7%95%A5%E4%B8%8E%E6%88%98%E6%9C%AF%E7%9A%84%E5%8C%BA%E5%88%AB.html">第1问</a>），今天我们把聚光灯打在中小企业身上——一个最容易被「战略」二字吓退的群体。</p>
-<hr>
-<h2 id="一、先说说那个常见的困惑"><a href="#一、先说说那个常见的困惑" class="headerlink" title="一、先说说那个常见的困惑"></a>一、先说说那个常见的困惑</h2><p>中小企业的日常是什么样的？</p>
-<p>老板早上到公司，采购说找到了一家更便宜的供应商；销售说有个大客户在犹豫，得赶紧去谈；财务说这个月现金有点紧，有几笔款要催；人事说那个骨干又提离职了……</p>
-<p>在这样的「打仗模式」下，你跟他说「我们花两周时间讨论一下未来三年的战略」，他大概率会回一句：「先把眼前的活干了再说。」</p>
-<p>这不是老板短视，而是中小企业生存压力的真实写照。</p>
+<p>说实话，这个问题我自己也纠结了很久。</p>
+<p>最开始管第一家店的时候，我根本没想过什么三五年战略——每天睁开眼就是：进货多少钱、房租什么时候交、今天有没有客人、店里的下水道又堵了没。</p>
+<p>那时候有个人跟我说</p>
 <p>根据中国中小企业协会的数据，中国中小企业的平均寿命只有 <strong>2.5 年</strong>。在这样的生命周期面前，「长期」听起来确实有点奢侈。</p>
 <p>但问题恰恰在于：<strong>平均寿命短，与「没有长期战略」之间，是不是存在因果关系？</strong></p>
 <h2 id="二、「长期」到底有多长？"><a href="#二、「长期」到底有多长？" class="headerlink" title="二、「长期」到底有多长？"></a>二、「长期」到底有多长？</h2><p>先别急着回答「要不要」，我们先定义一下什么叫「长期」。</p>
@@ -448,7 +464,7 @@
 <hr>
 <h2 id="七、一个现实的结论"><a href="#七、一个现实的结论" class="headerlink" title="七、一个现实的结论"></a>七、一个现实的结论</h2><p>需要长期战略吗？当然需要。但需要的不是一本厚厚的战略书，而是一个清晰的指南针：</p>
 <ul>
-<li>🎯 目光放远一点，至少看到 3 年</li>
+<li>目光放远一点，至少看到 3 年</li>
 <li>✋ 手上抓牢一点，聚焦核心取舍</li>
 <li>🌊 心里灵活一点，随时准备调整</li>
 </ul>
@@ -479,8 +495,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 企业管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E6%88%98%E7%95%A5/" class="post-tags__link button"># 战略</a><a href="/tags/%E7%BB%84%E7%BB%87/" class="post-tags__link button"># 组织</a><a href="/tags/%E4%BA%BA%E5%8A%9B/" class="post-tags__link button"># 人力</a><a href="/tags/%E8%B4%A2%E5%8A%A1/" class="post-tags__link button"># 财务</a><a href="/tags/%E8%BF%90%E8%90%A5/" class="post-tags__link button"># 运营</a><a href="/tags/%E8%90%A5%E9%94%80/" class="post-tags__link button"># 营销</a><a href="/tags/%E5%88%9B%E6%96%B0/" class="post-tags__link button"># 创新</a><a href="/tags/%E7%AE%A1%E7%90%86%E5%BF%83%E5%BE%97/" class="post-tags__link button"># 管理心得</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-10-10</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 企业管理</a><a href="/tags/%E6%88%98%E7%95%A5/" class="post-tags__link button"># 战略</a><a href="/tags/%E7%BB%84%E7%BB%87/" class="post-tags__link button"># 组织</a><a href="/tags/%E4%BA%BA%E5%8A%9B/" class="post-tags__link button"># 人力</a><a href="/tags/%E8%B4%A2%E5%8A%A1/" class="post-tags__link button"># 财务</a><a href="/tags/%E8%BF%90%E8%90%A5/" class="post-tags__link button"># 运营</a><a href="/tags/%E8%90%A5%E9%94%80/" class="post-tags__link button"># 营销</a><a href="/tags/%E5%88%9B%E6%96%B0/" class="post-tags__link button"># 创新</a><a href="/tags/%E7%AE%A1%E7%90%86%E5%BF%83%E5%BE%97/" class="post-tags__link button"># 管理心得</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -791,9 +807,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

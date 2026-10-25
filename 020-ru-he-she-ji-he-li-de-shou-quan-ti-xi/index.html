@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,25 +39,25 @@
 <title>如何设计合理的授权体系，既不放权也不集权？ | Need.UNO</title>
 
 
-    <meta name="keywords" content="企业管理, 职场, 组织, 人力, 运营, 管理心得, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="职场, 企业管理, 组织, 人力, 运营, 管理心得, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
 
     <!-- OpenGraph -->
  
-    <meta name="description" content="企业管理的108个问题 · 第20问 上一问我们聊了如何打破部门墙（第19问），说到要从结构设计、考核机制和组织文化三个层面下手。但拆完墙之后，还有一个更关键的问题摆在面前——这些”横向连接器”靠什么运转？谁来拍板？谁有权力调动资源？ 说白了，就是授权问题。 今天我们来直面一个几乎所有管理者都会遭遇的两难——授权少了，自己累死；授权多了，公司乱死。到底怎么把握这个度？   我问过很多管理者一个问题">
+    <meta name="description" content="企业管理的108个问题 · 第20问 上一问我们聊了如何打破部门墙（第19问），说到要从结构设计、考核机制和组织文化三个层面下手。但拆完墙之后，还有一个更关键的问题摆在面前——这些”横向连接器”靠什么运转？谁来拍板？谁有权力调动资源？ 说白了，就是授权问题。 今天我们来直面一个几乎所有管理者都会遭遇的两难——授权少了，自己累死；授权多了，公司乱死。到底怎么把握这个度？   关于授权，我自己吃过两次">
 <meta property="og:type" content="website">
 <meta property="og:title" content="如何设计合理的授权体系，既不放权也不集权？">
 <meta property="og:url" content="https://need.uno/020-ru-he-she-ji-he-li-de-shou-quan-ti-xi/index.html">
 <meta property="og:site_name" content="Need.UNO">
-<meta property="og:description" content="企业管理的108个问题 · 第20问 上一问我们聊了如何打破部门墙（第19问），说到要从结构设计、考核机制和组织文化三个层面下手。但拆完墙之后，还有一个更关键的问题摆在面前——这些”横向连接器”靠什么运转？谁来拍板？谁有权力调动资源？ 说白了，就是授权问题。 今天我们来直面一个几乎所有管理者都会遭遇的两难——授权少了，自己累死；授权多了，公司乱死。到底怎么把握这个度？   我问过很多管理者一个问题">
+<meta property="og:description" content="企业管理的108个问题 · 第20问 上一问我们聊了如何打破部门墙（第19问），说到要从结构设计、考核机制和组织文化三个层面下手。但拆完墙之后，还有一个更关键的问题摆在面前——这些”横向连接器”靠什么运转？谁来拍板？谁有权力调动资源？ 说白了，就是授权问题。 今天我们来直面一个几乎所有管理者都会遭遇的两难——授权少了，自己累死；授权多了，公司乱死。到底怎么把握这个度？   关于授权，我自己吃过两次">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-28T04:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-03T07:09:18.529Z">
+<meta property="article:modified_time" content="2026-07-26T08:47:57.251Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="企业管理">
 <meta property="article:tag" content="职场">
+<meta property="article:tag" content="企业管理">
 <meta property="article:tag" content="组织">
 <meta property="article:tag" content="人力">
 <meta property="article:tag" content="运营">
@@ -81,6 +90,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -91,7 +106,7 @@
   "headline": "如何设计合理的授权体系，既不放权也不集权？",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-05-28",
-  "dateModified": "2026-07-03",
+  "dateModified": "2026-07-26",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/020-ru-he-she-ji-he-li-de-shou-quan-ti-xi/" },
   "description": "如何设计合理的授权体系，既不放权也不集权？"
 }
@@ -136,6 +151,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -161,6 +178,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -352,11 +371,10 @@
 <p>今天我们来直面一个几乎所有管理者都会遭遇的两难——<strong>授权少了，自己累死；授权多了，公司乱死。到底怎么把握这个度？</strong></p>
 </blockquote>
 <hr>
-<p>我问过很多管理者一个问题：<strong>你觉得授权难在哪里？</strong></p>
-<p>几乎所有人的回答都可以归结为一句话：</p>
-<blockquote>
-<p><strong>“不敢放，也不敢收。”</strong></p>
-</blockquote>
+<p>关于授权，我自己吃过两次大亏。</p>
+<p>第一次，授权太多。早期管第一家店的时候，我心大，跟店长说”你全权负责”，结果一个月后看报表——食材成本涨了8个点，店长为了省事全进的整箱货，很多用不完就过期了。</p>
+<p>第二次，授权太少。管第三家店的时候我学乖了，事无巨细都要我签字才能动。店长请假要批、买箱餐巾纸要批、换个灯泡要批。一个月下来我累得半死，店长跟我说”老板要不你换个店长吧，我在这就是你的传声筒”。</p>
+<p><strong>不管以前我偏向哪一边，结果都证明了一个道理：授权不是0或1的问题，是分寸问题。</strong></p>
 <p>不放，是因为觉得自己把着最安心。可团队做不大，自己累到下不了班。</p>
 <p>放，是因为想培养人、想提速。可放完发现收不回来——下面的人做了你不同意的决定，你还不能推翻，因为”已经授权了”。</p>
 <p>这个两难，不是个人能力问题。是<strong>授权体系本身没设计好。</strong></p>
@@ -535,8 +553,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 企业管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E7%BB%84%E7%BB%87/" class="post-tags__link button"># 组织</a><a href="/tags/%E4%BA%BA%E5%8A%9B/" class="post-tags__link button"># 人力</a><a href="/tags/%E8%BF%90%E8%90%A5/" class="post-tags__link button"># 运营</a><a href="/tags/%E7%AE%A1%E7%90%86%E5%BF%83%E5%BE%97/" class="post-tags__link button"># 管理心得</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-26</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 企业管理</a><a href="/tags/%E7%BB%84%E7%BB%87/" class="post-tags__link button"># 组织</a><a href="/tags/%E4%BA%BA%E5%8A%9B/" class="post-tags__link button"># 人力</a><a href="/tags/%E8%BF%90%E8%90%A5/" class="post-tags__link button"># 运营</a><a href="/tags/%E7%AE%A1%E7%90%86%E5%BF%83%E5%BE%97/" class="post-tags__link button"># 管理心得</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -847,9 +865,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

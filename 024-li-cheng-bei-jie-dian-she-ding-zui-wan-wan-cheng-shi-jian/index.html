@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,7 +39,7 @@
 <title>里程碑节点如何设定？标注&#34;最晚完成时间&#34;的重要性 | Need.UNO</title>
 
 
-    <meta name="keywords" content="职场, PMP, 项目管理, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="PMP, 项目管理, 职场, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -46,11 +55,11 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://need.uno/images/pmp/q024-%E9%87%8C%E7%A8%8B%E7%A2%91%E8%8A%82%E7%82%B9%E5%A6%82%E4%BD%95%E8%AE%BE%E5%AE%9A-%E6%A0%87%E6%B3%A8-%E6%9C%80%E6%99%9A%E5%AE%8C%E6%88%90%E6%97%B6%E9%97%B4-%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7.svg">
 <meta property="article:published_time" content="2026-07-13T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-14T18:02:20.732Z">
+<meta property="article:modified_time" content="2026-10-10T16:03:37.401Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="职场">
 <meta property="article:tag" content="PMP">
 <meta property="article:tag" content="项目管理">
+<meta property="article:tag" content="职场">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://need.uno/images/pmp/q024-%E9%87%8C%E7%A8%8B%E7%A2%91%E8%8A%82%E7%82%B9%E5%A6%82%E4%BD%95%E8%AE%BE%E5%AE%9A-%E6%A0%87%E6%B3%A8-%E6%9C%80%E6%99%9A%E5%AE%8C%E6%88%90%E6%97%B6%E9%97%B4-%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7.svg">
 <meta name="twitter:creator" content="@samjoeyang">
@@ -80,6 +89,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -90,7 +105,7 @@
   "headline": "里程碑节点如何设定？标注\&#34;最晚完成时间\&#34;的重要性",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-07-14",
-  "dateModified": "2026-07-15",
+  "dateModified": "2026-10-11",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/024-li-cheng-bei-jie-dian-she-ding-zui-wan-wan-cheng-shi-jian/" },
   "description": "里程碑节点如何设定？标注\&#34;最晚完成时间\&#34;的重要性"
 }
@@ -135,6 +150,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -160,6 +177,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -411,7 +430,7 @@
 <p><strong>错了。老板宁可看到你主动暴露一个可能的风险，也不愿意在最后一天收到一个“死”消息。</strong> 后者叫“项目失败”，前者叫“管理得当”。</p>
 <p>你设最晚时间，不是为了给自己留后路，而是为了让相关方从一开始就知道：<strong>这个节点有弹性，但弹性是有限的。超出这个边界，就不是项目经理能兜底的了。</strong></p>
 <h3 id="六、今日动作"><a href="#六、今日动作" class="headerlink" title="六、今日动作"></a>六、今日动作</h3><blockquote>
-<p><strong>📌 今日动作</strong>：找出你当前项目中最关键的下一个里程碑，打开计划表：</p>
+<p><strong>今日动作</strong>：找出你当前项目中最关键的下一个里程碑，打开计划表：</p>
 <ol>
 <li>把原来的单一日期改成“目标完成时间”和“最晚完成时间”两列</li>
 <li>在最晚完成时间前20%的位置，设置一个“预警检查点”</li>
@@ -422,7 +441,7 @@
 <p><strong>记住：里程碑不是留给团队看的，是留给风险看的。设定好最晚时间，你才能在真正出问题之前，抓住救命的绳。</strong></p>
 <hr>
 <p><img src="/images/pmp/q024-%E9%87%8C%E7%A8%8B%E7%A2%91%E8%8A%82%E7%82%B9%E5%A6%82%E4%BD%95%E8%AE%BE%E5%AE%9A-%E6%A0%87%E6%B3%A8-%E6%9C%80%E6%99%9A%E5%AE%8C%E6%88%90%E6%97%B6%E9%97%B4-%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7.svg" class="lazy" data-srcset="/images/pmp/q024-%E9%87%8C%E7%A8%8B%E7%A2%91%E8%8A%82%E7%82%B9%E5%A6%82%E4%BD%95%E8%AE%BE%E5%AE%9A-%E6%A0%87%E6%B3%A8-%E6%9C%80%E6%99%9A%E5%AE%8C%E6%88%90%E6%97%B6%E9%97%B4-%E7%9A%84%E9%87%8D%E8%A6%81%E6%80%A7.svg" srcset="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABAQMAAAAl21bKAAAABlBMVEXMzMyWlpYU2uzLAAAACXBIWXMAAA7EAAAOxAGVKw4bAAAACklEQVQImWNgAAAAAgAB9HFkpgAAAABJRU5ErkJggg==" alt="第24问：里程碑节点如何设定？标注&quot;最晚完成时间&quot;的重要性"></p>
-<p>📚 <strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
+<p><strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
 
     </div>
     
@@ -444,8 +463,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-15</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-10-11</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -756,9 +775,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

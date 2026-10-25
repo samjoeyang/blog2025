@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -74,6 +83,9 @@
 
 
 
+
+
+
 <!-- 百度自动推送 -->
 <script>
 (function(){
@@ -112,6 +124,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -137,6 +151,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -166,6 +182,25 @@
             
     <div class="post-list">
         
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        知识产权为什么越来越像互联网生意？
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2026/10/" class="post-meta__date button">2026-10-11</a>
+    
+    <span class="separate-dot"></span><a href="/categories/%E6%B3%95%E5%BE%8B/" class="button">法律</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/%E7%9F%A5%E8%AF%86%E4%BA%A7%E6%9D%83/" class="post-tags__link button"># 知识产权</a><a href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" class="post-tags__link button"># 互联网</a><a href="/tags/%E5%95%86%E4%B8%9A%E6%A8%A1%E5%BC%8F/" class="post-tags__link button"># 商业模式</a><a href="/tags/%E5%B9%B3%E5%8F%B0/" class="post-tags__link button"># 平台</a><a href="/tags/%E5%8C%BA%E5%9D%97%E9%93%BE%E5%AD%98%E8%AF%81/" class="post-tags__link button"># 区块链存证</a><a href="/tags/%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%BB%8F%E6%B5%8E/" class="post-tags__link button"># 注意力经济</a></div> 
+<a href="/zhi-shi-chan-quan-wei-shi-me-yue-lai-yue-xiang-hu-lian-wang-sheng-yi/" class="post-entry__link">知识产权为什么越来越像互联网生意？</a>
+                </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
@@ -342,25 +377,6 @@
 <a href="/needisme-2010-12-28-wordpress-e680a7e883bde4bc98e58c96/" class="post-entry__link">wordpress 性能优化</a>
                 </div>
             
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        2010年互联网热门关键词
-    </h2>
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2010/12/" class="post-meta__date button">2010-12-28</a>
-    
-    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
-
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/Google/" class="post-tags__link button"># Google</a><a href="/tags/NET/" class="post-tags__link button"># .NET</a><a href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" class="post-tags__link button"># 互联网</a><a href="/tags/Internet/" class="post-tags__link button"># Internet</a></div> 
-<a href="/needisme-2010-12-28-2010e5b9b4e4ba92e88194e7bd91e783ade997a8e585b3e994aee8af8d/" class="post-entry__link">2010年互联网热门关键词</a>
-                </div>
-            
         
     </div>
     
@@ -475,9 +491,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

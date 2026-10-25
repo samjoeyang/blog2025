@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,25 +39,25 @@
 <title>为什么很多公司设置了流程却没人遵守？ | Need.UNO</title>
 
 
-    <meta name="keywords" content="企业管理, 职场, 战略, 组织, 人力, 财务, 运营, 营销, 创新, 管理心得, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="职场, 企业管理, 战略, 组织, 人力, 财务, 运营, 营销, 创新, 管理心得, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
 
     <!-- OpenGraph -->
  
-    <meta name="description" content="企业管理的108个问题 · 第17问 上一问我们聊了建立高效的内部协作机制（第16问），其中提到了协作SLA和RACI模型等工具。但你有没有发现一个更扎心的现象——很多公司花了大把时间设计的流程，最后根本没人遵守。 该走的捷径照走，该跳过的节点照跳，流程成了挂在墙上的摆设。今天我们就来认真聊聊这个”流程困局”。   我进过不少公司，看过一个非常普遍的”仪式”： 某天，CEO雷霆震怒，说公司管理太乱">
+    <meta name="description" content="企业管理的108个问题 · 第17问 上一问我们聊了建立高效的内部协作机制（第16问），其中提到了协作SLA和RACI模型等工具。但你有没有发现一个更扎心的现象——很多公司花了大把时间设计的流程，最后根本没人遵守。 该走的捷径照走，该跳过的节点照跳，流程成了挂在墙上的摆设。今天我们就来认真聊聊这个”流程困局”。   这种事我自己也干过。 有一阵子门店考勤总是对不上——有人迟到没记、有人代打卡、还有">
 <meta property="og:type" content="website">
 <meta property="og:title" content="为什么很多公司设置了流程却没人遵守？">
 <meta property="og:url" content="https://need.uno/017-wei-shi-me-hen-duo-gong-si-she-zhi-liao-liu-cheng-que-mei-ren-zun-shou/index.html">
 <meta property="og:site_name" content="Need.UNO">
-<meta property="og:description" content="企业管理的108个问题 · 第17问 上一问我们聊了建立高效的内部协作机制（第16问），其中提到了协作SLA和RACI模型等工具。但你有没有发现一个更扎心的现象——很多公司花了大把时间设计的流程，最后根本没人遵守。 该走的捷径照走，该跳过的节点照跳，流程成了挂在墙上的摆设。今天我们就来认真聊聊这个”流程困局”。   我进过不少公司，看过一个非常普遍的”仪式”： 某天，CEO雷霆震怒，说公司管理太乱">
+<meta property="og:description" content="企业管理的108个问题 · 第17问 上一问我们聊了建立高效的内部协作机制（第16问），其中提到了协作SLA和RACI模型等工具。但你有没有发现一个更扎心的现象——很多公司花了大把时间设计的流程，最后根本没人遵守。 该走的捷径照走，该跳过的节点照跳，流程成了挂在墙上的摆设。今天我们就来认真聊聊这个”流程困局”。   这种事我自己也干过。 有一阵子门店考勤总是对不上——有人迟到没记、有人代打卡、还有">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-25T04:10:00.000Z">
-<meta property="article:modified_time" content="2026-07-03T07:09:18.528Z">
+<meta property="article:modified_time" content="2026-07-26T08:47:47.443Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="企业管理">
 <meta property="article:tag" content="职场">
+<meta property="article:tag" content="企业管理">
 <meta property="article:tag" content="战略">
 <meta property="article:tag" content="组织">
 <meta property="article:tag" content="人力">
@@ -85,6 +94,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -95,7 +110,7 @@
   "headline": "为什么很多公司设置了流程却没人遵守？",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-05-25",
-  "dateModified": "2026-07-03",
+  "dateModified": "2026-07-26",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/017-wei-shi-me-hen-duo-gong-si-she-zhi-liao-liu-cheng-que-mei-ren-zun-shou/" },
   "description": "为什么很多公司设置了流程却没人遵守？"
 }
@@ -140,6 +155,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -165,6 +182,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -355,10 +374,10 @@
 <p>上一问我们聊了建立高效的内部协作机制（<a href="/016-%E4%BC%81%E4%B8%9A%E5%A6%82%E4%BD%95%E5%BB%BA%E7%AB%8B%E9%AB%98%E6%95%88%E7%9A%84%E5%86%85%E9%83%A8%E5%8D%8F%E4%BD%9C%E6%9C%BA%E5%88%B6.html">第16问</a>），其中提到了协作SLA和RACI模型等工具。但你有没有发现一个更扎心的现象——<strong>很多公司花了大把时间设计的流程，最后根本没人遵守。</strong> 该走的捷径照走，该跳过的节点照跳，流程成了挂在墙上的摆设。今天我们就来认真聊聊这个”流程困局”。</p>
 </blockquote>
 <hr>
-<p>我进过不少公司，看过一个非常普遍的”仪式”：</p>
-<p>某天，CEO雷霆震怒，说公司管理太乱。于是各个部门开始”建流程”——采购流程、报销流程、审批流程、项目流程……一个月后，几十个流程图挂在了企业wiki上。</p>
-<p>三个月后呢？<strong>新来的员工问”这个流程怎么走”，老员工说”别管那个，走不了，你直接找某某签字就行了”。</strong></p>
-<p>流程变成了”没人看的说明书”。</p>
+<p>这种事我自己也干过。</p>
+<p>有一阵子门店考勤总是对不上——有人迟到没记、有人代打卡、还有人搞不清休息日怎么算。我火一上来，拉着财务搞了一套”门店考勤管理规范”，洋洋洒洒十几页，流程图都画了3张，发到群里让每家店学习。</p>
+<p>一个月后我随机问了三个店长，有两个说”不知道有这个规范”，另一个说”看了，但实操中根本走不通，还是老办法方便”。</p>
+<p><strong>流程做出来没人用，本质上不是流程的问题——是流程没有回答那个唯一重要的问题：用了这个流程，对我有什么好处？</strong></p>
 <p>为什么会这样？不是员工的执行力有问题，也不是流程的数量不够——而是<strong>流程的设计从一开始就是错的</strong>。</p>
 <hr>
 <h2 id="一、流程没人遵守的七个真实原因"><a href="#一、流程没人遵守的七个真实原因" class="headerlink" title="一、流程没人遵守的七个真实原因"></a>一、流程没人遵守的七个真实原因</h2><h3 id="原因一：流程是”写给别人”的"><a href="#原因一：流程是”写给别人”的" class="headerlink" title="原因一：流程是”写给别人”的"></a>原因一：流程是”写给别人”的</h3><p>这是最常见的问题——<strong>流程的设计者不是流程的执行者。</strong></p>
@@ -491,8 +510,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-03</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 企业管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E6%88%98%E7%95%A5/" class="post-tags__link button"># 战略</a><a href="/tags/%E7%BB%84%E7%BB%87/" class="post-tags__link button"># 组织</a><a href="/tags/%E4%BA%BA%E5%8A%9B/" class="post-tags__link button"># 人力</a><a href="/tags/%E8%B4%A2%E5%8A%A1/" class="post-tags__link button"># 财务</a><a href="/tags/%E8%BF%90%E8%90%A5/" class="post-tags__link button"># 运营</a><a href="/tags/%E8%90%A5%E9%94%80/" class="post-tags__link button"># 营销</a><a href="/tags/%E5%88%9B%E6%96%B0/" class="post-tags__link button"># 创新</a><a href="/tags/%E7%AE%A1%E7%90%86%E5%BF%83%E5%BE%97/" class="post-tags__link button"># 管理心得</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-07-26</p></div> 
+    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E4%BC%81%E4%B8%9A%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 企业管理</a><a href="/tags/%E6%88%98%E7%95%A5/" class="post-tags__link button"># 战略</a><a href="/tags/%E7%BB%84%E7%BB%87/" class="post-tags__link button"># 组织</a><a href="/tags/%E4%BA%BA%E5%8A%9B/" class="post-tags__link button"># 人力</a><a href="/tags/%E8%B4%A2%E5%8A%A1/" class="post-tags__link button"># 财务</a><a href="/tags/%E8%BF%90%E8%90%A5/" class="post-tags__link button"># 运营</a><a href="/tags/%E8%90%A5%E9%94%80/" class="post-tags__link button"># 营销</a><a href="/tags/%E5%88%9B%E6%96%B0/" class="post-tags__link button"># 创新</a><a href="/tags/%E7%AE%A1%E7%90%86%E5%BF%83%E5%BE%97/" class="post-tags__link button"># 管理心得</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -803,9 +822,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

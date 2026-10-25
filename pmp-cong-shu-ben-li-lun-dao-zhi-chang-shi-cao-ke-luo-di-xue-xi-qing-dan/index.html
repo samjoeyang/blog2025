@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,7 +39,7 @@
 <title>PMP从书本理论到职场实操 · 可落地学习清单 | Need.UNO</title>
 
 
-    <meta name="keywords" content="职场, PMP, 项目管理, 学习清单, 实操, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="PMP, 项目管理, 职场, 学习清单, 实操, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -45,11 +54,11 @@
 <meta property="og:description" content="核心思路：摒弃纯背诵理论，以「每天能用、本周落地、工作可复用」为原则，把PMP三大模块（人、过程、商业环境）的书本知识点，转化为日常项目工作的固定操作动作。全程无需额外模拟项目，直接套用自身本职工作即可。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-09T10:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-09T09:23:25.474Z">
+<meta property="article:modified_time" content="2026-10-10T16:03:39.322Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="职场">
 <meta property="article:tag" content="PMP">
 <meta property="article:tag" content="项目管理">
+<meta property="article:tag" content="职场">
 <meta property="article:tag" content="学习清单">
 <meta property="article:tag" content="实操">
 <meta name="twitter:card" content="summary_large_image">
@@ -80,6 +89,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -90,7 +105,7 @@
   "headline": "PMP从书本理论到职场实操 · 可落地学习清单",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-07-09",
-  "dateModified": "2026-07-09",
+  "dateModified": "2026-10-11",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/pmp-cong-shu-ben-li-lun-dao-zhi-chang-shi-cao-ke-luo-di-xue-xi-qing-dan/" },
   "description": "PMP从书本理论到职场实操 · 可落地学习清单"
 }
@@ -135,6 +150,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -160,6 +177,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -429,22 +448,22 @@
 </tr>
 </thead>
 <tbody><tr>
-<td align="center">🧱 理论对标</td>
+<td align="center">理论对标</td>
 <td align="center">第1周</td>
 <td align="left">完成所有知识点与工作场景对标，搭建个人PMP实操手册框架</td>
 </tr>
 <tr>
-<td align="center">📐 流程规范</td>
+<td align="center">流程规范</td>
 <td align="center">第2周</td>
 <td align="left">重点落地范围、进度、变更流程，规范日常工作流程</td>
 </tr>
 <tr>
-<td align="center">⚡ 软技能</td>
+<td align="center">软技能</td>
 <td align="center">第3周</td>
 <td align="left">重点落地风险管控、相关方管理、冲突沟通，解决职场协作难题</td>
 </tr>
 <tr>
-<td align="center">🔄 闭环</td>
+<td align="center">闭环</td>
 <td align="center">第4周</td>
 <td align="left">全程闭环复盘，形成个人标准化项目工作方法</td>
 </tr>
@@ -457,7 +476,7 @@
 </ol>
 <hr>
 <blockquote>
-<p>📚 <strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
+<p><strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
 </blockquote>
 
     </div>
@@ -480,8 +499,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-09</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E5%AD%A6%E4%B9%A0%E6%B8%85%E5%8D%95/" class="post-tags__link button"># 学习清单</a><a href="/tags/%E5%AE%9E%E6%93%8D/" class="post-tags__link button"># 实操</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-10-11</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/%E5%AD%A6%E4%B9%A0%E6%B8%85%E5%8D%95/" class="post-tags__link button"># 学习清单</a><a href="/tags/%E5%AE%9E%E6%93%8D/" class="post-tags__link button"># 实操</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -792,9 +811,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

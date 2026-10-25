@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -74,6 +83,9 @@
 
 
 
+
+
+
 <!-- 百度自动推送 -->
 <script>
 (function(){
@@ -112,6 +124,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -137,6 +151,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -168,190 +184,224 @@
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        探访日本 DoCoMo 总部：最潮的手机，最全的服务
+        微信浏览器HTTP_USER_AGENT判断
     </h2>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-23</a>
+    <a href="/archives/2013/09/" class="post-meta__date button">2013-09-05</a>
     
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/Git/" class="post-tags__link button"># Git</a><a href="/tags/%E6%89%8B%E6%9C%BA/" class="post-tags__link button"># 手机</a><a href="/tags/NET/" class="post-tags__link button"># .NET</a><a href="/tags/Mobile/" class="post-tags__link button"># Mobile</a></div> 
-<a href="/needisme-2010-11-23-e68ea2e8aebfe697a5e69cac-docomo-e680bbe983a8efbc9ae69c80e6bdaee79a84e6898be69cbaefbc8ce69c80e585a8e79a84e69c8de58aa1/" class="post-entry__link">探访日本 DoCoMo 总部：最潮的手机，最全的服务</a>
+<div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/PHP/" class="post-tags__link button"># PHP</a><a href="/tags/Mac/" class="post-tags__link button"># Mac</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/Android/" class="post-tags__link button"># Android</a><a href="/tags/iPhone/" class="post-tags__link button"># iPhone</a></div> 
+<a href="/needisme-2013-09-05-e5beaee4bfa1e6b58fe8a788e599a8http-user-agente588a4e696ad/" class="post-entry__link">微信浏览器HTTP_USER_AGENT判断</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        鄙人乃白痴
+        $_SERVER数组
     </h2>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-23</a>
+    <a href="/archives/2013/09/" class="post-meta__date button">2013-09-05</a>
     
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/NET/" class="post-tags__link button"># .NET</a></div> 
-<a href="/needisme-2010-11-23-e98499e4babae4b983e799bde797b4/" class="post-entry__link">鄙人乃白痴</a>
+<div class="post-entry__tags"><a href="/tags/PHP/" class="post-tags__link button"># PHP</a></div> 
+<a href="/needisme-2013-09-05-servere695b0e7bb84/" class="post-entry__link">$_SERVER数组</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        Linux怎么念？
+        apache note 日志 及详细设置
     </h2>
+    
+        <p>引：http://blog.csdn.net/btbtd/archive/2005/02/15/288027.aspx<br />
+# apache note | Apache 学习笔记(心得) by Emerald 绿色学院 - Green Institute</p>
+<p># 分类:<br />
+# 01.常规设置<br />
+# 02.虚拟主机<br />
+# 03. + Alias<br />
+# 04..htaccess<br />
+# 05.Log<br />
+# 06.URL Rewrite<br />
+# 07.其他</p>
+<p>########01.常规设置</p>
+<p># Listen<br />
+# 监听端口, 例: Listen 80</p>
+<p># ServerRoot<br />
+# Apache 所在目录, 例: ServerRoot "C:/Program Files/Apache Group/Apache2" (WINDOWS)</p>
+<p># ServerAdmin<br />
+# 错误报告邮箱, 例: ServerAdmin btbtd@yahoo.com.cn</p>
+<p># DocumentRoot<br />
+# 站点根目录, 例: DocumentRoot "I:/gi-2288"</p>
+<p># DirectoryIndex<br />
+# 配置目录索引文件,<br />
+# 例: DirectoryIndex index.php index.php3 index.html index.htm</p>
+<p># ServerName<br />
+# 服务器域名/IP地址, 例
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-23</a>
+    <a href="/archives/2013/09/" class="post-meta__date button">2013-09-04</a>
     
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a></div> 
-<a href="/needisme-2010-11-23-linuxe6808ee4b988e5bfb5efbc9f/" class="post-entry__link">Linux怎么念？</a>
+<div class="post-entry__tags"><a href="/tags/DNS/" class="post-tags__link button"># DNS</a><a href="/tags/HTML/" class="post-tags__link button"># HTML</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/LINUX/" class="post-tags__link button"># LINUX</a><a href="/tags/%E7%B3%BB%E7%BB%9F%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 系统管理</a><a href="/tags/Apache/" class="post-tags__link button"># Apache</a></div> 
+<a href="/needisme-2013-09-04-apache-note-e697a5e5bf97-e58f8ae8afa6e7bb86e8aebee7bdae/" class="post-entry__link">apache note 日志 及详细设置</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        《哈利波特》咒语大全
+        巧克力和你的生日, 你是什么巧克力呢？&amp;hearts;_
     </h2>
+    
+        <p>一月</p>
+<p>日子︰1月1日<br /> 巧克力︰西西里杏仁軟糖（ceili soft pralin&amp;）<br /> 成份︰巧克力外層配軟焦糖杏仁夾心<br /> 特性︰強者本色<br /> 生日占卜︰這天生日的人權力慾很強，無論在公在私，都喜歡發號施令，而且對自己要求嚴格，自我價值觀很強。雖然外表看上去很硬朗，但對人對事都是非常盡責的，本著忠?#092;\、善良的態度，是個值得信任的人。唯一的不足是不善表達自己的感情，令周遭的人際關係並不十分如意。<br /> 巧克力蜜語︰
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-22</a>
-    
-    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
-
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/iOS/" class="post-tags__link button"># iOS</a></div> 
-<a href="/needisme-2010-11-22-e3808ae59388e588a9e6b3a2e789b9e3808be59292e8afade5a4a7e585a8/" class="post-entry__link">《哈利波特》咒语大全</a>
-                </div>
-            
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        莫尔斯密码
-    </h2>
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-22</a>
-    
-    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
-
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/NET/" class="post-tags__link button"># .NET</a></div> 
-<a href="/needisme-2010-11-22-e88eabe5b094e696afe5af86e7a081/" class="post-entry__link">莫尔斯密码</a>
-                </div>
-            
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        中国网络神兽大全
-    </h2>
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-22</a>
-    
-    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
-
- 
-</div>
-<div class="post-entry__tags"><a href="/tags/%E4%BA%92%E8%81%94%E7%BD%91/" class="post-tags__link button"># 互联网</a><a href="/tags/Internet/" class="post-tags__link button"># Internet</a></div> 
-<a href="/needisme-2010-11-22-e4b8ade59bbde7bd91e7bb9ce7a59ee585bde5a4a7e585a8/" class="post-entry__link">中国网络神兽大全</a>
-                </div>
-            
-                <div class='post-entry content-card'>
-                    <div class="post-entry__header"></div>
-<div class="post-entry__content">
-    <h2 class="post-entry__title">
-        此刻，你最想做什么？
-    </h2>
-    
-</div>
-<div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-22</a>
+    <a href="/archives/2013/01/" class="post-meta__date button">2013-01-14</a>
     
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
 </div>
 <div class="post-entry__tags"></div> 
-<a href="/needisme-2010-11-22-e6ada4e588bbefbc8ce4bda0e69c80e683b3e5819ae4bb80e4b988efbc9f/" class="post-entry__link">此刻，你最想做什么？</a>
+<a href="/needisme-2013-01-14-e5b7a7e5858be58a9be5928ce4bda0e79a84e7949fe697a5-e4bda0e698afe4bb80e4b988e5b7a7e5858be58a9be591a2efbc9fe299a5eea0ba-eea0ba/" class="post-entry__link">巧克力和你的生日, 你是什么巧克力呢？&amp;hearts;_</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        石头会下蛋：贵州姑鲁寨&amp;ldquo;产蛋崖&amp;rdquo;
+        李淳风袁天罡和武则天
     </h2>
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-22</a>
+    <a href="/archives/2012/09/" class="post-meta__date button">2012-09-29</a>
     
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/NET/" class="post-tags__link button"># .NET</a><a href="/tags/%E5%A5%87%E9%97%BB%E8%BD%B6%E4%BA%8B/" class="post-tags__link button"># 奇闻轶事</a><a href="/tags/%E8%B6%A3%E9%97%BB/" class="post-tags__link button"># 趣闻</a></div> 
-<a href="/needisme-2010-11-22-e79fb3e5a4b4e4bc9ae4b88be89b8befbc9ae8b4b5e5b79ee5a791e9b281e5afa8e2809ce4baa7e89b8be5b496e2809d/" class="post-entry__link">石头会下蛋：贵州姑鲁寨&amp;ldquo;产蛋崖&amp;rdquo;</a>
+<div class="post-entry__tags"></div> 
+<a href="/needisme-2012-09-29-e69d8ee6b7b3e9a38ee8a281e5a4a9e7bda1e5928ce6ada6e58899e5a4a9/" class="post-entry__link">李淳风袁天罡和武则天</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        UBUNTU10.04安装jre
+        《西游记》的细节小知识（下）
     </h2>
+    
+        <p><a href="/images/needisme/2012/02/050729kyw.jpg" target="_blank"><img src="/images/needisme/2012/02/050729kyw.jpg" alt="" border="0" /></a></p>
+<p>玄 奘。唐朝著名的三藏法师，汉传佛教历史上最伟大的译师。俗姓陈，本名袆。佛教学者、旅行家，与鸠摩罗什、真谛并称为中国佛教三大翻译家，唯识宗的创始者之 一。在《西游记》中对玄奘的身世、遭遇和性格等有很多的歪曲性的描写，不符合历史的真实，这也是古代道教与佛教相争的产物。
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-22</a>
+    <a href="/archives/2012/02/" class="post-meta__date button">2012-02-07</a>
     
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/API/" class="post-tags__link button"># API</a><a href="/tags/NET/" class="post-tags__link button"># .NET</a><a href="/tags/Java/" class="post-tags__link button"># Java</a><a href="/tags/Linux/" class="post-tags__link button"># Linux</a><a href="/tags/FTP/" class="post-tags__link button"># FTP</a><a href="/tags/Ubuntu/" class="post-tags__link button"># Ubuntu</a></div> 
-<a href="/needisme-2010-11-22-ubuntu10-04e5ae89e8a385jre/" class="post-entry__link">UBUNTU10.04安装jre</a>
+<div class="post-entry__tags"></div> 
+<a href="/needisme-2012-02-07-e3808ae8a5bfe6b8b8e8aeb0e3808be79a84e7bb86e88a82e5b08fe79fa5e8af86efbc88e4b88befbc89/" class="post-entry__link">《西游记》的细节小知识（下）</a>
                 </div>
             
                 <div class='post-entry content-card'>
                     <div class="post-entry__header"></div>
 <div class="post-entry__content">
     <h2 class="post-entry__title">
-        HTC G1自动变成静音模式解决办法
+        《西游记》的细节小知识（上）
     </h2>
+    
+        <p><a href="/images/needisme/2012/02/073811jYD.jpg" target="_blank"><img src="/images/needisme/2012/02/073811jYD.jpg" alt="" border="0" /></a></p>
+<p>孙 悟空从东海龙王那拿到的金箍棒很多人可能以为是最厉害的武器。 事实上 猪八戒的武器-九尺钉耙 远远强于金箍棒
     
 </div>
 <div class="post-entry__meta">
-    <a href="/archives/2010/11/" class="post-meta__date button">2010-11-20</a>
+    <a href="/archives/2012/02/" class="post-meta__date button">2012-02-06</a>
     
     <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
 
  
 </div>
-<div class="post-entry__tags"><a href="/tags/Google/" class="post-tags__link button"># Google</a><a href="/tags/Android/" class="post-tags__link button"># Android</a></div> 
-<a href="/needisme-2010-11-20-htc-g1e887aae58aa8e58f98e68890e99d99e99fb3e6a8a1e5bc8fe8a7a3e586b3e58a9ee6b395/" class="post-entry__link">HTC G1自动变成静音模式解决办法</a>
+<div class="post-entry__tags"></div> 
+<a href="/needisme-2012-02-06-e3808ae8a5bfe6b8b8e8aeb0e3808be79a84e7bb86e88a82e5b08fe79fa5e8af86efbc88e4b88aefbc89/" class="post-entry__link">《西游记》的细节小知识（上）</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        RUU 2.3.3 后root问题
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2011/09/" class="post-meta__date button">2011-09-19</a>
+    
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/Android/" class="post-tags__link button"># Android</a></div> 
+<a href="/needisme-2011-09-19-ruu-2-3-3-e5908eroote997aee9a298/" class="post-entry__link">RUU 2.3.3 后root问题</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        APN设置消失原因分析和解决办法
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2011/09/" class="post-meta__date button">2011-09-19</a>
+    
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/Android/" class="post-tags__link button"># Android</a></div> 
+<a href="/needisme-2011-09-19-apne8aebee7bdaee6b688e5a4b1e58e9fe59ba0e58886e69e90e5928ce8a7a3e586b3e58a9ee6b395/" class="post-entry__link">APN设置消失原因分析和解决办法</a>
+                </div>
+            
+                <div class='post-entry content-card'>
+                    <div class="post-entry__header"></div>
+<div class="post-entry__content">
+    <h2 class="post-entry__title">
+        HTC VISION 刷机大集合
+    </h2>
+    
+</div>
+<div class="post-entry__meta">
+    <a href="/archives/2011/09/" class="post-meta__date button">2011-09-07</a>
+    
+    <span class="separate-dot"></span><a href="/categories/NeedIsMe/" class="button">NeedIsMe</a>
+
+ 
+</div>
+<div class="post-entry__tags"><a href="/tags/Windows/" class="post-tags__link button"># Windows</a><a href="/tags/Android/" class="post-tags__link button"># Android</a></div> 
+<a href="/needisme-2011-09-07-htc-vision-e588b7e69cbae5a4a7e99b86e59088/" class="post-entry__link">HTC VISION 刷机大集合</a>
                 </div>
             
         
@@ -480,9 +530,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     

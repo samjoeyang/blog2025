@@ -13,7 +13,16 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <!-- 预连接 CDN 提升加载速度 -->
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+    <link rel="preconnect" href="https://pagead2.googlesyndication.com">
+    <link rel="preconnect" href="https://www.googletagmanager.com">
+    <link rel="preconnect" href="https://fundingchoicesmessages.google.com">
+    
+    <!-- FontAwesome 非阻塞加载 -->
+    <link rel="preload" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+    <noscript><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"></noscript>
     
     <!--icon-->
 
@@ -30,7 +39,7 @@
 <title>「范围蔓延」在你工作中长什么样？ | Need.UNO</title>
 
 
-    <meta name="keywords" content="职场, PMP, 项目管理, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
+    <meta name="keywords" content="PMP, 项目管理, 职场, 技术博客, 编程, 人工智能, AI, 企业管理, 知行笔记, 创业, 软件工程, Hexo, 前端开发, 后端开发, 自动化">
 
 
 
@@ -45,11 +54,11 @@
 <meta property="og:description" content="PMP职场实战108问 · 第4问范围蔓延：你以为是“顺手帮忙”，其实是“慢性自杀”你有没有经历过这种场景？项目做到一半，业务部门领导笑眯眯地说：“小王啊，这个功能很简单的，就加个筛选条件，你们顺手做一下呗。”你一想，确实就加个按钮，半天能搞定，答应了。结果第三天，对方又说：“既然筛选能做，那顺便把导出功能也加上吧。”一星期后，项目工期延了两周，团队加班到崩溃，原本的核心功能反而延期交付了。 这就">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-07-10T18:00:00.000Z">
-<meta property="article:modified_time" content="2026-07-14T02:55:40.052Z">
+<meta property="article:modified_time" content="2026-10-10T16:03:37.035Z">
 <meta property="article:author" content="Samjoe Yang">
-<meta property="article:tag" content="职场">
 <meta property="article:tag" content="PMP">
 <meta property="article:tag" content="项目管理">
+<meta property="article:tag" content="职场">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:creator" content="@samjoeyang">
 
@@ -78,6 +87,12 @@
 
 
 
+  
+  
+
+
+
+
 
 
 
@@ -88,7 +103,7 @@
   "headline": "「范围蔓延」在你工作中长什么样？",
   "author": { "@type": "Person", "name": "Samjoe Yang" },
   "datePublished": "2026-07-11",
-  "dateModified": "2026-07-14",
+  "dateModified": "2026-10-11",
   "mainEntityOfPage": { "@type": "WebPage", "@id": "https://need.uno/004-fan-wei-man-yan-zai-ni-gong-zuo-zhong-chang-shi-me-yang/" },
   "description": "「范围蔓延」在你工作中长什么样？"
 }
@@ -133,6 +148,8 @@
                 
                     <a href="/about/" class="navbar-menu button">关于</a>
                 
+                    <a href="/privacy-policy/" class="navbar-menu button">隐私</a>
+                
             </div>
         
         
@@ -158,6 +175,8 @@
                     <a href="/archives/" class="dropdown-menu button">归档</a>
                 
                     <a href="/about/" class="dropdown-menu button">关于</a>
+                
+                    <a href="/privacy-policy/" class="dropdown-menu button">隐私</a>
                 
             </div>
         
@@ -403,12 +422,12 @@
 <p>“这功能我记下来了，但它不在当前Sprint里。等第一期上线后，我们复盘时优先评估它。”</p>
 <p>既给了面子，又守住了边界。</p>
 <h2 id="今日动作"><a href="#今日动作" class="headerlink" title="今日动作"></a>今日动作</h2><blockquote>
-<p><strong>📌 今日动作</strong>：打开你手上的项目，找出最近一周收到的“顺手做的事情”，列出来。哪怕是“帮忙改个文案”、“加个字段”。然后问自己：如果这些事情没人做，项目会死吗？如果不会，今天就去找对方，用“行，但……”的句式重新谈判。</p>
+<p><strong>今日动作</strong>：打开你手上的项目，找出最近一周收到的“顺手做的事情”，列出来。哪怕是“帮忙改个文案”、“加个字段”。然后问自己：如果这些事情没人做，项目会死吗？如果不会，今天就去找对方，用“行，但……”的句式重新谈判。</p>
 </blockquote>
 <p>记住一句话：<strong>项目成功不是你做了多少额外的事，而是你没有让核心的事情被小事淹没。</strong></p>
 <p>范围管理，本质上是你对项目、对团队、对自己职业生涯的操守。学会说“不”，才是最高级的专业。</p>
 <hr>
-<p>📚 <strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
+<p><strong><a href="/pmp-zhi-chang-shi-zhan-108-wen/">返回 PMP职场实战108问 目录 →</a></strong></p>
 
     </div>
     
@@ -430,8 +449,8 @@
         
     </div>
  
-    <div class="post-footer__meta"><p>更新于 2026-07-14</p></div> 
-    <div class="post-entry__tags"><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a></div> 
+    <div class="post-footer__meta"><p>更新于 2026-10-11</p></div> 
+    <div class="post-entry__tags"><a href="/tags/PMP/" class="post-tags__link button"># PMP</a><a href="/tags/%E9%A1%B9%E7%9B%AE%E7%AE%A1%E7%90%86/" class="post-tags__link button"># 项目管理</a><a href="/tags/%E8%81%8C%E5%9C%BA/" class="post-tags__link button"># 职场</a></div> 
     
 <div class="post-share">
     <div class="share-buttons">
@@ -742,9 +761,7 @@
     
         <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1157022733083083" crossorigin="anonymous"></script> 
     
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"> 
-    
-        <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
+        <script defer src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script> 
     
         <script> function isWeChatBrowser() { return /micromessenger/i.test(navigator.userAgent); } document.addEventListener("DOMContentLoaded", function() { const wechatButtons = document.querySelectorAll("[data-share=wechat], [data-share=wechat-moments]"); wechatButtons.forEach(button => { button.addEventListener("click", function(e) { e.preventDefault(); if (isWeChatBrowser()) { // 微信内置浏览器，提示用户使用右上角菜单分享 const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style="background:white;padding:20px 30px;border-radius:8px;text-align:center;font-size:1.1rem;">请点击右上角菜单进行分享</div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } else { // 普通浏览器，弹二维码 const url = window.location.href; const qrcode = new QRCode(document.createElement("div"), { text: url, width: 128, height: 128 }); const qrcodeImg = qrcode._el.querySelector("img"); const modal = document.createElement("div"); modal.style.cssText = "position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.8);display:flex;justify-content:center;align-items:center;z-index:9999;"; modal.innerHTML = `<div style=\"background:white;padding:20px;border-radius:8px;text-align:center;\"><img src=\"${qrcodeImg.src}\" style=\"margin-bottom:10px;\"><p>请使用微信扫描二维码分享</p></div>`; modal.addEventListener("click", () => modal.remove()); document.body.appendChild(modal); } }); }); }); </script> 
     
