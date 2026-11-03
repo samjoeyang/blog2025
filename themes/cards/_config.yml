@@ -33,8 +33,7 @@ head:
 
   # 自定义 head
   custom_head:
-    # - ''
-    # - ''
+    - '<script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"WebSite","@id":"https://need.uno/#website","url":"https://need.uno","name":"Need.UNO","description":"一个技术人的知行笔记：分享技术、管理、编程与商业思考的原创博客","inLanguage":"zh-CN","publisher":{"@id":"https://need.uno/#person"}},{"@type":"Person","@id":"https://need.uno/#person","name":"Samjoe Yang","url":"https://need.uno/about/","sameAs":["https://x.com/samjoeyang","https://github.com/samjoeyang"]}]}</script>'
 
 
 
@@ -64,6 +63,10 @@ navbar:
     #   url: /page/
     - name: 关于
       url: /about/
+    - name: 常见问题
+      url: /faq/
+    - name: 原创声明
+      url: /authentic/
     - name: 隐私
       url: /privacy-policy/
 
